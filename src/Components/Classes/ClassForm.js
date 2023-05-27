@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 const ClassForm = (props) => {
   const [formData, setFormData] = useState({
-    activity: props.classData.activity._id,
-    trainer: props.classData.trainer._id,
     day: props.classData.day,
     hour: props.classData.hour,
     slots: props.classData.slots

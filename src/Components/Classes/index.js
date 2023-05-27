@@ -24,7 +24,6 @@ function Projects() {
   };
 
   const handleUpdate = (updatedClass, classId) => {
-    console.log(updatedClass);
     fetch(`${process.env.REACT_APP_API_URL}/class/${classId}`, {
       method: 'PUT',
       headers: {
@@ -33,11 +32,9 @@ function Projects() {
       body: JSON.stringify(updatedClass)
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         getData();
         handleCancel();
-        setEditedClass(null);
       })
       .catch((error) => console.error(error));
   };
