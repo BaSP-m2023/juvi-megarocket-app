@@ -7,7 +7,7 @@ function Projects() {
   const [classes, setClasses] = useState([]);
 
   const getClasses = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/class/`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/`);
     const responseData = await response.json();
     const classesData = responseData.data;
     setClasses(classesData);

@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './table.module.css';
 
 const Table = ({ data }) => {
-  console.log(data);
   return (
     <section className={styles.classContainer}>
       <div className={styles.classes}>
