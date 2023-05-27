@@ -14,7 +14,7 @@ function Projects() {
 
   const getData = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
       const jsonData = await response.json();
       const classData = jsonData.data;
       setClassesData(classData);
@@ -24,7 +24,7 @@ function Projects() {
   };
 
   const handleUpdate = (updatedClass, classId) => {
-    fetch(`${process.env.REACT_APP_API_URL}/class/${classId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/class/${classId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ function Projects() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE'
       })
         .then((response) => response.json())
