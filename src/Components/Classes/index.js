@@ -19,7 +19,7 @@ function Projects() {
       const classData = jsonData.data;
       setClassesData(classData);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -32,21 +32,32 @@ function Projects() {
       body: JSON.stringify(updatedClass)
     })
       .then((response) => response.json())
-      .then(() => {
-        getData();
-        handleCancel();
+      .then((data) => {
+        if (data.error === true) {
+          alert(data.message);
+        } else {
+          alert(data.message);
+          getData();
+          handleCancel();
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => alert(error));
   };
 
   const handleDelete = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, {
         method: 'DELETE'
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error === true) {
+            alert(data.message);
+          } else alert(data.message);
+        });
       getData();
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
   const handleEdit = (clase) => {
@@ -61,14 +72,19 @@ function Projects() {
   return (
     <section className={styles.container}>
       <h2>Classes</h2>
-      {isEditing && editedClass ? (
-        <ClassForm
-          classData={editedClass}
-          handleUpdate={handleUpdate}
-          handleCancel={() => setEditedClass(null)}
-        />
+      <button>New Class</button>
+      {classesData ? (
+        isEditing && editedClass ? (
+          <ClassForm
+            classData={editedClass}
+            handleUpdate={handleUpdate}
+            handleCancel={() => setEditedClass(null)}
+          />
+        ) : (
+          <Table classesData={classesData} handleDelete={handleDelete} handleEdit={handleEdit} />
+        )
       ) : (
-        <Table classesData={classesData} handleDelete={handleDelete} handleEdit={handleEdit} />
+        <h3>There are no classes to show</h3>
       )}
     </section>
   );

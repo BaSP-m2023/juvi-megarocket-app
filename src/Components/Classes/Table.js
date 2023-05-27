@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './table.module.css';
 
 const Table = (props) => {
   const [selectedClass, setSelectedClass] = useState(null);
@@ -20,7 +21,7 @@ const Table = (props) => {
   return (
     <table>
       <thead>
-        <tr>
+        <tr className={styles.classes}>
           <th>Activity</th>
           <th>Trainer</th>
           <th>Day</th>
@@ -31,7 +32,7 @@ const Table = (props) => {
       </thead>
       <tbody>
         {props.classesData.map((clase) => (
-          <tr key={clase._id}>
+          <tr className={styles.classes} key={clase._id}>
             <td>{clase.activity.name}</td>
             <td>{clase.trainer.firstName}</td>
             <td>{clase.day}</td>

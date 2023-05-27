@@ -1,0 +1,46 @@
+.activities {
+  display: flex;
+  justify-content: space-between;
+}
+
+.activities :nth-child(3) {
+  width: 40%;
+}
+
+.classes {
+  display: flex;
+  text-align: center;
+  min-width: 65vw;
+}
+
+.classes th {
+  color: #f9a414;
+}
+.classes td {
+  align-items: center;
+  text-align: center;
+}
+
+.classes :nth-child(3) {
+  width: 35%;
+}
+
+.classesInfo {
+  display: flex;
+  flex-direction: column;
+  width: 94vw;
+}
+
+.activityInfo {
+  width: 10%;
+}
+
+.activityInfo :nth-child(3) {
+  width: 40%;
+}
+
+.classContainer {
+  height: 40vh;
+  background-color: #0f232e;
+  color: #fff;
+}
