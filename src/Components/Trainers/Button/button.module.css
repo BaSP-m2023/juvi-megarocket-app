@@ -1,0 +1,18 @@
+.btnContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 50px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
