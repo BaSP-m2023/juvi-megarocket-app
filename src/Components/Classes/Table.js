@@ -19,7 +19,7 @@ const Table = (props) => {
   };
 
   return (
-    <table>
+    <table className={styles.tableClass}>
       <thead>
         <tr className={styles.classes}>
           <th>Activity</th>
@@ -30,7 +30,7 @@ const Table = (props) => {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className={styles.tableInfo}>
         {props.classesData.map((clase) => (
           <tr className={styles.classes} key={clase._id}>
             <td>{clase.activity.name}</td>
@@ -46,8 +46,15 @@ const Table = (props) => {
                 </>
               ) : (
                 <>
-                  <button onClick={() => handleEdit(clase)}>Edit</button>
-                  <button onClick={() => handleDelete(clase._id)}>Delete</button>
+                  <button className={styles.btnGeneralEdit} onClick={() => handleEdit(clase)}>
+                    Edit
+                  </button>
+                  <button
+                    className={styles.btnGeneralDelete}
+                    onClick={() => handleDelete(clase._id)}
+                  >
+                    Delete
+                  </button>
                 </>
               )}
             </td>

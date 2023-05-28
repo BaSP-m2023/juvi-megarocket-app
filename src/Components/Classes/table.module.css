@@ -1,46 +1,24 @@
-.activities {
-  display: flex;
-  justify-content: space-between;
+.tableClass {
+  width: 70vh;
+  background-color: #0f232e;
 }
-
-.activities :nth-child(3) {
-  width: 40%;
+button {
+  border-radius: 10%;
+  border-style: none;
+  width: 4vw;
 }
-
-.classes {
-  display: flex;
+.tableInfo td {
+  padding-top: 20px;
+  color: #fff;
   text-align: center;
-  min-width: 65vw;
 }
-
-.classes th {
+.classes {
   color: #f9a414;
 }
-.classes td {
-  align-items: center;
-  text-align: center;
+.classes th {
+  align-self: flex-start;
 }
 
-.classes :nth-child(3) {
-  width: 35%;
-}
-
-.classesInfo {
-  display: flex;
-  flex-direction: column;
-  width: 94vw;
-}
-
-.activityInfo {
-  width: 10%;
-}
-
-.activityInfo :nth-child(3) {
-  width: 40%;
-}
-
-.classContainer {
-  height: 40vh;
-  background-color: #0f232e;
-  color: #fff;
+.btnGeneralEdit {
+  margin-right: 10px;
 }
