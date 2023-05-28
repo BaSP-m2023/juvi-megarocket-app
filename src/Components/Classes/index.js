@@ -22,7 +22,7 @@ function Projects() {
 
   const getData = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/class`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
       const jsonData = await response.json();
       const classData = jsonData.data;
       setClassesData(classData);
@@ -32,7 +32,7 @@ function Projects() {
   };
   const getTrainers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/trainer`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
       const jsonData = await response.json();
       const trainerData = jsonData.data;
       setTrainers(trainerData);
@@ -43,7 +43,7 @@ function Projects() {
 
   const addClass = (formData) => {
     console.log(formData);
-    fetch(`${process.env.REACT_APP_API_URL}api/class/`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/class/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ function Projects() {
 
   const getActivities = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/activity`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`);
       const jsonData = await response.json();
       const activityData = jsonData.data;
       setActivity(activityData);
@@ -94,7 +94,7 @@ function Projects() {
     }
   };
   const handleUpdate = (updatedClass, classId) => {
-    fetch(`${process.env.REACT_APP_API_URL}api/class/${classId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/class/${classId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ function Projects() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}api/class/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE'
       })
         .then((response) => response.json())
