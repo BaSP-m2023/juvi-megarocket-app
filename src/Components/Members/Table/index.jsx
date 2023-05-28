@@ -1,9 +1,9 @@
 import React from 'react';
-// import styles from './table.module.css';
+import styles from './table.module.css';
 
-const Table = ({ data }) => {
+const Table = ({ data, deleteMemb }) => {
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
         <tr>
           <th>Name</th>
@@ -16,6 +16,7 @@ const Table = ({ data }) => {
           <th>Zip</th>
           <th>Is active?</th>
           <th>Membership type</th>
+          <th>Tools</th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +33,12 @@ const Table = ({ data }) => {
               <td>{i.postalCode}</td>
               <td>{i.isActive}</td>
               <td>{i.memberships}</td>
+              <td>
+                <button>M</button>
+                <button className={styles.deleteButton} onClick={() => deleteMemb(i._id)}>
+                  X
+                </button>
+              </td>
             </tr>
           );
         })}

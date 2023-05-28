@@ -1,0 +1,37 @@
+.table th {
+  border: 1px solid #d0d0d0;
+  text-align: left;
+  background-color: #aaa;
+  color: #000;
+}
+
+.table td, .table th {
+  padding: 5px;
+}
+
+.table tr:nth-child(even) {
+  background-color: #37386730;
+}
+
+.table tr:hover {
+  background-color: #37386760;
+  transition: 0.4s;
+}
+
+.table {
+  border: 0.1px solid #aaa;
+}
+
+.deleteButton {
+  border: 0px;
+  background-color: #00000000;
+  color: #800b0b;
+}
+
+.deleteButton:hover {
+  font-size: 18px;
+  font-weight: 1200;
+  color: #f00;
+  transition: 0.3s;
+  cursor: pointer;
+}
