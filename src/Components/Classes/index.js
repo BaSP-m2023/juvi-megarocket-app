@@ -16,19 +16,26 @@ function Projects() {
   };
   useEffect(() => {
     getData();
+    getTrainers();
+    getActivities();
   }, []);
 
   const getData = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}api/class`);
-      const classData = await response.json();
-      const resTrainers = await fetch(`${process.env.REACT_APP_API_URL}api/trainer`);
-      const dataTrainers = await resTrainers.json();
-      const resActivity = await fetch(`${process.env.REACT_APP_API_URL}api/activity`);
-      const dataActivity = await resActivity.json();
-      setTrainers(dataTrainers.data);
-      setActivity(dataActivity.data);
-      setClassesData(classData.data);
+      const jsonData = await response.json();
+      const classData = jsonData.data;
+      setClassesData(classData);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const getTrainers = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/trainer`);
+      const jsonData = await response.json();
+      const trainerData = jsonData.data;
+      setTrainers(trainerData);
     } catch (error) {
       alert(error);
     }
@@ -69,12 +76,23 @@ function Projects() {
           ]);
         }
         alert(data.message);
+        changeState();
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
+  const getActivities = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/activity`);
+      const jsonData = await response.json();
+      const activityData = jsonData.data;
+      setActivity(activityData);
+    } catch (error) {
+      alert(error);
+    }
+  };
   const handleUpdate = (updatedClass, classId) => {
     fetch(`${process.env.REACT_APP_API_URL}api/class/${classId}`, {
       method: 'PUT',
@@ -112,6 +130,7 @@ function Projects() {
       alert(error);
     }
   };
+
   const handleEdit = (clase) => {
     setIsEditing(true);
     setEditedClass(clase);
@@ -134,6 +153,8 @@ function Projects() {
             classData={editedClass}
             handleUpdate={handleUpdate}
             handleCancel={() => setEditedClass(null)}
+            trainersData={dataTrainers}
+            activitiesData={dataActivity}
           />
         ) : (
           <Table classesData={classesData} handleDelete={handleDelete} handleEdit={handleEdit} />
