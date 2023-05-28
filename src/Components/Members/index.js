@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
+//components imports
+import Table from './Table/index';
 
 function Members() {
   const [members, setMembers] = useState([]);
 
+  const getMembs = async () => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
+    const data = await response.json();
+    setMembers(data.data);
+  };
+
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users`)
-      .then((response) => response.json())
-      .then((response) => {
-        setMembers(response);
-      });
-  }, []);
+    getMembs();
+  });
 
   return (
     <section className={styles.container}>
       <h2>Members</h2>
-      <div>
-        {members.map((employee) => {
-          return <div key={employee.id}>{employee.name}</div>;
-        })}
-      </div>
+      <Table data={members} />
     </section>
   );
 }
