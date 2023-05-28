@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 const ClassForm = (props) => {
   const [formData, setFormData] = useState({
+    trainer: props.classData.trainer._id,
+    activity: props.classData.activity._id,
     day: props.classData.day,
     hour: props.classData.hour,
     slots: props.classData.slots
@@ -23,8 +25,38 @@ const ClassForm = (props) => {
     props.handleCancel();
   };
 
+  const filteredTrainers = props.trainersData.filter(
+    (trainer) => trainer._id !== props.classData.trainer._id
+  );
+  const filteredActivities = props.activitiesData.filter(
+    (activity) => activity._id !== props.classData.activity._id
+  );
   return (
     <form onSubmit={handleSubmit}>
+      <label>
+        Trainer:
+        <select name="trainer" onChange={handleChange}>
+          <option value={props.classData.trainer._id}>
+            {props.classData.trainer.firstName + ' ' + props.classData.trainer.lastName}
+          </option>
+          {filteredTrainers.map((trainer) => (
+            <option key={trainer._id} value={trainer._id}>
+              {trainer.firstName + ' ' + trainer.lastName}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Activity:
+        <select name="activity" onChange={handleChange}>
+          <option value={props.classData.activity._id}>{props.classData.activity.name}</option>
+          {filteredActivities.map((activity) => (
+            <option key={activity._id} value={activity._id}>
+              {activity.name}
+            </option>
+          ))}
+        </select>
+      </label>
       <label>
         Day:
         <input type="text" name="day" value={formData.day} onChange={handleChange} />

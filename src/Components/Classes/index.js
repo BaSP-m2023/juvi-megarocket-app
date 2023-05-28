@@ -5,16 +5,20 @@ import { useEffect, useState } from 'react';
 
 function Projects() {
   const [classesData, setClassesData] = useState([]);
+  const [trainersData, setTrainersData] = useState([]);
+  const [activitiesData, setActivitiesData] = useState([]);
   const [editedClass, setEditedClass] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     getData();
+    getTrainers();
+    getActivities();
   }, []);
 
   const getData = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/class`);
       const jsonData = await response.json();
       const classData = jsonData.data;
       setClassesData(classData);
@@ -22,9 +26,29 @@ function Projects() {
       alert(error);
     }
   };
+  const getTrainers = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/trainer`);
+      const jsonData = await response.json();
+      const trainerData = jsonData.data;
+      setTrainersData(trainerData);
+    } catch (error) {
+      alert(error);
+    }
+  };
 
+  const getActivities = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/activity`);
+      const jsonData = await response.json();
+      const activityData = jsonData.data;
+      setActivitiesData(activityData);
+    } catch (error) {
+      alert(error);
+    }
+  };
   const handleUpdate = (updatedClass, classId) => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/class/${classId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}api/class/${classId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -46,7 +70,7 @@ function Projects() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}api/class/${id}`, {
         method: 'DELETE'
       })
         .then((response) => response.json())
@@ -60,6 +84,7 @@ function Projects() {
       alert(error);
     }
   };
+
   const handleEdit = (clase) => {
     setIsEditing(true);
     setEditedClass(clase);
@@ -79,6 +104,8 @@ function Projects() {
             classData={editedClass}
             handleUpdate={handleUpdate}
             handleCancel={() => setEditedClass(null)}
+            trainersData={trainersData}
+            activitiesData={activitiesData}
           />
         ) : (
           <Table classesData={classesData} handleDelete={handleDelete} handleEdit={handleEdit} />
