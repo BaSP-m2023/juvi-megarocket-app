@@ -1,6 +1,6 @@
 import styles from './classes.module.css';
-import Table from './Table';
-import ClassForm from './ClassForm';
+import Table from './Table/Table';
+import ClassForm from './form/ClassForm';
 import { useEffect, useState } from 'react';
 import ClassFormCreate from './form/ClassFormCreate';
 
