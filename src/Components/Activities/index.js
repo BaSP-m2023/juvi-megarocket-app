@@ -41,9 +41,11 @@ const Activities = () => {
         setSelectedActivity(null);
         alert('Activity added successfully!');
       } else {
-        throw new Error('Error creating activity');
+        const responseData = await response.json();
+        throw new Error(responseData.message);
       }
     } catch (error) {
+      setShowForm(true);
       alert('Error creating activity: ' + error);
     }
   };
@@ -68,9 +70,11 @@ const Activities = () => {
         setSelectedActivity(null);
         alert('Activity updated successfully!');
       } else {
-        throw new Error('Error updating activity');
+        const responseData = await response.json();
+        throw new Error(responseData.message);
       }
     } catch (error) {
+      setShowForm(true);
       alert('Error updating activity: ' + error);
     }
   };
