@@ -1,6 +1,31 @@
 .container {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.mainClass {
+  display: flex;
+  width: 70vw;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mainClass h2 {
+  color: black;
+}
+
+.btnClass {
+  width: 6vw;
+  height: 4vh;
+  align-self: center;
+  color: #fff;
+  background-color: #7ad983;
+  border-radius: 10%;
+  border-style: none;
+}
+.btnClass:hover {
+  background-color: #18591e;
 }
