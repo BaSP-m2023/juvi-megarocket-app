@@ -6,7 +6,7 @@ function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/subscriptions/`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`)
       .then((response) => response.json())
       .then((data) => {
         setSubscriptions(data);
