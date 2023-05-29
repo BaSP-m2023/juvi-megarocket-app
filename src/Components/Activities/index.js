@@ -23,31 +23,71 @@ const Activities = () => {
     getActivities();
   }, []);
 
-  const addActivity = ({ name, description }) => {
-    const newActivity = {
-      _id: Math.floor(Math.random() * 100),
-      name,
-      description
-    };
-    setActivities([...activities, newActivity]);
-    setShowForm(false);
-  };
+  const addActivity = async ({ name, description }) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, description })
+      });
 
-  const editActivity = (updatedActivity) => {
-    const updatedActivities = activities.map((activity) => {
-      if (activity._id === updatedActivity._id) {
-        return updatedActivity;
+      if (response.ok) {
+        const responseData = await response.json();
+        const newActivity = responseData.data;
+        setActivities([...activities, newActivity]);
+        setShowForm(false);
+      } else {
+        throw new Error('Error creating activity');
       }
-      return activity;
-    });
-    setActivities(updatedActivities);
-    setShowForm(false);
-    setSelectedActivity(null);
+    } catch (error) {
+      alert('Error creating activity: ' + error);
+    }
   };
 
-  const deleteItem = (_id) => {
-    setActivities([...activities.filter((activity) => activity._id !== _id)]);
-    alert('Activity deleted successfully!');
+  const editActivity = async (updatedActivity, _id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedActivity)
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const updatedData = responseData.data;
+        setActivities(
+          activities.map((activity) => (activity._id === updatedData._id ? updatedData : activity))
+        );
+        setShowForm(false);
+        setSelectedActivity(null);
+        alert('Activity updated successfully!');
+      } else {
+        throw new Error('Error updating activity');
+      }
+    } catch (error) {
+      alert('Error updating activity: ' + error);
+    }
+  };
+
+  const deleteItem = async (_id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${_id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        setActivities(activities.filter((activity) => activity._id !== _id));
+        alert('Activity deleted successfully!');
+      } else {
+        throw new Error('Error deleting activity');
+      }
+    } catch (error) {
+      alert('Error deleting activity: ' + error);
+    }
   };
 
   const handleEdit = (activity) => {

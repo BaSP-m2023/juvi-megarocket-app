@@ -7,10 +7,12 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
     description: ''
   });
   const [editMode, setEditMode] = useState(false);
-
+  const [newSelectedActivity, setnewSelectedActivity] = useState({
+    name: selectedActivity.name,
+    description: selectedActivity.description
+  });
   useEffect(() => {
     if (selectedActivity) {
-      setActivity(selectedActivity);
       setEditMode(true);
     } else {
       setActivity({
@@ -22,16 +24,23 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
   }, [selectedActivity]);
 
   const onChange = (e) => {
-    setActivity({
-      ...activity,
-      [e.target.name]: e.target.value
-    });
+    if (editMode) {
+      setnewSelectedActivity({
+        ...newSelectedActivity,
+        [e.target.name]: e.target.value
+      });
+    } else {
+      setActivity({
+        ...activity,
+        [e.target.name]: e.target.value
+      });
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (editMode) {
-      editActivity(activity);
+      editActivity(newSelectedActivity, selectedActivity._id);
       alert('Activity updated successfully!');
     } else {
       addActivity(activity);
@@ -55,7 +64,7 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
             className={styles.input}
             name="name"
             type="text"
-            value={activity.name}
+            value={newSelectedActivity.name}
             onChange={onChange}
           />
         </div>
@@ -65,7 +74,7 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
             className={styles.input}
             name="description"
             type="text"
-            value={activity.description}
+            value={newSelectedActivity.description}
             onChange={onChange}
           />
         </div>
