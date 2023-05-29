@@ -1,8 +1,8 @@
 import styles from './classes.module.css';
-import Table from './Table/Table';
-import ClassForm from './form/ClassForm';
+import Table from './Table/table.jsx';
+import ClassForm from './Fprm/classFormEdit';
 import { useEffect, useState } from 'react';
-import ClassFormCreate from './form/ClassFormCreate';
+import ClassFormCreate from './Fprm/classFormCreate';
 
 function Projects() {
   const [dataClasses, setDataClasses] = useState([]);
