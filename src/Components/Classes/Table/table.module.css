@@ -22,3 +22,11 @@ button {
 .btnGeneralEdit {
   margin-right: 10px;
 }
+
+.btnGeneralEdit:hover {
+  background-color: #f9a414;
+}
+.btnGeneralDelete:hover {
+  color: #fff;
+  background-color: red;
+}

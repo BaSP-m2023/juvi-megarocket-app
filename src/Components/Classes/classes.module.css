@@ -26,3 +26,6 @@
   border-radius: 10%;
   border-style: none;
 }
+.btnClass:hover {
+  background-color: #18591e;
+}
