@@ -2,51 +2,43 @@ import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 
 const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
-  const [activity, setActivity] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     description: ''
   });
   const [editMode, setEditMode] = useState(false);
-  const [newSelectedActivity, setnewSelectedActivity] = useState({
-    name: selectedActivity.name,
-    description: selectedActivity.description
-  });
+
   useEffect(() => {
     if (selectedActivity) {
       setEditMode(true);
+      setFormData({
+        name: selectedActivity.name,
+        description: selectedActivity.description
+      });
     } else {
-      setActivity({
+      setEditMode(false);
+      setFormData({
         name: '',
         description: ''
       });
-      setEditMode(false);
     }
   }, [selectedActivity]);
 
   const onChange = (e) => {
-    if (editMode) {
-      setnewSelectedActivity({
-        ...newSelectedActivity,
-        [e.target.name]: e.target.value
-      });
-    } else {
-      setActivity({
-        ...activity,
-        [e.target.name]: e.target.value
-      });
-    }
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (editMode) {
-      editActivity(newSelectedActivity, selectedActivity._id);
-      alert('Activity updated successfully!');
+      editActivity(formData, selectedActivity._id);
     } else {
-      addActivity(activity);
-      alert('Activity added successfully!');
+      addActivity(formData);
     }
-    setActivity({
+    setFormData({
       name: '',
       description: ''
     });
@@ -64,7 +56,7 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
             className={styles.input}
             name="name"
             type="text"
-            value={newSelectedActivity.name}
+            value={formData.name}
             onChange={onChange}
           />
         </div>
@@ -74,7 +66,7 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
             className={styles.input}
             name="description"
             type="text"
-            value={newSelectedActivity.description}
+            value={formData.description}
             onChange={onChange}
           />
         </div>

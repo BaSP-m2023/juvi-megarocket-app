@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './activities.module.css';
 import Table from './Table';
 import Form from './Form';
@@ -38,6 +38,8 @@ const Activities = () => {
         const newActivity = responseData.data;
         setActivities([...activities, newActivity]);
         setShowForm(false);
+        setSelectedActivity(null);
+        alert('Activity added successfully!');
       } else {
         throw new Error('Error creating activity');
       }
