@@ -1,0 +1,66 @@
+.addClass {
+  width: 70vh;
+  height: 10vh;
+  padding-top: 30px;
+}
+.formControl {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+label {
+  width: 6vw;
+  padding: 0px 10px;
+  color: #0f2531;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.addClass select {
+  width: 14vh;
+}
+.firstLine,
+.secondLine,
+.btnCreateForm {
+  padding-top: 17px;
+  align-self: center;
+}
+.firstLine,
+.secondLine {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60vh;
+}
+
+.secondLine input {
+  height: 2vh;
+}
+.btnCreateForm {
+  display: flex;
+  justify-content: space-evenly;
+  width: 30vw;
+  height: 3vh;
+}
+.btnSubmit {
+  height: 2vh;
+  width: 10vw;
+  color: #fff;
+  background-color: #0f232e;
+  border-radius: 10%;
+}
+.btnSubmit:hover {
+  background-color: #7ad983;
+  color: #fff;
+}
+.btnCancel:hover {
+  background-color: red;
+  color: #fff;
+}
+
+.btnCancel {
+  height: 2vh;
+  width: 10vw;
+  color: #0f232e;
+  border-radius: 10%;
+  border: 1px solid #0f232e;
+}
