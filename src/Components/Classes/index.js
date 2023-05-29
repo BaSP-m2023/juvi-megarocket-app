@@ -5,15 +5,18 @@ import { useEffect, useState } from 'react';
 import ClassFormCreate from './form/ClassFormCreate';
 
 function Projects() {
-  const [classesData, setClassesData] = useState([]);
+  const [dataClasses, setDataClasses] = useState([]);
   const [dataTrainers, setTrainers] = useState([]);
   const [dataActivity, setActivity] = useState([]);
+
   const [editedClass, setEditedClass] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showForm, setShowForm] = useState(false);
+
   const changeState = () => {
     setShowForm(!showForm);
   };
+
   useEffect(() => {
     getData();
     getTrainers();
@@ -25,11 +28,12 @@ function Projects() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
       const jsonData = await response.json();
       const classData = jsonData.data;
-      setClassesData(classData);
+      setDataClasses(classData);
     } catch (error) {
       alert(error);
     }
   };
+
   const getTrainers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
@@ -39,48 +43,6 @@ function Projects() {
     } catch (error) {
       alert(error);
     }
-  };
-
-  const addClass = (formData) => {
-    console.log(formData);
-    fetch(`${process.env.REACT_APP_API_URL}/api/class/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.error) {
-          const trainer = dataTrainers.find((trainer) => {
-            if (trainer._id === data.data.trainer) {
-              return trainer.firstName;
-            }
-          });
-          const activity = dataActivity.find((activity) => {
-            if (activity._id === data.data.activity) {
-              return activity.name;
-            }
-          });
-          setClassesData([
-            ...classesData,
-            {
-              _id: data.data._id,
-              activity: activity,
-              trainer: trainer,
-              day: data.data.day,
-              hour: data.data.hour,
-              slots: data.data.slots
-            }
-          ]);
-        }
-        alert(data.message);
-        changeState();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
 
   const getActivities = async () => {
@@ -93,6 +55,40 @@ function Projects() {
       alert(error);
     }
   };
+
+  const addClass = (formData) => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/class/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.error) {
+          setDataClasses([
+            ...dataClasses,
+            {
+              _id: data.data._id,
+              activity: data.activity.name,
+              trainer: data.trainer.firstNAme,
+              day: data.data.day,
+              hour: data.data.hour,
+              slots: data.data.slots
+            }
+          ]);
+          alert(data.message);
+          changeState();
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const handleUpdate = (updatedClass, classId) => {
     fetch(`${process.env.REACT_APP_API_URL}/api/class/${classId}`, {
       method: 'PUT',
@@ -131,9 +127,9 @@ function Projects() {
     }
   };
 
-  const handleEdit = (clase) => {
+  const handleEdit = (classEditing) => {
     setIsEditing(true);
-    setEditedClass(clase);
+    setEditedClass(classEditing);
   };
   const handleCancel = () => {
     setEditedClass(null);
@@ -147,7 +143,7 @@ function Projects() {
           Add Class
         </button>
       </div>
-      {classesData ? (
+      {dataClasses ? (
         isEditing && editedClass ? (
           <ClassForm
             classData={editedClass}
@@ -157,7 +153,7 @@ function Projects() {
             activitiesData={dataActivity}
           />
         ) : (
-          <Table classesData={classesData} handleDelete={handleDelete} handleEdit={handleEdit} />
+          <Table dataClasses={dataClasses} handleDelete={handleDelete} handleEdit={handleEdit} />
         )
       ) : (
         <h3>There are no classes to show</h3>

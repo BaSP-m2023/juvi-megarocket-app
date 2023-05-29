@@ -3,8 +3,8 @@ import styles from './table.module.css';
 
 const Table = (props) => {
   const [selectedClass, setSelectedClass] = useState(null);
-  const handleEdit = (clase) => {
-    props.handleEdit(clase);
+  const handleEdit = (classEditing) => {
+    props.handleEdit(classEditing);
   };
 
   const handleCancel = () => {
@@ -31,27 +31,27 @@ const Table = (props) => {
         </tr>
       </thead>
       <tbody className={styles.tableInfo}>
-        {props.classesData.map((clase) => (
-          <tr className={styles.classes} key={clase._id}>
-            <td>{clase.activity.name}</td>
-            <td>{clase.trainer.firstName}</td>
-            <td>{clase.day}</td>
-            <td>{clase.hour}</td>
-            <td>{clase.slots}</td>
+        {props.dataClasses.map((classMap) => (
+          <tr className={styles.classes} key={classMap._id}>
+            <td>{classMap.activity.name}</td>
+            <td>{classMap.trainer.firstName}</td>
+            <td>{classMap.day}</td>
+            <td>{classMap.hour}</td>
+            <td>{classMap.slots}</td>
             <td>
-              {selectedClass && selectedClass._id === clase._id ? (
+              {selectedClass && selectedClass._id === classMap._id ? (
                 <>
                   <button onClick={() => props.handleUpdate(selectedClass)}>Update</button>
                   <button onClick={handleCancel}>Cancel</button>
                 </>
               ) : (
                 <>
-                  <button className={styles.btnGeneralEdit} onClick={() => handleEdit(clase)}>
+                  <button className={styles.btnGeneralEdit} onClick={() => handleEdit(classMap)}>
                     Edit
                   </button>
                   <button
                     className={styles.btnGeneralDelete}
-                    onClick={() => handleDelete(clase._id)}
+                    onClick={() => handleDelete(classMap._id)}
                   >
                     Delete
                   </button>
