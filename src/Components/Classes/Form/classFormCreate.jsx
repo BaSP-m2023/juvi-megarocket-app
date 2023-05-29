@@ -10,6 +10,13 @@ const createFrom = ({ dataActivity, dataTrainers, showForm, addClass, changeStat
     hour: '',
     slots: ''
   });
+  const defaultFormData = {
+    activity: '',
+    trainer: '',
+    day: '',
+    hour: '',
+    slots: ''
+  };
   const onChangeInput = async (e) => {
     await setFormData({
       ...formData,
@@ -22,6 +29,7 @@ const createFrom = ({ dataActivity, dataTrainers, showForm, addClass, changeStat
       alert('Please fill out the form');
     } else {
       addClass(formData);
+      setFormData(defaultFormData);
     }
   };
   const onCancelButton = () => {

@@ -1,10 +1,10 @@
 import styles from './classes.module.css';
 import Table from './Table/table.jsx';
-import ClassForm from './Fprm/classFormEdit';
+import ClassForm from './Form/classFormEdit';
 import { useEffect, useState } from 'react';
-import ClassFormCreate from './Fprm/classFormCreate';
+import ClassFormCreate from './Form/classFormCreate';
 
-function Projects() {
+function Classes() {
   const [dataClasses, setDataClasses] = useState([]);
   const [dataTrainers, setTrainers] = useState([]);
   const [dataActivity, setActivity] = useState([]);
@@ -67,12 +67,13 @@ function Projects() {
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
+          console.log(data);
           setDataClasses([
             ...dataClasses,
             {
               _id: data.data._id,
-              activity: data.activity.name,
-              trainer: data.trainer.firstNAme,
+              activity: data.data.activity,
+              trainer: data.data.trainer,
               day: data.data.day,
               hour: data.data.hour,
               slots: data.data.slots
@@ -80,6 +81,7 @@ function Projects() {
           ]);
           alert(data.message);
           changeState();
+          getData();
         } else {
           alert(data.message);
         }
@@ -143,6 +145,15 @@ function Projects() {
           Add Class
         </button>
       </div>
+      {
+        <ClassFormCreate
+          dataActivity={dataActivity}
+          dataTrainers={dataTrainers}
+          showForm={showForm}
+          addClass={addClass}
+          changeState={changeState}
+        />
+      }
       {dataClasses ? (
         isEditing && editedClass ? (
           <ClassForm
@@ -158,17 +169,8 @@ function Projects() {
       ) : (
         <h3>There are no classes to show</h3>
       )}
-      {
-        <ClassFormCreate
-          dataActivity={dataActivity}
-          dataTrainers={dataTrainers}
-          showForm={showForm}
-          addClass={addClass}
-          changeState={changeState}
-        />
-      }
     </section>
   );
 }
 
-export default Projects;
+export default Classes;

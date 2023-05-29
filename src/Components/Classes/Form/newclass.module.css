@@ -1,11 +1,10 @@
 .addClass {
-  width: 70vh;
-  height: 10vh;
-  padding-top: 30px;
+  width: 70vw;
+  margin: 25px;
 }
 .updateClass {
   width: 70vw;
-  height: 46vh;
+  margin: 25px;
 }
 .formControl,
 .formControlUpdate {
@@ -22,6 +21,7 @@
   width: 6vw;
   padding: 15px 10px;
   font-size: 1.3rem;
+  color: #f9a414;
   text-align: inherit;
 }
 .formControlUpdate select {
@@ -32,16 +32,15 @@
 .formControlUpdate input {
   margin-left: 20px;
 }
-label {
+.formControl label {
   width: 6vw;
   padding: 0px 10px;
   color: #f9a414;
   font-size: 1.3rem;
   text-align: center;
 }
-
 .addClass select {
-  width: 14vh;
+  width: 14vw;
 }
 .firstLine,
 .secondLine,
@@ -53,11 +52,10 @@ label {
 .secondLine {
   display: flex;
   justify-content: space-evenly;
-  width: 60vh;
+  width: 60vw;
 }
-
 .secondLine input {
-  height: 2vh;
+  height: 3vh;
 }
 .btnCreateForm {
   display: flex;
@@ -65,7 +63,6 @@ label {
   width: 30vw;
   height: 3vh;
 }
-
 .btnSubmit:hover {
   background-color: #7ad983;
   color: #fff;
@@ -74,12 +71,11 @@ label {
   background-color: red;
   color: #fff;
 }
-
 .btnCancel {
   height: 2vh;
   width: 10vw;
   color: #0f232e;
-  border-radius: 10%;
+  border-radius: 10px;
   border: 1px solid #0f232e;
 }
 .btnSubmit {
@@ -87,7 +83,7 @@ label {
   width: 10vw;
   color: #fff;
   background-color: #7ad983;
-  border-radius: 10%;
+  border-radius: 10px;
 }
 .btnEdit {
   display: flex;
