@@ -1,0 +1,26 @@
+.tableContainer {
+  width: 70vh;
+  background-color: #EA3354;
+}
+button {
+  margin: .3rem;
+  width: 5rem;
+  padding: 1rem;
+  border-radius: 0rem;
+  border-style: none;
+}
+button:hover{
+  background-color: #d8d8d8;
+  cursor: pointer;
+}
+.tableBody{
+  text-align: start;
+}
+.tableBody td {
+  color: #fff;
+  text-align: center;
+  border: 1px solid #fff;
+}
+.sAdmins {
+  color: #1d1c1c;
+}
