@@ -14,15 +14,15 @@ const handleDelete = async (id, firstName, lastName) => {
     alert(`ERROR`);
   }
 };
-const form = (id) => {
-  alert(`CUIDADO ${id}`);
-};
 
-const Table = ({ data }) => {
-  if (!data || data.length === 0) {
+const Table = (props) => {
+  if (!props.data || props.data.length === 0) {
     return <p>There are no elements to show.</p>;
   }
-  console.log(data);
+
+  const editButton = (id) => {
+    props.edit(id);
+  };
 
   return (
     <section className={styles.classContainer}>
@@ -41,7 +41,7 @@ const Table = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {props.data.map((item) => (
             <tr key={item._id}>
               <td>{item.lastName + ' ' + item.firstName}</td>
               <td>{item.city}</td>
@@ -52,17 +52,17 @@ const Table = ({ data }) => {
               <td>{item.salary}</td>
               <td>
                 <button
+                  style={{ backgroundColor: 'black' }}
+                  onClick={() => editButton(item._id)}
+                  className={styles.Button}
+                >
+                  Edit
+                </button>
+                <button
                   onClick={() => handleDelete(item._id, item.firstName, item.lastName)}
                   className={styles.Button}
                 >
                   Delete
-                </button>
-                <button
-                  style={{ backgroundColor: 'black' }}
-                  onClick={() => form(item._id)}
-                  className={styles.Button}
-                >
-                  Edit
                 </button>
               </td>
             </tr>

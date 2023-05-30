@@ -23,7 +23,8 @@ const addTrainer = async (firstName, lastName, city, dni, email, phone, salary, 
   if (response.status === 201) {
     alert(`The trainer named:${lastName} ${firstName} was created successfully`);
   } else {
-    alert(`ERROR`);
+    const error = await response.json();
+    alert(error.message);
   }
 };
 
