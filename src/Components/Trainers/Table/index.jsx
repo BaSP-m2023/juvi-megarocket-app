@@ -1,14 +1,28 @@
 import styles from './table.module.css';
 
+const handleDelete = async (id, firstName, lastName) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  });
+  if (response.status === 200) {
+    alert(`The trainer named:${lastName} ${firstName} was eliminated successfully`);
+  } else {
+    alert(`ERROR`);
+  }
+};
+const form = (id) => {
+  alert(`CUIDADO ${id}`);
+};
+
 const Table = ({ data }) => {
   if (!data || data.length === 0) {
     return <p>There are no elements to show.</p>;
   }
   console.log(data);
-
-  const handleDelete = (id) => {
-    console.log(`Deleting item with ID: ${id}`);
-  };
 
   return (
     <section className={styles.classContainer}>
@@ -16,7 +30,6 @@ const Table = ({ data }) => {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>City</th>
             <th>Dni</th>
@@ -30,7 +43,6 @@ const Table = ({ data }) => {
         <tbody>
           {data.map((item) => (
             <tr key={item._id}>
-              <td>{item._id}</td>
               <td>{item.lastName + ' ' + item.firstName}</td>
               <td>{item.city}</td>
               <td>{item.dni}</td>
@@ -39,8 +51,18 @@ const Table = ({ data }) => {
               <td>{item.phone}</td>
               <td>{item.salary}</td>
               <td>
-                <button onClick={() => handleDelete(item._id)} className={styles.deleteButton}>
+                <button
+                  onClick={() => handleDelete(item._id, item.firstName, item.lastName)}
+                  className={styles.Button}
+                >
                   Delete
+                </button>
+                <button
+                  style={{ backgroundColor: 'black' }}
+                  onClick={() => form(item._id)}
+                  className={styles.Button}
+                >
+                  Edit
                 </button>
               </td>
             </tr>
