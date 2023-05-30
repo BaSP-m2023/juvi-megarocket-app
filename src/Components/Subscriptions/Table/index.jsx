@@ -1,12 +1,38 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './table.module.css';
 
-const Table = ({ data }) => {
+const Table = ({ data, onButtonClick }) => {
   if (!data || data.length === 0) {
     return <p>LOADING...There are no elements to show.</p>;
   }
 
-  const [editingItemId, setEditingItemId] = useState(null);
+  const [user, setUser] = useState({
+    idMember: '646015ffa877f6e5fb0e5de2',
+    date: new Date().toISOString(),
+    idClass: '64750dd551aa0de8c834eb3f'
+  });
+  const [expandedRows, setExpandedRows] = useState([]);
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'editMember') {
+      setUser({
+        ...user,
+        idMember: value
+      });
+    } else if (name === 'date') {
+      const dateValue = new Date(value).toISOString();
+      setUser({
+        ...user,
+        date: dateValue
+      });
+    }
+  };
+
+  const handleClick = () => {
+    onButtonClick();
+  };
 
   const handleAdd = () => {
     alert('New subscription successfully added.');
@@ -32,28 +58,8 @@ const Table = ({ data }) => {
       });
   };
 
-  const handleEdit = (id) => {
-    console.log('Edit', id);
-    setEditingItemId(id);
-  };
-
-  const handleSave = (id) => {
-    console.log('Save', id);
-    setEditingItemId(null);
-    fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-      method: 'PUT'
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
   const handleDelete = (id) => {
-    alert('subscription ' + id + ' removed successfully');
+    alert('Subscription ' + id + ' removed successfully');
     fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
       method: 'DELETE'
     })
@@ -67,11 +73,56 @@ const Table = ({ data }) => {
       });
   };
 
+  const handlePut = (id) => {
+    const requestData = {
+      members: [user.idMember],
+      date: user.date
+    };
+
+    setUser({
+      ...user,
+      idMember: requestData.members[0],
+      date: requestData.date
+    });
+
+    fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        window.location.reload();
+        alert('Info successfully sent.');
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  const handleEdit = (id) => {
+    const expandedRowsCopy = [...expandedRows];
+    if (expandedRowsCopy.includes(id)) {
+      expandedRowsCopy.splice(expandedRowsCopy.indexOf(id), 1);
+    } else {
+      expandedRowsCopy.push(id);
+    }
+    setExpandedRows(expandedRowsCopy);
+  };
+
   return (
     <section className={styles.classContainer}>
       <h1>Subscriptions</h1>
+      <div>
+        <button className={styles.button} onClick={handleClick}>
+          New manual subscription
+        </button>
+      </div>
       <button className={styles.button} onClick={handleAdd}>
-        Add New Subscription
+        New automatic subscription (for testing)
       </button>
       <table>
         <thead>
@@ -83,45 +134,59 @@ const Table = ({ data }) => {
             <th>ACTIVITY</th>
             <th>DATE</th>
             <th>MEMBERS</th>
-            <th>ACTIONS</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr key={item._id}>
-              <td>{item._id}</td>
-              <td>{item.classes && item.classes.day}</td>
-              <td>{item.classes && item.classes.hour}</td>
-              <td>{item.classes && item.classes.trainer}</td>
-              <td>{item.classes && item.classes.activity}</td>
-              <td>{item.date && item.date.substring(0, 10)}</td>
-              <td>
-                {item.members &&
-                  item.members.map((member) => (
-                    <div key={member._id}>
-                      {member.firstName &&
-                        member.lastName &&
-                        member.firstName + ' ' + member.lastName}
-                    </div>
-                  ))}
-              </td>
-              <td>
-                {editingItemId === item._id ? (
-                  <button className={styles.button} onClick={() => handleSave(item._id)}>
-                    Save
+            <React.Fragment key={item._id}>
+              <tr>
+                <td>{item._id}</td>
+                <td>{item.classes && item.classes.day}</td>
+                <td>{item.classes && item.classes.hour}</td>
+                <td>{item.classes && item.classes.trainer}</td>
+                <td>{item.classes && item.classes.activity}</td>
+                <td>{item.date && item.date.substring(0, 10)}</td>
+                <td>
+                  {item.members &&
+                    item.members.map((member) => (
+                      <div key={member._id}>
+                        {member.firstName &&
+                          member.lastName &&
+                          member.firstName + ' ' + member.lastName}
+                      </div>
+                    ))}
+                </td>
+                <td>
+                  <button className={styles.button} onClick={() => handleEdit(item._id)}>
+                    Edit
                   </button>
-                ) : (
-                  <>
-                    <button className={styles.button} onClick={() => handleEdit(item._id)}>
-                      Edit
+                  <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              {expandedRows.includes(item._id) && (
+                <tr>
+                  <td colSpan="8">
+                    <select name="editMember" value={user.idMember} onChange={onChangeInput}>
+                      <option value="646014b31c70e12b863ad70a">Juan Manuel Lopez</option>
+                      <option value="646015ffa877f6e5fb0e5de2">Ariana Lopez</option>
+                      <option value="64601701a877f6e5fb0e5de5">Carla Lopez</option>
+                    </select>
+                    <input
+                      name="date"
+                      type="datetime-local"
+                      value={user.date.slice(0, -5)}
+                      onChange={onChangeInput}
+                    />
+                    <button className={styles.button} onClick={() => handlePut(item._id)}>
+                      Save
                     </button>
-                    <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
-                      Delete
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
           ))}
         </tbody>
       </table>
