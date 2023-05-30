@@ -169,18 +169,24 @@ const Table = ({ data, onButtonClick }) => {
               {expandedRows.includes(item._id) && (
                 <tr>
                   <td colSpan="8">
-                    <select name="editMember" value={user.idMember} onChange={onChangeInput}>
+                    <select
+                      className={styles.selectEdit}
+                      name="editMember"
+                      value={user.idMember}
+                      onChange={onChangeInput}
+                    >
                       <option value="646014b31c70e12b863ad70a">Juan Manuel Lopez</option>
                       <option value="646015ffa877f6e5fb0e5de2">Ariana Lopez</option>
                       <option value="64601701a877f6e5fb0e5de5">Carla Lopez</option>
                     </select>
                     <input
+                      className={styles.inputEdit}
                       name="date"
                       type="datetime-local"
                       value={user.date.slice(0, -5)}
                       onChange={onChangeInput}
                     />
-                    <button className={styles.button} onClick={() => handlePut(item._id)}>
+                    <button className={styles.buttonSave} onClick={() => handlePut(item._id)}>
                       Save
                     </button>
                   </td>

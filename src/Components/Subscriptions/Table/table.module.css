@@ -12,8 +12,17 @@ td {
 
 .button {
   background-color: #f9a414;
+  border-radius: 5px;
 }
 
 .buttonDelete {
   background-color: #e33613;
+}
+
+.selectEdit, .inputEdit {
+  background-color: #f9a414;
+}
+
+.buttonSave {
+  background-color: rgb(242, 243, 242);
 }
