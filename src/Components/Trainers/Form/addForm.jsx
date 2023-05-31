@@ -21,7 +21,7 @@ const addTrainer = async (firstName, lastName, city, dni, email, phone, salary, 
     })
   });
   if (response.status === 201) {
-    alert(`The trainer named:${lastName} ${firstName} was created successfully`);
+    alert(`The trainer named: ${lastName} ${firstName} was created successfully`);
   } else {
     const error = await response.json();
     alert(error.message);
@@ -41,7 +41,7 @@ const Form = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!firstName || !lastName || !city || !dni || !email || !phone || !salary) {
-      alert('Please add a Trainer');
+      alert('Pleas complete all fields');
     }
     await addTrainer(firstName, lastName, city, dni, email, phone, salary, password);
     setFirstName('');

@@ -1,31 +1,5 @@
 import styles from './form.module.css';
 
-const editTrainer = async (formData) => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${formData._id}`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      dni: formData.dni,
-      phone: formData.phone,
-      email: formData.email,
-      city: formData.city,
-      password: formData.password,
-      salary: formData.salary
-    })
-  });
-  if (response.status === 200) {
-    alert(`The trainer named:${formData.lastName} ${formData.firstName} was edited successfully`);
-  } else {
-    const error = await response.json();
-    alert(error.message);
-  }
-};
-
 const Form = (props) => {
   const handleChange = (e) => {
     props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
@@ -33,7 +7,32 @@ const Form = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     await editTrainer(props.formData);
-    props.close();
+  };
+  const editTrainer = async (formData) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${formData._id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        dni: formData.dni,
+        phone: formData.phone,
+        email: formData.email,
+        city: formData.city,
+        password: formData.password,
+        salary: formData.salary
+      })
+    });
+    if (response.status === 200) {
+      alert(`The trainer named:${formData.lastName} ${formData.firstName} was edited successfully`);
+      props.close();
+    } else {
+      const error = await response.json();
+      alert(error.message);
+    }
   };
   return (
     <form className={styles.addTrainer} onSubmit={onSubmit}>
