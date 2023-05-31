@@ -11,8 +11,7 @@ const Form = ({ addMember }) => {
     city: '',
     birthDate: '',
     postalCode: '',
-    isActive: true,
-    membership: ''
+    memberships: 'Only Classes'
   });
 
   const onChange = (e) => {
@@ -24,7 +23,14 @@ const Form = ({ addMember }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addMember(member);
+    console.log(member);
+    member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
+    console.log(member);
+    try {
+      addMember(member);
+    } catch (e) {
+      console.log(e);
+    }
     setMember({
       firstName: '',
       lastName: '',
@@ -34,8 +40,7 @@ const Form = ({ addMember }) => {
       city: '',
       birthDate: '',
       postalCode: '',
-      isActive: true,
-      membership: ''
+      memberships: 'Only Classes'
     });
   };
 
@@ -69,7 +74,7 @@ const Form = ({ addMember }) => {
           <input
             className={styles.input}
             name="dni"
-            type="text"
+            type="number"
             value={member.dni}
             onChange={onChange}
             placeholder="DNI"
@@ -80,7 +85,7 @@ const Form = ({ addMember }) => {
           <input
             className={styles.input}
             name="phone"
-            type="text"
+            type="number"
             value={member.phone}
             onChange={onChange}
             placeholder="Phone"
@@ -112,7 +117,7 @@ const Form = ({ addMember }) => {
           <label>Birth Day</label>
           <input
             className={styles.input}
-            name="birthDay"
+            name="birthDate"
             type="date"
             value={member.birthDate}
             onChange={onChange}
@@ -124,19 +129,15 @@ const Form = ({ addMember }) => {
           <input
             className={styles.input}
             name="postalCode"
-            type="text"
+            type="number"
             value={member.postalCode}
             onChange={onChange}
             placeholder="Zip"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>Active</label>
-          <input type="checkbox"></input>
-        </fieldset>
-        <fieldset className={styles.fieldset}>
           <label>Membership</label>
-          <select>
+          <select name="memberships" value={member.memberships} onChange={onChange}>
             <option value="Only Classes">Only Classes</option>
             <option value="Classic">Classic</option>
             <option value="Black">Black</option>

@@ -2,51 +2,90 @@ import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 //components imports
 import Table from './Table/index';
-import Form from './Form/index';
+import AddForm from './AddForm/index';
+import UpdateForm from './UpdateForm/index';
 
 function Members() {
   const [showAddMember, setShowAddMember] = useState(false);
+  const [showUpdMember, setShowUpdMember] = useState(false);
   const [members, setMembers] = useState([]);
+  const [selectId, setSelectId] = useState('');
 
   const getMembs = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
     const data = await response.json();
+    data.data.forEach((d) => {
+      d.birthDate = d.birthDate.substring(0, 10);
+    });
     setMembers(data.data);
   };
 
   useEffect(() => {
     getMembs();
-  });
+  }, []);
 
-  const addMember = ({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    city,
-    birthDate,
-    postalCode,
-    isActive,
-    membership
-  }) => {
-    const newMemb = {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      birthDate,
-      postalCode,
-      isActive,
-      membership
-    };
-    setMembers([...members, newMemb]);
+  const addMember = async (member) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(member)
+      });
+
+      const newMemb = await response.json();
+
+      setMembers([...members, newMemb]);
+
+      alert('Member Added!');
+    } catch (e) {
+      alert('Can not be created');
+      console.log(e);
+    }
   };
 
-  const deleteMemb = (id) => {
-    setMembers([...members.filter((member) => member._id !== id)]);
+  const deleteMemb = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, { method: 'DELETE' });
+      setMembers(members.filter((member) => member._id !== id));
+      alert('Member deleted!');
+    } catch (e) {
+      alert('Can not be deleted');
+      console.log(e);
+    }
+  };
+
+  const updateMemb = async (id, member) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(member)
+      }).then(async (response) => {
+        const data = await response.json();
+        setMembers(
+          members.map((d) =>
+            d._id === id
+              ? {
+                  ...d,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  dni: data.dni,
+                  phone: data.phone,
+                  email: data.email,
+                  city: data.city,
+                  birthDate: data.birthDate,
+                  postalCode: data.postalCode,
+                  memberships: data.memberships
+                }
+              : d
+          )
+        );
+        alert('Member updated!');
+      });
+    } catch (e) {
+      alert('Can not be updated');
+      console.log(e);
+    }
   };
 
   return (
@@ -54,8 +93,34 @@ function Members() {
       <a className={styles.a} onClick={() => setShowAddMember(!showAddMember)}>
         + Add Member
       </a>
-      {showAddMember && <Form addMember={addMember} data={members} showAdd={showAddMember} />}
-      <Table data={members} delete={deleteMemb} />
+      {showAddMember && (
+        <AddForm
+          addMember={addMember}
+          data={members}
+          showAdd={showAddMember}
+          setAdd={setShowAddMember}
+          showUpd={showUpdMember}
+          setUpd={setShowUpdMember}
+        />
+      )}
+      {showUpdMember && (
+        <UpdateForm
+          updMemb={updateMemb}
+          data={members}
+          showUpd={showUpdMember}
+          selectId={selectId}
+        />
+      )}
+      <Table
+        data={members}
+        deleteMemb={deleteMemb}
+        showAdd={showAddMember}
+        setAdd={setShowAddMember}
+        showUpd={showUpdMember}
+        setUpd={setShowUpdMember}
+        selectId={selectId}
+        setSelectId={setSelectId}
+      />
     </section>
   );
 }
