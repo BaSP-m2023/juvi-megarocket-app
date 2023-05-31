@@ -32,8 +32,7 @@ const Form = () => {
       body: JSON.stringify(requestData)
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         alert('New subscription successfully added.');
         window.location.reload();
       })

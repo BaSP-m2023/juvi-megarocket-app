@@ -49,8 +49,7 @@ const Table = ({ data, onButtonClick }) => {
       body: JSON.stringify(requestData)
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         window.location.reload();
       })
       .catch((error) => {
@@ -64,8 +63,7 @@ const Table = ({ data, onButtonClick }) => {
       method: 'DELETE'
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         window.location.reload();
       })
       .catch((error) => {
@@ -93,8 +91,7 @@ const Table = ({ data, onButtonClick }) => {
       body: JSON.stringify(requestData)
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         window.location.reload();
         alert('Info successfully sent.');
       })

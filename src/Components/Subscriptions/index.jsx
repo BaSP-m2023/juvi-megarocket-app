@@ -22,7 +22,6 @@ function Subscriptions() {
         setSubscriptions(data);
       })
       .catch((error) => {
-        console.error('Error:', error);
         alert('Error', error);
       });
   }, []);
