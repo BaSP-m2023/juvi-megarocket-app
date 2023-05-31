@@ -23,9 +23,7 @@ const Form = ({ addMember }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(member);
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
-    console.log(member);
     try {
       addMember(member);
     } catch (e) {

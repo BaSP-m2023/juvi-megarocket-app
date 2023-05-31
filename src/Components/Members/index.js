@@ -34,9 +34,12 @@ function Members() {
 
       const newMemb = await response.json();
 
-      setMembers([...members, newMemb]);
-
-      alert('Member Added!');
+      if (!newMemb.error) {
+        setMembers([...members, newMemb]);
+        alert('Member Added!');
+      } else {
+        alert('Can not be created');
+      }
     } catch (e) {
       alert('Can not be created');
       console.log(e);
@@ -62,25 +65,29 @@ function Members() {
         body: JSON.stringify(member)
       }).then(async (response) => {
         const data = await response.json();
-        setMembers(
-          members.map((d) =>
-            d._id === id
-              ? {
-                  ...d,
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  dni: data.dni,
-                  phone: data.phone,
-                  email: data.email,
-                  city: data.city,
-                  birthDate: data.birthDate,
-                  postalCode: data.postalCode,
-                  memberships: data.memberships
-                }
-              : d
-          )
-        );
-        alert('Member updated!');
+        if (!data.error) {
+          setMembers(
+            members.map((d) =>
+              d._id === id
+                ? {
+                    ...d,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    dni: data.dni,
+                    phone: data.phone,
+                    email: data.email,
+                    city: data.city,
+                    birthDate: data.birthDate,
+                    postalCode: data.postalCode,
+                    memberships: data.memberships
+                  }
+                : d
+            )
+          );
+          alert('Member Added!');
+        } else {
+          alert('Can not be created');
+        }
       });
     } catch (e) {
       alert('Can not be updated');
@@ -106,6 +113,7 @@ function Members() {
       {showUpdMember && (
         <UpdateForm
           updMemb={updateMemb}
+          setMembers={setMembers}
           data={members}
           showUpd={showUpdMember}
           selectId={selectId}
