@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './form.module.css';
 
 const Form = (props) => {
@@ -12,34 +12,6 @@ const Form = (props) => {
     password: ''
   });
 
-  const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    if (props.selectedAdmin) {
-      setIsEditing(true);
-      setFormData({
-        firstName: props.selectedAdmin.firstName,
-        lastName: props.selectedAdmin.lastName,
-        dni: props.selectedAdmin.dni,
-        phone: props.selectedAdmin.phone,
-        email: props.selectedAdmin.email,
-        city: props.selectedAdmin.city,
-        password: props.selectedAdmin.password
-      });
-    } else {
-      setIsEditing(false);
-      setFormData({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        password: ''
-      });
-    }
-  }, [props.selectedAdmin]);
-
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -48,23 +20,17 @@ const Form = (props) => {
   };
 
   const onSubmit = (e) => {
+    console.log(props.selectedAdmin._id);
     e.preventDefault();
-    if (isEditing) {
+    if (props.isEditing) {
       props.editAdmin(formData, props.selectedAdmin._id);
     } else {
       props.addAdmin(formData);
     }
-    setFormData({
-      firstName: '',
-      lastName: '',
-      dni: '',
-      phone: '',
-      email: '',
-      city: '',
-      password: ''
-    });
     props.setShowForm(false);
   };
+
+  const switchButtonText = props.isEditing ? 'Update' : 'Add';
 
   return (
     <form className={styles.myForm} onSubmit={onSubmit}>
@@ -141,7 +107,7 @@ const Form = (props) => {
         </div>
       </div>
       <button className={styles.addButton} type="submit">
-        Add
+        {switchButtonText}
       </button>
       <button className={styles.cancelButton} onClick={() => props.setShowForm(false)}>
         Cancel

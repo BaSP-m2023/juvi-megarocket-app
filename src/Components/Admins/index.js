@@ -7,6 +7,7 @@ function Admins() {
   const [adminsData, setAdminsData] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const getAdmins = async () => {
     try {
@@ -37,7 +38,6 @@ function Admins() {
         const newAdmin = responseData.data;
         setAdminsData([...adminsData, newAdmin]);
         setShowForm(false);
-        setSelectedAdmin(null);
         alert('Admin created correctly!');
       } else {
         throw new Error(responseData.message);
@@ -58,19 +58,13 @@ function Admins() {
         },
         body: JSON.stringify(updatedAdmin)
       });
-      const responseData = response.json();
-      if (!responseData) {
-        const adminData = await response.json();
-        const updatedAdminData = adminData.data;
+      const responseData = await response.json();
+      if (response.ok) {
+        const updatedAdminData = responseData.data;
         setAdminsData(
-          setAdminsData(
-            adminsData.map((admin) =>
-              admin._id === updatedAdminData._id ? updatedAdminData : admin
-            )
-          )
+          adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
         );
         setShowForm(false);
-        setSelectedAdmin(null);
         alert('Admin updated correctly!');
       } else {
         throw new Error(responseData.message);
@@ -89,12 +83,11 @@ function Admins() {
       if (response.ok) {
         setAdminsData(adminsData.filter((admin) => admin.id !== id));
         alert('Admin deleted correctly!');
-        showForm();
       } else {
         throw new Error('Error deleting Admin.');
       }
-    } catch {
-      alert(`Admin with ID: ${id} was deleted correctly`);
+    } catch (error) {
+      alert(`Error deleting Admin: ` + error);
     }
   };
 
@@ -110,11 +103,20 @@ function Admins() {
         <Form
           addAdmin={addAdmin}
           editAdmin={editAdmin}
-          selectedAdmin={selectedAdmin}
           setShowForm={setShowForm}
+          selectedAdmin={selectedAdmin}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
         />
       )}
-      <Table data={adminsData} deleteAdmin={deleteAdmin} editAdmin={editAdmin} />
+      <Table
+        data={adminsData}
+        deleteAdmin={deleteAdmin}
+        editAdmin={editAdmin}
+        setShowForm={setShowForm}
+        setSelectedAdmin={setSelectedAdmin}
+        setIsEditing={setIsEditing}
+      />
     </section>
   );
 }

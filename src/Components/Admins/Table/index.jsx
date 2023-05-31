@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './table.module.css';
 
-const Table = ({ data, deleteAdmin, editAdmin }) => {
+const Table = (props) => {
   const handleDelete = (id) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
-      deleteAdmin(id);
+      props.deleteAdmin(id);
     }
   };
 
@@ -22,7 +22,7 @@ const Table = ({ data, deleteAdmin, editAdmin }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((admin) => (
+        {props.data.map((admin) => (
           <tr key={admin._id}>
             <td>{admin.firstName + ' ' + admin.lastName}</td>
             <td>{admin.email}</td>
@@ -33,7 +33,14 @@ const Table = ({ data, deleteAdmin, editAdmin }) => {
               <button className={styles.deleteButton} onClick={() => handleDelete(admin._id)}>
                 Delete
               </button>
-              <button className={styles.editButton} onClick={() => editAdmin(admin)}>
+              <button
+                className={styles.editButton}
+                onClick={() => {
+                  props.setShowForm(true);
+                  props.setSelectedAdmin(admin);
+                  props.setIsEditing(true);
+                }}
+              >
                 Edit
               </button>
             </td>
