@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import style from './form.module.css';
 
-const Form = () => {
+const Form = ({ members, classes }) => {
+  console.log(members);
+  console.log(classes);
   const [user, setUser] = useState({
-    idMember: '646014b31c70e12b863ad70a',
+    idMember: '',
     date: new Date().toISOString(),
-    idClass: '64750dd551aa0de8c834eb3f'
+    idClass: ''
   });
 
   const onChangeInput = (e) => {
@@ -31,13 +33,16 @@ const Form = () => {
       },
       body: JSON.stringify(requestData)
     })
-      .then((response) => response.json())
-      .then(() => {
-        alert('New subscription successfully added.');
-        window.location.reload();
+      .then((response) => {
+        if (response.ok) {
+          alert('New subscription successfully added.');
+          window.location.reload();
+        } else {
+          throw new Error('Error creating subscription');
+        }
       })
       .catch((error) => {
-        alert(error);
+        alert(error.message);
       });
     setUser({
       idMember: '',
@@ -49,6 +54,11 @@ const Form = () => {
   const handleFormClose = () => {
     alert('The updated data will be displayed.');
   };
+
+  const classOptions = classes.map((classItem) => ({
+    value: classItem._id,
+    label: classItem.activity.name
+  }));
 
   return (
     <div>
@@ -63,9 +73,12 @@ const Form = () => {
               value={user.idMember}
               onChange={onChangeInput}
             >
-              <option value="646014b31c70e12b863ad70a">Juan Manuel Lopez</option>
-              <option value="646015ffa877f6e5fb0e5de2">Ariana Lopez</option>
-              <option value="64601701a877f6e5fb0e5de5">Carla Lopez</option>
+              <option value="">Choose Member</option>
+              {members.map((member) => (
+                <option key={member._id} value={member._id}>
+                  {member.firstName} {member.lastName}
+                </option>
+              ))}
             </select>
           </div>
           <div className={style.inputContainer}>
@@ -86,9 +99,12 @@ const Form = () => {
               value={user.idClass}
               onChange={onChangeInput}
             >
-              <option value="64750dd551aa0de8c834eb3f">Crossfit</option>
-              <option value="64710a03c093074a397642d2">Box</option>
-              <option value="64750e1451aa0de8c834eb43">Spinning</option>
+              <option value="">Choose Class</option>
+              {classOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </div>
         </div>

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
 
-const Table = ({ data, onButtonClick }) => {
+const Table = ({ data, members, onButtonClick }) => {
   if (!data || data.length === 0) {
     return <p>LOADING...There are no elements to show.</p>;
   }
 
   const [user, setUser] = useState({
-    idMember: '646015ffa877f6e5fb0e5de2',
+    idMember: '',
     date: new Date().toISOString(),
-    idClass: '64750dd551aa0de8c834eb3f'
+    idClass: ''
   });
   const [expandedRows, setExpandedRows] = useState([]);
 
@@ -32,29 +32,6 @@ const Table = ({ data, onButtonClick }) => {
 
   const handleClick = () => {
     onButtonClick();
-  };
-
-  const handleAdd = () => {
-    alert('New subscription successfully added.');
-    const requestData = {
-      classes: '646bb9576a1d04d630b3e4b6',
-      members: ['646014b31c70e12b863ad70a', '646015ffa877f6e5fb0e5de2'],
-      date: '2023-05-15T14:57:14.000Z'
-    };
-    fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestData)
-    })
-      .then((response) => response.json())
-      .then(() => {
-        window.location.reload();
-      })
-      .catch((error) => {
-        alert(error);
-      });
   };
 
   const handleDelete = (id) => {
@@ -118,9 +95,6 @@ const Table = ({ data, onButtonClick }) => {
           New manual subscription
         </button>
       </div>
-      <button className={styles.button} onClick={handleAdd}>
-        New automatic subscription (for testing)
-      </button>
       <table>
         <thead>
           <tr>
@@ -128,7 +102,7 @@ const Table = ({ data, onButtonClick }) => {
             <th>DAY</th>
             <th>HOUR</th>
             <th>TRAINER</th>
-            <th>ACTIVITY</th>
+            <th>CLASS</th>
             <th>DATE</th>
             <th>MEMBERS</th>
             <th></th>
@@ -172,10 +146,14 @@ const Table = ({ data, onButtonClick }) => {
                       value={user.idMember}
                       onChange={onChangeInput}
                     >
-                      <option value="646014b31c70e12b863ad70a">Juan Manuel Lopez</option>
-                      <option value="646015ffa877f6e5fb0e5de2">Ariana Lopez</option>
-                      <option value="64601701a877f6e5fb0e5de5">Carla Lopez</option>
+                      <option value="">Choose Member</option>
+                      {members.map((member) => (
+                        <option key={member._id} value={member._id}>
+                          {member.firstName} {member.lastName}
+                        </option>
+                      ))}
                     </select>
+
                     <input
                       className={styles.inputEdit}
                       name="date"
