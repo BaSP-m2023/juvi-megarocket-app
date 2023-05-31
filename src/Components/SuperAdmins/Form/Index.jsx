@@ -83,7 +83,7 @@ const Form = ({ addAdmin, editAdmin, selectedAdmin }) => {
           />
         </div>
       </div>
-      <button className={styles.button} type="submit">
+      <button className={styles.buttonB} type="submit">
         {buttonText}
       </button>
     </form>

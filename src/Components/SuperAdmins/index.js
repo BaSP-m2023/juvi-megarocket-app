@@ -14,7 +14,6 @@ const SuperAdminsPage = () => {
       const responseData = await response.json();
       const data = responseData.data;
       setAdmins(data);
-      console.log(responseData);
     } catch (error) {
       alert('Error fetching admins: ' + error);
     }

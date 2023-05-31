@@ -2,14 +2,14 @@
   width: 70vh;
   background-color: #EA3354;
 }
-button {
+.buttonB {
   margin: .3rem;
   width: 5rem;
   padding: 1rem;
   border-radius: 0rem;
   border-style: none;
 }
-button:hover{
+.buttonB:hover{
   background-color: #d8d8d8;
   cursor: pointer;
 }

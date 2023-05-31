@@ -23,15 +23,23 @@ const Table = (props) => {
     if (selectedAdmin && selectedAdmin._id === admin._id) {
       return (
         <>
-          <button onClick={() => props.handleUpdate(selectedAdmin)}>Update</button>
-          <button onClick={handleCancel}>Cancel</button>
+          <button className="buttonB" onClick={() => props.handleUpdate(selectedAdmin)}>
+            Update
+          </button>
+          <button className="buttonB" onClick={handleCancel}>
+            Cancel
+          </button>
         </>
       );
     } else {
       return (
         <>
-          <button onClick={() => handleEdit(admin)}>Edit</button>
-          <button onClick={() => handleDelete(admin._id)}>Delete</button>
+          <button className="buttonB" onClick={() => handleEdit(admin)}>
+            Edit
+          </button>
+          <button className="buttonB" onClick={() => handleDelete(admin._id)}>
+            Delete
+          </button>
         </>
       );
     }
