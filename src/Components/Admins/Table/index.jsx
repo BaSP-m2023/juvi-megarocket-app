@@ -1,28 +1,44 @@
 import React from 'react';
 import styles from './table.module.css';
 
-const Table = (props) => {
+const Table = ({ data, deleteAdmin, editAdmin }) => {
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this item?');
+    if (confirmDelete) {
+      deleteAdmin(id);
+    }
+  };
+
   return (
-    <table className="adminsTable">
+    <table className={styles.adminsTable}>
       <thead>
         <tr>
-          <th></th>
-          <th></th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>DNI</th>
+          <th>Phone</th>
+          <th>City</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {props.adminsData.map((item) => {
-          <tr key={item.id}>
-            <td> {item.name} </td>
-            <td> {item.email} </td>
+        {data.map((admin) => (
+          <tr key={admin._id}>
+            <td>{admin.firstName + ' ' + admin.lastName}</td>
+            <td>{admin.email}</td>
+            <td>{admin.dni}</td>
+            <td>{admin.phone}</td>
+            <td>{admin.city}</td>
             <td>
-              <button className={styles.deleteButton} onClick={() => props.deleteItem(item.id)}>
-                X
+              <button className={styles.deleteButton} onClick={() => handleDelete(admin._id)}>
+                Delete
               </button>
-              <button className={styles.editButton}>Edit</button>
+              <button className={styles.editButton} onClick={() => editAdmin(admin)}>
+                Edit
+              </button>
             </td>
-          </tr>;
-        })}
+          </tr>
+        ))}
       </tbody>
     </table>
   );
