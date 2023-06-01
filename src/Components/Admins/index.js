@@ -95,7 +95,13 @@ function Admins() {
     <section className={styles.container}>
       <h2>Admins</h2>
       {!showForm && (
-        <button className={styles.addButton} onClick={() => setShowForm(true)}>
+        <button
+          className={styles.addButton}
+          onClick={() => {
+            setShowForm(true);
+            setIsEditing(false);
+          }}
+        >
           Add Admin
         </button>
       )}

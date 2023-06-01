@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 
 const Form = (props) => {
@@ -12,6 +12,30 @@ const Form = (props) => {
     password: ''
   });
 
+  useEffect(() => {
+    if (props.isEditing) {
+      setFormData({
+        firstName: props.selectedAdmin.firstName,
+        lastName: props.selectedAdmin.lastName,
+        dni: props.selectedAdmin.dni,
+        phone: props.selectedAdmin.phone,
+        email: props.selectedAdmin.email,
+        city: props.selectedAdmin.city,
+        password: props.selectedAdmin.password
+      });
+    } else {
+      setFormData({
+        firstName: '',
+        lastName: '',
+        dni: '',
+        phone: '',
+        email: '',
+        city: '',
+        password: ''
+      });
+    }
+  }, [props.selectedAdmin]);
+
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -20,7 +44,6 @@ const Form = (props) => {
   };
 
   const onSubmit = (e) => {
-    console.log(props.selectedAdmin._id);
     e.preventDefault();
     if (props.isEditing) {
       props.editAdmin(formData, props.selectedAdmin._id);
