@@ -16,7 +16,7 @@ function Admins() {
       const adminData = jsonData.data;
       setAdminsData(adminData);
     } catch (error) {
-      alert('Error getting Admins');
+      alert('Error getting Admins.');
     }
   };
 
