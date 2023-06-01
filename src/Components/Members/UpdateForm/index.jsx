@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
 
-const Form = ({ data, updMemb, selectId }) => {
+const Form = ({ data, updateMemb, selectId }) => {
   const selectedMember = data.filter((item) => item._id === selectId);
   const [member, setMember] = useState({
     firstName: selectedMember[0].firstName,
@@ -25,7 +25,7 @@ const Form = ({ data, updMemb, selectId }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     try {
-      updMemb(selectId, member);
+      updateMemb(selectId, member);
     } catch (error) {
       console.log(error);
     }

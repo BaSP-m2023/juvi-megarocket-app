@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './table.module.css';
 
-const Table = ({ data, deleteMemb, setUpd, showUpd, setSelectId }) => {
+const Table = ({ data, deleteMemb, setShowUpdMember, showUpdMember, setSelectId }) => {
   return (
     <table className={styles.table}>
       <thead>
@@ -36,7 +36,7 @@ const Table = ({ data, deleteMemb, setUpd, showUpd, setSelectId }) => {
               <td>
                 <button
                   onClick={() => {
-                    setUpd(!showUpd);
+                    setShowUpdMember(!showUpdMember);
                     setSelectId(item._id);
                   }}
                 >

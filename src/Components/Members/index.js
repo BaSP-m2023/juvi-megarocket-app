@@ -103,28 +103,28 @@ function Members() {
         <AddForm
           addMember={addMember}
           data={members}
-          showAdd={showAddMember}
-          setAdd={setShowAddMember}
-          showUpd={showUpdMember}
-          setUpd={setShowUpdMember}
+          showAddMember={showAddMember}
+          setAddMember={setShowAddMember}
+          showUpdMember={showUpdMember}
+          setShowUpdMember={setShowUpdMember}
         />
       )}
       {showUpdMember && (
         <UpdateForm
-          updMemb={updateMemb}
+          updateMemb={updateMemb}
           setMembers={setMembers}
           data={members}
-          showUpd={showUpdMember}
+          showUpdMember={showUpdMember}
           selectId={selectId}
         />
       )}
       <Table
         data={members}
         deleteMemb={deleteMemb}
-        showAdd={showAddMember}
-        setAdd={setShowAddMember}
-        showUpd={showUpdMember}
-        setUpd={setShowUpdMember}
+        showAddMember={showAddMember}
+        setAddMember={setShowAddMember}
+        showUpdMember={showUpdMember}
+        setShowUpdMember={setShowUpdMember}
         selectId={selectId}
         setSelectId={setSelectId}
       />
