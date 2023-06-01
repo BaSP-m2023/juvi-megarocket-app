@@ -41,8 +41,13 @@ const createFrom = ({ dataActivity, dataTrainers, showForm, addClass, changeStat
         <form className={styles.addClass} onSubmit={onSubmit}>
           <div className={styles.formControl}>
             <div className={styles.firstLine}>
-              <label>Activity</label>
-              <select value={formData.activity} name="activity" onChange={onChangeInput}>
+              <label className={styles.labelClasses}>Activity</label>
+              <select
+                className={styles.selectClasses}
+                value={formData.activity}
+                name="activity"
+                onChange={onChangeInput}
+              >
                 <option value="">Select an activity</option>
                 {dataActivity.map((activity) => (
                   <option key={activity._id} value={activity._id}>
@@ -50,8 +55,13 @@ const createFrom = ({ dataActivity, dataTrainers, showForm, addClass, changeStat
                   </option>
                 ))}
               </select>
-              <label>Trainers</label>
-              <select value={formData.trainer} name="trainer" onChange={onChangeInput}>
+              <label className={styles.labelClasses}>Trainers</label>
+              <select
+                className={styles.selectClasses}
+                value={formData.trainer}
+                name="trainer"
+                onChange={onChangeInput}
+              >
                 <option value="">Select a trainer</option>
                 {dataTrainers.map((trainer) => (
                   <option key={trainer._id} value={trainer._id}>
@@ -59,8 +69,13 @@ const createFrom = ({ dataActivity, dataTrainers, showForm, addClass, changeStat
                   </option>
                 ))}
               </select>
-              <label>Day</label>
-              <select value={formData.day} name="day" onChange={onChangeInput}>
+              <label className={styles.labelClasses}>Day</label>
+              <select
+                className={styles.selectClasses}
+                value={formData.day}
+                name="day"
+                onChange={onChangeInput}
+              >
                 <option value="">Select a Day</option>
                 <option>Monday</option>
                 <option>Tuesday</option>
@@ -72,12 +87,18 @@ const createFrom = ({ dataActivity, dataTrainers, showForm, addClass, changeStat
             </div>
             <div className={styles.secondLine}>
               <div className={styles.formHour}>
-                <label>Hours</label>
-                <input type="time" name="hour" onChange={onChangeInput}></input>
+                <label className={styles.labelClasses}>Hours</label>
+                <input
+                  className={styles.inputClasses}
+                  type="time"
+                  name="hour"
+                  onChange={onChangeInput}
+                ></input>
               </div>
               <div className={styles.formSlots}>
-                <label>Slots</label>
+                <label className={styles.labelClasses}>Slots</label>
                 <input
+                  className={styles.inputClasses}
                   type="text"
                   name="slots"
                   placeholder="Add slots for class"

@@ -99,7 +99,11 @@ const SuperAdminsPage = () => {
     <section className={styles.container}>
       <div className={styles.firstBox}>
         <h2>SuperAdmins</h2>
-        {!showForm && <button onClick={() => setShowForm(true)}>Add Admin</button>}
+        {!showForm && (
+          <button className={styles.buttonSuperAdmins} onClick={() => setShowForm(true)}>
+            Add Admin
+          </button>
+        )}
       </div>
       {showForm && (
         <div className={styles.modal}>

@@ -7,9 +7,9 @@ const Table = ({ data, deleteItem, editActivity }) => {
   };
 
   return (
-    <table>
+    <table className={styles.tableActivities}>
       <thead>
-        <tr>
+        <tr className={styles.trTable}>
           <th>Name</th>
           <th>Description</th>
           <th>Actions</th>
@@ -19,13 +19,15 @@ const Table = ({ data, deleteItem, editActivity }) => {
         {data.map((item) => {
           return (
             <tr key={item._id}>
-              <td>{item.name}</td>
-              <td>{item.description}</td>
-              <td>
+              <td className={styles.tdTable}>{item.name}</td>
+              <td className={styles.tdTable}>{item.description}</td>
+              <td className={styles.tdTable}>
                 <button className={styles.deleteButton} onClick={() => deleteItem(item._id)}>
                   X
                 </button>
-                <button onClick={() => handleEdit(item)}>Edit</button>
+                <button className={styles.buttonEdit} onClick={() => handleEdit(item)}>
+                  Edit
+                </button>
               </td>
             </tr>
           );

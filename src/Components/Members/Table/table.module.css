@@ -1,19 +1,19 @@
-.table th {
+.table .thTrainers {
   border: 1px solid #d0d0d0;
   text-align: left;
   background-color: #aaa;
   color: #000;
 }
 
-.table td, .table th {
+.table .tdTrainers, .table .thTrainers {
   padding: 5px;
 }
 
-.table tr:nth-child(even) {
+.table .trTrainers:nth-child(even) {
   background-color: #37386730;
 }
 
-.table tr:hover {
+.table .trTrainers:hover {
   background-color: #FDDBA160;
   transition: 0.4s;
 }

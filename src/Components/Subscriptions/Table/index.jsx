@@ -112,13 +112,15 @@ const Table = ({ data, members, onButtonClick }) => {
           {data.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item._id}</td>
-                <td>{item.classes && item.classes.day}</td>
-                <td>{item.classes && item.classes.hour}</td>
-                <td>{item.classes && item.classes.trainer}</td>
-                <td>{item.classes && item.classes.activity}</td>
-                <td>{item.date && item.date.substring(0, 10)}</td>
-                <td>
+                <td className={styles.tdSubscriptions}>{item._id}</td>
+                <td className={styles.tdSubscriptions}>{item.classes && item.classes.day}</td>
+                <td className={styles.tdSubscriptions}>{item.classes && item.classes.hour}</td>
+                <td className={styles.tdSubscriptions}>{item.classes && item.classes.trainer}</td>
+                <td className={styles.tdSubscriptions}>{item.classes && item.classes.activity}</td>
+                <td className={styles.tdSubscriptions}>
+                  {item.date && item.date.substring(0, 10)}
+                </td>
+                <td className={styles.tdSubscriptions}>
                   {item.members &&
                     item.members.map((member) => (
                       <div key={member._id}>
@@ -128,7 +130,7 @@ const Table = ({ data, members, onButtonClick }) => {
                       </div>
                     ))}
                 </td>
-                <td>
+                <td className={styles.tdSubscriptions}>
                   <button className={styles.button} onClick={() => handleEdit(item._id)}>
                     Edit
                   </button>
@@ -139,7 +141,7 @@ const Table = ({ data, members, onButtonClick }) => {
               </tr>
               {expandedRows.includes(item._id) && (
                 <tr>
-                  <td colSpan="8">
+                  <td className={styles.tdSubscriptions} colSpan="8">
                     <select
                       className={styles.selectEdit}
                       name="editMember"

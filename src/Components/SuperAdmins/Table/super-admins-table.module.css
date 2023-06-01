@@ -16,7 +16,7 @@
 .tableBody{
   text-align: start;
 }
-.tableBody td {
+.tableBody .tdSuperAdmins {
   color: #fff;
   text-align: center;
   border: 1px solid #fff;

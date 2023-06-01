@@ -36,9 +36,9 @@ const ClassForm = (props) => {
     <form className={styles.updateClass} onSubmit={handleSubmit}>
       <div className={styles.formControlUpdate}>
         <div className={styles.updateOption}>
-          <label>
+          <label className={styles.labelClasses}>
             Trainer:
-            <select name="trainer" onChange={handleChange}>
+            <select className={styles.selectClasses} name="trainer" onChange={handleChange}>
               <option value={props.classData.trainer._id}>
                 {props.classData.trainer.firstName + ' ' + props.classData.trainer.lastName}
               </option>
@@ -51,9 +51,9 @@ const ClassForm = (props) => {
           </label>
         </div>
         <div className={styles.updateOption}>
-          <label>
+          <label className={styles.labelClasses}>
             Activity:
-            <select name="activity" onChange={handleChange}>
+            <select className={styles.selectClasses} name="activity" onChange={handleChange}>
               <option value={props.classData.activity._id}>{props.classData.activity.name}</option>
               {filteredActivities.map((activity) => (
                 <option key={activity._id} value={activity._id}>
@@ -64,21 +64,39 @@ const ClassForm = (props) => {
           </label>
         </div>
         <div className={styles.updateOption}>
-          <label>
+          <label className={styles.labelClasses}>
             Day:
-            <input type="text" name="day" value={formData.day} onChange={handleChange} />
+            <input
+              className={styles.inputClasses}
+              type="text"
+              name="day"
+              value={formData.day}
+              onChange={handleChange}
+            />
           </label>
         </div>
         <div className={styles.updateOption}>
-          <label>
+          <label className={styles.labelClasses}>
             Hour:
-            <input type="text" name="hour" value={formData.hour} onChange={handleChange} />
+            <input
+              className={styles.inputClasses}
+              type="text"
+              name="hour"
+              value={formData.hour}
+              onChange={handleChange}
+            />
           </label>
         </div>
         <div className={styles.updateOption}>
-          <label>
+          <label className={styles.labelClasses}>
             Slots:
-            <input type="text" name="slots" value={formData.slots} onChange={handleChange} />
+            <input
+              className={styles.inputClasses}
+              type="text"
+              name="slots"
+              value={formData.slots}
+              onChange={handleChange}
+            />
           </label>
         </div>
         <div className={styles.btnEdit}>

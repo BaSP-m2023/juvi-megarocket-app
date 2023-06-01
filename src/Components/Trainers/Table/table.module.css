@@ -2,18 +2,18 @@
   margin: 20px;
 }
 
-table {
+.tableTrainers {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+.thTrainers, .tdTrainers {
   padding: 8px;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
-th {
+.thTrainers {
   background-color: #f2f2f2;
 }
 

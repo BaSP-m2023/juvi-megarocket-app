@@ -1,11 +1,11 @@
-th {
+.thAdmins {
   padding: 10px;
   text-align: center;
   background-color: #666666;
   border: 1px solid #F9A414;
 }
 
-td {
+.tdAdmins {
   padding: 10px;
   text-align: center;
   background-color: #999999;

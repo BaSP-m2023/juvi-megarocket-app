@@ -56,8 +56,8 @@ const Table = (props) => {
       <tbody className={styles.tableBody}>
         {props.data.map((admin) => (
           <tr className={styles.admins} key={admin._id}>
-            <td>{admin.email}</td>
-            <td>{renderActions(admin)}</td>
+            <td className={styles.tdSuperAdmins}>{admin.email}</td>
+            <td className={styles.tdSuperAdmins}>{renderActions(admin)}</td>
           </tr>
         ))}
       </tbody>

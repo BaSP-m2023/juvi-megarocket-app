@@ -22,27 +22,34 @@ const Table = (props) => {
     <table className={styles.tableClass}>
       <thead>
         <tr className={styles.classes}>
-          <th>Activity</th>
-          <th>Trainer</th>
-          <th>Day</th>
-          <th>Hour</th>
-          <th>Slot</th>
-          <th>Actions</th>
+          <th className={styles.thClasses}>Activity</th>
+          <th className={styles.thClasses}>Trainer</th>
+          <th className={styles.thClasses}>Day</th>
+          <th className={styles.thClasses}>Hour</th>
+          <th className={styles.thClasses}>Slot</th>
+          <th className={styles.thClasses}>Actions</th>
         </tr>
       </thead>
       <tbody className={styles.tableInfo}>
         {props.dataClasses.map((classMap) => (
           <tr className={styles.classes} key={classMap._id}>
-            <td>{classMap.activity.name}</td>
-            <td>{classMap.trainer.firstName}</td>
-            <td>{classMap.day}</td>
-            <td>{classMap.hour}</td>
-            <td>{classMap.slots}</td>
-            <td>
+            <td className={styles.tdClasses}>{classMap.activity.name}</td>
+            <td className={styles.tdClasses}>{classMap.trainer.firstName}</td>
+            <td className={styles.tdClasses}>{classMap.day}</td>
+            <td className={styles.tdClasses}>{classMap.hour}</td>
+            <td className={styles.tdClasses}>{classMap.slots}</td>
+            <td className={styles.tdClasses}>
               {selectedClass && selectedClass._id === classMap._id ? (
                 <>
-                  <button onClick={() => props.handleUpdate(selectedClass)}>Update</button>
-                  <button onClick={handleCancel}>Cancel</button>
+                  <button
+                    className={styles.buttonClasses}
+                    onClick={() => props.handleUpdate(selectedClass)}
+                  >
+                    Update
+                  </button>
+                  <button className={styles.buttonClasses} onClick={handleCancel}>
+                    Cancel
+                  </button>
                 </>
               ) : (
                 <>

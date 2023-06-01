@@ -5,35 +5,35 @@ const Table = ({ data, deleteMemb, setShowUpdMember, showUpdMember, setSelectId 
   return (
     <table className={styles.table}>
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Last Name</th>
-          <th>Dni</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>City</th>
-          <th>Birthdate</th>
-          <th>Zip</th>
-          <th>Is active?</th>
-          <th>Membership type</th>
-          <th>Tools</th>
+        <tr className={styles.trTrainers}>
+          <th className={styles.thTrainers}>Name</th>
+          <th className={styles.thTrainers}>Last Name</th>
+          <th className={styles.thTrainers}>Dni</th>
+          <th className={styles.thTrainers}>Phone</th>
+          <th className={styles.thTrainers}>Email</th>
+          <th className={styles.thTrainers}>City</th>
+          <th className={styles.thTrainers}>Birthdate</th>
+          <th className={styles.thTrainers}>Zip</th>
+          <th className={styles.thTrainers}>Is active?</th>
+          <th className={styles.thTrainers}>Membership type</th>
+          <th className={styles.thTrainers}>Tools</th>
         </tr>
       </thead>
       <tbody>
         {data.map((item) => {
           return (
-            <tr key={item._id}>
-              <td>{item.firstName}</td>
-              <td>{item.lastName}</td>
-              <td>{item.dni}</td>
-              <td>{item.phone}</td>
-              <td>{item.email}</td>
-              <td>{item.city}</td>
-              <td>{item.birthDate}</td>
-              <td>{item.postalCode}</td>
-              <td>{item.isActive}</td>
-              <td>{item.memberships}</td>
-              <td>
+            <tr className={styles.trTrainers} key={item._id}>
+              <td className={styles.tdTrainers}>{item.firstName}</td>
+              <td className={styles.tdTrainers}>{item.lastName}</td>
+              <td className={styles.tdTrainers}>{item.dni}</td>
+              <td className={styles.tdTrainers}>{item.phone}</td>
+              <td className={styles.tdTrainers}>{item.email}</td>
+              <td className={styles.tdTrainers}>{item.city}</td>
+              <td className={styles.tdTrainers}>{item.birthDate}</td>
+              <td className={styles.tdTrainers}>{item.postalCode}</td>
+              <td className={styles.tdTrainers}>{item.isActive}</td>
+              <td className={styles.tdTrainers}>{item.memberships}</td>
+              <td className={styles.tdTrainers}>
                 <button
                   onClick={() => {
                     setShowUpdMember(!showUpdMember);

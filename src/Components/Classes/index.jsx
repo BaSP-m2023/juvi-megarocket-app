@@ -140,7 +140,7 @@ function Classes() {
   return (
     <section className={styles.container}>
       <div className={styles.mainClass}>
-        <h2>Classes</h2>
+        <h2 className={styles.titleClasses}>Classes</h2>
         <button className={styles.btnClass} onClick={changeState}>
           Add Class
         </button>

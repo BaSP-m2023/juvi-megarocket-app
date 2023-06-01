@@ -57,8 +57,9 @@ const Form = () => {
     <form className={styles.addTrainer} onSubmit={onSubmit}>
       <div className={styles.column}>
         <div className={styles.formControl}>
-          <label>First Name</label>
+          <label className={styles.labelTrainers}>First Name</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             placeholder="Add First Name"
             value={firstName}
@@ -66,8 +67,9 @@ const Form = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Last Name</label>
+          <label className={styles.labelTrainers}>Last Name</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             placeholder="Add Last Name"
             value={lastName}
@@ -75,8 +77,9 @@ const Form = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>City</label>
+          <label className={styles.labelTrainers}>City</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             placeholder="Add City"
             value={city}
@@ -84,8 +87,9 @@ const Form = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Dni</label>
+          <label className={styles.labelTrainers}>Dni</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             placeholder="Add Dni"
             value={dni}
@@ -95,8 +99,9 @@ const Form = () => {
       </div>
       <div className={styles.column}>
         <div className={styles.formControl}>
-          <label>Email</label>
+          <label className={styles.labelTrainers}>Email</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             placeholder="Add Email"
             value={email}
@@ -104,8 +109,9 @@ const Form = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Phone</label>
+          <label className={styles.labelTrainers}>Phone</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             placeholder="Add Phone"
             value={phone}
@@ -113,8 +119,9 @@ const Form = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Salary</label>
+          <label className={styles.labelTrainers}>Salary</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             placeholder="Add Salary"
             value={salary}
@@ -122,8 +129,9 @@ const Form = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Password</label>
+          <label className={styles.labelTrainers}>Password</label>
           <input
+            className={styles.inputTrainers}
             type="password"
             placeholder="Add password"
             value={password}

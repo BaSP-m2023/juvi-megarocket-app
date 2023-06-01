@@ -12,14 +12,14 @@
   justify-content: center;
   align-items: center;
 }
-.firstBox button{
+.firstBox .buttonSuperAdmins{
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 50px;
 }
-.firstBox button:hover{
+.firstBox .buttonSuperAdmins:hover{
   background-color: #d8d8d8;
   cursor: pointer;
 }
