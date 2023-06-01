@@ -38,8 +38,9 @@ const Form = (props) => {
     <form className={styles.addTrainer} onSubmit={onSubmit}>
       <div className={styles.column}>
         <div className={styles.formControl}>
-          <label>First Name</label>
+          <label className={styles.labelTrainers}>First Name</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             name="firstName"
             placeholder="Add First Name"
@@ -48,8 +49,9 @@ const Form = (props) => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Last Name</label>
+          <label className={styles.labelTrainers}>Last Name</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             name="lastName"
             placeholder="Add Last Name"
@@ -58,8 +60,9 @@ const Form = (props) => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>City</label>
+          <label className={styles.labelTrainers}>City</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             name="city"
             placeholder="Add City"
@@ -68,8 +71,9 @@ const Form = (props) => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Dni</label>
+          <label className={styles.labelTrainers}>Dni</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             name="dni"
             placeholder="Add Dni"
@@ -80,8 +84,9 @@ const Form = (props) => {
       </div>
       <div className={styles.column}>
         <div className={styles.formControl}>
-          <label>Email</label>
+          <label className={styles.labelTrainers}>Email</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             name="email"
             placeholder="Add Email"
@@ -90,8 +95,9 @@ const Form = (props) => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Phone</label>
+          <label className={styles.labelTrainers}>Phone</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             name="phone"
             placeholder="Add Phone"
@@ -100,8 +106,9 @@ const Form = (props) => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Salary</label>
+          <label className={styles.labelTrainers}>Salary</label>
           <input
+            className={styles.inputTrainers}
             type="text"
             name="salary"
             placeholder="Add Salary"
@@ -110,8 +117,9 @@ const Form = (props) => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Password</label>
+          <label className={styles.labelTrainers}>Password</label>
           <input
+            className={styles.inputTrainers}
             type="password"
             name="password"
             placeholder="Add password"

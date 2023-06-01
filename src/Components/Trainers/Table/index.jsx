@@ -27,30 +27,30 @@ const Table = (props) => {
   return (
     <section className={styles.classContainer}>
       <h1>Trainers</h1>
-      <table>
+      <table className={styles.tableTrainers}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>City</th>
-            <th>Dni</th>
-            <th>Email</th>
-            <th>Active state</th>
-            <th>Phone</th>
-            <th>Salary</th>
-            <th>Action</th>
+            <th className={styles.thTrainers}>Name</th>
+            <th className={styles.thTrainers}>City</th>
+            <th className={styles.thTrainers}>Dni</th>
+            <th className={styles.thTrainers}>Email</th>
+            <th className={styles.thTrainers}>Active state</th>
+            <th className={styles.thTrainers}>Phone</th>
+            <th className={styles.thTrainers}>Salary</th>
+            <th className={styles.thTrainers}>Action</th>
           </tr>
         </thead>
         <tbody>
           {props.data.map((item) => (
             <tr key={item._id}>
-              <td>{item.lastName + ' ' + item.firstName}</td>
-              <td>{item.city}</td>
-              <td>{item.dni}</td>
-              <td>{item.email}</td>
-              <td>{item.isActive ? 'Active' : 'Inactive'}</td>
-              <td>{item.phone}</td>
-              <td>{item.salary}</td>
-              <td>
+              <td className={styles.tdTrainers}>{item.lastName + ' ' + item.firstName}</td>
+              <td className={styles.tdTrainers}>{item.city}</td>
+              <td className={styles.tdTrainers}>{item.dni}</td>
+              <td className={styles.tdTrainers}>{item.email}</td>
+              <td className={styles.tdTrainers}>{item.isActive ? 'Active' : 'Inactive'}</td>
+              <td className={styles.tdTrainers}>{item.phone}</td>
+              <td className={styles.tdTrainers}>{item.salary}</td>
+              <td className={styles.tdTrainers}>
                 <button
                   style={{ backgroundColor: 'black' }}
                   onClick={() => editButton(item._id)}

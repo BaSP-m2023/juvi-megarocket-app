@@ -13,23 +13,23 @@ const Table = (props) => {
     <table className={styles.adminsTable}>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>DNI</th>
-          <th>Phone</th>
-          <th>City</th>
-          <th>Actions</th>
+          <th className={styles.thAdmins}>Name</th>
+          <th className={styles.thAdmins}>Email</th>
+          <th className={styles.thAdmins}>DNI</th>
+          <th className={styles.thAdmins}>Phone</th>
+          <th className={styles.thAdmins}>City</th>
+          <th className={styles.thAdmins}>Actions</th>
         </tr>
       </thead>
       <tbody>
         {props.data.map((admin) => (
           <tr key={admin._id}>
-            <td>{admin.firstName + ' ' + admin.lastName}</td>
-            <td>{admin.email}</td>
-            <td>{admin.dni}</td>
-            <td>{admin.phone}</td>
-            <td>{admin.city}</td>
-            <td>
+            <td className={styles.tdAdmins}>{admin.firstName + ' ' + admin.lastName}</td>
+            <td className={styles.tdAdmins}>{admin.email}</td>
+            <td className={styles.tdAdmins}>{admin.dni}</td>
+            <td className={styles.tdAdmins}>{admin.phone}</td>
+            <td className={styles.tdAdmins}>{admin.city}</td>
+            <td className={styles.tdAdmins}>
               <button className={styles.deleteButton} onClick={() => handleDelete(admin._id)}>
                 Delete
               </button>

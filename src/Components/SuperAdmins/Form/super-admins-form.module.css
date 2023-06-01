@@ -8,7 +8,7 @@
   border-radius: .1rem;
   border-style: none;
 }
-.tableContent td {
+.tableContent {
   padding-top: 20px;
   color: #fff;
   text-align: center;
@@ -16,7 +16,7 @@
 .sAdmins {
   color: #f9a414;
 }
-.sAdmins th {
+.sAdmins {
   align-self: flex-start;
 }
 .inputContainer{

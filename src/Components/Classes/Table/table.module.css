@@ -3,12 +3,12 @@
   background-color: #0f232e;
   margin: 30px;
 }
-button {
+.buttonClasses {
   border-radius: 10%;
   border-style: none;
   width: 4vw;
 }
-.tableInfo td {
+.tableInfo .tdClasses {
   padding-top: 20px;
   color: #fff;
   text-align: center;
@@ -16,7 +16,7 @@ button {
 .classes {
   color: #f9a414;
 }
-.classes th {
+.classes .thClasses {
   align-self: flex-start;
 }
 

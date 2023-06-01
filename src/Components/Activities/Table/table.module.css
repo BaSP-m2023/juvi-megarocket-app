@@ -1,10 +1,10 @@
-th {
+.thTable {
   padding: 10px;
   text-align: center;
   background-color: #666666;
   border: 1px solid #F9A414;
 }
-td {
+.tdTable {
   padding: 10px;
   text-align: center;
   background-color: #999999;
@@ -20,7 +20,7 @@ td {
   cursor: pointer;
 }
 
-button {
+.buttonEdit {
   padding: 5px 10px;
   margin: 10px 0;
   background-color: #4caf50;

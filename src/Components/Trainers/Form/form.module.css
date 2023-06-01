@@ -15,19 +15,19 @@
   margin-bottom: 1rem;
 }
 
-.formControl label {
+.formControl .labelTrainers {
   display: block;
   margin-bottom: 0.5rem;
 }
 
-.formControl input[type="text"], input[type="password"] {
+.formControl .inputTrainers[type="text"], .inputTrainers[type="password"] {
   width: 80%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.formControl input[type="checkbox"] {
+.formControl .inputTrainers[type="checkbox"] {
   margin-left: 14px;
 }
 
@@ -38,7 +38,7 @@
 
 }
 
-.formControlCheck label {
+.formControlCheck .labelTrainers {
   display: flex;
   align-items: center;
   margin-top: 4px;

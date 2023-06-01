@@ -17,29 +17,29 @@
 .formControlUpdate {
   background-color: #0f232e;
 }
-.formControlUpdate label {
+.formControlUpdate .labelClasses {
   width: 6vw;
   padding: 15px 10px;
   font-size: 1.3rem;
   color: #f9a414;
   text-align: inherit;
 }
-.formControlUpdate select {
+.formControlUpdate .selectClasses {
   width: 15vw;
   height: 2vh;
   margin-left: 20px;
 }
-.formControlUpdate input {
+.formControlUpdate .inputClasses {
   margin-left: 20px;
 }
-.formControl label {
+.formControl .labelClasses {
   width: 6vw;
   padding: 0px 10px;
   color: #f9a414;
   font-size: 1.3rem;
   text-align: center;
 }
-.addClass select {
+.addClass .selectClasses {
   width: 14vw;
 }
 .firstLine,
@@ -54,7 +54,7 @@
   justify-content: space-evenly;
   width: 60vw;
 }
-.secondLine input {
+.secondLine .inputClasses {
   height: 3vh;
 }
 .btnCreateForm {

@@ -103,7 +103,7 @@ const Activities = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Activities</h2>
+      <h2 className={styles.titleActivities}>Activities</h2>
       {!showForm && (
         <button className={styles.addButton} onClick={() => setShowForm(true)}>
           Add Activity
