@@ -20,29 +20,29 @@ const Table = ({ data, deleteMemb, setUpd, showUpd, setSelectId }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((i) => {
+        {data.map((item) => {
           return (
-            <tr key={i._id}>
-              <td>{i.firstName}</td>
-              <td>{i.lastName}</td>
-              <td>{i.dni}</td>
-              <td>{i.phone}</td>
-              <td>{i.email}</td>
-              <td>{i.city}</td>
-              <td>{i.birthDate}</td>
-              <td>{i.postalCode}</td>
-              <td>{i.isActive}</td>
-              <td>{i.memberships}</td>
+            <tr key={item._id}>
+              <td>{item.firstName}</td>
+              <td>{item.lastName}</td>
+              <td>{item.dni}</td>
+              <td>{item.phone}</td>
+              <td>{item.email}</td>
+              <td>{item.city}</td>
+              <td>{item.birthDate}</td>
+              <td>{item.postalCode}</td>
+              <td>{item.isActive}</td>
+              <td>{item.memberships}</td>
               <td>
                 <button
                   onClick={() => {
                     setUpd(!showUpd);
-                    setSelectId(i._id);
+                    setSelectId(item._id);
                   }}
                 >
                   M
                 </button>
-                <button className={styles.deleteButton} onClick={() => deleteMemb(i._id)}>
+                <button className={styles.deleteButton} onClick={() => deleteMemb(item._id)}>
                   X
                 </button>
               </td>

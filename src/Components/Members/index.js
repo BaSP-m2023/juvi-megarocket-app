@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
-//components imports
 import Table from './Table/index';
 import AddForm from './AddForm/index';
 import UpdateForm from './UpdateForm/index';
@@ -14,8 +13,8 @@ function Members() {
   const getMembs = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
     const data = await response.json();
-    data.data.forEach((d) => {
-      d.birthDate = d.birthDate.substring(0, 10);
+    data.data.forEach((item) => {
+      item.birthDate = item.birthDate.substring(0, 10);
     });
     setMembers(data.data);
   };
@@ -40,9 +39,9 @@ function Members() {
       } else {
         alert('Can not be created');
       }
-    } catch (e) {
+    } catch (error) {
       alert('Can not be created');
-      console.log(e);
+      console.log(error);
     }
   };
 
@@ -51,9 +50,9 @@ function Members() {
       await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, { method: 'DELETE' });
       setMembers(members.filter((member) => member._id !== id));
       alert('Member deleted!');
-    } catch (e) {
+    } catch (error) {
       alert('Can not be deleted');
-      console.log(e);
+      console.log(error);
     }
   };
 
@@ -66,11 +65,12 @@ function Members() {
       }).then(async (response) => {
         const data = await response.json();
         if (!data.error) {
+          alert('Member Added!');
           setMembers(
-            members.map((d) =>
-              d._id === id
+            members.map((member) =>
+              member._id === id
                 ? {
-                    ...d,
+                    ...member,
                     firstName: data.firstName,
                     lastName: data.lastName,
                     dni: data.dni,
@@ -81,17 +81,16 @@ function Members() {
                     postalCode: data.postalCode,
                     memberships: data.memberships
                   }
-                : d
+                : member
             )
           );
-          alert('Member Added!');
         } else {
           alert('Can not be created');
         }
       });
-    } catch (e) {
+    } catch (error) {
       alert('Can not be updated');
-      console.log(e);
+      console.log(error);
     }
   };
 

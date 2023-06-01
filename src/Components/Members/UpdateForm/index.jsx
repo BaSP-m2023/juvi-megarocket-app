@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './form.module.css';
 
 const Form = ({ data, updMemb, selectId }) => {
-  const selectedMember = data.filter((d) => d._id === selectId);
+  const selectedMember = data.filter((item) => item._id === selectId);
   const [member, setMember] = useState({
     firstName: selectedMember[0].firstName,
     lastName: selectedMember[0].lastName,
@@ -15,19 +15,19 @@ const Form = ({ data, updMemb, selectId }) => {
     memberships: selectedMember[0].memberships
   });
 
-  const onChange = (e) => {
+  const onChange = (event) => {
     setMember({
       ...member,
-      [e.target.name]: e.target.value
+      [event.target.name]: event.target.value
     });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (event) => {
+    event.preventDefault();
     try {
       updMemb(selectId, member);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
     setMember({
       firstName: member.firstName,

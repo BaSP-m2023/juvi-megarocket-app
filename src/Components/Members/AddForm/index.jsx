@@ -14,20 +14,20 @@ const Form = ({ addMember }) => {
     memberships: 'Only Classes'
   });
 
-  const onChange = (e) => {
+  const onChange = (event) => {
     setMember({
       ...member,
-      [e.target.name]: e.target.value
+      [event.target.name]: event.target.value
     });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (event) => {
+    event.preventDefault();
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
     try {
       addMember(member);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
     setMember({
       firstName: '',
