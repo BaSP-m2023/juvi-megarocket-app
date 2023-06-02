@@ -11,38 +11,23 @@ import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
-function Layout() {
-  let currentScreen = <Home />;
-  switch (window.location.pathname) {
-    case '/activities':
-      currentScreen = <Activities />;
-      break;
-    case '/admins':
-      currentScreen = <Admins />;
-      break;
-    case '/classes':
-      currentScreen = <Classes />;
-      break;
-    case '/members':
-      currentScreen = <Members />;
-      break;
-    case '/subscriptions':
-      currentScreen = <Subscriptions />;
-      break;
-    case '/super-admins':
-      currentScreen = <SuperAdmins />;
-      break;
-    case '/trainers':
-      currentScreen = <Trainers />;
-      break;
-    default:
-      break;
-  }
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
+function Layout() {
   return (
     <div className={styles.container}>
       <Header />
-      {currentScreen}
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/activities" component={Activities} />
+        <Route path="/admins" component={Admins} />
+        <Route path="/classes" component={Classes} />
+        <Route path="/members" component={Members} />
+        <Route path="/subscriptions" component={Subscriptions} />
+        <Route path="/super-admins" component={SuperAdmins} />
+        <Route path="/trainers" component={Trainers} />
+      </Switch>
       <Footer />
     </div>
   );

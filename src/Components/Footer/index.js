@@ -1,4 +1,5 @@
 import styles from './footer.module.css';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 function Footer() {
   return (
@@ -6,30 +7,30 @@ function Footer() {
       <div className={styles.main}>
         <p className={styles.appName}>MegaRocket</p>
         <ul className={styles.rutes}>
-          <li>
-            <a href={'/'}>Home</a>
-          </li>
-          <li>
-            <a href={'/activities'}>Activities</a>
-          </li>
-          <li>
-            <a href={'/admins'}>Admins</a>
-          </li>
-          <li>
-            <a href={'/classes'}>Classes</a>
-          </li>
-          <li>
-            <a href={'/members'}>Members</a>
-          </li>
-          <li>
-            <a href={'/subscriptions'}>Subscriptions</a>
-          </li>
-          <li>
-            <a href={'/super-admins'}>Super Admins</a>
-          </li>
-          <li>
-            <a href={'/trainers'}>Trainers</a>
-          </li>
+          <Link to="/">
+            <li>Home</li>
+          </Link>
+          <Link to="/activities">
+            <li>Activities</li>
+          </Link>
+          <Link to="/admins">
+            <li>Admins</li>
+          </Link>
+          <Link to="/classes">
+            <li>Classes</li>
+          </Link>
+          <Link to="/members">
+            <li>Members</li>
+          </Link>
+          <Link to="/subscriptions">
+            <li>Subscriptions</li>
+          </Link>
+          <Link to="/super-admins">
+            <li>SuperAdmins</li>
+          </Link>
+          <Link to="/trainers">
+            <li>Trainers</li>
+          </Link>
         </ul>
       </div>
       <div className={styles.license}>
