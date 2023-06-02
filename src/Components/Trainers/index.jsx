@@ -1,5 +1,5 @@
 import Table from './Table';
-import Button from './Button';
+import Button from './Shared/Button';
 import Form from './Form/addForm';
 import FormEdit from './Form/editForm';
 import { useState, useEffect } from 'react';
