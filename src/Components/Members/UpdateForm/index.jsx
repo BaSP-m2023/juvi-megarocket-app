@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
 
-const Form = ({ data, updateMemb, selectId }) => {
+const Form = ({ data, updateMemb, selectId, hideForm }) => {
   const selectedMember = data.filter((item) => item._id === selectId);
   const [member, setMember] = useState({
     firstName: selectedMember[0].firstName,
@@ -22,10 +22,11 @@ const Form = ({ data, updateMemb, selectId }) => {
     });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      updateMemb(selectId, member);
+      await updateMemb(selectId, member);
+      hideForm;
     } catch (error) {
       console.log(error);
     }
@@ -142,6 +143,9 @@ const Form = ({ data, updateMemb, selectId }) => {
           </select>
         </fieldset>
         <button type="submit">Submit</button>
+        <button type="button" onClick={hideForm}>
+          Cancel
+        </button>
       </div>
     </form>
   );

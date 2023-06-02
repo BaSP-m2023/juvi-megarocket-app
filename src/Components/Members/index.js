@@ -18,7 +18,10 @@ function Members() {
     });
     setMembers(data.data);
   };
-
+  const hideForm = () => {
+    setShowUpdMember(false);
+    setShowAddMember(false);
+  };
   useEffect(() => {
     getMembs();
   }, []);
@@ -32,15 +35,17 @@ function Members() {
       });
 
       const newMemb = await response.json();
+      console.log(newMemb);
 
       if (!newMemb.error) {
         setMembers([...members, newMemb]);
-        alert('Member Added!');
+        alert(newMemb.message);
+        hideForm();
       } else {
-        alert('Can not be created');
+        alert(newMemb.message);
       }
     } catch (error) {
-      alert('Can not be created');
+      alert(error);
       console.log(error);
     }
   };
@@ -51,8 +56,7 @@ function Members() {
       setMembers(members.filter((member) => member._id !== id));
       alert('Member deleted!');
     } catch (error) {
-      alert('Can not be deleted');
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -65,7 +69,7 @@ function Members() {
       }).then(async (response) => {
         const data = await response.json();
         if (!data.error) {
-          alert('Member Added!');
+          alert(data.message);
           setMembers(
             members.map((member) =>
               member._id === id
@@ -84,13 +88,13 @@ function Members() {
                 : member
             )
           );
+          hideForm();
         } else {
-          alert('Can not be created');
+          alert(data.message);
         }
       });
     } catch (error) {
-      alert('Can not be updated');
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -107,6 +111,7 @@ function Members() {
           setAddMember={setShowAddMember}
           showUpdMember={showUpdMember}
           setShowUpdMember={setShowUpdMember}
+          hideForm={hideForm}
         />
       )}
       {showUpdMember && (
@@ -116,6 +121,7 @@ function Members() {
           data={members}
           showUpdMember={showUpdMember}
           selectId={selectId}
+          hideForm={hideForm}
         />
       )}
       <Table
