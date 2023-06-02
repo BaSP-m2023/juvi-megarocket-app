@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
 
-const Form = ({ addMember }) => {
+const Form = ({ addMember, hideForm }) => {
   const [member, setMember] = useState({
     firstName: '',
     lastName: '',
@@ -142,6 +142,9 @@ const Form = ({ addMember }) => {
           </select>
         </fieldset>
         <button type="submit">Submit</button>
+        <button type="button" onClick={hideForm}>
+          Cancel
+        </button>
       </div>
     </form>
   );
