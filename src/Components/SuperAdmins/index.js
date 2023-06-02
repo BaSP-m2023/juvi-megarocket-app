@@ -47,25 +47,26 @@ const SuperAdminsPage = () => {
   };
 
   const editAdmin = async (updatedAdmin, _id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${_id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updatedAdmin)
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error === true) {
-          alert(data.message);
-        } else {
-          getAdmins();
-          alert(data.message);
-          setShowForm(false);
-          setSelectedAdmin(null);
-        }
-      })
-      .catch((error) => alert('Error: ' + error));
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedAdmin)
+      });
+      const data = await response.json();
+
+      if (data.error === true) {
+        alert(data.message);
+      } else if (data.error === false) {
+        getAdmins();
+        setShowForm(false);
+        setSelectedAdmin(null);
+      }
+    } catch (error) {
+      alert('Error: ' + error);
+    }
   };
 
   const deleteAdmin = async (_id) => {
