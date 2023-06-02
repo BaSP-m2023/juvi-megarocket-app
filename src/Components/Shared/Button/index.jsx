@@ -25,12 +25,4 @@ Button.defaultProps = {
   bColor: 'white'
 };
 
-Button.propTypes = {
-  text: PropTypes.string,
-  backColor: PropTypes.string,
-  bColor: PropTypes.string,
-  color: PropTypes.string,
-  onClick: PropTypes.func
-};
-
 export default Button;
