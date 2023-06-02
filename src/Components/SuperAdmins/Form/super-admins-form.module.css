@@ -1,0 +1,25 @@
+.tableSA {
+  width: 70vh;
+  background-color: #00a6ff;
+}
+.buttonB {
+  width: 5rem;
+  padding: 1rem;
+  border-radius: .1rem;
+  border-style: none;
+}
+.tableContent {
+  padding-top: 20px;
+  color: #fff;
+  text-align: center;
+}
+.sAdmins {
+  color: #f9a414;
+}
+.sAdmins {
+  align-self: flex-start;
+}
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,33 @@
+.tableClass {
+  width: 70vw;
+  background-color: #0f232e;
+  margin: 30px;
+}
+.buttonClasses {
+  border-radius: 10%;
+  border-style: none;
+  width: 4vw;
+}
+.tableInfo .tdClasses {
+  padding-top: 20px;
+  color: #fff;
+  text-align: center;
+}
+.classes {
+  color: #f9a414;
+}
+.classes .thClasses {
+  align-self: flex-start;
+}
+
+.btnGeneralEdit {
+  margin-right: 10px;
+}
+
+.btnGeneralEdit:hover {
+  background-color: #f9a414;
+}
+.btnGeneralDelete:hover {
+  color: #fff;
+  background-color: red;
+}
