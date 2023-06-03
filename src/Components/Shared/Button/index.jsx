@@ -1,18 +1,25 @@
 import styles from './button.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const Button = (props) => {
+const edit = <FontAwesomeIcon icon={faPen} />;
+const del = <FontAwesomeIcon icon={faTimes} size="lg" />;
+
+const Button = ({ type, resource, onClick }) => {
   let text = '';
   const getTypeClassName = () => {
-    switch (props.type) {
+    switch (type) {
       case 'delete':
+        text = del;
         return styles.btnDelete;
       case 'add':
-        text = `+ Add ${props.resource}`;
+        text = `+ Add ${resource}`;
         return styles.btnAdd;
       case 'confirm':
         text = 'Confirm';
         return styles.btnConfirm;
       case 'edit':
+        text = edit;
         return styles.btnEdit;
       case 'cancel':
         text = 'Cancel';
@@ -24,7 +31,7 @@ const Button = (props) => {
 
   return (
     <div className={styles.btnContainer}>
-      <button className={`${styles.btn} ${getTypeClassName()}`} onClick={props.onClick}>
+      <button className={`${styles.btn} ${getTypeClassName()}`} onClick={onClick}>
         {text}
       </button>
     </div>
