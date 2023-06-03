@@ -1,42 +1,83 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-const Form = ({ addAdmin, editAdmin, setShowForm, selectedAdmin, isEditing }) => {
-  const history = useHistory();
+const Form = () => {
+  const { id } = useParams();
+  const [adminsData, setAdminsData] = useState([]);
+  const [selectedAdmin, setSelectedAdmin] = useState({});
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: ''
+    firstName: selectedAdmin.firstName || '',
+    lastName: selectedAdmin.lastName || '',
+    dni: selectedAdmin.dni || '',
+    phone: selectedAdmin.phone || '',
+    email: selectedAdmin.email || '',
+    city: selectedAdmin.city || '',
+    password: selectedAdmin.password || ''
   });
 
+  const history = useHistory();
+
   useEffect(() => {
-    if (isEditing) {
-      setFormData({
-        firstName: selectedAdmin.firstName,
-        lastName: selectedAdmin.lastName,
-        dni: selectedAdmin.dni,
-        phone: selectedAdmin.phone,
-        email: selectedAdmin.email,
-        city: selectedAdmin.city,
-        password: selectedAdmin.password
-      });
-    } else {
-      setFormData({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        password: ''
-      });
+    if (id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setSelectedAdmin(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }, [selectedAdmin]);
+  }, []);
+
+  const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ firstName, lastName, dni, phone, email, city, password })
+      });
+      const responseData = await response.json();
+
+      if (!responseData.error) {
+        alert('Admin created correctly!');
+        history.goBack();
+      } else {
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Error creating admin: ' + error);
+    }
+  };
+  const editAdmin = async (updatedAdmin, adminId) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedAdmin)
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+      if (response.ok) {
+        const updatedAdminData = responseData.data;
+        setAdminsData(
+          adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
+        );
+        alert('Admin updated correctly!');
+        history.goBack();
+      } else {
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      alert('Error updating Admin: ' + error);
+    }
+  };
 
   const onChange = (e) => {
     setFormData({
@@ -45,19 +86,16 @@ const Form = ({ addAdmin, editAdmin, setShowForm, selectedAdmin, isEditing }) =>
     });
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (isEditing) {
-      await editAdmin(formData, selectedAdmin._id);
-      console.log(editAdmin);
+    if (id) {
+      editAdmin(formData, selectedAdmin._id);
     } else {
-      await addAdmin(formData);
-      console.log(formData);
+      addAdmin(formData);
     }
-    setShowForm(false);
   };
 
-  const switchButtonText = isEditing ? 'Update' : 'Add';
+  const switchButtonText = id ? 'Update' : 'Add';
 
   return (
     <form className={styles.myForm} onSubmit={onSubmit}>
