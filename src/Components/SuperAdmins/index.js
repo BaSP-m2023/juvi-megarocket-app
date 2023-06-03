@@ -61,6 +61,7 @@ const SuperAdminsPage = () => {
         alert(data.message);
       } else if (data.error === false) {
         getAdmins();
+        alert(data.message);
         setShowForm(false);
         setSelectedAdmin(null);
       }
