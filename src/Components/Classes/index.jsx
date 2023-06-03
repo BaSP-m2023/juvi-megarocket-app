@@ -1,8 +1,9 @@
 import styles from './classes.module.css';
-import Table from './Table/table.jsx';
+//import Table from './Table/table.jsx';
 import ClassForm from './Form/classFormEdit';
 import { useEffect, useState } from 'react';
 import ClassFormCreate from './Form/classFormCreate';
+import { Table } from '../Shared';
 
 function Classes() {
   const [dataClasses, setDataClasses] = useState([]);
@@ -164,7 +165,7 @@ function Classes() {
             activitiesData={dataActivity}
           />
         ) : (
-          <Table dataClasses={dataClasses} handleDelete={handleDelete} handleEdit={handleEdit} />
+          <Table data={dataClasses} edit={handleEdit} delete={handleDelete} />
         )
       ) : (
         <h3>There are no classes to show</h3>
