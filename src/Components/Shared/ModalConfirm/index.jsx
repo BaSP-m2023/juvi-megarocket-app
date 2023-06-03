@@ -8,8 +8,8 @@ const ModalConfirm = ({ title, message, onConfirm, onCancel }) => {
         <h2>{title}</h2>
         <p>{message}</p>
         <div className={styles.buttonContainer}>
-          <button onClick={onConfirm}>Confirmar</button>
-          <button onClick={onCancel}>Cancelar</button>
+          <button onClick={onConfirm}>Confirm</button>
+          <button onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>
