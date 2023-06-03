@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './modal-confirm.module.css';
+import Button from './button';
 
 const ModalConfirm = ({ title, message, onConfirm, onCancel }) => {
   return (
@@ -8,8 +9,8 @@ const ModalConfirm = ({ title, message, onConfirm, onCancel }) => {
         <h2>{title}</h2>
         <p>{message}</p>
         <div className={styles.buttonContainer}>
-          <button onClick={onConfirm}>Confirm</button>
-          <button onClick={onCancel}>Cancel</button>
+          <Button type="confirm" onClick={onConfirm} />
+          <Button type="cancel" onClick={onCancel} />
         </div>
       </div>
     </div>
