@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Table from './Table/index.jsx';
 import styles from './admins.module.css';
 import Form from './Form';
+import { Link } from 'react-router-dom';
 
 function Admins() {
   const [adminsData, setAdminsData] = useState([]);
@@ -26,7 +27,7 @@ function Admins() {
 
   const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -34,9 +35,12 @@ function Admins() {
         body: JSON.stringify({ firstName, lastName, dni, phone, email, city, password })
       });
       const responseData = await response.json();
+
       if (!responseData.error) {
         const newAdmin = responseData.data;
+        console.log(adminsData);
         setAdminsData([...adminsData, newAdmin]);
+
         setShowForm(false);
         alert('Admin created correctly!');
       } else {
@@ -47,6 +51,7 @@ function Admins() {
       console.log(error);
       alert('Error creating admin: ' + error);
     }
+    console.log(adminsData);
   };
 
   const editAdmin = async (updatedAdmin, adminId) => {
@@ -95,15 +100,17 @@ function Admins() {
     <section className={styles.container}>
       <h2>Admins</h2>
       {!showForm && (
-        <button
-          className={styles.addButton}
-          onClick={() => {
-            setShowForm(true);
-            setIsEditing(false);
-          }}
-        >
-          Add Admin
-        </button>
+        <Link to="/admins/form">
+          <button
+            className={styles.addButton}
+            onClick={() => {
+              setIsEditing(false);
+              setShowForm(true);
+            }}
+          >
+            Add Admin
+          </button>
+        </Link>
       )}
       {showForm && (
         <Form

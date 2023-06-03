@@ -1,5 +1,6 @@
 import Activities from '../Activities';
 import Admins from '../Admins/index';
+import Form from '../Admins/Form';
 import Classes from '../Classes';
 import Members from '../Members';
 import Subscriptions from '../Subscriptions';
@@ -21,7 +22,8 @@ function Layout() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/activities" component={Activities} />
-        <Route path="/admins" component={Admins} />
+        <Route exact path="/admins" component={Admins} />
+        <Route path="/admins/form" component={Form} />
         <Route path="/classes" component={Classes} />
         <Route path="/members" component={Members} />
         <Route path="/subscriptions" component={Subscriptions} />

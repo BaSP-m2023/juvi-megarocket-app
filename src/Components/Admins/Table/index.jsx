@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './table.module.css';
+/* import { Link } from 'react-router-dom'; */
 
 const Table = (props) => {
   const handleDelete = (id) => {
@@ -33,6 +34,7 @@ const Table = (props) => {
               <button className={styles.deleteButton} onClick={() => handleDelete(admin._id)}>
                 Delete
               </button>
+              {/* <Link to="/admins/form"> */}
               <button
                 className={styles.editButton}
                 onClick={() => {
@@ -43,6 +45,7 @@ const Table = (props) => {
               >
                 Edit
               </button>
+              {/* </Link> */}
             </td>
           </tr>
         ))}

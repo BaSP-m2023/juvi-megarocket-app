@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import { useHistory } from 'react-router-dom';
 
-const Form = (props) => {
+const Form = ({ addAdmin, editAdmin, setShowForm, selectedAdmin, isEditing }) => {
+  const history = useHistory();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -13,15 +15,15 @@ const Form = (props) => {
   });
 
   useEffect(() => {
-    if (props.isEditing) {
+    if (isEditing) {
       setFormData({
-        firstName: props.selectedAdmin.firstName,
-        lastName: props.selectedAdmin.lastName,
-        dni: props.selectedAdmin.dni,
-        phone: props.selectedAdmin.phone,
-        email: props.selectedAdmin.email,
-        city: props.selectedAdmin.city,
-        password: props.selectedAdmin.password
+        firstName: selectedAdmin.firstName,
+        lastName: selectedAdmin.lastName,
+        dni: selectedAdmin.dni,
+        phone: selectedAdmin.phone,
+        email: selectedAdmin.email,
+        city: selectedAdmin.city,
+        password: selectedAdmin.password
       });
     } else {
       setFormData({
@@ -34,7 +36,7 @@ const Form = (props) => {
         password: ''
       });
     }
-  }, [props.selectedAdmin]);
+  }, [selectedAdmin]);
 
   const onChange = (e) => {
     setFormData({
@@ -43,17 +45,19 @@ const Form = (props) => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (props.isEditing) {
-      props.editAdmin(formData, props.selectedAdmin._id);
+    if (isEditing) {
+      await editAdmin(formData, selectedAdmin._id);
+      console.log(editAdmin);
     } else {
-      props.addAdmin(formData);
+      await addAdmin(formData);
+      console.log(formData);
     }
-    props.setShowForm(false);
+    setShowForm(false);
   };
 
-  const switchButtonText = props.isEditing ? 'Update' : 'Add';
+  const switchButtonText = isEditing ? 'Update' : 'Add';
 
   return (
     <form className={styles.myForm} onSubmit={onSubmit}>
@@ -132,7 +136,7 @@ const Form = (props) => {
       <button className={styles.addButton} type="submit">
         {switchButtonText}
       </button>
-      <button className={styles.cancelButton} onClick={() => props.setShowForm(false)}>
+      <button type="button" className={styles.cancelButton} onClick={() => history.goBack()}>
         Cancel
       </button>
     </form>
