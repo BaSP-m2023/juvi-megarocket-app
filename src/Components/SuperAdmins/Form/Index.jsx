@@ -46,10 +46,8 @@ const Form = ({ addAdmin, editAdmin, selectedAdmin }) => {
     e.preventDefault();
     if (editMode) {
       editAdmin(newSelectedAdmin, selectedAdmin._id);
-      alert('Admin updated successfully!');
     } else {
       addAdmin(admin);
-      alert('Admin added successfully!');
     }
     setAdmin({
       email: '',
