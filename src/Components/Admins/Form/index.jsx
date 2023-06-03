@@ -1,21 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-const Form = ({ addAdmin, editAdmin, setShowForm, selectedAdmin, isEditing }) => {
-  const history = useHistory();
+const Form = () => {
+  const { id } = useParams();
+  const [adminsData, setAdminsData] = useState([]);
+  const [selectedAdmin, setSelectedAdmin] = useState({});
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: ''
+    firstName: selectedAdmin.firstName || '',
+    lastName: selectedAdmin.lastName || '',
+    dni: selectedAdmin.dni || '',
+    phone: selectedAdmin.phone || '',
+    email: selectedAdmin.email || '',
+    city: selectedAdmin.city || '',
+    password: selectedAdmin.password || ''
   });
+  const history = useHistory();
 
   useEffect(() => {
-    if (isEditing) {
+    if (id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setSelectedAdmin(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  /* useEffect(() => {
+    if (id) {
       setFormData({
         firstName: selectedAdmin.firstName,
         lastName: selectedAdmin.lastName,
@@ -36,7 +52,7 @@ const Form = ({ addAdmin, editAdmin, setShowForm, selectedAdmin, isEditing }) =>
         password: ''
       });
     }
-  }, [selectedAdmin]);
+  }, []); */
 
   const onChange = (e) => {
     setFormData({
@@ -45,19 +61,64 @@ const Form = ({ addAdmin, editAdmin, setShowForm, selectedAdmin, isEditing }) =>
     });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (isEditing) {
-      await editAdmin(formData, selectedAdmin._id);
-      console.log(editAdmin);
-    } else {
-      await addAdmin(formData);
-      console.log(formData);
+  const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ firstName, lastName, dni, phone, email, city, password })
+      });
+      const responseData = await response.json();
+
+      if (responseData.error) {
+        throw new Error(responseData.message);
+      } else {
+        const newAdmin = responseData.data;
+        setAdminsData([...adminsData, newAdmin]);
+        alert('Admin created correctly!');
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Error creating admin: ' + error);
     }
-    setShowForm(false);
   };
 
-  const switchButtonText = isEditing ? 'Update' : 'Add';
+  const editAdmin = async (updatedAdmin, adminId) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedAdmin)
+      });
+      const responseData = await response.json();
+      if (response.ok) {
+        const updatedAdminData = responseData.data;
+        setAdminsData(
+          adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
+        );
+        alert('Admin updated correctly!');
+      } else {
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      alert('Error updating Admin: ' + error);
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (id) {
+      editAdmin(formData, selectedAdmin._id);
+    } else {
+      addAdmin(formData);
+    }
+  };
+
+  const switchButtonText = id ? 'Update' : 'Add';
 
   return (
     <form className={styles.myForm} onSubmit={onSubmit}>

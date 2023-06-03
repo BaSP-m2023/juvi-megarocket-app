@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import Table from './Table/index.jsx';
 import styles from './admins.module.css';
-import Form from './Form';
 import { Link } from 'react-router-dom';
 
 function Admins() {
   const [adminsData, setAdminsData] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [selectedAdmin, setSelectedAdmin] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
 
   const getAdmins = async () => {
     try {
@@ -24,61 +20,6 @@ function Admins() {
   useEffect(() => {
     getAdmins();
   }, []);
-
-  const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ firstName, lastName, dni, phone, email, city, password })
-      });
-      const responseData = await response.json();
-
-      if (!responseData.error) {
-        const newAdmin = responseData.data;
-        console.log(adminsData);
-        setAdminsData([...adminsData, newAdmin]);
-
-        setShowForm(false);
-        alert('Admin created correctly!');
-      } else {
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      setShowForm(true);
-      console.log(error);
-      alert('Error creating admin: ' + error);
-    }
-    console.log(adminsData);
-  };
-
-  const editAdmin = async (updatedAdmin, adminId) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedAdmin)
-      });
-      const responseData = await response.json();
-      if (response.ok) {
-        const updatedAdminData = responseData.data;
-        setAdminsData(
-          adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
-        );
-        setShowForm(false);
-        alert('Admin updated correctly!');
-      } else {
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      setShowForm(true);
-      alert('Error updating Admin: ' + error);
-    }
-  };
 
   const deleteAdmin = async (id) => {
     try {
@@ -99,37 +40,10 @@ function Admins() {
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      {!showForm && (
-        <Link to="/admins/form">
-          <button
-            className={styles.addButton}
-            onClick={() => {
-              setIsEditing(false);
-              setShowForm(true);
-            }}
-          >
-            Add Admin
-          </button>
-        </Link>
-      )}
-      {showForm && (
-        <Form
-          addAdmin={addAdmin}
-          editAdmin={editAdmin}
-          setShowForm={setShowForm}
-          selectedAdmin={selectedAdmin}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-        />
-      )}
-      <Table
-        data={adminsData}
-        deleteAdmin={deleteAdmin}
-        editAdmin={editAdmin}
-        setShowForm={setShowForm}
-        setSelectedAdmin={setSelectedAdmin}
-        setIsEditing={setIsEditing}
-      />
+
+      <Link to="/admins/form">Add Admin</Link>
+
+      <Table data={adminsData} deleteAdmin={deleteAdmin} />
     </section>
   );
 }
