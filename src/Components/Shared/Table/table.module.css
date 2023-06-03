@@ -1,4 +1,33 @@
+.table {
+  font-family: 'Roboto';
+  font-style: normal;
+  color: #0f232e;
+  width: 65vw;
+  border-collapse: collapse;
+}
+.table thead {
+  background-color: rgba(55, 56, 103, 0.1);
+}
 .table th {
   text-transform: capitalize;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  text-align: start;
+  padding: 10px;
 }
 
+.table td {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 100%;
+  padding: 10px;
+}
+.table tr:nth-child(even) {
+  background-color: rgba(249, 164, 20, 0.2);
+}
+.table   td:last-child {
+  text-align: right;
+}

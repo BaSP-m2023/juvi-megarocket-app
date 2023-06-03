@@ -2,18 +2,18 @@ import React from 'react';
 import styles from './table.module.css';
 import { Link } from 'react-router-dom';
 
-const Table = (props) => {
-  const handleDelete = (id) => {
+const Table = ({ data, handleDelete, editLink }) => {
+  const handleDeleteTable = (id) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
-      props.handleDelete(id);
+      handleDelete(id);
     }
   };
-  if (!props.data || props.data.length === 0) {
+  if (!data || data.length === 0) {
     return <div>No data available</div>;
   }
   const excludedProperties = ['_id', 'isActive', '__v'];
-  const propertyNames = Object.keys(props.data[0]).filter(
+  const propertyNames = Object.keys(data[0]).filter(
     (propertyName) => !excludedProperties.includes(propertyName)
   );
 
@@ -38,20 +38,23 @@ const Table = (props) => {
           {propertyNames.map((propertyName) => (
             <th key={propertyName}>{propertyName}</th>
           ))}
-          <th>Actions</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        {props.data.map((item, index) => (
+        {data.map((item, index) => (
           <tr key={index}>
             {propertyNames.map((propertyName) => (
               <td key={propertyName}>{renderCellValue(item[propertyName])}</td>
             ))}
             <td>
-              <Link to={props.editLink + item._id}>
+              <Link to={editLink + item._id}>
                 <button>Edit</button>
               </Link>
-              <button className={styles.btnGeneralDelete} onClick={() => handleDelete(item._id)}>
+              <button
+                className={styles.btnGeneralDelete}
+                onClick={() => handleDeleteTable(item._id)}
+              >
                 Delete
               </button>
             </td>
