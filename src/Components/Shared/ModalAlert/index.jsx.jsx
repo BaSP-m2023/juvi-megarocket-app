@@ -1,8 +1,15 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
+
 import styles from './modal-alert.module.css';
-const ModalAlert = () => {
-  return <div></div>;
+const ModalAlert = (props) => {
+  return (
+    <div className={styles.modal}>
+      <div className={styles['modal-content']}>
+        <p>{props.texto}</p>
+        <button onClick={props.onConfirmar}>Confirmar</button>
+      </div>
+    </div>
+  );
 };
 
 export default ModalAlert;

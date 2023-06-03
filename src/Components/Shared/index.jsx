@@ -1,5 +1,5 @@
-export { default as Button } from './Button';
-export { default as Input } from './Input';
-export { default as ModalAlert } from './ModalAlert';
-export { default as ModalConfirm } from './ModalConfirm';
-export { default as Table } from './Table';
+export { default as Button } from './Button/index.jsx';
+export { default as Input } from './Input/index.jsx';
+export { default as ModalAlert } from './ModalAlert/index.jsx';
+export { default as ModalConfirm } from './ModalConfirm/index.jsx';
+export { default as Table } from './Table/index.jsx';
