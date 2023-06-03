@@ -113,7 +113,7 @@ function Classes() {
       .catch((error) => alert(error));
   };
 
-  const handleDelete = async (id) => {
+  /* const handleDelete = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE'
@@ -128,12 +128,12 @@ function Classes() {
     } catch (error) {
       alert(error);
     }
-  };
+  };*/
 
-  const handleEdit = (classEditing) => {
-    setIsEditing(true);
-    setEditedClass(classEditing);
-  };
+  // const handleEdit = (classEditing) => {
+  //  setIsEditing(true);
+  //  setEditedClass(classEditing);
+  //};
   const handleCancel = () => {
     setEditedClass(null);
     setIsEditing(false);
@@ -165,7 +165,7 @@ function Classes() {
             activitiesData={dataActivity}
           />
         ) : (
-          <Table data={dataClasses} edit={handleEdit} delete={handleDelete} />
+          <Table data={dataClasses} />
         )
       ) : (
         <h3>There are no classes to show</h3>
