@@ -1,27 +1,34 @@
 import styles from './button.module.css';
 
 const Button = (props) => {
+  let text = '';
+  const getTypeClassName = () => {
+    switch (props.type) {
+      case 'delete':
+        return styles.btnDelete;
+      case 'add':
+        text = `+ Add ${props.resource}`;
+        return styles.btnAdd;
+      case 'confirm':
+        text = 'Confirm';
+        return styles.btnConfirm;
+      case 'edit':
+        return styles.btnEdit;
+      case 'cancel':
+        text = 'Cancel';
+        return styles.btnCancel;
+      default:
+        return styles.btn;
+    }
+  };
+
   return (
     <div className={styles.btnContainer}>
-      <button
-        onClick={props.onClick}
-        style={{
-          backgroundColor: props.backColor,
-          color: props.color,
-          borderColor: props.bColor
-        }}
-        className={styles.btn}
-      >
-        {props.text}
+      <button className={`${styles.btn} ${getTypeClassName()}`} onClick={props.onClick}>
+        {text}
       </button>
     </div>
   );
-};
-
-Button.defaultProps = {
-  backColor: 'black',
-  color: 'white',
-  bColor: 'white'
 };
 
 export default Button;
