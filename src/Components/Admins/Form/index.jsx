@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
+import Button from '../../Shared/Button';
+import ModalAlert from '../../Shared/ModalAlert/index.jsx';
 
 const Form = () => {
+  const [modalText, setModalText] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
   const [adminsData, setAdminsData] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState({});
@@ -15,7 +19,9 @@ const Form = () => {
     city: selectedAdmin.city || '',
     password: selectedAdmin.password || ''
   });
-
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const history = useHistory();
 
   useEffect(() => {
@@ -54,14 +60,16 @@ const Form = () => {
       const responseData = await response.json();
 
       if (!responseData.error) {
-        alert('Admin created correctly!');
+        setModalText('Admin created correctly!');
+        setIsModalOpen(true);
         history.goBack();
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
       console.log(error);
-      alert('Error creating admin: ' + error);
+      setModalText('Error creating admin: ' + error);
+      setIsModalOpen(true);
     }
   };
   const editAdmin = async (updatedAdmin, adminId) => {
@@ -79,13 +87,17 @@ const Form = () => {
         setAdminsData(
           adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
         );
-        alert('Admin updated correctly!');
-        history.goBack();
+        setModalText('Admin updated correctly!');
+        setIsModalOpen(true);
+        setTimeout(() => {
+          history.goBack();
+        }, 2000);
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
-      alert('Error updating Admin: ' + error);
+      setModalText('Error updating Admin: ' + error);
+      setIsModalOpen(true);
     }
   };
 
@@ -108,86 +120,89 @@ const Form = () => {
   const switchButtonText = id ? 'Update' : 'Add';
 
   return (
-    <form className={styles.myForm} onSubmit={onSubmit}>
-      <div className={styles.divContainer}>
-        <div className={styles.inputDiv}>
-          <label>First Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={onChange}
-          />
+    <>
+      <form className={styles.myForm} onSubmit={onSubmit}>
+        <div className={styles.divContainer}>
+          <div className={styles.inputDiv}>
+            <label>First Name</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.inputDiv}>
+            <label>Last Name</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.inputDiv}>
+            <label>DNI</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="dni"
+              value={formData.dni}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.inputDiv}>
+            <label>Phone</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.inputDiv}>
+            <label>Email</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.inputDiv}>
+            <label>City</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.inputDiv}>
+            <label>Password</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="password"
+              value={formData.password}
+              onChange={onChange}
+            />
+          </div>
         </div>
-        <div className={styles.inputDiv}>
-          <label>Last Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.inputDiv}>
-          <label>DNI</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="dni"
-            value={formData.dni}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.inputDiv}>
-          <label>Phone</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.inputDiv}>
-          <label>Email</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.inputDiv}>
-          <label>City</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.inputDiv}>
-          <label>Password</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="password"
-            value={formData.password}
-            onChange={onChange}
-          />
-        </div>
-      </div>
-      <button className={styles.addButton} type="submit">
-        {switchButtonText}
-      </button>
-      <button type="button" className={styles.cancelButton} onClick={() => history.goBack()}>
-        Cancel
-      </button>
-    </form>
+        <Button className={styles.addButton} type="confirm">
+          {switchButtonText}
+        </Button>
+        <Button type="cancel" className={styles.cancelButton} onClick={() => history.goBack()}>
+          Cancel
+        </Button>
+      </form>
+      {isModalOpen && <ModalAlert text={modalText} onClick={closeModal} />}
+    </>
   );
 };
 

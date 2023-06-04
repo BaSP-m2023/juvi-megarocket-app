@@ -7,7 +7,7 @@ const ModalAlert = ({ text, onClick }) => {
     <div className={styles.modal}>
       <div className={styles['modal-content']}>
         <p>{text}</p>
-        <Button type={confirm} onClick={onClick} />
+        <Button type="confirm" onClick={onClick} />
       </div>
     </div>
   );
