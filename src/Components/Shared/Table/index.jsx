@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './table.module.css';
+import Button from '../Button';
 import { Link } from 'react-router-dom';
 
 const Table = ({ data, handleDelete, editLink }) => {
@@ -49,14 +50,9 @@ const Table = ({ data, handleDelete, editLink }) => {
             ))}
             <td>
               <Link to={editLink + item._id}>
-                <button>Edit</button>
+                <Button type="edit" />
               </Link>
-              <button
-                className={styles.btnGeneralDelete}
-                onClick={() => handleDeleteTable(item._id)}
-              >
-                Delete
-              </button>
+              <Button type="delete" onClick={() => handleDeleteTable(item._id)} />
             </td>
           </tr>
         ))}
