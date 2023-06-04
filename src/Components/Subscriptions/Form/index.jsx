@@ -1,114 +1,171 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './form.module.css';
+import { useParams } from 'react-router-dom/cjs/react-router-dom';
+import ModalAlert from '../Shared';
 
-const Form = ({ members, classes }) => {
-  console.log(members);
-  console.log(classes);
-  const [user, setUser] = useState({
-    idMember: '',
-    date: new Date().toISOString(),
-    idClass: ''
+const Form = () => {
+  const { id } = useParams();
+  const [membersData, setMembers] = useState([]);
+  const [classesData, setClasses] = useState([]);
+  const [selectedSubscription, setSelectedSubscription] = useState({});
+
+  const [formData, setFormData] = useState({
+    classes: selectedSubscription.classes || '',
+    members: selectedSubscription.members || '',
+    date: selectedSubscription.date || '',
+    isActive: selectedSubscription.isActive || ''
   });
+  useEffect(() => {
+    getMembers();
+    getClasses();
+    if (id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setSelectedSubscription(data.data);
+        })
+        .catch((error) => {
+          ModalAlert(error);
+        });
+    }
+  }, []);
 
+  const getMembers = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/member/`)
+      .then((response) => response.json())
+      .then((jsonData) => {
+        const memberData = jsonData.data;
+        setMembers(memberData);
+      })
+      .catch((error) => {
+        ModalAlert(error);
+      });
+  };
+
+  const getClasses = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/class/`)
+      .then((response) => response.json())
+      .then((jsonData) => {
+        const classesData = jsonData.data;
+        setClasses(classesData);
+      })
+      .catch((error) => {
+        ModalAlert(error);
+      });
+  };
+  const filteredMembers = membersData.filter(
+    (member) => member._id !== selectedSubscription.member._id
+  );
+  const filteredClasses = classesData.filter(
+    (classe) => classe._id !== selectedSubscription.classes._id
+  );
   const onChangeInput = (e) => {
     const value =
       e.target.name === 'date' ? new Date(e.target.value).toISOString() : e.target.value;
 
-    setUser({
-      ...user,
+    setFormData({
+      ...formData,
       [e.target.name]: value
     });
   };
-
-  const handleAdd = () => {
-    const requestData = {
-      classes: user.idClass,
-      members: [user.idMember],
-      date: user.date
-    };
-    fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestData)
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert('New subscription successfully added.');
-          window.location.reload();
-        } else {
-          throw new Error('Error creating subscription');
-        }
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-    setUser({
-      idMember: '',
-      date: new Date().toISOString(),
-      idClass: ''
-    });
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (id) {
+      editSubscription(formData, selectedSubscription._id);
+    } else {
+      addSubscription(formData);
+    }
   };
-
+  const addSubscription = async ({ classes, members, date, isActive }) => {
+    const requestData = {
+      classes: classes,
+      members: members,
+      date: date,
+      isActive: isActive
+    };
+    try {
+      const response = fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+      });
+      const responseData = await response.json();
+      if (responseData.error) {
+        throw new Error(responseData.Error);
+      } else {
+        ModalAlert(responseData.message);
+      }
+    } catch (error) {
+      ModalAlert(error);
+    }
+  };
+  const editSubscription = async (updatedSubscription, subscriptionId) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/subscriptions/${subscriptionId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedSubscription)
+        }
+      );
+      const responseData = await response.json();
+      if (response.ok) {
+        ModalAlert(response.message);
+      } else {
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      ModalAlert(error);
+    }
+  };
   const handleFormClose = () => {
     alert('The updated data will be displayed.');
   };
 
-  const classOptions = classes.map((classItem) => ({
-    value: classItem._id,
-    label: classItem.activity.name
-  }));
-
   return (
     <div>
-      <form className={style.form}>
-        <div className={style.subContainer}>
-          <div className={style.inputContainer}>
-            <h3>New Subscription</h3>
-            <label className={style.label}>ID member</label>
-            <select
-              className={style.input}
-              name="idMember"
-              value={user.idMember}
-              onChange={onChangeInput}
-            >
-              <option value="">Choose Member</option>
-              {members.map((member) => (
+      <form onSubmit={onSubmit}>
+        <div>
+          <div>
+            <label>ID member</label>
+            <select name="idMember" onChange={onChangeInput}>
+              <option value={selectedSubscription.member._id}>
+                {selectedSubscription.member.firstName + ' ' + selectedSubscription.member.lastName}
+              </option>
+              {filteredMembers.map((member) => (
                 <option key={member._id} value={member._id}>
                   {member.firstName} {member.lastName}
                 </option>
               ))}
             </select>
           </div>
-          <div className={style.inputContainer}>
-            <label className={style.label}>Date</label>
+          <div>
+            <label>Date</label>
             <input
-              className={style.input}
               name="date"
               type="datetime-local"
-              value={user.date.slice(0, -5)}
+              value={selectedSubscription.date.slice(0, -5)}
               onChange={onChangeInput}
             />
           </div>
-          <div className={style.inputContainer}>
-            <label className={style.label}>ID class</label>
-            <select
-              className={style.input}
-              name="idClass"
-              value={user.idClass}
-              onChange={onChangeInput}
-            >
+          <div>
+            <label>ID class</label>
+            <select name="idClass" value={selectedSubscription.clases._id} onChange={onChangeInput}>
               <option value="">Choose Class</option>
-              {classOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
+              {filteredClasses.map((classe) => (
+                <option key={classe._id} value={classe._id}>
+                  {classe._id}
                 </option>
               ))}
             </select>
           </div>
         </div>
-        <button className={style.button} type="button" onClick={handleAdd}>
+        <button className={style.button} type="submit">
           Add
         </button>
         <button className={style.buttonClose} onClick={handleFormClose}>
