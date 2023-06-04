@@ -10,16 +10,6 @@ const Table = ({ data, handleDelete, editLink }) => {
       handleDelete(id);
     }
   };
-  const getActivityById = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        return data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   if (!data || data.length === 0) {
     return <div>No data available</div>;
   }
@@ -29,15 +19,18 @@ const Table = ({ data, handleDelete, editLink }) => {
   );
 
   const renderCellValue = (value) => {
-    if (typeof value === 'object') {
+    if (Array.isArray(value)) {
+      let returnNames = '';
+      value.forEach((element) => {
+        returnNames += element.firstName + '';
+      });
+      return returnNames;
+    } else if (typeof value === 'object') {
       if (value.name) {
         return value.name;
       }
       if (value.firstName) {
         return value.firstName;
-      }
-      if (value.activity) {
-        return renderCellValue(getActivityById(value._id));
       }
       return value._id;
     } else {
