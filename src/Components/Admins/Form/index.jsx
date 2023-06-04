@@ -30,6 +30,17 @@ const Form = () => {
         });
     }
   }, []);
+  useEffect(() => {
+    setFormData({
+      firstName: selectedAdmin.firstName || '',
+      lastName: selectedAdmin.lastName || '',
+      dni: selectedAdmin.dni || '',
+      phone: selectedAdmin.phone || '',
+      email: selectedAdmin.email || '',
+      city: selectedAdmin.city || '',
+      password: selectedAdmin.password || ''
+    });
+  }, [selectedAdmin]);
 
   const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
     try {
@@ -63,7 +74,6 @@ const Form = () => {
         body: JSON.stringify(updatedAdmin)
       });
       const responseData = await response.json();
-      console.log(responseData);
       if (response.ok) {
         const updatedAdminData = responseData.data;
         setAdminsData(

@@ -40,7 +40,7 @@ function Admins() {
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <Link to="/admins/form">
+      <Link to="/admins/AdminForm">
         <button className={styles.addButton}>Add Admin</button>
       </Link>
       <Table data={adminsData} deleteAdmin={deleteAdmin} />

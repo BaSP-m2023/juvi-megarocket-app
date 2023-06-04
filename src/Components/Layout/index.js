@@ -23,7 +23,8 @@ function Layout() {
         <Route exact path="/" component={Home} />
         <Route path="/activities" component={Activities} />
         <Route exact path="/admins" component={Admins} />
-        <Route path="/admins/form" component={Form} />
+        <Route exact path="/admins/AdminForm/" component={Form} />
+        <Route path="/admins/AdminForm/:id" component={Form} />
         <Route path="/classes" component={Classes} />
         <Route path="/members" component={Members} />
         <Route path="/subscriptions" component={Subscriptions} />

@@ -34,7 +34,7 @@ const Table = (props) => {
               <button className={styles.deleteButton} onClick={() => handleDelete(admin._id)}>
                 Delete
               </button>
-              <Link to={`/admins/form/${admin._id}`}>
+              <Link to={`/admins/AdminForm/${admin._id}`}>
                 <button className={styles.editButton}>Edit</button>
               </Link>
             </td>
