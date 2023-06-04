@@ -1,12 +1,13 @@
 import React from 'react';
+import Button from '../Button';
 
 import styles from './modal-alert.module.css';
-const ModalAlert = (props) => {
+const ModalAlert = ({ text, onClick }) => {
   return (
     <div className={styles.modal}>
       <div className={styles['modal-content']}>
-        <p>{props.texto}</p>
-        <button onClick={props.onConfirmar}>Confirm</button>
+        <p>{text}</p>
+        <Button type={confirm} onClick={onClick} />
       </div>
     </div>
   );
