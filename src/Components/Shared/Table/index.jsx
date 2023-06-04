@@ -3,7 +3,6 @@ import styles from './table.module.css';
 import Button from '../Button';
 import { Link } from 'react-router-dom';
 
-
 const Table = ({ data, handleDelete, editLink }) => {
   const handleDeleteTable = (id) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
@@ -11,16 +10,16 @@ const Table = ({ data, handleDelete, editLink }) => {
       handleDelete(id);
     }
   };
-  const getActivityById=(id)=>{
+  const getActivityById = (id) => {
     fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      return(data.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+      .then((response) => response.json())
+      .then((data) => {
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   if (!data || data.length === 0) {
     return <div>No data available</div>;
   }
@@ -37,8 +36,8 @@ const Table = ({ data, handleDelete, editLink }) => {
       if (value.firstName) {
         return value.firstName;
       }
-      if(value.activity){
-       return renderCellValue(getActivityById(value._id))
+      if (value.activity) {
+        return renderCellValue(getActivityById(value._id));
       }
       return value._id;
     } else {
