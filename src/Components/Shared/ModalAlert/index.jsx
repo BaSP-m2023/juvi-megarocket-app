@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../Button';
-
 import styles from './modal-alert.module.css';
+
 const ModalAlert = ({ text, onClick }) => {
   return (
     <div className={styles.modal}>
