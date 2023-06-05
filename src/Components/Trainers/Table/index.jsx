@@ -1,4 +1,5 @@
 import styles from './table.module.css';
+import Button from '../../Shared/Button';
 
 const handleDelete = async (id, firstName, lastName) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
@@ -51,19 +52,16 @@ const Table = (props) => {
               <td className={styles.tdTrainers}>{item.phone}</td>
               <td className={styles.tdTrainers}>{item.salary}</td>
               <td className={styles.tdTrainers}>
-                <button
-                  style={{ backgroundColor: 'black' }}
+                <Button
+                  type="edit"
+                  resource="trainer"
                   onClick={() => editButton(item._id)}
-                  className={styles.Button}
-                >
-                  Edit
-                </button>
-                <button
+                ></Button>
+                <Button
+                  type="delete"
+                  resource="trainer"
                   onClick={() => handleDelete(item._id, item.firstName, item.lastName)}
-                  className={styles.Button}
-                >
-                  Delete
-                </button>
+                ></Button>
               </td>
             </tr>
           ))}

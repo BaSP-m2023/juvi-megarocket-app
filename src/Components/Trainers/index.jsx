@@ -1,5 +1,5 @@
 import Table from './Table';
-import Button from './Button';
+import Button from '../Shared/Button';
 import Form from './Form/addForm';
 import FormEdit from './Form/editForm';
 import { useState, useEffect } from 'react';
@@ -63,7 +63,7 @@ function Trainers() {
 
   return (
     <section>
-      <Button color="black" text={isFormOpen ? 'Close' : 'Add'} onClick={toggleFormAdd} />
+      <Button type="add" resource="Trainer" onClick={toggleFormAdd} />
       <Table data={trainers.data ? trainers.data : []} edit={toggleFormEdit} />
       {isFormOpen && <Form />}
       {isFormEditOpen && (
