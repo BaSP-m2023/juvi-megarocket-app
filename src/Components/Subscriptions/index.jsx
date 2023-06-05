@@ -1,7 +1,7 @@
 import styles from './subscriptions.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import Table from '../Shared';
+import SharedTable from '../Shared';
 import ModalAlert from '../Shared';
 import Button from '../Shared';
 
@@ -45,7 +45,11 @@ function Subscriptions() {
       <Link>
         <Button>Add Admin</Button>
       </Link>
-      <Table data={subscriptions} editLink={'/subscriptions/form'} handleDelete={handleDelete} />
+      <SharedTable
+        data={subscriptions}
+        editLink={'/subscriptions/form'}
+        handleDelete={handleDelete}
+      />
     </section>
   );
 }

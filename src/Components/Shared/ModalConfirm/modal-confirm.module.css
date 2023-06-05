@@ -1,0 +1,63 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  position: relative;
+  width: 600px;
+  height: 300px;
+  padding: 20px;
+  border-radius: 7.6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent h2 {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26.7463px;
+  line-height: 31px;
+  color: #0f232e;
+}
+
+.modalContent p {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26.7463px;
+  line-height: 31px;
+  color: #0f232e;
+  margin-bottom: 20px;
+}
+
+.buttonContainer button {
+  display: block;
+  padding: 10px 20px;
+  background-color: #fddba1;
+  color: #0f232e;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 180px;
+  height: 70px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24.8358px;
+  line-height: 29px;
+  text-align: center;
+  right: 30px;
+  bottom: 30px;
+}
