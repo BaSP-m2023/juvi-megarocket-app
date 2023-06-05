@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
-import { ModalAlert } from '../../Shared';
+import { ModalAlert, Button, ModalConfirm } from '../../Shared';
+import { useHistory } from 'react-router-dom';
 
 const SubForm = () => {
   const { id } = useParams();
   const [membersData, setMembers] = useState([]);
   const [classesData, setClasses] = useState([]);
-  const [showAlert, setshowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
-  const [selectedSubscription, setSelectedSubscription] = useState({
-    classes: {},
-    members: [],
-    date: ''
-  });
-
+  const history = useHistory();
   const [formData, setFormData] = useState({
-    classes: selectedSubscription.classes || '',
-    members: selectedSubscription.members || '',
-    date: selectedSubscription.date || '',
-    isActive: selectedSubscription.isActive || ''
+    classes: '',
+    members: '',
+    date: '',
+    isActive: ''
   });
+  const [showConfirm, setShowConfirm] = useState(false);
+
   useEffect(() => {
     getMembers();
     getClasses();
@@ -28,7 +26,12 @@ const SubForm = () => {
       fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`)
         .then((response) => response.json())
         .then((data) => {
-          setSelectedSubscription(data.data);
+          setFormData({
+            classes: data.classes._id,
+            members: data.members._id,
+            date: data.date,
+            isActive: data.isActive
+          });
         })
         .catch((error) => {
           setAlertText(error);
@@ -36,6 +39,12 @@ const SubForm = () => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (window.location.pathname === '/subscriptions') {
+      setShowConfirm(true);
+    }
+  }, [window.location.pathname]);
 
   const getMembers = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/member/`)
@@ -62,29 +71,25 @@ const SubForm = () => {
         showAlertHandler();
       });
   };
-  const filteredMembers = membersData.filter(
-    (member) => member._id !== selectedSubscription.members[0]
-  );
-  const filteredClasses = classesData.filter(
-    (classe) => classe._id !== selectedSubscription.classes._id
-  );
-  const onChangeInput = (e) => {
-    const value =
-      e.target.name === 'date' ? new Date(e.target.value).toISOString() : e.target.value;
 
-    setFormData({
-      ...formData,
-      [e.target.name]: value
-    });
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
   };
-  const onSubmit = (e) => {
+
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      editSubscription(formData, selectedSubscription._id);
+      await editSubscription(formData, id);
     } else {
-      addSubscription(formData);
+      await addSubscription(formData);
     }
+    history.push('/subscriptions');
   };
+
   const addSubscription = async ({ classes, members, date, isActive }) => {
     const requestData = {
       classes: classes,
@@ -93,7 +98,7 @@ const SubForm = () => {
       isActive: isActive
     };
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -102,16 +107,18 @@ const SubForm = () => {
       });
       const responseData = await response.json();
       if (responseData.error) {
-        throw new Error(responseData.Error);
+        throw new Error(responseData.error);
       } else {
         setAlertText(responseData.message);
         showAlertHandler();
+        getClasses();
       }
     } catch (error) {
-      setAlertText(error);
+      setAlertText(error.message);
       showAlertHandler();
     }
   };
+
   const editSubscription = async (updatedSubscription, subscriptionId) => {
     try {
       const response = await fetch(
@@ -128,97 +135,74 @@ const SubForm = () => {
       if (response.ok) {
         setAlertText(responseData.message);
         showAlertHandler();
+        getClasses();
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
-      ModalAlert(error);
+      setAlertText(error.message);
       showAlertHandler();
     }
   };
-  const handleFormClose = () => {
-    alert('The updated data will be displayed.');
-  };
+
   const showAlertHandler = () => {
-    setshowAlert(!showAlert);
+    setShowAlert(!showAlert);
+  };
+
+  const handleFormClose = (e) => {
+    e.preventDefault();
+    history.push('/subscriptions');
+  };
+
+  const handleConfirmClose = () => {
+    setShowConfirm(false);
   };
 
   return (
     <div>
       {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
-      <form onSubmit={onSubmit}>
+      <form className={style.form} onSubmit={onSubmit}>
         <div>
-          <div>
+          <div className={style.forms}>
             <label>ID member</label>
-            {id ? (
-              <select name="idMember" onChange={onChangeInput}>
-                <option value={selectedSubscription.members._id}>
-                  {selectedSubscription.members.firstName +
-                    ' ' +
-                    selectedSubscription.members.lastName}
+            <select name="members" value={formData.members} onChange={onChangeInput}>
+              <option value={null}>Seleccione un Miembro</option>
+              {membersData.map((member) => (
+                <option key={member._id} value={member._id}>
+                  {member.firstName} {member.lastName}
                 </option>
-                {filteredMembers.map((member) => (
-                  <option key={member._id} value={member._id}>
-                    {member.firstName} {member.lastName}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <select name="idMember" onChange={onChangeInput}>
-                <option value={null}>Seleccione un Miembro</option>
-                {membersData.map((member) => (
-                  <option key={member._id} value={member._id}>
-                    {member.firstName} {member.lastName}
-                  </option>
-                ))}
-              </select>
-            )}
+              ))}
+            </select>
           </div>
-          <div>
+          <div className={style.forms}>
             <label>Date</label>
             <input
               name="date"
               type="datetime-local"
-              value={selectedSubscription.date.slice(0, -5)}
+              value={formData.date}
               onChange={onChangeInput}
             />
           </div>
-          <div>
+          <div className={style.forms}>
             <label>ID class</label>
-            {id ? (
-              <select
-                name="idClass"
-                value={selectedSubscription.classes._id}
-                onChange={onChangeInput}
-              >
-                <option value={selectedSubscription.classes._id}>
-                  {selectedSubscription.classes.name}
+            <select name="classes" value={formData.classes} onChange={onChangeInput}>
+              <option value={null}>Choose Class</option>
+              {classesData.map((classe) => (
+                <option key={classe._id} value={classe._id}>
+                  {classe._id}
                 </option>
-                {filteredClasses.map((classe) => (
-                  <option key={classe._id} value={classe._id}>
-                    {classe._id}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <select name="idClass" onChange={onChangeInput}>
-                <option value={null}>Choose Class</option>
-                {classesData.map((classe) => (
-                  <option key={classe._id} value={classe._id}>
-                    {classe._id}
-                  </option>
-                ))}
-              </select>
-            )}
+              ))}
+            </select>
           </div>
         </div>
-        <button className={style.button} type="submit">
-          Add
-        </button>
-        <button className={style.buttonClose} onClick={handleFormClose}>
-          Close
-        </button>
+        <div className={style.buttons}>
+          <Button className={style.button} type="submit" />
+          <Button className={style.buttonClose} onClick={handleFormClose} type="cancel" />
+        </div>
       </form>
+      {showConfirm && (
+        <ModalConfirm text="¿Desea confirmar la acción?" onClose={handleConfirmClose} />
+      )}
     </div>
   );
 };
