@@ -1,6 +1,7 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
+// import { Link } from 'react-router-dom';
 
 const addTrainer = async (firstName, lastName, city, dni, email, phone, salary, password) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`, {
@@ -41,7 +42,8 @@ const Form = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!firstName || !lastName || !city || !dni || !email || !phone || !salary) {
-      alert('Pleas complete all fields');
+      alert('Please complete all fields');
+      return;
     }
     await addTrainer(firstName, lastName, city, dni, email, phone, salary, password);
     setFirstName('');
@@ -52,7 +54,16 @@ const Form = () => {
     setPhone('');
     setSalary('');
     setPassword('');
+    history.push('/trainers');
   };
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (history.location.pathname !== '/trainers/add') {
+      history.push('/trainers/add');
+    }
+  }, [history]);
   return (
     <form className={styles.addTrainer} onSubmit={onSubmit}>
       <div className={styles.column}>
@@ -139,7 +150,6 @@ const Form = () => {
           />
         </div>
       </div>
-
       <input type="submit" value="Save trainer" className={`${styles.btn} ${styles.btnBlock}`} />
     </form>
   );

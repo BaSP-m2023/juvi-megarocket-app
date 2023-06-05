@@ -3,6 +3,7 @@ import Button from '../Shared/Button';
 import Form from './Form/addForm';
 import FormEdit from './Form/editForm';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
@@ -63,7 +64,9 @@ function Trainers() {
 
   return (
     <section>
-      <Button type="add" resource="Trainer" onClick={toggleFormAdd} />
+      <Link to="/trainers/add">
+        <Button type="add" resource="Trainer" onClick={toggleFormAdd} />
+      </Link>
       <Table data={trainers.data ? trainers.data : []} edit={toggleFormEdit} />
       {isFormOpen && <Form />}
       {isFormEditOpen && (

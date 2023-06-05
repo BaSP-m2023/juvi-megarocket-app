@@ -1,5 +1,6 @@
 import styles from './table.module.css';
 import Button from '../../Shared/Button';
+// import { Link } from 'react-router-dom';
 
 const handleDelete = async (id, firstName, lastName) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
@@ -70,5 +71,6 @@ const Table = (props) => {
     </section>
   );
 };
+// <Link to={`/trainers/edit/${item._id}`}></Link>;
 
 export default Table;
