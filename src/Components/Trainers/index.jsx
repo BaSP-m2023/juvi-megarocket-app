@@ -8,6 +8,7 @@ function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isFormEditOpen, setIsFormEditOpen] = useState(false);
+  const [deletedTrainerId, setDeletedTrainerId] = useState(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -30,7 +31,7 @@ function Trainers() {
         setIsAlertOpen(true);
         setAlertMessage(error.message);
       });
-  }, []);
+  }, [deletedTrainerId]);
 
   const getEditId = (id) => {
     fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
@@ -75,6 +76,7 @@ function Trainers() {
     if (response.status === 200) {
       setIsAlertOpen(true);
       setAlertMessage('Trainer deleted');
+      setDeletedTrainerId(id);
     } else {
       setIsAlertOpen(true);
       setAlertMessage('Error deleting trainer');
