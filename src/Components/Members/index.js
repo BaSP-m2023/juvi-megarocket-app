@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import Table from './Table/index';
-import AddForm from './AddForm/index';
-import UpdateForm from './UpdateForm/index';
+import MemberForm from './MemberForm/index';
+// Shared
+import Button from '../Shared/Button';
 
 function Members() {
   const [showAddMember, setShowAddMember] = useState(false);
-  const [showUpdMember, setShowUpdMember] = useState(false);
   const [members, setMembers] = useState([]);
   const [selectId, setSelectId] = useState('');
+  const [texts, setTexts] = useState('');
 
   const getMembs = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
@@ -18,10 +19,11 @@ function Members() {
     });
     setMembers(data.data);
   };
+
   const hideForm = () => {
-    setShowUpdMember(false);
     setShowAddMember(false);
   };
+
   useEffect(() => {
     getMembs();
   }, []);
@@ -35,17 +37,17 @@ function Members() {
       });
 
       const newMemb = await response.json();
-      console.log(newMemb);
 
       if (!newMemb.error) {
         setMembers([...members, newMemb]);
+        getMembs();
         alert(newMemb.message);
         hideForm();
       } else {
         alert(newMemb.message);
       }
     } catch (error) {
-      alert(error);
+      alert(error.message);
       console.log(error);
     }
   };
@@ -56,7 +58,8 @@ function Members() {
       setMembers(members.filter((member) => member._id !== id));
       alert('Member deleted!');
     } catch (error) {
-      alert(error);
+      alert(error.message);
+      console.log(error);
     }
   };
 
@@ -88,52 +91,53 @@ function Members() {
                 : member
             )
           );
+          getMembs();
           hideForm();
         } else {
           alert(data.message);
         }
       });
     } catch (error) {
-      alert(error);
+      alert(error.message);
+      console.log(error);
     }
   };
 
   return (
     <section className={styles.container}>
-      <a className={styles.a} onClick={() => setShowAddMember(!showAddMember)}>
-        + Add Member
-      </a>
-      {showAddMember && (
-        <AddForm
-          addMember={addMember}
-          data={members}
-          showAddMember={showAddMember}
-          setAddMember={setShowAddMember}
-          showUpdMember={showUpdMember}
-          setShowUpdMember={setShowUpdMember}
-          hideForm={hideForm}
+      {!showAddMember && (
+        <Button
+          text="Add member"
+          clickAction={() => {
+            setShowAddMember(!showAddMember);
+            setTexts('Add member');
+          }}
+          disabled={false}
         />
       )}
-      {showUpdMember && (
-        <UpdateForm
-          updateMemb={updateMemb}
-          setMembers={setMembers}
+      {showAddMember && (
+        <MemberForm
           data={members}
-          showUpdMember={showUpdMember}
+          setMembers={setMembers}
+          addMember={addMember}
+          updateMemb={updateMemb}
           selectId={selectId}
           hideForm={hideForm}
+          text={texts}
         />
       )}
-      <Table
-        data={members}
-        deleteMemb={deleteMemb}
-        showAddMember={showAddMember}
-        setAddMember={setShowAddMember}
-        showUpdMember={showUpdMember}
-        setShowUpdMember={setShowUpdMember}
-        selectId={selectId}
-        setSelectId={setSelectId}
-      />
+      {!showAddMember && (
+        <Table
+          data={members}
+          deleteMemb={deleteMemb}
+          showAddMember={showAddMember}
+          setShowAddMember={setShowAddMember}
+          selectId={selectId}
+          setSelectId={setSelectId}
+          text={texts}
+          setTexts={setTexts}
+        />
+      )}
     </section>
   );
 }

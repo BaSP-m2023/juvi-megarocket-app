@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './table.module.css';
+import Button from '../../Shared/Button';
 
-const Table = ({ data, deleteMemb, setShowUpdMember, showUpdMember, setSelectId }) => {
+const Table = ({ data, deleteMemb, setShowAddMember, showAddMember, setSelectId, setTexts }) => {
   return (
     <table className={styles.table}>
       <thead>
@@ -34,17 +35,15 @@ const Table = ({ data, deleteMemb, setShowUpdMember, showUpdMember, setSelectId 
               <td className={styles.tdTrainers}>{item.isActive}</td>
               <td className={styles.tdTrainers}>{item.memberships}</td>
               <td className={styles.tdTrainers}>
-                <button
-                  onClick={() => {
-                    setShowUpdMember(!showUpdMember);
+                <Button
+                  type="modify"
+                  clickAction={() => {
+                    setTexts('Modify member');
+                    setShowAddMember(!showAddMember);
                     setSelectId(item._id);
                   }}
-                >
-                  M
-                </button>
-                <button className={styles.deleteButton} onClick={() => deleteMemb(item._id)}>
-                  X
-                </button>
+                />
+                <Button type="delete" clickAction={() => deleteMemb(item._id)} />
               </td>
             </tr>
           );

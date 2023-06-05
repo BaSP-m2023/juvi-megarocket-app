@@ -1,17 +1,38 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
 
-const Form = ({ addMember, hideForm }) => {
+const MemberForm = ({ data, addMember, updateMemb, selectId, hideForm, text }) => {
+  let selectedMember = [
+    {
+      firstName: '',
+      lastName: '',
+      dni: '',
+      phone: '',
+      email: '',
+      city: '',
+      birthDate: '',
+      postalCode: '',
+      memberships: ''
+    }
+  ];
+
+  if (text !== 'Add member') {
+    selectedMember = data.filter((item) => item._id === selectId);
+  }
+
   const [member, setMember] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    birthDate: '',
-    postalCode: '',
-    memberships: 'Only Classes'
+    firstName: selectedMember[0].firstName ?? '',
+    lastName: selectedMember[0].lastName ?? '',
+    dni: selectedMember[0].dni ?? '',
+    phone: selectedMember[0].phone ?? '',
+    email: selectedMember[0].email ?? '',
+    city: selectedMember[0].city ?? '',
+    birthDate: selectedMember[0].birthDate ?? '',
+    postalCode: selectedMember[0].postalCode ?? '',
+    memberships: selectedMember[0].memberships ?? ''
   });
 
   const onChange = (event) => {
@@ -21,29 +42,23 @@ const Form = ({ addMember, hideForm }) => {
     });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
     try {
-      addMember(member);
+      if (text === 'Add member') {
+        await addMember(member);
+      } else {
+        await updateMemb(selectId, member);
+      }
     } catch (error) {
       console.log(error);
     }
-    setMember({
-      firstName: '',
-      lastName: '',
-      dni: '',
-      phone: '',
-      email: '',
-      city: '',
-      birthDate: '',
-      postalCode: '',
-      memberships: 'Only Classes'
-    });
   };
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
+      <h1>{text}</h1>
       <div className={styles.formContainer}>
         <fieldset className={styles.fieldset}>
           <label className={styles.label}>First name</label>
@@ -53,7 +68,7 @@ const Form = ({ addMember, hideForm }) => {
             type="text"
             value={member.firstName}
             onChange={onChange}
-            placeholder="First Name"
+            placeholder="Ex: Tristan"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -64,7 +79,7 @@ const Form = ({ addMember, hideForm }) => {
             type="text"
             value={member.lastName}
             onChange={onChange}
-            placeholder="Last Name"
+            placeholder="Ex: Galvez"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -75,7 +90,7 @@ const Form = ({ addMember, hideForm }) => {
             type="number"
             value={member.dni}
             onChange={onChange}
-            placeholder="DNI"
+            placeholder="Ex: 33555888"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -86,7 +101,7 @@ const Form = ({ addMember, hideForm }) => {
             type="number"
             value={member.phone}
             onChange={onChange}
-            placeholder="Phone"
+            placeholder="Ex: 11426426"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -97,7 +112,7 @@ const Form = ({ addMember, hideForm }) => {
             type="text"
             value={member.email}
             onChange={onChange}
-            placeholder="Email"
+            placeholder="example@example.com"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -108,7 +123,7 @@ const Form = ({ addMember, hideForm }) => {
             type="text"
             value={member.city}
             onChange={onChange}
-            placeholder="City"
+            placeholder="Ex: Casilda"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -119,7 +134,6 @@ const Form = ({ addMember, hideForm }) => {
             type="date"
             value={member.birthDate}
             onChange={onChange}
-            placeholder="Birth Day"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -130,7 +144,17 @@ const Form = ({ addMember, hideForm }) => {
             type="number"
             value={member.postalCode}
             onChange={onChange}
-            placeholder="Zip"
+            placeholder="Ex: 2170"
+          />
+        </fieldset>
+        <fieldset className={styles.fieldset}>
+          <label>Password</label>
+          <input
+            className={styles.input}
+            name="password"
+            type="password"
+            onChange={console.log('password')}
+            placeholder="Password"
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -141,13 +165,11 @@ const Form = ({ addMember, hideForm }) => {
             <option value="Black">Black</option>
           </select>
         </fieldset>
-        <button type="submit">Submit</button>
-        <button type="button" onClick={hideForm}>
-          Cancel
-        </button>
+        <Button type="submit" text={'Submit'} />
+        <Button type="cancel" text={'Cancel'} clickAction={hideForm} />
       </div>
     </form>
   );
 };
 
-export default Form;
+export default MemberForm;
