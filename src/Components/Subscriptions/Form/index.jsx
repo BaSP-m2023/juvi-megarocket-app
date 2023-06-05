@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
-import ModalAlert from '../Shared';
+import { ModalAlert } from '../../Shared';
 
-const Form = () => {
+const SubForm = () => {
   const { id } = useParams();
   const [membersData, setMembers] = useState([]);
   const [classesData, setClasses] = useState([]);
@@ -176,4 +176,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default SubForm;

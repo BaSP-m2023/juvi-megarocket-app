@@ -1,16 +1,17 @@
 import styles from './subscriptions.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import SharedTable from '../Shared';
-import ModalAlert from '../Shared';
-import Button from '../Shared';
+import { SharedTable, ModalAlert, Button } from '../Shared';
 
 function Subscriptions() {
+  const [showAlert, setshowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [subscriptions, setSubscriptions] = useState([]);
 
   useEffect(() => {
     getData();
   }, []);
+
   const handleDelete = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
@@ -19,12 +20,16 @@ function Subscriptions() {
         .then((response) => response.json())
         .then((data) => {
           if (data.error === true) {
-            ModalAlert(data.message);
-          } else ModalAlert(data.message);
+            setAlertText(data.message);
+          } else {
+            setAlertText(data.message);
+          }
         });
       getData();
+      showAlertHandler();
     } catch (error) {
-      ModalAlert(error);
+      setAlertText(error);
+      showAlertHandler();
     }
   };
 
@@ -36,18 +41,24 @@ function Subscriptions() {
         setSubscriptions(subData);
       })
       .catch((error) => {
-        ModalAlert(error);
+        setAlertText(error);
+        showAlertHandler();
       });
+  };
+
+  const showAlertHandler = () => {
+    setshowAlert(!showAlert);
   };
 
   return (
     <section className={styles.container}>
-      <Link>
-        <Button>Add Admin</Button>
+      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
+      <Link to="/subscriptions/form">
+        <Button type="add" resource="Subscription"></Button>
       </Link>
       <SharedTable
         data={subscriptions}
-        editLink={'/subscriptions/form'}
+        editLink={'/subscriptions/form/'}
         handleDelete={handleDelete}
       />
     </section>
