@@ -7,7 +7,13 @@ const SubForm = () => {
   const { id } = useParams();
   const [membersData, setMembers] = useState([]);
   const [classesData, setClasses] = useState([]);
-  const [selectedSubscription, setSelectedSubscription] = useState({});
+  const [showAlert, setshowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
+  const [selectedSubscription, setSelectedSubscription] = useState({
+    classes: {},
+    members: [],
+    date: ''
+  });
 
   const [formData, setFormData] = useState({
     classes: selectedSubscription.classes || '',
@@ -25,7 +31,8 @@ const SubForm = () => {
           setSelectedSubscription(data.data);
         })
         .catch((error) => {
-          ModalAlert(error);
+          setAlertText(error);
+          showAlertHandler();
         });
     }
   }, []);
@@ -38,7 +45,8 @@ const SubForm = () => {
         setMembers(memberData);
       })
       .catch((error) => {
-        ModalAlert(error);
+        setAlertText(error);
+        showAlertHandler();
       });
   };
 
@@ -50,11 +58,12 @@ const SubForm = () => {
         setClasses(classesData);
       })
       .catch((error) => {
-        ModalAlert(error);
+        setAlertText(error);
+        showAlertHandler();
       });
   };
   const filteredMembers = membersData.filter(
-    (member) => member._id !== selectedSubscription.member._id
+    (member) => member._id !== selectedSubscription.members[0]
   );
   const filteredClasses = classesData.filter(
     (classe) => classe._id !== selectedSubscription.classes._id
@@ -95,10 +104,12 @@ const SubForm = () => {
       if (responseData.error) {
         throw new Error(responseData.Error);
       } else {
-        ModalAlert(responseData.message);
+        setAlertText(responseData.message);
+        showAlertHandler();
       }
     } catch (error) {
-      ModalAlert(error);
+      setAlertText(error);
+      showAlertHandler();
     }
   };
   const editSubscription = async (updatedSubscription, subscriptionId) => {
@@ -115,34 +126,53 @@ const SubForm = () => {
       );
       const responseData = await response.json();
       if (response.ok) {
-        ModalAlert(response.message);
+        setAlertText(responseData.message);
+        showAlertHandler();
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
       ModalAlert(error);
+      showAlertHandler();
     }
   };
   const handleFormClose = () => {
     alert('The updated data will be displayed.');
   };
+  const showAlertHandler = () => {
+    setshowAlert(!showAlert);
+  };
 
   return (
     <div>
+      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
       <form onSubmit={onSubmit}>
         <div>
           <div>
             <label>ID member</label>
-            <select name="idMember" onChange={onChangeInput}>
-              <option value={selectedSubscription.member._id}>
-                {selectedSubscription.member.firstName + ' ' + selectedSubscription.member.lastName}
-              </option>
-              {filteredMembers.map((member) => (
-                <option key={member._id} value={member._id}>
-                  {member.firstName} {member.lastName}
+            {id ? (
+              <select name="idMember" onChange={onChangeInput}>
+                <option value={selectedSubscription.members._id}>
+                  {selectedSubscription.members.firstName +
+                    ' ' +
+                    selectedSubscription.members.lastName}
                 </option>
-              ))}
-            </select>
+                {filteredMembers.map((member) => (
+                  <option key={member._id} value={member._id}>
+                    {member.firstName} {member.lastName}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <select name="idMember" onChange={onChangeInput}>
+                <option value={null}>Seleccione un Miembro</option>
+                {membersData.map((member) => (
+                  <option key={member._id} value={member._id}>
+                    {member.firstName} {member.lastName}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
           <div>
             <label>Date</label>
@@ -155,14 +185,31 @@ const SubForm = () => {
           </div>
           <div>
             <label>ID class</label>
-            <select name="idClass" value={selectedSubscription.clases._id} onChange={onChangeInput}>
-              <option value="">Choose Class</option>
-              {filteredClasses.map((classe) => (
-                <option key={classe._id} value={classe._id}>
-                  {classe._id}
+            {id ? (
+              <select
+                name="idClass"
+                value={selectedSubscription.classes._id}
+                onChange={onChangeInput}
+              >
+                <option value={selectedSubscription.classes._id}>
+                  {selectedSubscription.classes.name}
                 </option>
-              ))}
-            </select>
+                {filteredClasses.map((classe) => (
+                  <option key={classe._id} value={classe._id}>
+                    {classe._id}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <select name="idClass" onChange={onChangeInput}>
+                <option value={null}>Choose Class</option>
+                {classesData.map((classe) => (
+                  <option key={classe._id} value={classe._id}>
+                    {classe._id}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
         </div>
         <button className={style.button} type="submit">
