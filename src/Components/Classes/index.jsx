@@ -1,7 +1,7 @@
-import styles from './newclasses.module.css';
-import Table from './Table';
+import styles from './classes.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ModalAlert, SharedTable, Button } from '../Shared';
 
 const Classes = () => {
   const [classesData, setClassData] = useState([]);
@@ -17,7 +17,7 @@ const Classes = () => {
       const classData = jsonData.data;
       setClassData(classData);
     } catch (error) {
-      alert('Error getting Classes.');
+      ModalAlert(error);
     }
   };
 
@@ -28,20 +28,21 @@ const Classes = () => {
       });
       if (response.ok) {
         setClassData(classesData.filter((itemClass) => itemClass.id !== id));
-        alert('Class deleted correctly!');
+        ModalAlert(response.message);
       } else {
         throw new Error('Error deleting Class.');
       }
     } catch (error) {
-      alert('Error deleting Class: ' + error);
+      ModalAlert(error);
     }
   };
 
   return (
     <section className={styles.containerClass}>
-      <h2>Classes</h2>
-      <Link to="./Form">Add Class</Link>
-      <Table data={classesData} deleteClass={deleteClass} />
+      <Link to="/classes/form">
+        <Button type="add" resource="Class"></Button>
+      </Link>
+      <SharedTable data={classesData} editLink={'classes/form'} handleDelete={deleteClass} />
     </section>
   );
 };
