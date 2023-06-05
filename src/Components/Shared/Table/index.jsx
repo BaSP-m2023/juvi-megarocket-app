@@ -3,7 +3,7 @@ import styles from './table.module.css';
 import Button from '../Button';
 import { Link } from 'react-router-dom';
 
-const Table = ({ data, handleDelete, editLink }) => {
+const SharedTable = ({ data, handleDelete, editLink }) => {
   const handleDeleteTable = (id) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
@@ -67,4 +67,4 @@ const Table = ({ data, handleDelete, editLink }) => {
   );
 };
 
-export default Table;
+export default SharedTable;
