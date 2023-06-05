@@ -12,7 +12,7 @@ import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
 import Form from '../Trainers/Form/addForm';
-// import FormEdit from '../Trainers/Form/editForm';
+import FormEdit from '../Trainers/Form/editForm';
 // import Table from '../Trainers/Table/index';
 
 import React from 'react';
@@ -32,10 +32,10 @@ function Layout() {
         <Route path="/super-admins" component={SuperAdmins} />
         <Route path="/trainers" exact component={Trainers} />
         <Route path="/trainers/add" component={Form} />
+        <Route path="/trainers/edit/:id" component={FormEdit} />
       </Switch>
       <Footer />
     </div>
   );
 }
-/*         <Route path="/trainers/edit/:id" component={FormEdit} /> */
 export default Layout;

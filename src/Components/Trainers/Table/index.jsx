@@ -1,6 +1,7 @@
 import styles from './table.module.css';
 import Button from '../../Shared/Button';
-// import { Link } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
+import { Link } from 'react-router-dom';
 
 const handleDelete = async (id, firstName, lastName) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
@@ -22,9 +23,9 @@ const Table = (props) => {
     return <p>There are no elements to show.</p>;
   }
 
-  const editButton = (id) => {
+  /*const editButton = (id) => {
     props.edit(id);
-  };
+  };*/
 
   return (
     <section className={styles.classContainer}>
@@ -53,11 +54,13 @@ const Table = (props) => {
               <td className={styles.tdTrainers}>{item.phone}</td>
               <td className={styles.tdTrainers}>{item.salary}</td>
               <td className={styles.tdTrainers}>
-                <Button
-                  type="edit"
-                  resource="trainer"
-                  onClick={() => editButton(item._id)}
-                ></Button>
+                <Link to={`/trainers/edit/${item._id}`}>
+                  <Button
+                    type="edit"
+                    resource="trainer"
+                    // onClick={() => editButton(item._id)}
+                  ></Button>
+                </Link>
                 <Button
                   type="delete"
                   resource="trainer"
@@ -71,6 +74,5 @@ const Table = (props) => {
     </section>
   );
 };
-// <Link to={`/trainers/edit/${item._id}`}></Link>;
 
 export default Table;

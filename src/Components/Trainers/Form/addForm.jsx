@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
+// import { ModalAlert } from '../../Shared/ModalAlert';
 // import { Link } from 'react-router-dom';
 
 const addTrainer = async (firstName, lastName, city, dni, email, phone, salary, password) => {
@@ -38,6 +40,10 @@ const Form = () => {
   const [phone, setPhone] = useState('');
   const [salary, setSalary] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleCancel = () => {
+    history.push('/trainers');
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -151,6 +157,9 @@ const Form = () => {
         </div>
       </div>
       <input type="submit" value="Save trainer" className={`${styles.btn} ${styles.btnBlock}`} />
+      <Button type="cancel" onClick={handleCancel}>
+        Cancel
+      </Button>
     </form>
   );
 };

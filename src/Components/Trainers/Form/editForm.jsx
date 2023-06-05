@@ -1,15 +1,60 @@
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import styles from './form.module.css';
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import Button from '../../Shared/Button';
 
-const Form = (props) => {
+const Form = () => {
+  const history = useHistory();
+  const [initialFormData, setInitialFormData] = useState({});
+  const [selectedTrainer, setSelectedTrainer] = useState({});
+  const [formData, setFormData] = useState({
+    firstName: selectedTrainer.firstName || '',
+    lastName: selectedTrainer.lastName || '',
+    dni: selectedTrainer.dni || '',
+    phone: selectedTrainer.phone || '',
+    email: selectedTrainer.email || '',
+    city: selectedTrainer.city || '',
+    password: selectedTrainer.password || '',
+    salary: selectedTrainer.salary || ''
+  });
+  const { id } = useParams();
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSelectedTrainer(data.data);
+        setInitialFormData(data.data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, []);
+  useEffect(() => {
+    setFormData({
+      firstName: selectedTrainer.firstName || '',
+      lastName: selectedTrainer.lastName || '',
+      dni: selectedTrainer.dni || '',
+      phone: selectedTrainer.phone || '',
+      email: selectedTrainer.email || '',
+      city: selectedTrainer.city || '',
+      password: selectedTrainer.password || '',
+      salary: selectedTrainer.salary || ''
+    });
+  }, [selectedTrainer]);
   const handleChange = (e) => {
-    props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleCancel = () => {
+    setFormData(initialFormData);
+    history.push('/trainers');
   };
   const onSubmit = async (e) => {
     e.preventDefault();
-    await editTrainer(props.formData);
+    await editTrainer(formData);
   };
   const editTrainer = async (formData) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${formData._id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -28,7 +73,8 @@ const Form = (props) => {
     });
     if (response.status === 200) {
       alert(`The trainer named:${formData.lastName} ${formData.firstName} was edited successfully`);
-      props.close();
+      //close();
+      history.push('/trainers');
     } else {
       const error = await response.json();
       alert(error.message);
@@ -44,7 +90,7 @@ const Form = (props) => {
             type="text"
             name="firstName"
             placeholder="Add First Name"
-            value={props.formData.firstName}
+            value={formData.firstName}
             onChange={handleChange}
           />
         </div>
@@ -55,7 +101,7 @@ const Form = (props) => {
             type="text"
             name="lastName"
             placeholder="Add Last Name"
-            value={props.formData.lastName}
+            value={formData.lastName}
             onChange={handleChange}
           />
         </div>
@@ -66,7 +112,7 @@ const Form = (props) => {
             type="text"
             name="city"
             placeholder="Add City"
-            value={props.formData.city}
+            value={formData.city}
             onChange={handleChange}
           />
         </div>
@@ -77,7 +123,7 @@ const Form = (props) => {
             type="text"
             name="dni"
             placeholder="Add Dni"
-            value={props.formData.dni}
+            value={formData.dni}
             onChange={handleChange}
           />
         </div>
@@ -90,7 +136,7 @@ const Form = (props) => {
             type="text"
             name="email"
             placeholder="Add Email"
-            value={props.formData.email}
+            value={formData.email}
             onChange={handleChange}
           />
         </div>
@@ -101,7 +147,7 @@ const Form = (props) => {
             type="text"
             name="phone"
             placeholder="Add Phone"
-            value={props.formData.phone}
+            value={formData.phone}
             onChange={handleChange}
           />
         </div>
@@ -112,7 +158,7 @@ const Form = (props) => {
             type="text"
             name="salary"
             placeholder="Add Salary"
-            value={props.formData.salary}
+            value={formData.salary}
             onChange={handleChange}
           />
         </div>
@@ -123,12 +169,15 @@ const Form = (props) => {
             type="password"
             name="password"
             placeholder="Add password"
-            value={props.formData.password}
+            value={formData.password}
             onChange={handleChange}
           />
         </div>
       </div>
       <input type="submit" value="Edit trainer" className={`${styles.btn} ${styles.btnBlock}`} />
+      <Button type="cancel" onClick={handleCancel}>
+        Cancel
+      </Button>
     </form>
   );
 };
