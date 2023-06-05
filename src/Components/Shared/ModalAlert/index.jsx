@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../Button';
+import { Button } from '../../Shared';
 import styles from './modal-alert.module.css';
 
 const ModalAlert = ({ text, onClick }) => {
@@ -7,7 +7,7 @@ const ModalAlert = ({ text, onClick }) => {
     <div className={styles.modal}>
       <div className={styles['modal-content']}>
         <p>{text}</p>
-        <Button type={confirm} onClick={onClick} />
+        <Button type="confirm" onClick={onClick} />
       </div>
     </div>
   );
