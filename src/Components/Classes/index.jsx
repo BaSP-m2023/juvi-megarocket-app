@@ -42,7 +42,7 @@ const Classes = () => {
       <Link to="/classes/form">
         <Button type="add" resource="Class"></Button>
       </Link>
-      <SharedTable data={classesData} editLink={'classes/form'} handleDelete={deleteClass} />
+      <SharedTable data={classesData} editLink={'classes/form/'} handleDelete={deleteClass} />
     </section>
   );
 };

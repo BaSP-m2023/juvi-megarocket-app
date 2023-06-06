@@ -24,7 +24,7 @@ function Layout() {
         <Route path="/activities" component={Activities} />
         <Route path="/admins" component={Admins} />
         <Route exact path="/classes" component={Classes} />
-        <Route exact path="/classes/form" component={FormClasses} />
+        <Route exact path="/classes/form/" component={FormClasses} />
         <Route path="/classes/form/:id" component={FormClasses} />
         <Route path="/members" component={Members} />
         <Route path="/subscriptions" component={Subscriptions} />
