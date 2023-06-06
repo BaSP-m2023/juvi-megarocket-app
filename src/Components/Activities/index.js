@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './activities.module.css';
 import { Link } from 'react-router-dom';
-import { SharedTable, Button } from '../Shared';
+import { Button, SharedTable, ModalAlert } from '../Shared';
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState('');
 
   const getActivities = async () => {
     try {
@@ -13,7 +15,8 @@ const Activities = () => {
       const data = responseData.data;
       setActivities(data);
     } catch (error) {
-      alert('Error fetching activities: ' + error);
+      setModalText('Error fetching activities: ' + error);
+      setShowModal(true);
     }
   };
 
@@ -29,27 +32,36 @@ const Activities = () => {
 
       if (response.ok) {
         setActivities(activities.filter((activity) => activity._id !== _id));
-        alert('Activity deleted successfully!');
+        setModalText('Activity deleted successfully!');
+        setShowModal(true);
       } else {
         throw new Error('Error deleting activity');
       }
     } catch (error) {
-      alert('Error deleting activity: ' + error);
+      setModalText('Error deleting activity: ' + error);
+      setShowModal(true);
     }
   };
 
+  const closeModal = () => {
+    setShowModal(true);
+  };
+
   return (
-    <section className={styles.container}>
-      <h2 className={styles.titleActivities}>Activities</h2>
-      <Link to="/activities/ActivitiesForm">
-        <Button type="add" resource="Activity" />
-      </Link>
-      <SharedTable
-        data={activities}
-        editLink={'activities/ActivitiesForm/'}
-        handleDelete={deleteItem}
-      />
-    </section>
+    <>
+      <section className={styles.container}>
+        <h2 className={styles.titleActivities}>Activities</h2>
+        <Link to="/activities/ActivitiesForm">
+          <Button type="add" resource="Activity" />
+        </Link>
+        <SharedTable
+          data={activities}
+          editLink={'activities/ActivitiesForm/'}
+          handleDelete={deleteItem}
+        />
+      </section>
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+    </>
   );
 };
 
