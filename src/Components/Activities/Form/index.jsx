@@ -1,28 +1,87 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
+import { Button } from '../../Shared';
+// import { Input } from '../../Shared';
 
-const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
+const Form = ({ activities, setActivities }) => {
+  const { id } = useParams();
+  const history = useHistory();
+  const [selectedActivity, setSelectedActivity] = useState({});
   const [formData, setFormData] = useState({
-    name: '',
-    description: ''
+    name: selectedActivity.name || '',
+    description: selectedActivity.description || ''
   });
-  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    if (selectedActivity) {
-      setEditMode(true);
-      setFormData({
-        name: selectedActivity.name,
-        description: selectedActivity.description
-      });
-    } else {
-      setEditMode(false);
-      setFormData({
-        name: '',
-        description: ''
-      });
+    if (id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/activity/`)
+        .then((response) => response.json())
+        .then((data) => {
+          setSelectedActivity(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
+  }, []);
+  useEffect(() => {
+    setFormData({
+      name: selectedActivity.name || '',
+      description: selectedActivity.description || ''
+    });
   }, [selectedActivity]);
+
+  const addActivity = async ({ name, description }) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, description })
+      });
+      const responseData = await response.json();
+
+      if (response.ok) {
+        const newActivity = responseData.data;
+        setActivities([...activities, newActivity]);
+        setSelectedActivity(null);
+        alert('Activity added successfully!');
+      } else {
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      alert('Error creating activity: ' + error);
+    }
+  };
+
+  const editActivity = async (updatedActivity, _id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedActivity)
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const updatedData = responseData.data;
+        setActivities(
+          activities.map((activity) => (activity._id === updatedData._id ? updatedData : activity))
+        );
+        setSelectedActivity(null);
+        alert('Activity updated successfully!');
+      } else {
+        const responseData = await response.json();
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      alert('Error updating activity: ' + error);
+    }
+  };
 
   const onChange = (e) => {
     setFormData({
@@ -33,7 +92,7 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (editMode) {
+    if (id) {
       editActivity(formData, selectedActivity._id);
     } else {
       addActivity(formData);
@@ -42,38 +101,22 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
       name: '',
       description: ''
     });
-    setShowForm(false);
   };
 
-  const buttonText = editMode ? 'Update' : 'Add';
+  const buttonText = id ? 'Update' : 'Add';
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
       <div className={styles.subContainer}>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Name</label>
-          <input
-            className={styles.input}
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Description</label>
-          <input
-            className={styles.input}
-            name="description"
-            type="text"
-            value={formData.description}
-            onChange={onChange}
-          />
-        </div>
+        <input name="name" type="text" value={formData.name} onChange={onChange} />
+        <input name="description" type="text" value={formData.description} onChange={onChange} />
       </div>
-      <button className={styles.button} type="submit">
+      <Button className={styles.button} type="confirm">
         {buttonText}
-      </button>
+      </Button>
+      <Button className={styles.cancelButton} type="cancel" onClick={() => history.goBack()}>
+        Cancel
+      </Button>
     </form>
   );
 };

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './activities.module.css';
-import Table from './Table';
-import Form from './Form';
+import { Link } from 'react-router-dom';
+import { SharedTable, Button } from '../Shared';
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [selectedActivity, setSelectedActivity] = useState(null);
 
   const getActivities = async () => {
     try {
@@ -22,62 +20,6 @@ const Activities = () => {
   useEffect(() => {
     getActivities();
   }, []);
-
-  const addActivity = async ({ name, description }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, description })
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const newActivity = responseData.data;
-        setActivities([...activities, newActivity]);
-        setShowForm(false);
-        setSelectedActivity(null);
-        alert('Activity added successfully!');
-      } else {
-        const responseData = await response.json();
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      setShowForm(true);
-      alert('Error creating activity: ' + error);
-    }
-  };
-
-  const editActivity = async (updatedActivity, _id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedActivity)
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const updatedData = responseData.data;
-        setActivities(
-          activities.map((activity) => (activity._id === updatedData._id ? updatedData : activity))
-        );
-        setShowForm(false);
-        setSelectedActivity(null);
-        alert('Activity updated successfully!');
-      } else {
-        const responseData = await response.json();
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      setShowForm(true);
-      alert('Error updating activity: ' + error);
-    }
-  };
 
   const deleteItem = async (_id) => {
     try {
@@ -96,28 +38,17 @@ const Activities = () => {
     }
   };
 
-  const handleEdit = (activity) => {
-    setSelectedActivity(activity);
-    setShowForm(true);
-  };
-
   return (
     <section className={styles.container}>
       <h2 className={styles.titleActivities}>Activities</h2>
-      {!showForm && (
-        <button className={styles.addButton} onClick={() => setShowForm(true)}>
-          Add Activity
-        </button>
-      )}
-      {showForm && (
-        <Form
-          addActivity={addActivity}
-          editActivity={editActivity}
-          selectedActivity={selectedActivity}
-          setShowForm={setShowForm}
-        />
-      )}
-      <Table data={activities} deleteItem={deleteItem} editActivity={handleEdit} />
+      <Link to="/activities/ActivitiesForm">
+        <Button type="add" resource="Activity" />
+      </Link>
+      <SharedTable
+        data={activities}
+        editLink={'activities/ActivitiesForm/'}
+        handleDelete={deleteItem}
+      />
     </section>
   );
 };
