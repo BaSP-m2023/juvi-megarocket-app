@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './table.module.css';
 import { Button, ModalConfirm } from '../../Shared';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 const SharedTable = ({ data, handleDelete, editLink }) => {
-  const [showAlert, setshowAlert] = useState(false);
-
   if (!data || data.length === 0) {
     return <div>No data available</div>;
   }
+
   const excludedProperties = ['_id', 'isActive', '__v'];
   const propertyNames = Object.keys(data[0]).filter(
     (propertyName) => !excludedProperties.includes(propertyName)
@@ -34,16 +32,6 @@ const SharedTable = ({ data, handleDelete, editLink }) => {
       return value;
     }
   };
-  const confirmDeleteHandler = (id) => {
-    handleDelete(id);
-    showAlertHandler();
-  };
-  const cancelDeleteHandler = () => {
-    showAlertHandler();
-  };
-  const showAlertHandler = () => {
-    setshowAlert(!showAlert);
-  };
 
   return (
     <div>
@@ -58,29 +46,57 @@ const SharedTable = ({ data, handleDelete, editLink }) => {
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index}>
-              {propertyNames.map((propertyName) => (
-                <td key={propertyName}>{renderCellValue(item[propertyName])}</td>
-              ))}
-              <td>
-                <Link to={editLink + item._id}>
-                  <Button type="edit" />
-                </Link>
-                <Button type="delete" onClick={showAlertHandler} />
-                {showAlert && (
-                  <ModalConfirm
-                    title="Confirm"
-                    message="Are you sure you want to delete this item?"
-                    onConfirm={() => confirmDeleteHandler(item._id)}
-                    onCancel={cancelDeleteHandler}
-                  />
-                )}
-              </td>
-            </tr>
+            <TableRow
+              key={index}
+              item={item}
+              propertyNames={propertyNames}
+              editLink={editLink}
+              handleDelete={handleDelete}
+              renderCellValue={renderCellValue}
+            />
           ))}
         </tbody>
       </table>
     </div>
+  );
+};
+
+const TableRow = ({ item, propertyNames, editLink, handleDelete, renderCellValue }) => {
+  const [showAlert, setshowAlert] = useState(false);
+
+  const confirmDeleteHandler = (id) => {
+    handleDelete(id);
+    showAlertHandler();
+  };
+
+  const cancelDeleteHandler = () => {
+    showAlertHandler();
+  };
+
+  const showAlertHandler = () => {
+    setshowAlert(!showAlert);
+  };
+
+  return (
+    <tr>
+      {propertyNames.map((propertyName) => (
+        <td key={propertyName}>{renderCellValue(item[propertyName])}</td>
+      ))}
+      <td>
+        <Link to={editLink + item._id}>
+          <Button type="edit" />
+        </Link>
+        <Button type="delete" onClick={showAlertHandler} />
+        {showAlert && (
+          <ModalConfirm
+            title="Confirm"
+            message="Are you sure you want to delete this item?"
+            onConfirm={() => confirmDeleteHandler(item._id)}
+            onCancel={cancelDeleteHandler}
+          />
+        )}
+      </td>
+    </tr>
   );
 };
 
