@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const MemberForm = ({ data, addMember, updateMemb, selectId, hideForm, text }) => {
   let selectedMember = [
@@ -165,8 +166,12 @@ const MemberForm = ({ data, addMember, updateMemb, selectId, hideForm, text }) =
             <option value="Black">Black</option>
           </select>
         </fieldset>
-        <Button type="submit" text={'Submit'} />
-        <Button type="cancel" text={'Cancel'} clickAction={hideForm} />
+        <Link to="/">
+          <Button type={'confirm'} resource={'Member'} onClick={onSubmit} />
+        </Link>
+        <Link to="/">
+          <Button type={'cancel'} resource={'Member'} />
+        </Link>
       </div>
     </form>
   );

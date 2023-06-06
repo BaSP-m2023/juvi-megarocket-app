@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './members.module.css';
-import Table from './Table/index';
 import MemberForm from './MemberForm/index';
 // Shared
 import Button from '../Shared/Button';
+import Table from '../Shared/Table';
 
 function Members() {
-  const [showAddMember, setShowAddMember] = useState(false);
   const [members, setMembers] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [selectId, setSelectId] = useState('');
-  const [texts, setTexts] = useState('');
+  const [buttonType, setButtonType] = useState('add');
 
   const getMembs = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
@@ -18,10 +19,6 @@ function Members() {
       item.birthDate = item.birthDate.substring(0, 10);
     });
     setMembers(data.data);
-  };
-
-  const hideForm = () => {
-    setShowAddMember(false);
   };
 
   useEffect(() => {
@@ -42,7 +39,6 @@ function Members() {
         setMembers([...members, newMemb]);
         getMembs();
         alert(newMemb.message);
-        hideForm();
       } else {
         alert(newMemb.message);
       }
@@ -65,6 +61,7 @@ function Members() {
 
   const updateMemb = async (id, member) => {
     try {
+      setSelectId(id);
       await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
@@ -92,7 +89,6 @@ function Members() {
             )
           );
           getMembs();
-          hideForm();
         } else {
           alert(data.message);
         }
@@ -105,39 +101,13 @@ function Members() {
 
   return (
     <section className={styles.container}>
-      {!showAddMember && (
-        <Button
-          text="Add member"
-          clickAction={() => {
-            setShowAddMember(!showAddMember);
-            setTexts('Add member');
-          }}
-          disabled={false}
-        />
-      )}
-      {showAddMember && (
-        <MemberForm
-          data={members}
-          setMembers={setMembers}
-          addMember={addMember}
-          updateMemb={updateMemb}
-          selectId={selectId}
-          hideForm={hideForm}
-          text={texts}
-        />
-      )}
-      {!showAddMember && (
-        <Table
-          data={members}
-          deleteMemb={deleteMemb}
-          showAddMember={showAddMember}
-          setShowAddMember={setShowAddMember}
-          selectId={selectId}
-          setSelectId={setSelectId}
-          text={texts}
-          setTexts={setTexts}
-        />
-      )}
+      <Link to="members/form">
+        <Button type={buttonType} resource={'Member'} onClick={() => setButtonType('cancel')} />
+      </Link>
+      <Table data={members} handleDelete={deleteMemb} editLink={'members/form/'} />
+      <Table data={members} handleDelete={deleteMemb} editLink={'members/form/'} />
+      <MemberForm data={members} setMembers={setMembers} addMember={addMember} />
+      <MemberForm data={members} updateMemb={updateMemb} selectId={selectId} />
     </section>
   );
 }

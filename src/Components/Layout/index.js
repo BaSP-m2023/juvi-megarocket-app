@@ -6,6 +6,9 @@ import Subscriptions from '../Subscriptions';
 import SuperAdmins from '../SuperAdmins';
 import Trainers from '../Trainers';
 
+//Member
+import memberForm from '../Members/MemberForm';
+
 import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
@@ -23,7 +26,10 @@ function Layout() {
         <Route path="/activities" component={Activities} />
         <Route path="/admins" component={Admins} />
         <Route path="/classes" component={Classes} />
-        <Route path="/members" component={Members} />
+        <Route exact path="/members" component={Members} />
+        <Route exact path="/members/table" component={Members} />
+        <Route exact path="/members/form" component={memberForm} />
+        <Route path="/members/form/:id" component={memberForm} />
         <Route path="/subscriptions" component={Subscriptions} />
         <Route path="/super-admins" component={SuperAdmins} />
         <Route path="/trainers" component={Trainers} />
