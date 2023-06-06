@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import Table from './Table/index.jsx';
 import styles from './admins.module.css';
 import { Link } from 'react-router-dom';
 import Button from '../Shared/Button/index.jsx';
 import { ModalAlert, ModalConfirm } from '../Shared/index.jsx';
+import { SharedTable } from '../Shared';
+
 function Admins() {
   const [adminsData, setAdminsData] = useState([]);
   const [modalText, setModalText] = useState('');
@@ -60,7 +61,7 @@ function Admins() {
           Add Admin
         </Button>
       </Link>
-      <Table data={adminsData} deleteAdmin={onDelete} />
+      <SharedTable data={adminsData} handleDelete={onDelete} editLink="/admins/AdminForm/" />
       {isModalDeleteOpen && (
         <ModalConfirm
           onConfirm={deleteAdmin}
