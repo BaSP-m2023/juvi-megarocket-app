@@ -1,7 +1,7 @@
 import styles from './classes.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ModalAlert, SharedTable, Button } from '../Shared';
+import { SharedTable, Button } from '../Shared';
 
 const Classes = () => {
   const [classesData, setClassData] = useState([]);
@@ -17,7 +17,7 @@ const Classes = () => {
       const classData = jsonData.data;
       setClassData(classData);
     } catch (error) {
-      ModalAlert(error);
+      alert(error);
     }
   };
 
@@ -28,12 +28,11 @@ const Classes = () => {
       });
       if (response.ok) {
         setClassData(classesData.filter((itemClass) => itemClass.id !== id));
-        ModalAlert(response.message);
       } else {
         throw new Error('Error deleting Class.');
       }
     } catch (error) {
-      ModalAlert(error);
+      alert(error);
     }
   };
 

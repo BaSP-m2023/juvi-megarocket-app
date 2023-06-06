@@ -3,6 +3,7 @@ import styles from './classesForm.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import { Input } from '../../Shared';
+import ModalAlert from '../../Shared/ModalAlert';
 
 const FormClasses = () => {
   const { id } = useParams();
@@ -16,6 +17,9 @@ const FormClasses = () => {
     hour: '',
     slots: ''
   });
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState('');
+  const [isTrue, setIsTrue] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -40,8 +44,8 @@ const FormClasses = () => {
     });
   }, [selectedClass]);
 
-  const onChangeInput = async (e) => {
-    await setFormData({
+  const onChangeInput = (e) => {
+    setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
@@ -63,11 +67,13 @@ const FormClasses = () => {
       } else {
         const newClass = responseData.data;
         setClassData([...classesData, newClass]);
-        alert('Class created correctly!');
+        setModalText('Class created correctly!');
+        setShowModal(true);
       }
     } catch (error) {
       console.log(error);
-      alert('Error creating Class: ' + error);
+      setModalText('Error creating Class: ' + error);
+      setShowModal(true);
     }
   };
 
@@ -88,12 +94,15 @@ const FormClasses = () => {
             itemClass._id === updatedClassData._id ? updatedClassData : itemClass
           )
         );
-        alert('Class updated correctly!');
+        setIsTrue(true);
+        setModalText('Class updated correctly!');
+        setShowModal(true);
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
-      alert('Error updating Class: ' + error);
+      setModalText('Error updating Class: ' + error);
+      setShowModal(true);
     }
   };
 
@@ -101,10 +110,8 @@ const FormClasses = () => {
     e.preventDefault();
     if (id) {
       editClass(formData, selectedClass._id);
-      history.goBack();
     } else {
       addClass(formData);
-      history.goBack();
     }
   };
 
@@ -113,8 +120,12 @@ const FormClasses = () => {
     history.goBack();
   };
 
-  console.log(selectedClass);
-  console.log(selectedClass.activity?._id);
+  const closeModal = () => {
+    setShowModal(false);
+    if (isTrue) {
+      history.goBack();
+    }
+  };
 
   return (
     <>
@@ -124,7 +135,7 @@ const FormClasses = () => {
             <Input
               labelText="ID Activity"
               onChange={onChangeInput}
-              type={'text'}
+              type="text"
               name="activity"
               value={formData.activity}
             />
@@ -133,7 +144,7 @@ const FormClasses = () => {
             <Input
               labelText="ID Trainer"
               onChange={onChangeInput}
-              type={'text'}
+              type="text"
               name="trainer"
               value={formData.trainer}
             />
@@ -142,7 +153,7 @@ const FormClasses = () => {
             <Input
               labelText="Day"
               onChange={onChangeInput}
-              type={'text'}
+              type="text"
               name="day"
               value={formData.day}
             />
@@ -151,7 +162,7 @@ const FormClasses = () => {
             <Input
               labelText="Hour"
               onChange={onChangeInput}
-              type={'text'}
+              type="text"
               name="hour"
               value={formData.hour}
             />
@@ -160,15 +171,16 @@ const FormClasses = () => {
             <Input
               labelText="Slots"
               onChange={onChangeInput}
-              type={'text'}
+              type="text"
               name="slots"
               value={formData.slots}
             />
           </div>
         </div>
-        <Button type="confirm" onClick={onSubmit}></Button>
-        <Button type="cancel" onClick={onSubmitCancel}></Button>
+        <Button type="confirm" onClick={onSubmit} />
+        <Button type="cancel" onClick={onSubmitCancel} />
       </form>
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </>
   );
 };
