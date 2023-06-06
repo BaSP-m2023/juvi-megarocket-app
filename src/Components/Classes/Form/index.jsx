@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styles from './classesForm.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
-// import Button from '../../Shared';
 
 const FormClasses = () => {
   const { id } = useParams();
@@ -91,8 +90,10 @@ const FormClasses = () => {
     e.preventDefault();
     if (id) {
       editClass(formData, selectedClass._id);
+      history.goBack();
     } else {
       addClass(formData);
+      history.goBack();
     }
   };
 
