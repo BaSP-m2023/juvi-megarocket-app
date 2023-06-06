@@ -8,3 +8,16 @@
 .container a {
   text-decoration: none;
 }
+.titleAdmin {
+  display: flex;
+  width: 64vw;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleAdmin button {
+  margin-left: auto;
+}
+.titleAdmin h2 {
+  align-self: center;
+}

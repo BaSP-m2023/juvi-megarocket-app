@@ -55,12 +55,14 @@ function Admins() {
 
   return (
     <section className={styles.container}>
-      <h2>Admins</h2>
-      <Link to="/admins/AdminForm">
-        <Button type="add" resource="admin">
-          Add Admin
-        </Button>
-      </Link>
+      <div className={styles.titleAdmin}>
+        <h2>Admins</h2>
+        <Link to="/admins/AdminForm">
+          <Button type="add" resource="admin">
+            Add Admin
+          </Button>
+        </Link>
+      </div>
       <SharedTable data={adminsData} handleDelete={onDelete} editLink="/admins/AdminForm/" />
       {isModalDeleteOpen && (
         <ModalConfirm
