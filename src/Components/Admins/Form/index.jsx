@@ -4,6 +4,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import ModalAlert from '../../Shared/ModalAlert/index.jsx';
 import { Input } from '../../Shared';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Form = () => {
   const [modalText, setModalText] = useState('');
@@ -21,9 +23,14 @@ const Form = () => {
     password: selectedAdmin.password || ''
   });
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(!showPassword);
   };
   const history = useHistory();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     if (id) {
@@ -182,13 +189,20 @@ const Form = () => {
           </div>
           <div className={styles.inputDiv}>
             <label>Password</label>
-            <Input
-              className={styles.input}
-              type="text"
-              name="password"
-              value={formData.password}
-              onChange={onChange}
-            />
+            <div className={styles.password}>
+              <Input
+                className={styles.input}
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={onChange}
+              />
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className={styles.showPasswordIcon}
+                onClick={togglePassword}
+              />
+            </div>
           </div>
         </div>
         <Button className={styles.addButton} type="confirm">
