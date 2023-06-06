@@ -3,6 +3,7 @@ import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import ModalAlert from '../../Shared/ModalAlert/index.jsx';
+import { Input } from '../../Shared';
 
 const Form = () => {
   const [modalText, setModalText] = useState('');
@@ -125,17 +126,11 @@ const Form = () => {
         <div className={styles.divContainer}>
           <div className={styles.inputDiv}>
             <label>First Name</label>
-            <input
-              className={styles.input}
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={onChange}
-            />
+            <Input name="firstName" type="text" value={formData.firstName} onChange={onChange} />
           </div>
           <div className={styles.inputDiv}>
             <label>Last Name</label>
-            <input
+            <Input
               className={styles.input}
               type="text"
               name="lastName"
@@ -145,7 +140,7 @@ const Form = () => {
           </div>
           <div className={styles.inputDiv}>
             <label>DNI</label>
-            <input
+            <Input
               className={styles.input}
               type="text"
               name="dni"
@@ -155,7 +150,7 @@ const Form = () => {
           </div>
           <div className={styles.inputDiv}>
             <label>Phone</label>
-            <input
+            <Input
               className={styles.input}
               type="text"
               name="phone"
@@ -165,7 +160,7 @@ const Form = () => {
           </div>
           <div className={styles.inputDiv}>
             <label>Email</label>
-            <input
+            <Input
               className={styles.input}
               type="text"
               name="email"
@@ -175,7 +170,7 @@ const Form = () => {
           </div>
           <div className={styles.inputDiv}>
             <label>City</label>
-            <input
+            <Input
               className={styles.input}
               type="text"
               name="city"
@@ -185,7 +180,7 @@ const Form = () => {
           </div>
           <div className={styles.inputDiv}>
             <label>Password</label>
-            <input
+            <Input
               className={styles.input}
               type="text"
               name="password"
