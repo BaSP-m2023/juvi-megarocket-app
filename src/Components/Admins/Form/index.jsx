@@ -63,13 +63,15 @@ const Form = () => {
       if (!responseData.error) {
         setModalText('Admin created correctly!');
         setIsModalOpen(true);
-        history.goBack();
+        setTimeout(() => {
+          history.goBack();
+        }, 2000);
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
       console.log(error);
-      setModalText('Error creating admin: ' + error);
+      setModalText('Error creating admin: ' + error.message);
       setIsModalOpen(true);
     }
   };
@@ -96,8 +98,8 @@ const Form = () => {
       } else {
         throw new Error(responseData.message);
       }
-    } catch (error) {
-      setModalText('Error updating Admin: ' + error);
+    } catch (errors) {
+      setModalText('Error updating Admin: ' + errors.message);
       setIsModalOpen(true);
     }
   };
