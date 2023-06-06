@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styles from './classesForm.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
+import { Input } from '../../Shared';
 
 const FormClasses = () => {
   const { id } = useParams();
+  const history = useHistory();
   const [classesData, setClassData] = useState([]);
   const [selectedClass, setSelectedClass] = useState({});
   const [formData, setFormData] = useState({
-    activity: selectedClass.activity || '',
-    trainer: selectedClass.trainer || '',
-    day: selectedClass.day || '',
-    hour: selectedClass.hour || '',
-    slots: selectedClass.slots || ''
+    activity: '',
+    trainer: '',
+    day: '',
+    hour: '',
+    slots: ''
   });
-  const history = useHistory();
 
   useEffect(() => {
     if (id) {
@@ -27,7 +28,17 @@ const FormClasses = () => {
           console.log(error);
         });
     }
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    setFormData({
+      activity: selectedClass.activity?._id || '',
+      trainer: selectedClass.trainer?._id || '',
+      day: selectedClass.day || '',
+      hour: selectedClass.hour || '',
+      slots: selectedClass.slots || ''
+    });
+  }, [selectedClass]);
 
   const onChangeInput = async (e) => {
     await setFormData({
@@ -102,58 +113,56 @@ const FormClasses = () => {
     history.goBack();
   };
 
+  console.log(selectedClass);
+  console.log(selectedClass.activity?._id);
+
   return (
     <>
       <form className={styles.formClasses}>
         <div className={styles.formContainer}>
           <div className={styles.inputClass}>
-            <label>Activity</label>
-            <input
-              className={styles.input}
-              type="text"
+            <Input
+              labelText="ID Activity"
+              onChange={onChangeInput}
+              type={'text'}
               name="activity"
               value={formData.activity}
-              onChange={onChangeInput}
             />
           </div>
           <div className={styles.inputClass}>
-            <label>Trainer</label>
-            <input
-              className={styles.input}
-              type="text"
+            <Input
+              labelText="ID Trainer"
+              onChange={onChangeInput}
+              type={'text'}
               name="trainer"
               value={formData.trainer}
-              onChange={onChangeInput}
             />
           </div>
           <div className={styles.inputClass}>
-            <label>Day</label>
-            <input
-              className={styles.input}
-              type="text"
+            <Input
+              labelText="Day"
+              onChange={onChangeInput}
+              type={'text'}
               name="day"
               value={formData.day}
-              onChange={onChangeInput}
             />
           </div>
           <div className={styles.inputClass}>
-            <label>Hour</label>
-            <input
-              className={styles.input}
-              type="text"
+            <Input
+              labelText="Hour"
+              onChange={onChangeInput}
+              type={'text'}
               name="hour"
               value={formData.hour}
-              onChange={onChangeInput}
             />
           </div>
           <div className={styles.inputClass}>
-            <label>Slots</label>
-            <input
-              className={styles.input}
-              type="text"
+            <Input
+              labelText="Slots"
+              onChange={onChangeInput}
+              type={'text'}
               name="slots"
               value={formData.slots}
-              onChange={onChangeInput}
             />
           </div>
         </div>
