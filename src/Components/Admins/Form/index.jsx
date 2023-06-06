@@ -22,9 +22,14 @@ const Form = () => {
     city: selectedAdmin.city || '',
     password: selectedAdmin.password || ''
   });
-  const closeModal = () => {
-    setIsModalOpen(!showPassword);
+  const closeModalAndBack = () => {
+    setIsModalOpen(!isModalOpen);
+    history.goBack();
   };
+  const closeModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   const history = useHistory();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -70,9 +75,6 @@ const Form = () => {
       if (!responseData.error) {
         setModalText('Admin created correctly!');
         setIsModalOpen(true);
-        setTimeout(() => {
-          history.goBack();
-        }, 2000);
       } else {
         throw new Error(responseData.message);
       }
@@ -99,9 +101,6 @@ const Form = () => {
         );
         setModalText('Admin updated correctly!');
         setIsModalOpen(true);
-        setTimeout(() => {
-          history.goBack();
-        }, 2000);
       } else {
         throw new Error(responseData.message);
       }
@@ -208,7 +207,7 @@ const Form = () => {
         <Button className={styles.addButton} type="confirm">
           {switchButtonText}
         </Button>
-        <Button type="cancel" className={styles.cancelButton} onClick={() => history.goBack()}>
+        <Button type="cancel" className={styles.cancelButton} onClick={closeModalAndBack}>
           Cancel
         </Button>
       </form>
