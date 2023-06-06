@@ -29,10 +29,11 @@ function Trainers() {
       })
       .catch((error) => {
         setIsAlertOpen(true);
-        setAlertMessage(error.message);
+        setAlertMessage(error);
       });
   }, [deletedTrainerId]);
 
+  // eslint-disable-next-line no-unused-vars
   const getEditId = (id) => {
     fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
       method: 'GET',
@@ -49,18 +50,17 @@ function Trainers() {
       })
       .catch((error) => {
         setIsAlertOpen(true);
-        setAlertMessage(error.message);
+        setAlertMessage(error);
       });
   };
   const toggleFormAdd = () => {
     setIsFormOpen(!isFormOpen);
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const toggleFormEdit = (id) => {
+  /* const toggleFormEdit = (id) => {
     setIsFormEditOpen(!isFormEditOpen);
     getEditId(id);
-  };
+  };*/
 
   const toggleFormEditClose = () => {
     setIsFormEditOpen(!isFormEditOpen);

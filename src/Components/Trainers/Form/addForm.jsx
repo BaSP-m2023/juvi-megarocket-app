@@ -1,35 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
-import Button from '../../Shared/Button';
+import { Button, ModalAlert, Input } from '../../Shared';
 // import { ModalAlert } from '../../Shared/ModalAlert';
 // import { Link } from 'react-router-dom';
-
-const addTrainer = async (firstName, lastName, city, dni, email, phone, salary, password) => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      firstName: firstName,
-      lastName: lastName,
-      dni: dni,
-      phone: phone,
-      email: email,
-      city: city,
-      password: password,
-      salary: salary
-    })
-  });
-  if (response.status === 201) {
-    alert(`The trainer named: ${lastName} ${firstName} was created successfully`);
-  } else {
-    const error = await response.json();
-    alert(error.message);
-  }
-};
 
 const Form = () => {
   const [firstName, setFirstName] = useState('');
@@ -40,6 +14,33 @@ const Form = () => {
   const [phone, setPhone] = useState('');
   const [salary, setSalary] = useState('');
   const [password, setPassword] = useState('');
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const addTrainer = async (firstName, lastName, city, dni, email, phone, salary, password) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        dni: dni,
+        phone: phone,
+        email: email,
+        city: city,
+        password: password,
+        salary: salary
+      })
+    });
+    if (response.status === 201) {
+      alert(`The trainer named: ${lastName} ${firstName} was created successfully`);
+    } else {
+      const error = await response.json();
+      alert(error.message);
+    }
+  };
 
   const handleCancel = () => {
     history.push('/trainers');
@@ -48,7 +49,8 @@ const Form = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!firstName || !lastName || !city || !dni || !email || !phone || !salary) {
-      alert('Please complete all fields');
+      setIsAlertOpen(true);
+      setAlertMessage('Please complete all fields');
       return;
     }
     await addTrainer(firstName, lastName, city, dni, email, phone, salary, password);
@@ -70,96 +72,68 @@ const Form = () => {
       history.push('/trainers/add');
     }
   }, [history]);
+  const closeAlert = () => {
+    setIsAlertOpen(false);
+  };
   return (
     <form className={styles.addTrainer} onSubmit={onSubmit}>
       <div className={styles.column}>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>First Name</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            placeholder="Add First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Last Name</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            placeholder="Add Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>City</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            placeholder="Add City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Dni</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            placeholder="Add Dni"
-            value={dni}
-            onChange={(e) => setDni(e.target.value)}
-          />
-        </div>
+        <Input
+          labelText={`First Name`}
+          type={'text'}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        ></Input>
+        <Input
+          labelText={`Last Name`}
+          type={'text'}
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        ></Input>
+        <Input
+          labelText={`City`}
+          type={'text'}
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        ></Input>
+        <Input
+          labelText={`Dni`}
+          type={'text'}
+          value={dni}
+          onChange={(e) => setDni(e.target.value)}
+        ></Input>
       </div>
       <div className={styles.column}>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Email</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            placeholder="Add Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Phone</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            placeholder="Add Phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Salary</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            placeholder="Add Salary"
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Password</label>
-          <input
-            className={styles.inputTrainers}
-            type="password"
-            placeholder="Add password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <Input
+          labelText={`Email`}
+          type={'text'}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        ></Input>
+        <Input
+          labelText={`Phone`}
+          type={'text'}
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        ></Input>
+        <Input
+          labelText={`Salary`}
+          type={'text'}
+          value={salary}
+          onChange={(e) => setSalary(e.target.value)}
+        ></Input>
+        <Input
+          labelText={`Password`}
+          type={'password'}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        ></Input>
       </div>
-      <input type="submit" value="Save trainer" className={`${styles.btn} ${styles.btnBlock}`} />
+      <Input type={'submit'} value={'Save trainer'}></Input>
       <Button type="cancel" onClick={handleCancel}>
         Cancel
       </Button>
+      {isAlertOpen && <ModalAlert text={alertMessage} onClick={closeAlert} />}
     </form>
   );
 };

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Button from '../../Shared/Button';
+import { Button, Input } from '../../Shared';
 
 const Form = () => {
   const history = useHistory();
@@ -83,98 +83,66 @@ const Form = () => {
   return (
     <form className={styles.addTrainer} onSubmit={onSubmit}>
       <div className={styles.column}>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>First Name</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            name="firstName"
-            placeholder="Add First Name"
-            value={formData.firstName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Last Name</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            name="lastName"
-            placeholder="Add Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>City</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            name="city"
-            placeholder="Add City"
-            value={formData.city}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Dni</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            name="dni"
-            placeholder="Add Dni"
-            value={formData.dni}
-            onChange={handleChange}
-          />
-        </div>
+        <Input
+          labelText={`First name`}
+          type={'text'}
+          name={`firstName`}
+          value={formData.firstName}
+          onChange={handleChange}
+        ></Input>
+        <Input
+          labelText={`Last Name`}
+          type={'text'}
+          name={`lastName`}
+          value={formData.lastName}
+          onChange={handleChange}
+        ></Input>
+        <Input
+          labelText={`City`}
+          type={'text'}
+          name={`city`}
+          value={formData.city}
+          onChange={handleChange}
+        ></Input>
+        <Input
+          labelText={`Dni`}
+          type={'text'}
+          name={`dni`}
+          value={formData.dni}
+          onChange={handleChange}
+        ></Input>
       </div>
       <div className={styles.column}>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Email</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            name="email"
-            placeholder="Add Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Phone</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            name="phone"
-            placeholder="Add Phone"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Salary</label>
-          <input
-            className={styles.inputTrainers}
-            type="text"
-            name="salary"
-            placeholder="Add Salary"
-            value={formData.salary}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formControl}>
-          <label className={styles.labelTrainers}>Password</label>
-          <input
-            className={styles.inputTrainers}
-            type="password"
-            name="password"
-            placeholder="Add password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
+        <Input
+          labelText={`Email`}
+          type={'text'}
+          name={`email`}
+          value={formData.email}
+          onChange={handleChange}
+        ></Input>
+        <Input
+          labelText={`Phone`}
+          type={'text'}
+          name={`phone`}
+          value={formData.phone}
+          onChange={handleChange}
+        ></Input>
+        <Input
+          labelText={`Salary`}
+          type={'text'}
+          name={`salary`}
+          value={formData.salary}
+          onChange={handleChange}
+        ></Input>
+        <Input
+          labelText={`Password`}
+          type={'password'}
+          name={`password`}
+          value={formData.password}
+          onChange={handleChange}
+        ></Input>
       </div>
-      <input type="submit" value="Edit trainer" className={`${styles.btn} ${styles.btnBlock}`} />
+      <Input type={'submit'} value={'Edit trainer'}></Input>
       <Button type="cancel" onClick={handleCancel}>
         Cancel
       </Button>
