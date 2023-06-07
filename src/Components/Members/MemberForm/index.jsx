@@ -1,11 +1,11 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
+import ModalAlert from '../../Shared/ModalAlert';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-const MemberForm = ({ data, addMember, updateMemb, selectId, hideForm, text }) => {
+const MemberForm = () => {
   let selectedMember = [
     {
       firstName: '',
@@ -20,9 +20,27 @@ const MemberForm = ({ data, addMember, updateMemb, selectId, hideForm, text }) =
     }
   ];
 
-  if (text !== 'Add member') {
-    selectedMember = data.filter((item) => item._id === selectId);
-  }
+  const text = 'Add member';
+
+  // if (match) {
+  //   selectedMember = data.filter((item) => item._id === selectId);
+  //   text = 'Edit member';
+  // } else {
+  //   text = 'Add member';
+  // }
+
+  const [members, setMembers] = useState([]);
+  const [msg, setMsg] = useState('');
+  const [modal, setModal] = useState(false);
+
+  const getMembs = async () => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
+    const data = await response.json();
+    data.data.forEach((item) => {
+      item.birthDate = item.birthDate.substring(0, 10);
+    });
+    setMembers(data.data);
+  };
 
   const [member, setMember] = useState({
     firstName: selectedMember[0].firstName ?? '',
@@ -50,10 +68,70 @@ const MemberForm = ({ data, addMember, updateMemb, selectId, hideForm, text }) =
       if (text === 'Add member') {
         await addMember(member);
       } else {
-        await updateMemb(selectId, member);
+        await updateMemb('123', member);
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const addMember = async (member) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(member)
+      });
+
+      const newMemb = await response.json();
+
+      if (!newMemb.error) {
+        setMembers([...members, newMemb]);
+        getMembs();
+        setMsg(newMemb.message);
+      } else {
+        setMsg(newMemb.message);
+      }
+    } catch (error) {
+      setMsg(error.message);
+    }
+  };
+
+  const updateMemb = async (id, member) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(member)
+      }).then(async (response) => {
+        const data = await response.json();
+        if (!data.error) {
+          setMsg(data.message);
+          setMembers(
+            members.map((member) =>
+              member._id === id
+                ? {
+                    ...member,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    dni: data.dni,
+                    phone: data.phone,
+                    email: data.email,
+                    city: data.city,
+                    birthDate: data.birthDate,
+                    postalCode: data.postalCode,
+                    memberships: data.memberships
+                  }
+                : member
+            )
+          );
+          getMembs();
+        } else {
+          setMsg(data.message);
+        }
+      });
+    } catch (error) {
+      setMsg(error.message);
     }
   };
 
@@ -166,10 +244,18 @@ const MemberForm = ({ data, addMember, updateMemb, selectId, hideForm, text }) =
             <option value="Black">Black</option>
           </select>
         </fieldset>
-        <Link to="/">
-          <Button type={'confirm'} resource={'Member'} onClick={onSubmit} />
+        <Link to="/members">
+          <Button
+            type={'confirm'}
+            resource={'Member'}
+            onClick={(e) => {
+              onSubmit;
+              setModal(!modal);
+            }}
+          />
         </Link>
-        <Link to="/">
+        {modal && <ModalAlert text={msg} />}
+        <Link to="/members">
           <Button type={'cancel'} resource={'Member'} />
         </Link>
       </div>
