@@ -5,13 +5,19 @@
   justify-content: center;
   align-items: center;
 }
+.container a {
+  text-decoration: none;
+}
+.titleAdmin {
+  display: flex;
+  width: 64vw;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.addButton {
-  padding: 5px 10px;
-  margin: 10px 0;
-  background-color: #daa520;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  text-align: center;
+.titleAdmin button {
+  margin-left: auto;
+}
+.titleAdmin h2 {
+  align-self: center;
 }

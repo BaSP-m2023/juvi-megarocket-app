@@ -1,5 +1,6 @@
 import Activities from '../Activities';
 import Admins from '../Admins/index';
+import AdminsForm from '../Admins/Form';
 import Classes from '../Classes';
 import FormClasses from '../Classes/Form';
 import Members from '../Members';
@@ -27,8 +28,10 @@ function Layout() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/activities" component={Activities} />
-        <Route path="/admins" component={Admins} />
-        <Route exact path="/classes" component={Classes} />
+        <Route exact path="/admins" component={Admins} />
+        <Route exact path="/admins/AdminForm/" component={AdminsForm} />
+        <Route path="/admins/AdminForm/:id" component={AdminsForm} />
+        <Route path="/classes" component={Classes} />
         <Route exact path="/classes/form/" component={FormClasses} />
         <Route path="/classes/form/:id" component={FormClasses} />
         <Route path="/members" component={Members} />
