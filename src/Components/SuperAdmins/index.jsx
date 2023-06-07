@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import Table from './Table/Index';
 import Form from './Form/Index';
+import { SharedTable, Button } from '../Shared';
+import { Link } from 'react-router-dom';
 
 const SuperAdminsPage = () => {
   const [admins, setAdmins] = useState([]);
@@ -87,10 +88,10 @@ const SuperAdminsPage = () => {
     }
   };
 
-  const handleEdit = (admin) => {
-    setSelectedAdmin(admin);
-    setShowForm(true);
-  };
+  // const handleEdit = (admin) => {
+  //   setSelectedAdmin(admin);
+  //   setShowForm(true);
+  // };
 
   const closeModal = () => {
     setShowForm(false);
@@ -101,11 +102,6 @@ const SuperAdminsPage = () => {
     <section className={styles.container}>
       <div className={styles.firstBox}>
         <h2>SuperAdmins</h2>
-        {!showForm && (
-          <button className={styles.buttonSuperAdmins} onClick={() => setShowForm(true)}>
-            Add Admin
-          </button>
-        )}
       </div>
       {showForm && (
         <div className={styles.modal}>
@@ -122,7 +118,10 @@ const SuperAdminsPage = () => {
           </div>
         </div>
       )}
-      <Table data={admins} deleteAdmin={deleteAdmin} editAdmin={handleEdit} />
+      <Link to="/SuperAdmin/form">
+        <Button type="add" resource="SuperAdmin"></Button>
+      </Link>
+      <SharedTable data={admins} handleDelete={deleteAdmin} />
     </section>
   );
 };
