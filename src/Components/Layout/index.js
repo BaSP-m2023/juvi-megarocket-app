@@ -12,6 +12,10 @@ import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
+import Form from '../Trainers/Form/addForm';
+import FormEdit from '../Trainers/Form/editForm';
+// import Table from '../Trainers/Table/index';
+
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
@@ -29,11 +33,12 @@ function Layout() {
         <Route path="/members" component={Members} />
         <Route path="/subscriptions" component={Subscriptions} />
         <Route path="/super-admins" component={SuperAdmins} />
-        <Route path="/trainers" component={Trainers} />
+        <Route path="/trainers" exact component={Trainers} />
+        <Route path="/trainers/add" component={Form} />
+        <Route path="/trainers/edit/:id" component={FormEdit} />
       </Switch>
       <Footer />
     </div>
   );
 }
-
 export default Layout;
