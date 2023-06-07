@@ -69,9 +69,9 @@ const FormClasses = () => {
         setClassData([...classesData, newClass]);
         setModalText('Class created correctly!');
         setShowModal(true);
+        setIsTrue(true);
       }
     } catch (error) {
-      console.log(error);
       setModalText('Error creating Class: ' + error);
       setShowModal(true);
     }
