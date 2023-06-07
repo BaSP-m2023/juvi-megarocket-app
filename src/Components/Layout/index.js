@@ -8,6 +8,7 @@ import Subscriptions from '../Subscriptions';
 import SubForm from '../Subscriptions/Form';
 import SuperAdmins from '../SuperAdmins';
 import Trainers from '../Trainers';
+import FormActivities from '../Activities/Form';
 
 import Home from '../Home/index';
 import Header from '../Header/index';
@@ -27,18 +28,26 @@ function Layout() {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/activities" component={Activities} />
-        <Route exact path="/admins" component={Admins} />
+        <Route exact path="/activities" component={Activities} />
+        <Route exact path="/activities/ActivitiesForm" component={FormActivities} />
+        <Route path="/activities/ActivitiesForm/:id" component={FormActivities} />
+
+        <Route path="/admins" component={Admins} />
         <Route exact path="/admins/AdminForm/" component={AdminsForm} />
         <Route path="/admins/AdminForm/:id" component={AdminsForm} />
+
         <Route path="/classes" component={Classes} />
         <Route exact path="/classes/form/" component={FormClasses} />
         <Route path="/classes/form/:id" component={FormClasses} />
+
         <Route path="/members" component={Members} />
+
         <Route path="/subscriptions" exact component={Subscriptions} />
         <Route exact path="/subscriptions/form" component={SubForm} />
         <Route exact path="/subscriptions/form/:id" component={SubForm} />
+
         <Route path="/super-admins" component={SuperAdmins} />
+
         <Route path="/trainers" exact component={Trainers} />
         <Route path="/trainers/add" component={Form} />
         <Route path="/trainers/edit/:id" component={FormEdit} />
