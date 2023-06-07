@@ -15,8 +15,8 @@ import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
-import Form from '../Trainers/Form/addForm';
-import FormEdit from '../Trainers/Form/editForm';
+import TrainerForm from '../Trainers/Form/addForm';
+import TrainerFormEdit from '../Trainers/Form/editForm';
 // import Table from '../Trainers/Table/index';
 
 import React from 'react';
@@ -36,7 +36,7 @@ function Layout() {
         <Route exact path="/admins/Form/" component={AdminsForm} />
         <Route path="/admins/Form/:id" component={AdminsForm} />
 
-        <Route path="/classes" component={Classes} />
+        <Route exact path="/classes" component={Classes} />
         <Route exact path="/classes/form/" component={FormClasses} />
         <Route path="/classes/form/:id" component={FormClasses} />
 
@@ -49,8 +49,8 @@ function Layout() {
         <Route path="/super-admins" component={SuperAdmins} />
 
         <Route path="/trainers" exact component={Trainers} />
-        <Route path="/trainers/add" component={Form} />
-        <Route path="/trainers/edit/:id" component={FormEdit} />
+        <Route path="/trainers/add" component={TrainerForm} />
+        <Route path="/trainers/edit/:id" component={TrainerFormEdit} />
       </Switch>
       <Footer />
     </div>
