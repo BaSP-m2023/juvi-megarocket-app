@@ -7,7 +7,7 @@ import { Input } from '../../Shared';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-const Form = () => {
+const AdminsForm = () => {
   const [modalText, setModalText] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
@@ -216,4 +216,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default AdminsForm;

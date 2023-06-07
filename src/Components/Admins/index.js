@@ -57,13 +57,13 @@ function Admins() {
     <section className={styles.container}>
       <div className={styles.titleAdmin}>
         <h2>Admins</h2>
-        <Link to="/admins/AdminForm">
+        <Link to="/admins/form">
           <Button type="add" resource="admin">
             Add Admin
           </Button>
         </Link>
       </div>
-      <SharedTable data={adminsData} handleDelete={onDelete} editLink="/admins/AdminForm/" />
+      <SharedTable data={adminsData} handleDelete={onDelete} editLink="/admins/form/" />
       {isModalDeleteOpen && (
         <ModalConfirm
           onConfirm={deleteAdmin}
