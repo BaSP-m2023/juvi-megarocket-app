@@ -44,7 +44,7 @@ const Activities = () => {
   };
 
   const closeModal = () => {
-    setShowModal(true);
+    setShowModal(false);
   };
 
   return (

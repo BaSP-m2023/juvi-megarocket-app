@@ -79,8 +79,7 @@ const AdminsForm = () => {
         throw new Error(responseData.message);
       }
     } catch (error) {
-      console.log(error);
-      setModalText('Error creating admin: ' + error.message);
+      setModalText('Error creating admin');
       setIsModalOpen(true);
     }
   };
