@@ -1,27 +1,37 @@
 import styles from './subscriptions.module.css';
-import Table from './Table';
-import Form from './Form';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { SharedTable, ModalAlert, Button } from '../Shared';
 
 function Subscriptions() {
+  const [showAlert, setshowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [subscriptions, setSubscriptions] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-
-  const handleButtonClick = () => {
-    setShowForm(true);
-  };
-
-  const handleFormClose = () => {
-    setShowForm(false);
-  };
 
   useEffect(() => {
     getData();
-    getMember();
-    getClasses();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
+        method: 'DELETE'
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error === true) {
+            setAlertText(data.message);
+          } else {
+            setAlertText(data.message);
+          }
+        });
+      getData();
+      showAlertHandler();
+    } catch (error) {
+      setAlertText(error);
+      showAlertHandler();
+    }
+  };
 
   const getData = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`)
@@ -31,51 +41,26 @@ function Subscriptions() {
         setSubscriptions(subData);
       })
       .catch((error) => {
-        alert(error);
+        setAlertText(error);
+        showAlertHandler();
       });
   };
 
-  const getMember = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/member/`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        const memberData = jsonData.data;
-        setMembers(memberData);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
-  const getClasses = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/class/`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        const classesData = jsonData.data;
-        setClasses(classesData);
-      })
-      .catch((error) => {
-        alert(error);
-      });
+  const showAlertHandler = () => {
+    setshowAlert(!showAlert);
   };
 
   return (
     <section className={styles.container}>
-      <Table
+      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
+      <Link to="/subscriptions/form">
+        <Button type="add" resource="Subscription"></Button>
+      </Link>
+      <SharedTable
         data={subscriptions}
-        members={members}
-        classes={classes}
-        onButtonClick={handleButtonClick}
+        editLink={'/subscriptions/form/'}
+        handleDelete={handleDelete}
       />
-
-      {showForm && (
-        <Form
-          subscriptions={subscriptions}
-          members={members}
-          classes={classes}
-          onClose={handleFormClose}
-        />
-      )}
     </section>
   );
 }
