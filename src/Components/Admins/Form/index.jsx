@@ -13,6 +13,7 @@ const AdminsForm = () => {
   const { id } = useParams();
   const [adminsData, setAdminsData] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState({});
+  const [success, setsuccess] = useState(false);
   const [formData, setFormData] = useState({
     firstName: selectedAdmin.firstName || '',
     lastName: selectedAdmin.lastName || '',
@@ -23,11 +24,14 @@ const AdminsForm = () => {
     password: selectedAdmin.password || ''
   });
   const closeModalAndBack = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen(false);
     history.goBack();
   };
   const closeModal = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen(false);
+    if (success) {
+      history.goBack();
+    }
   };
 
   const history = useHistory();
@@ -75,12 +79,12 @@ const AdminsForm = () => {
       if (!responseData.error) {
         setModalText('Admin created correctly!');
         setIsModalOpen(true);
+        setsuccess(true);
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
-      console.log(error);
-      setModalText('Error creating admin: ' + error.message);
+      setModalText('Creating admin ' + error);
       setIsModalOpen(true);
     }
   };
@@ -101,11 +105,12 @@ const AdminsForm = () => {
         );
         setModalText('Admin updated correctly!');
         setIsModalOpen(true);
+        setsuccess(true);
       } else {
         throw new Error(responseData.message);
       }
-    } catch (errors) {
-      setModalText('Error updating Admin: ' + errors.message);
+    } catch (error) {
+      setModalText('Error updating Admin: ' + error.message);
       setIsModalOpen(true);
     }
   };
