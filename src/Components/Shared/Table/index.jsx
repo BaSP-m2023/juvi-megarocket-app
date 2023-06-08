@@ -15,7 +15,7 @@ const SharedTable = ({ data, handleDelete, editLink }) => {
 
   const renderCellValue = (value, propertyName) => {
     if (propertyName === 'password') {
-      return '********'; // Reemplaza con el texto oculto que desees
+      return '********';
     } else if (Array.isArray(value)) {
       let returnNames = '';
       value.forEach((element) => {
