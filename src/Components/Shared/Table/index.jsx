@@ -13,8 +13,10 @@ const SharedTable = ({ data, handleDelete, editLink }) => {
     (propertyName) => !excludedProperties.includes(propertyName)
   );
 
-  const renderCellValue = (value) => {
-    if (Array.isArray(value)) {
+  const renderCellValue = (value, propertyName) => {
+    if (propertyName === 'password') {
+      return '********'; // Reemplaza con el texto oculto que desees
+    } else if (Array.isArray(value)) {
       let returnNames = '';
       value.forEach((element) => {
         returnNames += element.firstName + '';
@@ -80,7 +82,7 @@ const TableRow = ({ item, propertyNames, editLink, handleDelete, renderCellValue
   return (
     <tr>
       {propertyNames.map((propertyName) => (
-        <td key={propertyName}>{renderCellValue(item[propertyName])}</td>
+        <td key={propertyName}>{renderCellValue(item[propertyName], propertyName)}</td>
       ))}
       <td>
         <Link to={editLink + item._id}>
