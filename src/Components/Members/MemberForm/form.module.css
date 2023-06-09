@@ -1,8 +1,10 @@
 .form {
-  display: block;
-  position: absolute;
-  z-index: 1;
-  background-color: #999999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  background-color: #fff;
 }
 
 .formContainer {
@@ -10,7 +12,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  width: 30vw;
+  width: 40vw;
   height: 40vh;
 }
 
@@ -18,4 +20,5 @@
   display: flex;
   flex-direction: column;
   width: 40%;
+  border: none;
 }
