@@ -1,26 +1,23 @@
 import Activities from '../Activities';
 import Admins from '../Admins/index';
-import AdminsForm from '../Admins/Form';
 import Classes from '../Classes';
-import FormClasses from '../Classes/Form';
 import Members from '../Members';
 import Subscriptions from '../Subscriptions';
-import SubForm from '../Subscriptions/Form';
 import SuperAdmins from '../SuperAdmins';
 import Trainers from '../Trainers';
-import FormActivities from '../Activities/Form';
-
-//Member
-import MemberForm from '../Members/MemberForm';
 
 import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
+import FormActivities from '../Activities/Form';
+import AdminsForm from '../Admins/Form';
+import FormClasses from '../Classes/Form';
+import MemberForm from '../Members/MemberForm';
+import SubForm from '../Subscriptions/Form';
 import TrainerForm from '../Trainers/Form/addForm';
 import TrainerFormEdit from '../Trainers/Form/editForm';
-// import Table from '../Trainers/Table/index';
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
