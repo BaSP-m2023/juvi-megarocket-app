@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styles from './super-admins-form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import Input from '../../Shared/Input';
-// import { Link } from 'react-router-dom';
+import { Button, Input, ModalAlert } from '../../Shared';
 
 const FormSuperAdmin = () => {
   const { id } = useParams();
+  const history = useHistory();
   const [adminsData, setAdminsData] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
     email: selectedAdmin.email || '',
     password: selectedAdmin.password || ''
   });
-  const history = useHistory();
 
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`)
+      fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setSelectedAdmin(data.data);
@@ -28,6 +28,10 @@ const FormSuperAdmin = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setFormData(selectedAdmin);
+  }, [selectedAdmin]);
+
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -37,7 +41,7 @@ const FormSuperAdmin = () => {
 
   const addAdmin = async ({ email, password }) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -51,7 +55,8 @@ const FormSuperAdmin = () => {
       } else {
         const newAdmin = responseData.data;
         setAdminsData([...adminsData, newAdmin]);
-        alert('Admin created correctly!');
+        setModalText('Admin add successfully!');
+        setShowModal(true);
       }
     } catch (error) {
       console.log(error);
@@ -60,26 +65,36 @@ const FormSuperAdmin = () => {
   };
 
   const editAdmin = async (updatedAdmin, adminId) => {
+    const dataUpdate = {
+      email: updatedAdmin.email,
+      password: updatedAdmin.password
+    };
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${adminId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(updatedAdmin)
+        body: JSON.stringify(dataUpdate)
       });
-      const responseData = await response.json();
+
       if (response.ok) {
+        alert('pase por aca');
+        const responseData = await response.json();
         const updatedAdminData = responseData.data;
         setAdminsData(
           adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
         );
-        alert('Admin updated correctly!');
+        setModalText('Admin updated correctly!');
+        setShowModal(true);
       } else {
+        const responseData = await response.json();
         throw new Error(responseData.message);
       }
     } catch (error) {
-      alert('Error updating Admin: ' + error);
+      console.log(formData);
+      setModalText('Error updating admin: ' + error);
+      setShowModal(true);
     }
   };
 
@@ -94,36 +109,43 @@ const FormSuperAdmin = () => {
     }
   };
 
+  const closeModal = () => {
+    setShowModal(!showModal);
+  };
+
   const onSubmitCancel = (e) => {
     e.preventDefault();
     history.goBack();
   };
 
   return (
-    <form className={styles.formAdmin}>
-      <div className={styles.formContainer}>
-        <div className={styles.inputAdmin}>
+    <>
+      <form className={styles.formAdmin}>
+        <div className={styles.formContainer}>
+          <div className={styles.inputAdmin}>
+            <Input
+              labelText="Email"
+              onChange={onChange}
+              type="text"
+              name="email"
+              value={formData.email}
+            />
+          </div>
           <Input
-            labelText="Email"
-            onChange={onChange}
-            type="text"
-            name="email"
-            value={formData.admin}
-          />
-        </div>
-        <div className={styles.inputAdmin}>
-          <Input
-            labelText="Password"
-            onChange={onChange}
+            labelText="Contraseña"
             type="password"
             name="password"
-            value={formData.admin}
+            value={formData.password}
+            onChange={onChange}
           />
         </div>
-      </div>
-      <Button type="confirm" onClick={onSubmit}></Button>
-      <Button type="cancel" onClick={onSubmitCancel}></Button>
-    </form>
+        <div className={styles.buttonContainer}>
+          <Button type="confirm" onClick={onSubmit}></Button>
+          <Button type="cancel" onClick={onSubmitCancel}></Button>
+        </div>
+      </form>
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+    </>
   );
 };
 

@@ -27,8 +27,8 @@ function Layout() {
         <Route path="/members" component={Members} />
         <Route path="/subscriptions" component={Subscriptions} />
         <Route exact path="/super-admins" component={SuperAdmins} />
-        <Route exact path="/SuperAdmin/form" component={FormSuperAdmin} />
-        <Route exact path="/SuperAdmin/form/:id" component={FormSuperAdmin} />
+        <Route exact path="/super-admins/form" component={FormSuperAdmin} />
+        <Route exact path="/super-admins/form/:id" component={FormSuperAdmin} />
         <Route path="/trainers" component={Trainers} />
       </Switch>
       <Footer />

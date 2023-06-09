@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import Form from './Form/Index';
-import { SharedTable, Button } from '../Shared';
 import { Link } from 'react-router-dom';
+import { Button, SharedTable, ModalAlert } from '../Shared';
 
-const SuperAdminsPage = () => {
-  const [admins, setAdmins] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [selectedAdmin, setSelectedAdmin] = useState(null);
+const AdminsPage = () => {
+  const [admin, setAdmins] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState('');
 
   const getAdmins = async () => {
     try {
@@ -16,7 +15,8 @@ const SuperAdminsPage = () => {
       const data = responseData.data;
       setAdmins(data);
     } catch (error) {
-      alert('Error fetching admins: ' + error);
+      setModalText('Error fetching admins: ' + error);
+      setShowModal(true);
     }
   };
 
@@ -24,106 +24,41 @@ const SuperAdminsPage = () => {
     getAdmins();
   }, []);
 
-  const addAdmin = async ({ email, password }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const newAdmin = responseData.data;
-        setAdmins([...admins, newAdmin]);
-        setShowForm(false);
-      } else {
-        throw new Error(response.data.message);
-      }
-    } catch (error) {
-      alert('Error creating admin: ' + error);
-    }
-  };
-
-  const editAdmin = async (updatedAdmin, _id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedAdmin)
-      });
-      const data = await response.json();
-
-      if (data.error === true) {
-        alert(data.message);
-      } else if (data.error === false) {
-        getAdmins();
-        alert(data.message);
-        setShowForm(false);
-        setSelectedAdmin(null);
-      }
-    } catch (error) {
-      alert('Error: ' + error);
-    }
-  };
-
-  const deleteAdmin = async (_id) => {
+  const deleteItem = async (_id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${_id}`, {
         method: 'DELETE'
       });
 
       if (response.ok) {
-        setAdmins(admins.filter((admin) => admin._id !== _id));
-        alert('Admin deleted successfully!');
+        setAdmins(admin.filter((admin) => admin._id !== _id));
+        setModalText('Admin deleted successfully!');
+        setShowModal(true);
       } else {
-        throw new Error('Error: Admin cannot be deleted');
+        throw new Error('Error deleting admin');
       }
     } catch (error) {
-      alert('Error: ' + error);
+      setModalText('Error deleting admin: ' + error);
+      setShowModal(true);
     }
   };
 
-  // const handleEdit = (admin) => {
-  //   setSelectedAdmin(admin);
-  //   setShowForm(true);
-  // };
-
   const closeModal = () => {
-    setShowForm(false);
-    setSelectedAdmin(null);
+    setShowModal(!showModal);
   };
 
   return (
-    <section className={styles.container}>
-      <div className={styles.firstBox}>
-        <h2>SuperAdmins</h2>
-      </div>
-      {showForm && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <span className={styles.close} onClick={closeModal}>
-              &times;
-            </span>
-            <Form
-              addAdmin={addAdmin}
-              editAdmin={editAdmin}
-              selectedAdmin={selectedAdmin}
-              closeModal={closeModal}
-            />
-          </div>
-        </div>
-      )}
-      <Link to="/SuperAdmin/form">
-        <Button type="add" resource="SuperAdmin"></Button>
-      </Link>
-      <SharedTable data={admins} handleDelete={deleteAdmin} />
-    </section>
+    <>
+      <section className={styles.container}>
+        <h2 className={styles.titleAdmins}>SuperAdmin</h2>
+        <Link to="/super-admins/form">
+          <Button type="add" resource="superAdmin" />
+        </Link>
+        <SharedTable data={admin} editLink={'super-admins/form/'} handleDelete={deleteItem} />
+      </section>
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+    </>
   );
 };
 
-export default SuperAdminsPage;
+export default AdminsPage;
