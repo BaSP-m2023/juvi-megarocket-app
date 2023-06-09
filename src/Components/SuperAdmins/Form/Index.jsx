@@ -79,7 +79,6 @@ const FormSuperAdmin = () => {
       });
 
       if (response.ok) {
-        alert('pase por aca');
         const responseData = await response.json();
         const updatedAdminData = responseData.data;
         setAdminsData(
