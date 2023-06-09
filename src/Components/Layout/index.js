@@ -35,6 +35,7 @@ function Layout() {
         <Route exact path="/super-admins" component={SuperAdmins} />
         <Route exact path="/super-admins/form" component={FormSuperAdmin} />
         <Route exact path="/super-admins/form/:id" component={FormSuperAdmin} />
+        <Route path="/activities/ActivitiesForm/:id" component={FormActivities} />
         <Route exact path="/activities" component={Activities} />
         <Route exact path="/activities/ActivitiesForm" component={FormActivities} />
 
