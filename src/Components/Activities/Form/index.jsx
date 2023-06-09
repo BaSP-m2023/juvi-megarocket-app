@@ -1,28 +1,91 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
+import { Button, Input, ModalAlert } from '../../Shared';
 
-const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
+const Form = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  const [activities, setActivities] = useState([]);
+  const [selectedActivity, setSelectedActivity] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
-    name: '',
-    description: ''
+    name: selectedActivity?.name || '',
+    description: selectedActivity?.description || ''
   });
-  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    if (selectedActivity) {
-      setEditMode(true);
-      setFormData({
-        name: selectedActivity.name,
-        description: selectedActivity.description
-      });
-    } else {
-      setEditMode(false);
-      setFormData({
-        name: '',
-        description: ''
-      });
+    if (id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setSelectedActivity(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
+  }, []);
+  useEffect(() => {
+    setFormData({
+      name: selectedActivity?.name || '',
+      description: selectedActivity?.description || ''
+    });
   }, [selectedActivity]);
+
+  const addActivity = async ({ name, description }) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, description })
+      });
+      const responseData = await response.json();
+
+      if (response.ok) {
+        const newActivity = responseData.data;
+        setActivities([...activities, newActivity]);
+        setModalText('Activity added successfully!');
+        setShowModal(true);
+      } else {
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      setModalText('Error creating activity: ' + error);
+      setShowModal(true);
+    }
+  };
+
+  const editActivity = async (updatedActivity, id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedActivity)
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const updatedData = responseData.data;
+        setActivities(
+          activities.map((activity) => (activity._id === updatedData._id ? updatedData : activity))
+        );
+        setModalText('Activity updated successfully!');
+        setShowModal(true);
+      } else {
+        const responseData = await response.json();
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      setModalText('Error updating activity: ' + error);
+      setShowModal(true);
+    }
+  };
 
   const onChange = (e) => {
     setFormData({
@@ -33,7 +96,7 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (editMode) {
+    if (id) {
       editActivity(formData, selectedActivity._id);
     } else {
       addActivity(formData);
@@ -42,39 +105,39 @@ const Form = ({ addActivity, editActivity, selectedActivity, setShowForm }) => {
       name: '',
       description: ''
     });
-    setShowForm(false);
   };
 
-  const buttonText = editMode ? 'Update' : 'Add';
+  const closeModal = () => {
+    setShowModal(!showModal);
+    history.goBack();
+  };
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
-      <div className={styles.subContainer}>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Name</label>
-          <input
-            className={styles.input}
+    <>
+      <form className={styles.form} onSubmit={onSubmit}>
+        <div className={styles.subContainer}>
+          <Input
+            labelText="Name"
             name="name"
             type="text"
             value={formData.name}
             onChange={onChange}
           />
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Description</label>
-          <input
-            className={styles.input}
+          <Input
+            labelText="Description"
             name="description"
             type="text"
             value={formData.description}
             onChange={onChange}
           />
         </div>
-      </div>
-      <button className={styles.button} type="submit">
-        {buttonText}
-      </button>
-    </form>
+        <div className={styles.buttonContainer}>
+          <Button type="confirm"></Button>
+          <Button type="cancel" onClick={closeModal}></Button>
+        </div>
+      </form>
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+    </>
   );
 };
 

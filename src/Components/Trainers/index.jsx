@@ -1,13 +1,14 @@
-import Table from './Table';
-import Button from './Button';
+import { Button, SharedTable, ModalAlert } from '../Shared';
 import Form from './Form/addForm';
 import FormEdit from './Form/editForm';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isFormEditOpen, setIsFormEditOpen] = useState(false);
+  const [deletedTrainerId, setDeletedTrainerId] = useState(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -18,7 +19,8 @@ function Trainers() {
     password: '',
     salary: ''
   });
-
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`)
       .then((response) => response.json())
@@ -26,10 +28,12 @@ function Trainers() {
         setTrainers(data);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        setIsAlertOpen(true);
+        setAlertMessage(error);
       });
-  }, []);
+  }, [deletedTrainerId]);
 
+  // eslint-disable-next-line no-unused-vars
   const getEditId = (id) => {
     fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
       method: 'GET',
@@ -45,30 +49,59 @@ function Trainers() {
         }
       })
       .catch((error) => {
-        alert(error);
+        setIsAlertOpen(true);
+        setAlertMessage(error);
       });
   };
   const toggleFormAdd = () => {
     setIsFormOpen(!isFormOpen);
   };
 
-  const toggleFormEdit = (id) => {
+  /* const toggleFormEdit = (id) => {
     setIsFormEditOpen(!isFormEditOpen);
     getEditId(id);
-  };
+  };*/
 
   const toggleFormEditClose = () => {
     setIsFormEditOpen(!isFormEditOpen);
   };
+  const handleDelete = async (id) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+    if (response.status === 200) {
+      setIsAlertOpen(true);
+      setAlertMessage('Trainer deleted');
+      setDeletedTrainerId(id);
+    } else {
+      setIsAlertOpen(true);
+      setAlertMessage('Error deleting trainer');
+    }
+  };
+
+  const closeAlert = () => {
+    setIsAlertOpen(false);
+  };
 
   return (
     <section>
-      <Button color="black" text={isFormOpen ? 'Close' : 'Add'} onClick={toggleFormAdd} />
-      <Table data={trainers.data ? trainers.data : []} edit={toggleFormEdit} />
+      <Link to="/trainers/add">
+        <Button type="add" resource="Trainer" onClick={toggleFormAdd} />
+      </Link>
+      <SharedTable
+        data={trainers.data}
+        editLink={'/trainers/edit/'}
+        handleDelete={handleDelete}
+      ></SharedTable>
       {isFormOpen && <Form />}
       {isFormEditOpen && (
         <FormEdit formData={formData} setFormData={setFormData} close={toggleFormEditClose} />
       )}
+      {isAlertOpen && <ModalAlert text={alertMessage} onClick={closeAlert} />}
     </section>
   );
 }
