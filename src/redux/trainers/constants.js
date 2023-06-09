@@ -1,0 +1,4 @@
+export const FETCH_TRAINERS = 'FETCH_TRAINERS';
+export const ADD_TRAINER = 'ADD_TRAINER';
+export const REMOVE_TRAINER = 'REMOVE_TRAINER';
+export const EDIT_TRAINER = 'EDIT_TRAINER';
