@@ -24,10 +24,8 @@ function Members() {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, { method: 'DELETE' });
       setMembers(members.filter((member) => member._id !== id));
-      alert('Member deleted!');
     } catch (error) {
       alert(error.message);
-      console.log(error);
     }
   };
 

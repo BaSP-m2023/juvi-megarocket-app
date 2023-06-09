@@ -1,58 +1,62 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
 import ModalAlert from '../../Shared/ModalAlert';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams } from 'react-router-dom';
 
-const MemberForm = () => {
-  let selectedMember = [
-    {
-      firstName: '',
-      lastName: '',
-      dni: '',
-      phone: '',
-      email: '',
-      city: '',
-      birthDate: '',
-      postalCode: '',
-      memberships: ''
-    }
-  ];
-
-  const text = 'Add member';
-
-  // if (match) {
-  //   selectedMember = data.filter((item) => item._id === selectId);
-  //   text = 'Edit member';
-  // } else {
-  //   text = 'Add member';
-  // }
-
+const MemberForm = (props) => {
   const [members, setMembers] = useState([]);
   const [msg, setMsg] = useState('');
   const [modal, setModal] = useState(false);
+  const [modalDone, setModalDone] = useState(false);
+  const [member, setMember] = useState({
+    firstName: members.firstName ?? '',
+    lastName: members.lastName ?? '',
+    dni: members.dni ?? '',
+    phone: members.phone ?? '',
+    email: members.email ?? '',
+    city: members.city ?? '',
+    birthDate: members.birthDate ?? '',
+    postalCode: members.postalCode ?? '',
+    memberships: members.memberships ?? '',
+    password: members.password ?? ''
+  });
+
+  const { id } = useParams();
+  let text = 'Add member';
 
   const getMembs = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`);
     const data = await response.json();
-    data.data.forEach((item) => {
-      item.birthDate = item.birthDate.substring(0, 10);
-    });
+    data.data.birthDate = data.data.birthDate.substring(0, 10);
     setMembers(data.data);
   };
 
-  const [member, setMember] = useState({
-    firstName: selectedMember[0].firstName ?? '',
-    lastName: selectedMember[0].lastName ?? '',
-    dni: selectedMember[0].dni ?? '',
-    phone: selectedMember[0].phone ?? '',
-    email: selectedMember[0].email ?? '',
-    city: selectedMember[0].city ?? '',
-    birthDate: selectedMember[0].birthDate ?? '',
-    postalCode: selectedMember[0].postalCode ?? '',
-    memberships: selectedMember[0].memberships ?? ''
-  });
+  useEffect(() => {
+    if (id) {
+      getMembs();
+      text = 'Edit member';
+    } else {
+      text = 'Add member';
+    }
+  }, []);
+
+  useEffect(() => {
+    setMember({
+      firstName: members.firstName ?? '',
+      lastName: members.lastName ?? '',
+      dni: members.dni ?? '',
+      phone: members.phone ?? '',
+      email: members.email ?? '',
+      city: members.city ?? '',
+      birthDate: members.birthDate ?? '',
+      postalCode: members.postalCode ?? '',
+      memberships: members.memberships ?? '',
+      password: members.password ?? ''
+    });
+  }, [members]);
 
   const onChange = (event) => {
     setMember({
@@ -61,17 +65,18 @@ const MemberForm = () => {
     });
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
     try {
       if (text === 'Add member') {
-        await addMember(member);
+        addMember(member);
       } else {
-        await updateMemb('123', member);
+        updateMemb(id, member);
       }
     } catch (error) {
-      console.log(error);
+      setMsg(error);
+      setModal(!modal);
     }
   };
 
@@ -87,13 +92,15 @@ const MemberForm = () => {
 
       if (!newMemb.error) {
         setMembers([...members, newMemb]);
-        getMembs();
-        setMsg(newMemb.message);
+        setMsg('Member created!');
+        setModal(!modal);
       } else {
         setMsg(newMemb.message);
+        setModal(!modal);
       }
     } catch (error) {
       setMsg(error.message);
+      setModal(!modal);
     }
   };
 
@@ -106,7 +113,6 @@ const MemberForm = () => {
       }).then(async (response) => {
         const data = await response.json();
         if (!data.error) {
-          setMsg(data.message);
           setMembers(
             members.map((member) =>
               member._id === id
@@ -120,18 +126,22 @@ const MemberForm = () => {
                     city: data.city,
                     birthDate: data.birthDate,
                     postalCode: data.postalCode,
-                    memberships: data.memberships
+                    memberships: data.memberships,
+                    password: data.password
                   }
                 : member
             )
           );
-          getMembs();
+          setMsg(`Member ${members.firstName} ${members.lastName} updated!`);
+          setModalDone(!modalDone);
         } else {
           setMsg(data.message);
+          setModal(!modal);
         }
       });
     } catch (error) {
       setMsg(error.message);
+      setModal(!modal);
     }
   };
 
@@ -244,20 +254,18 @@ const MemberForm = () => {
             <option value="Black">Black</option>
           </select>
         </fieldset>
+        <Button
+          type={'confirm'}
+          resource={'Member'}
+          onClick={() => {
+            onSubmit;
+          }}
+        />
         <Link to="/members">
-          <Button
-            type={'confirm'}
-            resource={'Member'}
-            onClick={(e) => {
-              onSubmit;
-              setModal(!modal);
-            }}
-          />
+          <Button type={'cancel'} />
         </Link>
-        {modal && <ModalAlert text={msg} />}
-        <Link to="/members">
-          <Button type={'cancel'} resource={'Member'} />
-        </Link>
+        {modal && <ModalAlert text={msg} onClick={setModal(!modal)} />}
+        {modalDone && <ModalAlert text={msg} onClick={setModalDone(!modalDone)} />}
       </div>
     </form>
   );
