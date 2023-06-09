@@ -33,6 +33,7 @@ function Admins() {
       if (response.ok) {
         setAdminsData(adminsData.filter((admin) => admin._id !== id));
         setModalText('Admin deleted correctly!');
+        setIsModalOpen(true);
       } else {
         throw new Error('Error deleting Admin.');
       }
