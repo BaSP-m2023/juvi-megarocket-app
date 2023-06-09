@@ -1,4 +1,4 @@
-import { FETCH_ADMINS, ADD_ADMIN, REMOVE_ADMIN, EDIT_ADMIN } from './adminConstants';
+import { FETCH_ADMINS, ADD_ADMIN, REMOVE_ADMIN, EDIT_ADMIN } from './constants';
 
 export const fetchAdmins = () => ({
   type: FETCH_ADMINS

@@ -5,7 +5,7 @@ import Button from '../../Shared/Button';
 import ModalAlert from '../../Shared/ModalAlert/index.jsx';
 import { Input } from '../../Shared';
 import { connect } from 'react-redux';
-import { addAdmin, fetchAdmins } from './adminActions';
+import { addAdmin, fetchAdmins } from '../../../redux/admins/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 

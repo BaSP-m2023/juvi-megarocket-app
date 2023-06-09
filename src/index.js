@@ -5,7 +5,7 @@ import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { rootReducer } from './Redux/Reducers';
+import rootReducer from './redux/admins/reducer';
 
 const store = createStore(rootReducer);
 
