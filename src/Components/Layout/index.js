@@ -4,6 +4,7 @@ import Classes from '../Classes';
 import Members from '../Members';
 import Subscriptions from '../Subscriptions';
 import SuperAdmins from '../SuperAdmins';
+import FormSuperAdmin from '../SuperAdmins/Form/Index';
 import Trainers from '../Trainers';
 
 import Home from '../Home/index';
@@ -28,8 +29,10 @@ function Layout() {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-
-        <Route path="/activities" component={Activities} />
+        <Route exact path="/super-admins" component={SuperAdmins} />
+        <Route exact path="/super-admins/form" component={FormSuperAdmin} />
+        <Route exact path="/super-admins/form/:id" component={FormSuperAdmin} />
+        <Route path="/activities/ActivitiesForm/:id" component={FormActivities} />
         <Route exact path="/activities" component={Activities} />
         <Route exact path="/activities/ActivitiesForm" component={FormActivities} />
 
@@ -48,8 +51,6 @@ function Layout() {
         <Route path="/subscriptions" exact component={Subscriptions} />
         <Route exact path="/subscriptions/form" component={SubForm} />
         <Route exact path="/subscriptions/form/:id" component={SubForm} />
-
-        <Route path="/super-admins" component={SuperAdmins} />
 
         <Route path="/trainers" exact component={Trainers} />
         <Route path="/trainers/add" component={TrainerForm} />
