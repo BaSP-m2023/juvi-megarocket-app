@@ -12,6 +12,7 @@ const SubForm = () => {
   const [filteredClassesData, setFilteredClasses] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
+  const [success, setSuccess] = useState(false);
   const history = useHistory();
   const [selectedSubscription, setSelectedSubscription] = useState({
     classes: '',
@@ -29,6 +30,8 @@ const SubForm = () => {
   useEffect(() => {
     getMembers();
     getClasses();
+  }, []);
+  useEffect(() => {
     if (id) {
       fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`)
         .then((response) => response.json())
@@ -36,7 +39,7 @@ const SubForm = () => {
           setSelectedSubscription({
             classes: data.data.classes._id,
             members: data.data.members[0],
-            date: data.data.date
+            date: data.data.date.slice(0, 16)
           });
         })
         .catch((error) => {
@@ -44,21 +47,20 @@ const SubForm = () => {
           showAlertHandler();
         });
     }
-  }, []);
+  }, [id]);
+
   useEffect(() => {
     setFormData({
-      classes: selectedSubscription.classes._id,
+      classes: selectedSubscription.classes,
       members: selectedSubscription.members._id,
       date: selectedSubscription.date
     });
-    console.log(selectedSubscription);
-    setFilteredClasses(
-      classesData.filter((classe) => classe._id !== selectedSubscription.classes._id)
-    );
+    setFilteredClasses(classesData.filter((classe) => classe._id !== selectedSubscription.classes));
     setFilteredMembers(
       membersData.filter((member) => member._id !== selectedSubscription.members._id)
     );
   }, [selectedSubscription]);
+
   useEffect(() => {
     if (window.location.pathname === '/subscriptions') {
       setShowConfirm(true);
@@ -105,7 +107,6 @@ const SubForm = () => {
     } else {
       await addSubscription(formData);
     }
-    history.push('/subscriptions');
   };
 
   const addSubscription = async ({ classes, members, date }) => {
@@ -128,6 +129,7 @@ const SubForm = () => {
       } else {
         setAlertText(responseData.message);
         showAlertHandler();
+        setSuccess(true);
         getClasses();
       }
     } catch (error) {
@@ -157,9 +159,10 @@ const SubForm = () => {
       if (response.ok) {
         setAlertText(responseData.message);
         showAlertHandler();
+        setSuccess(true);
         getClasses();
       } else {
-        throw new Error(responseData.message);
+        setAlertText(responseData.message);
       }
     } catch (error) {
       setAlertText(error.message);
@@ -167,9 +170,8 @@ const SubForm = () => {
     }
   };
 
-  const showAlertHandler = (error) => {
-    setAlertText(error ? error : '');
-    setShowAlert(!showAlert);
+  const showAlertHandler = () => {
+    setShowAlert(true);
   };
   const handleFormClose = (e) => {
     e.preventDefault();
@@ -178,11 +180,15 @@ const SubForm = () => {
 
   const handleConfirmClose = () => {
     setShowConfirm(false);
+    setShowAlert(false);
+    if (success) {
+      history.push('/subscriptions');
+    }
   };
 
   return (
     <div>
-      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
+      {showAlert && <ModalAlert text={alertText} onClick={handleConfirmClose} />}
       <form className={style.form} onSubmit={onSubmit}>
         <div>
           <div className={style.forms}>
@@ -217,7 +223,7 @@ const SubForm = () => {
               <input
                 name="date"
                 type="datetime-local"
-                value={selectedSubscription.date}
+                value={formData.date}
                 onChange={onChangeInput}
               />
             </div>
