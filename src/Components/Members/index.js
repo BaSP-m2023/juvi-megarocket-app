@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './members.module.css';
-// Shared
 import { SharedTable, Button } from '../Shared';
 
-function Members() {
+function Members(props) {
   const [members, setMembers] = useState([]);
 
   const getMembs = async () => {
@@ -31,9 +29,11 @@ function Members() {
 
   return (
     <section className={styles.container}>
-      <Link to="members/form">
-        <Button type={'add'} resource={'Member'} />
-      </Link>
+      <Button
+        type={'add'}
+        resource={'Member'}
+        onClick={() => props.history.push('/members/form')}
+      />
       <SharedTable data={members} handleDelete={deleteMemb} editLink={'members/form/'} />
     </section>
   );

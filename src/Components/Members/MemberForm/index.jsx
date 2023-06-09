@@ -1,16 +1,13 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Button from '../../Shared/Button';
-import ModalAlert from '../../Shared/ModalAlert';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { ModalAlert, Button } from '../../Shared';
 import { useParams } from 'react-router-dom';
 
 const MemberForm = (props) => {
   const [members, setMembers] = useState([]);
-  const [msg, setMsg] = useState('');
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
+  const [msg, setMsg] = useState('');
   const [member, setMember] = useState({
     firstName: members.firstName ?? '',
     lastName: members.lastName ?? '',
@@ -27,6 +24,12 @@ const MemberForm = (props) => {
   const { id } = useParams();
   let text = 'Add member';
 
+  if (id) {
+    text = 'Edit member';
+  } else {
+    text = 'Add member';
+  }
+
   const getMembs = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`);
     const data = await response.json();
@@ -37,9 +40,6 @@ const MemberForm = (props) => {
   useEffect(() => {
     if (id) {
       getMembs();
-      text = 'Edit member';
-    } else {
-      text = 'Add member';
     }
   }, []);
 
@@ -91,9 +91,9 @@ const MemberForm = (props) => {
       const newMemb = await response.json();
 
       if (!newMemb.error) {
-        setMembers([...members, newMemb]);
         setMsg('Member created!');
-        setModal(!modal);
+        setModalDone(!modalDone);
+        getMembs();
       } else {
         setMsg(newMemb.message);
         setModal(!modal);
@@ -113,26 +113,19 @@ const MemberForm = (props) => {
       }).then(async (response) => {
         const data = await response.json();
         if (!data.error) {
-          setMembers(
-            members.map((member) =>
-              member._id === id
-                ? {
-                    ...member,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    dni: data.dni,
-                    phone: data.phone,
-                    email: data.email,
-                    city: data.city,
-                    birthDate: data.birthDate,
-                    postalCode: data.postalCode,
-                    memberships: data.memberships,
-                    password: data.password
-                  }
-                : member
-            )
-          );
-          setMsg(`Member ${members.firstName} ${members.lastName} updated!`);
+          setMembers({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            dni: data.dni,
+            phone: data.phone,
+            email: data.email,
+            city: data.city,
+            birthDate: data.birthDate,
+            postalCode: data.postalCode,
+            memberships: data.memberships,
+            password: data.password
+          });
+          setMsg(`Member ${member.firstName} ${member.lastName} updated!`);
           setModalDone(!modalDone);
         } else {
           setMsg(data.message);
@@ -242,7 +235,8 @@ const MemberForm = (props) => {
             className={styles.input}
             name="password"
             type="password"
-            onChange={console.log('password')}
+            value={member.password}
+            onChange={onChange}
             placeholder="Password"
           />
         </fieldset>
@@ -261,11 +255,9 @@ const MemberForm = (props) => {
             onSubmit;
           }}
         />
-        <Link to="/members">
-          <Button type={'cancel'} />
-        </Link>
-        {modal && <ModalAlert text={msg} onClick={setModal(!modal)} />}
-        {modalDone && <ModalAlert text={msg} onClick={setModalDone(!modalDone)} />}
+        <Button type={'cancel'} onClick={() => props.history.push('/members')} />
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+        {modalDone && <ModalAlert text={msg} onClick={() => props.history.push('/members')} />}
       </div>
     </form>
   );
