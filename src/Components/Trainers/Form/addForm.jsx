@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import { Button, ModalAlert, Input } from '../../Shared';
-// import { ModalAlert } from '../../Shared/ModalAlert';
-// import { Link } from 'react-router-dom';
 
 const Form = () => {
   const [firstName, setFirstName] = useState('');
@@ -34,11 +32,14 @@ const Form = () => {
         salary: salary
       })
     });
-    if (response.status === 201) {
-      alert(`The trainer named: ${lastName} ${firstName} was created successfully`);
+    const data = await response.json();
+    if (!data.error) {
+      setAlertMessage(`The trainer named: ${lastName} ${firstName} was created successfully`);
+      setIsAlertOpen(true);
     } else {
-      const error = await response.json();
-      alert(error.message);
+      setAlertMessage(data.message);
+      setIsAlertOpen(true);
+      return 'error';
     }
   };
 
@@ -51,18 +52,22 @@ const Form = () => {
     if (!firstName || !lastName || !city || !dni || !email || !phone || !salary) {
       setIsAlertOpen(true);
       setAlertMessage('Please complete all fields');
-      return;
     }
-    await addTrainer(firstName, lastName, city, dni, email, phone, salary, password);
-    setFirstName('');
-    setLastName('');
-    setCity('');
-    setDni('');
-    setEmail('');
-    setPhone('');
-    setSalary('');
-    setPassword('');
-    history.push('/trainers');
+    if (
+      (await addTrainer(firstName, lastName, city, dni, email, phone, salary, password)) === 'error'
+    ) {
+      setIsAlertOpen(true);
+    } else {
+      setFirstName('');
+      setLastName('');
+      setCity('');
+      setDni('');
+      setEmail('');
+      setPhone('');
+      setSalary('');
+      setPassword('');
+      history.push('/trainers');
+    }
   };
 
   const history = useHistory();
@@ -129,7 +134,7 @@ const Form = () => {
           onChange={(e) => setPassword(e.target.value)}
         ></Input>
       </div>
-      <Input type={'submit'} value={'Save trainer'}></Input>
+      <Button type={'confirm'} onClick={() => onSubmit} />
       <Button type="cancel" onClick={handleCancel}>
         Cancel
       </Button>
