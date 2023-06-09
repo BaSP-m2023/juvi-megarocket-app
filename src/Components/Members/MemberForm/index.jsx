@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import { ModalAlert, Button } from '../../Shared';
+import { ModalAlert, Button, Input } from '../../Shared';
 import { useParams } from 'react-router-dom';
 
 const MemberForm = (props) => {
@@ -144,7 +144,7 @@ const MemberForm = (props) => {
       <div className={styles.formContainer}>
         <fieldset className={styles.fieldset}>
           <label className={styles.label}>First name</label>
-          <input
+          <Input
             className={styles.input}
             name="firstName"
             type="text"
@@ -155,7 +155,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Last Name</label>
-          <input
+          <Input
             className={styles.input}
             name="lastName"
             type="text"
@@ -166,7 +166,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>DNI</label>
-          <input
+          <Input
             className={styles.input}
             name="dni"
             type="number"
@@ -177,7 +177,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Phone</label>
-          <input
+          <Input
             className={styles.input}
             name="phone"
             type="number"
@@ -188,7 +188,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Email</label>
-          <input
+          <Input
             className={styles.input}
             name="email"
             type="text"
@@ -199,7 +199,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>City</label>
-          <input
+          <Input
             className={styles.input}
             name="city"
             type="text"
@@ -210,7 +210,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Birth Day</label>
-          <input
+          <Input
             className={styles.input}
             name="birthDate"
             type="date"
@@ -220,7 +220,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Zip</label>
-          <input
+          <Input
             className={styles.input}
             name="postalCode"
             type="number"
@@ -231,7 +231,7 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Password</label>
-          <input
+          <Input
             className={styles.input}
             name="password"
             type="password"
