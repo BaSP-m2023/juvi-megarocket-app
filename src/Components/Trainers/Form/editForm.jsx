@@ -73,7 +73,6 @@ const Form = () => {
     });
     if (response.status === 200) {
       alert(`The trainer named:${formData.lastName} ${formData.firstName} was edited successfully`);
-      //close();
       history.push('/trainers');
     } else {
       const error = await response.json();

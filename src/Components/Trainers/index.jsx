@@ -1,26 +1,15 @@
 import { Button, SharedTable, ModalAlert } from '../Shared';
-import Form from './Form/addForm';
-import FormEdit from './Form/editForm';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import styles from './trainers.module.css';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isFormEditOpen, setIsFormEditOpen] = useState(false);
   const [deletedTrainerId, setDeletedTrainerId] = useState(null);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: ''
-  });
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`)
       .then((response) => response.json())
@@ -33,38 +22,10 @@ function Trainers() {
       });
   }, [deletedTrainerId]);
 
-  // eslint-disable-next-line no-unused-vars
-  const getEditId = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.error) {
-          setFormData(data.data);
-        }
-      })
-      .catch((error) => {
-        setIsAlertOpen(true);
-        setAlertMessage(error);
-      });
-  };
   const toggleFormAdd = () => {
     setIsFormOpen(!isFormOpen);
   };
 
-  /* const toggleFormEdit = (id) => {
-    setIsFormEditOpen(!isFormEditOpen);
-    getEditId(id);
-  };*/
-
-  const toggleFormEditClose = () => {
-    setIsFormEditOpen(!isFormEditOpen);
-  };
   const handleDelete = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
       method: 'DELETE',
@@ -88,8 +49,8 @@ function Trainers() {
   };
 
   return (
-    <section>
-      <Link to="/trainers/add">
+    <section className={styles.container}>
+      <Link to="/trainers/add" className={styles.link}>
         <Button type="add" resource="Trainer" onClick={toggleFormAdd} />
       </Link>
       <SharedTable
@@ -97,10 +58,7 @@ function Trainers() {
         editLink={'/trainers/edit/'}
         handleDelete={handleDelete}
       ></SharedTable>
-      {isFormOpen && <Form />}
-      {isFormEditOpen && (
-        <FormEdit formData={formData} setFormData={setFormData} close={toggleFormEditClose} />
-      )}
+
       {isAlertOpen && <ModalAlert text={alertMessage} onClick={closeAlert} />}
     </section>
   );
