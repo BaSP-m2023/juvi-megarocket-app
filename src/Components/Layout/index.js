@@ -1,11 +1,14 @@
 import Activities from '../Activities';
 import Admins from '../Admins/index';
+import AdminsForm from '../Admins/Form';
 import Classes from '../Classes';
 import FormClasses from '../Classes/Form';
 import Members from '../Members';
 import Subscriptions from '../Subscriptions';
+import SubForm from '../Subscriptions/Form';
 import SuperAdmins from '../SuperAdmins';
 import Trainers from '../Trainers';
+import FormActivities from '../Activities/Form';
 
 //Member
 import MemberForm from '../Members/MemberForm';
@@ -15,8 +18,8 @@ import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
-import Form from '../Trainers/Form/addForm';
-import FormEdit from '../Trainers/Form/editForm';
+import TrainerForm from '../Trainers/Form/addForm';
+import TrainerFormEdit from '../Trainers/Form/editForm';
 // import Table from '../Trainers/Table/index';
 
 import React from 'react';
@@ -28,20 +31,32 @@ function Layout() {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
+
         <Route path="/activities" component={Activities} />
-        <Route path="/admins" component={Admins} />
-        <Route path="/classes" component={Classes} />
-        <Route exact path="/members" component={Members} />
-        <Route exact path="/members/form" component={MemberForm} />
-        <Route path="/members/form/:id" component={MemberForm} />
+        <Route exact path="/activities" component={Activities} />
+        <Route exact path="/activities/ActivitiesForm" component={FormActivities} />
+
+        <Route exact path="/admins" component={Admins} />
+        <Route exact path="/admins/Form/" component={AdminsForm} />
+        <Route path="/admins/Form/:id" component={AdminsForm} />
+
         <Route exact path="/classes" component={Classes} />
         <Route exact path="/classes/form/" component={FormClasses} />
         <Route path="/classes/form/:id" component={FormClasses} />
-        <Route path="/subscriptions" component={Subscriptions} />
+
+        <Route exact path="/members" component={Members} />
+        <Route exact path="/members/form" component={MemberForm} />
+        <Route path="/members/form/:id" component={MemberForm} />
+
+        <Route path="/subscriptions" exact component={Subscriptions} />
+        <Route exact path="/subscriptions/form" component={SubForm} />
+        <Route exact path="/subscriptions/form/:id" component={SubForm} />
+
         <Route path="/super-admins" component={SuperAdmins} />
+
         <Route path="/trainers" exact component={Trainers} />
-        <Route path="/trainers/add" component={Form} />
-        <Route path="/trainers/edit/:id" component={FormEdit} />
+        <Route path="/trainers/add" component={TrainerForm} />
+        <Route path="/trainers/edit/:id" component={TrainerFormEdit} />
       </Switch>
       <Footer />
     </div>

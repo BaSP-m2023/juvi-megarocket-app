@@ -24,6 +24,9 @@ const Button = ({ type, resource, onClick }) => {
       case 'cancel':
         text = 'Cancel';
         return styles.btnCancel;
+      case 'submit':
+        text = 'Submit';
+        return styles.btnAdd;
       default:
         return styles.btn;
     }
