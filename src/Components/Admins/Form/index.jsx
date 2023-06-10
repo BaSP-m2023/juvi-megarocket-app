@@ -4,8 +4,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import ModalAlert from '../../Shared/ModalAlert/index.jsx';
 import { Input } from '../../Shared';
-import { connect } from 'react-redux';
-import { addAdmin, fetchAdmins } from './adminActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
@@ -222,11 +220,5 @@ const AdminsForm = () => {
     </>
   );
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addAdmin: (adminData) => dispatch(addAdmin(adminData)),
-    fetchAdmins: () => dispatch(fetchAdmins())
-  };
-};
 
-export default connect(null, mapDispatchToProps)(AdminsForm);
+export default AdminsForm;

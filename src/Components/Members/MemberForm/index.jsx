@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { ModalAlert, Button, Input } from '../../Shared';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMemberById, putMember, addMember } from '../../../redux/members/thunks';
 
 const MemberForm = (props) => {
   const [members, setMembers] = useState([]);
@@ -30,16 +32,15 @@ const MemberForm = (props) => {
     text = 'Add member';
   }
 
-  const getMembs = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`);
-    const data = await response.json();
-    data.data.birthDate = data.data.birthDate.substring(0, 10);
-    setMembers(data.data);
-  };
+  let data = useSelector((state) => state.members);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (id) {
-      getMembs();
+      dispatch(getMemberById(id));
+      setMembers(data.item);
+      console.log(data);
+      setModalDone(false);
     }
   }, []);
 
@@ -65,76 +66,34 @@ const MemberForm = (props) => {
     });
   };
 
+  const errorAlert = (errorMsg) => {
+    setMsg(errorMsg);
+    setModal(!modal);
+  };
+
+  const successAlert = (successMsg) => {
+    setMsg(successMsg);
+    setModalDone(!modalDone);
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
-    try {
-      if (text === 'Add member') {
-        addMember(member);
+    if (text === 'Add member') {
+      dispatch(addMember(member));
+      if (data.error != '') {
+        errorAlert(data.error);
       } else {
-        updateMemb(id, member);
+        successAlert('Member created!');
       }
-    } catch (error) {
-      setMsg(error);
-      setModal(!modal);
-    }
-  };
-
-  const addMember = async (member) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(member)
-      });
-
-      const newMemb = await response.json();
-
-      if (!newMemb.error) {
-        setMsg('Member created!');
-        setModalDone(!modalDone);
-        getMembs();
+    } else {
+      dispatch(putMember(id, member));
+      dispatch(getMemberById(id));
+      if (data.error != '') {
+        errorAlert(data.error);
       } else {
-        setMsg(newMemb.message);
-        setModal(!modal);
+        successAlert('Member updated!');
       }
-    } catch (error) {
-      setMsg(error.message);
-      setModal(!modal);
-    }
-  };
-
-  const updateMemb = async (id, member) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(member)
-      }).then(async (response) => {
-        const data = await response.json();
-        if (!data.error) {
-          setMembers({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            dni: data.dni,
-            phone: data.phone,
-            email: data.email,
-            city: data.city,
-            birthDate: data.birthDate,
-            postalCode: data.postalCode,
-            memberships: data.memberships,
-            password: data.password
-          });
-          setMsg(`Member ${member.firstName} ${member.lastName} updated!`);
-          setModalDone(!modalDone);
-        } else {
-          setMsg(data.message);
-          setModal(!modal);
-        }
-      });
-    } catch (error) {
-      setMsg(error.message);
-      setModal(!modal);
     }
   };
 
