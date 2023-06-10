@@ -36,11 +36,11 @@ function Trainers() {
   return (
     <section className={styles.container}>
       <h1>Trainers</h1>
-      <Link to="/trainers/add" className={styles.link}>
+      <Link to="/trainers/form" className={styles.link}>
         <Button type="add" resource="Trainer" />
       </Link>
       {!isLoading && (
-        <SharedTable data={list} editLink={'/trainers/edit/'} handleDelete={handleDelete} />
+        <SharedTable data={list} editLink={'/trainers/form/'} handleDelete={handleDelete} />
       )}
       {showAlert && error != '' && <ModalAlert text={error} onClick={closeAlert} />}
       {showAlert && message != '' && <ModalAlert text={message} onClick={closeAlert} />}

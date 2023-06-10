@@ -7,7 +7,10 @@ import {
   GET_TRAINERS_BY_ERROR,
   DEL_TRAINERS_PENDING,
   DEL_TRAINERS_SUCCESS,
-  DEL_TRAINERS_ERROR
+  DEL_TRAINERS_ERROR,
+  ADD_TRAINERS_PENDING,
+  ADD_TRAINERS_SUCCESS,
+  ADD_TRAINERS_ERROR
 } from './constants';
 
 const initialState = {
@@ -70,6 +73,25 @@ const trainerReducer = (state = initialState, action) => {
         isLoading: false
       };
     case DEL_TRAINERS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
+    case ADD_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ADD_TRAINERS_SUCCESS:
+      return {
+        ...state,
+        item: action.payload.data,
+        message: action.payload.message,
+        isLoading: false
+      };
+    case ADD_TRAINERS_ERROR:
       return {
         ...state,
         error: action.payload,

@@ -4,7 +4,10 @@ import {
   getTrainersError,
   delTrainerPending,
   delTrainerSuccess,
-  delTrainerError
+  delTrainerError,
+  addTrainerPending,
+  addTrainerSuccess,
+  addTrainerError
 } from './actions';
 
 export const getTrainers = () => {
@@ -38,6 +41,31 @@ export const delTrainer = (id) => {
       dispatch(delTrainerSuccess({ data, message }));
     } catch (error) {
       dispatch(delTrainerError(error));
+    }
+  };
+};
+
+export const addTrainer = (request) => {
+  console.log(request);
+  return async (dispatch) => {
+    try {
+      dispatch(addTrainerPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(request)
+      });
+      const responseJson = await response.json();
+      if (responseJson.error) {
+        throw new Error(responseJson.message);
+      } else {
+        const { data, message } = responseJson;
+        dispatch(addTrainerSuccess({ data, message }));
+      }
+    } catch (error) {
+      dispatch(addTrainerError(error));
     }
   };
 };
