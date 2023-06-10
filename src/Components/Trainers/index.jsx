@@ -1,65 +1,41 @@
 import { Button, SharedTable, ModalAlert } from '../Shared';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './trainers.module.css';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { getTrainers, delTrainer } from '../../redux/trainers/thunks';
+
 function Trainers() {
-  const [trainers, setTrainers] = useState([]);
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [deletedTrainerId, setDeletedTrainerId] = useState(null);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [showAlert, setshowAlert] = false;
+  const { list, isLoading, error, message, item } = useSelector((state) => state.trainers);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setTrainers(data);
-      })
-      .catch((error) => {
-        setIsAlertOpen(true);
-        setAlertMessage(error);
-      });
-  }, [deletedTrainerId]);
+    dispatch(getTrainers());
+  }, [item]);
 
-  const toggleFormAdd = () => {
-    setIsFormOpen(!isFormOpen);
-  };
+  useEffect(() => {
+    if (message != '') setshowAlert(true);
+  }, [message]);
 
   const handleDelete = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    if (response.status === 200) {
-      setIsAlertOpen(true);
-      setAlertMessage('Trainer deleted');
-      setDeletedTrainerId(id);
-    } else {
-      setIsAlertOpen(true);
-      setAlertMessage('Error deleting trainer');
-    }
+    dispatch(delTrainer(id));
   };
 
-  const closeAlert = () => {
-    setIsAlertOpen(false);
-  };
+  const closeAlert = () => {};
 
   return (
     <section className={styles.container}>
+      <h1>Trainers</h1>
       <Link to="/trainers/add" className={styles.link}>
-        <Button type="add" resource="Trainer" onClick={toggleFormAdd} />
+        <Button type="add" resource="Trainer" />
       </Link>
-      <SharedTable
-        data={trainers.data}
-        editLink={'/trainers/edit/'}
-        handleDelete={handleDelete}
-      ></SharedTable>
-
-      {isAlertOpen && <ModalAlert text={alertMessage} onClick={closeAlert} />}
+      {!isLoading && (
+        <SharedTable data={list} editLink={'/trainers/edit/'} handleDelete={handleDelete} />
+      )}
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
+      {showAlert && <ModalAlert text={message} onClick={closeAlert} />}
     </section>
   );
 }

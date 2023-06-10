@@ -1,25 +1,48 @@
-import { FETCH_TRAINERS, ADD_TRAINER, REMOVE_TRAINER, EDIT_TRAINER } from './constants';
+import {
+  getTrainersPending,
+  getTrainersSuccess,
+  getTrainersError,
+  delTrainerPending,
+  delTrainerSuccess,
+  delTrainerError
+} from './actions';
 
-export const fetchTrainersAsync = (setModalText) => {
+export const getTrainers = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch trainers.');
+      dispatch(getTrainersPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
+      const responseJson = await response.json();
+      if (responseJson.error) {
+        throw new Error(responseJson.message);
       }
-      const jsonData = await response.json();
-      const trainerData = jsonData.data;
-
-      dispatch({
-        type: FETCH_TRAINERS,
-        payload: trainerData
-      });
+      dispatch(getTrainersSuccess(responseJson.data));
     } catch (error) {
-      setModalText(`Error getting trainers: ${error}`);
+      dispatch(getTrainersError(error));
     }
   };
 };
 
+export const delTrainer = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(delTrainerPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
+        method: 'DELETE'
+      });
+      const responseJson = await response.json();
+      console.log(responseJson);
+      if (response.error) {
+        throw new Error(responseJson.message);
+      }
+      const { data, message } = responseJson;
+      dispatch(delTrainerSuccess({ data, message }));
+    } catch (error) {
+      dispatch(delTrainerError(error));
+    }
+  };
+};
+/*
 export const addTrainerAsync = (trainerData, setModalText) => {
   return async (dispatch) => {
     try {
@@ -49,15 +72,13 @@ export const addTrainerAsync = (trainerData, setModalText) => {
 export const removeTrainerAsync = (trainerId, setModalText, setIsModalOpen) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${trainerId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${trainerId}`, {
         method: 'DELETE'
       });
       if (!response.ok) {
         throw new Error('Failed to delete trainer.');
       }
-
       dispatch({
-        type: REMOVE_TRAINER,
         payload: trainerId
       });
     } catch (error) {
@@ -92,3 +113,4 @@ export const editTrainerAsync = (trainerData, trainerId, setModalText) => {
     }
   };
 };
+*/

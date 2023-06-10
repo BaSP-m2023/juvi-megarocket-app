@@ -1,20 +1,65 @@
-import { FETCH_TRAINERS, ADD_TRAINER, REMOVE_TRAINER, EDIT_TRAINER } from './constants';
+import {
+  GET_TRAINERS_PENDING,
+  GET_TRAINERS_SUCCESS,
+  GET_TRAINERS_ERROR,
+  GET_TRAINERS_BY_PENDING,
+  GET_TRAINERS_BY_SUCCESS,
+  GET_TRAINERS_BY_ERROR,
+  DEL_TRAINERS_PENDING,
+  DEL_TRAINERS_SUCCESS,
+  DEL_TRAINERS_ERROR
+} from './constants';
 
-export const fetchTrainers = () => ({
-  type: FETCH_TRAINERS
-});
+export const getTrainersPending = () => {
+  return {
+    type: GET_TRAINERS_PENDING
+  };
+};
+export const getTrainersSuccess = (data) => {
+  return {
+    type: GET_TRAINERS_SUCCESS,
+    payload: data
+  };
+};
+export const getTrainersError = (error) => {
+  return {
+    type: GET_TRAINERS_ERROR,
+    payload: error
+  };
+};
 
-export const addTrainer = (trainerData) => ({
-  type: ADD_TRAINER,
-  payload: trainerData
-});
+export const getTrainerByIdPending = () => {
+  return {
+    type: GET_TRAINERS_BY_ERROR
+  };
+};
+export const getTrainerByIdSuccess = (data) => {
+  return {
+    type: GET_TRAINERS_BY_SUCCESS,
+    payload: data
+  };
+};
+export const getTrainerByIdError = (error) => {
+  return {
+    type: GET_TRAINERS_BY_PENDING,
+    payload: error
+  };
+};
 
-export const removeTrainer = (trainerId) => ({
-  type: REMOVE_TRAINER,
-  payload: trainerId
-});
-
-export const editTrainer = (trainerData) => ({
-  type: EDIT_TRAINER,
-  payload: trainerData
-});
+export const delTrainerPending = () => {
+  return {
+    type: DEL_TRAINERS_PENDING
+  };
+};
+export const delTrainerSuccess = (data) => {
+  return {
+    type: DEL_TRAINERS_SUCCESS,
+    payload: data
+  };
+};
+export const delTrainerError = (error) => {
+  return {
+    type: DEL_TRAINERS_ERROR,
+    payload: error
+  };
+};
