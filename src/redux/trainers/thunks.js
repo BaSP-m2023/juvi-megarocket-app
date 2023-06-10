@@ -31,7 +31,6 @@ export const delTrainer = (id) => {
         method: 'DELETE'
       });
       const responseJson = await response.json();
-      console.log(responseJson);
       if (response.error) {
         throw new Error(responseJson.message);
       }

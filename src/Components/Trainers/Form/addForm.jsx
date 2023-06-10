@@ -14,6 +14,7 @@ const Form = () => {
   const [password, setPassword] = useState('');
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+
   const addTrainer = async (firstName, lastName, city, dni, email, phone, salary, password) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`, {
       method: 'POST',

@@ -63,7 +63,6 @@ const trainerReducer = (state = initialState, action) => {
         isLoading: true
       };
     case DEL_TRAINERS_SUCCESS:
-      console.log(action);
       return {
         ...state,
         item: action.payload.data,
