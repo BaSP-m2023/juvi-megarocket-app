@@ -4,7 +4,10 @@ import {
   GET_CLASSES_ERROR,
   DELETE_CLASS_PENDING,
   DELETE_CLASS_SUCCESS,
-  DELETE_CLASS_ERROR
+  DELETE_CLASS_ERROR,
+  POST_CLASS_PENDING,
+  POST_CLASS_SUCCESS,
+  POST_CLASS_ERROR
 } from './constants';
 
 export const getClassesPending = () => {
@@ -43,6 +46,26 @@ export const deleteClassSuccess = (_id) => {
 export const deleteClassError = (error) => {
   return {
     type: DELETE_CLASS_ERROR,
+    payload: error
+  };
+};
+
+export const postClassPending = () => {
+  return {
+    type: POST_CLASS_PENDING
+  };
+};
+
+export const postClassSuccess = (data) => {
+  return {
+    type: POST_CLASS_SUCCESS,
+    payload: data
+  };
+};
+
+export const postClassError = (error) => {
+  return {
+    type: POST_CLASS_ERROR,
     payload: error
   };
 };

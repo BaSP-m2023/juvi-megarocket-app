@@ -4,8 +4,11 @@ import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import { Input } from '../../Shared';
 import ModalAlert from '../../Shared/ModalAlert';
+import { postClass } from '../../../redux/classes/thunks';
+import { useDispatch } from 'react-redux';
 
 const FormClasses = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
   const [classesData, setClassData] = useState([]);
@@ -51,32 +54,6 @@ const FormClasses = () => {
     });
   };
 
-  const addClass = async ({ activity, trainer, day, hour, slots }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ activity, trainer, day, hour, slots })
-      });
-      const responseData = await response.json();
-
-      if (responseData.error) {
-        throw new Error(responseData.message);
-      } else {
-        const newClass = responseData.data;
-        setClassData([...classesData, newClass]);
-        setModalText('Class created correctly!');
-        setShowModal(true);
-        setIsTrue(true);
-      }
-    } catch (error) {
-      setModalText('Error creating Class: ' + error);
-      setShowModal(true);
-    }
-  };
-
   const editClass = async (updatedClass, classId) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${classId}`, {
@@ -111,7 +88,7 @@ const FormClasses = () => {
     if (id) {
       editClass(formData, selectedClass._id);
     } else {
-      addClass(formData);
+      dispatch(postClass(formData, setModalText, setShowModal, setIsTrue));
     }
   };
 

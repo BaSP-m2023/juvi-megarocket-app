@@ -4,7 +4,10 @@ import {
   GET_CLASSES_ERROR,
   DELETE_CLASS_PENDING,
   DELETE_CLASS_SUCCESS,
-  DELETE_CLASS_ERROR
+  DELETE_CLASS_ERROR,
+  POST_CLASS_PENDING,
+  POST_CLASS_SUCCESS,
+  POST_CLASS_ERROR
 } from './constants';
 
 const initialState = {
@@ -47,6 +50,25 @@ export const classReducer = (state = initialState, action) => {
         isLoading: false
       };
     case DELETE_CLASS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case POST_CLASS_PENDING:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case POST_CLASS_SUCCESS:
+      return {
+        ...state,
+        error: action.payload,
+        list: state.list.push(action.payload),
+        isLoading: false
+      };
+    case POST_CLASS_ERROR:
       return {
         ...state,
         error: action.payload,

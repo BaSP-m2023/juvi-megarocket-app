@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getClasses, deleteClass } from '../../redux/classes/thunks';
 
 const Classes = () => {
-  // const [classesData, setClassData] = useState([]);
-
   const { list, item, isLoading, error } = useSelector((state) => state.classes);
   const dispatch = useDispatch();
 
@@ -23,22 +21,6 @@ const Classes = () => {
   const deleteClasses = (_id) => {
     dispatch(deleteClass(_id));
   };
-  /*
-  const deleteClass = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
-        method: 'DELETE'
-      });
-      if (response.ok) {
-        setClassData(classesData.filter((itemClass) => itemClass.id !== id));
-      } else {
-        throw new Error('Error deleting Class.');
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-*/
   return (
     <section className={styles.containerClass}>
       <Link to="/classes/form">
