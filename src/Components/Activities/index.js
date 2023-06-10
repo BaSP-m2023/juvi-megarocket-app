@@ -2,13 +2,23 @@ import React, { useEffect, useState } from 'react';
 import styles from './activities.module.css';
 import { Link } from 'react-router-dom';
 import { Button, SharedTable, ModalAlert } from '../Shared';
+import { useDispatch, useSelector } from 'react-redux';
+import { getActivities } from '../../redux/activities/thunks';
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
 
-  const getActivities = async () => {
+  const { list, isLoading, error, item } = useSelector((state) => state.activity);
+  const dispatch = useDispatch();
+
+  console.log('list', list);
+  console.log('isLoading', isLoading);
+  console.log('error', error);
+  console.log('item', item);
+
+  /*const getActivitiesLocal = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`);
       const responseData = await response.json();
@@ -18,10 +28,11 @@ const Activities = () => {
       setModalText('Error fetching activities: ' + error);
       setShowModal(true);
     }
-  };
+  };*/
 
   useEffect(() => {
-    getActivities();
+    // getActivitiesLocal();
+    dispatch(getActivities());
   }, []);
 
   const deleteItem = async (_id) => {
@@ -54,11 +65,15 @@ const Activities = () => {
         <Link to="/activities/ActivitiesForm">
           <Button type="add" resource="Activity" />
         </Link>
-        <SharedTable
-          data={activities}
-          editLink={'activities/ActivitiesForm/'}
-          handleDelete={deleteItem}
-        />
+        {isLoading ? (
+          <div>is Loading</div>
+        ) : (
+          <SharedTable
+            data={list}
+            editLink={'activities/ActivitiesForm/'}
+            handleDelete={deleteItem}
+          />
+        )}
       </section>
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </>
