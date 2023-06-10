@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styles from './form.module.css';
-import { ModalAlert, Button, Input } from '../../Shared';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMemberById, putMember, addMember } from '../../../redux/members/thunks';
+
+import styles from './form.module.css';
+import { ModalAlert, Button, Input } from '../../Shared';
 
 const MemberForm = (props) => {
   const [members, setMembers] = useState([]);
@@ -32,15 +33,13 @@ const MemberForm = (props) => {
     text = 'Add member';
   }
 
-  let data = useSelector((state) => state.members);
+  const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (id) {
       dispatch(getMemberById(id));
       setMembers(data.item);
-      console.log(data);
-      setModalDone(false);
     }
   }, []);
 
