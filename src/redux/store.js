@@ -2,9 +2,11 @@ import { combineReducers, legacy_createStore as createStore, applyMiddleware } f
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { adminsReducer } from './admins/reducer';
+import { classReducer } from './classes/reducer';
 
 const rootReducer = combineReducers({
-  admins: adminsReducer
+  admins: adminsReducer,
+  classes: classReducer
 });
 
 const configureStore = () => {
