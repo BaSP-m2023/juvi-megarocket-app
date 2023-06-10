@@ -33,10 +33,10 @@ export const deleteClassPending = () => {
   };
 };
 
-export const deleteClassSuccess = (data) => {
+export const deleteClassSuccess = (_id) => {
   return {
     type: DELETE_CLASS_SUCCESS,
-    payload: data
+    payload: _id
   };
 };
 

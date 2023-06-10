@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SharedTable, Button } from '../Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClasses } from '../../redux/classes/thunks';
+import { getClasses, deleteClass } from '../../redux/classes/thunks';
 
 const Classes = () => {
-  const [classesData, setClassData] = useState([]);
+  // const [classesData, setClassData] = useState([]);
 
   const { list, item, isLoading, error } = useSelector((state) => state.classes);
   const dispatch = useDispatch();
@@ -14,11 +14,16 @@ const Classes = () => {
   console.log(item);
   console.log(isLoading);
   console.log(error);
+  console.log(useState);
 
   useEffect(() => {
     dispatch(getClasses());
   }, []);
 
+  const deleteClasses = (_id) => {
+    dispatch(deleteClass(_id));
+  };
+  /*
   const deleteClass = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
@@ -33,7 +38,7 @@ const Classes = () => {
       alert(error);
     }
   };
-
+*/
   return (
     <section className={styles.containerClass}>
       <Link to="/classes/form">
@@ -42,7 +47,7 @@ const Classes = () => {
       {isLoading ? (
         <div>Is Loading</div>
       ) : (
-        <SharedTable data={list} editLink={'classes/form/'} handleDelete={deleteClass} />
+        <SharedTable data={list} editLink={'classes/form/'} handleDelete={deleteClasses} />
       )}
     </section>
   );

@@ -1,4 +1,11 @@
-import { GET_CLASSES_PENDING, GET_CLASSES_SUCCESS, GET_CLASSES_ERROR } from './constants';
+import {
+  GET_CLASSES_PENDING,
+  GET_CLASSES_SUCCESS,
+  GET_CLASSES_ERROR,
+  DELETE_CLASS_PENDING,
+  DELETE_CLASS_SUCCESS,
+  DELETE_CLASS_ERROR
+} from './constants';
 
 const initialState = {
   list: [],
@@ -21,6 +28,25 @@ export const classReducer = (state = initialState, action) => {
         isLoading: false
       };
     case GET_CLASSES_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case DELETE_CLASS_PENDING:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case DELETE_CLASS_SUCCESS:
+      return {
+        ...state,
+        error: action.payload,
+        list: state.list.filter((classes) => classes._id !== action.payload),
+        isLoading: false
+      };
+    case DELETE_CLASS_ERROR:
       return {
         ...state,
         error: action.payload,
