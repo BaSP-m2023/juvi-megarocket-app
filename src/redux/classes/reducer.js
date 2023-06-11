@@ -2,18 +2,18 @@ import {
   GET_CLASSES_PENDING,
   GET_CLASSES_SUCCESS,
   GET_CLASSES_ERROR,
-  DEL_CLASS_PENDING,
-  DEL_CLASS_SUCCESS,
-  DEL_CLASS_ERROR,
-  POST_CLASS_PENDING,
-  POST_CLASS_SUCCESS,
-  POST_CLASS_ERROR,
-  PUT_CLASS_PENDING,
-  PUT_CLASS_SUCCESS,
-  PUT_CLASS_ERROR,
-  GET_BY_ID_CLASS_PENDING,
-  GET_BY_ID_CLASS_SUCCESS,
-  GET_BY_ID_CLASS_ERROR
+  DEL_CLASSES_PENDING,
+  DEL_CLASSES_SUCCESS,
+  DEL_CLASSES_ERROR,
+  ADD_CLASSES_PENDING,
+  ADD_CLASSES_SUCCESS,
+  ADD_CLASSES_ERROR,
+  PUT_CLASSES_PENDING,
+  PUT_CLASSES_SUCCESS,
+  PUT_CLASSES_ERROR,
+  GET_BY_ID_CLASSES_PENDING,
+  GET_BY_ID_CLASSES_SUCCESS,
+  GET_BY_ID_CLASSES_ERROR
 } from './constants';
 
 const initialState = {
@@ -43,53 +43,53 @@ export const classesReducer = (state = initialState, action) => {
         isLoading: false
       };
 
-    case DEL_CLASS_PENDING:
+    case DEL_CLASSES_PENDING:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
-    case DEL_CLASS_SUCCESS:
+    case DEL_CLASSES_SUCCESS:
       return {
         ...state,
         error: action.payload,
         list: state.list.filter((classes) => classes._id !== action.payload),
         isLoading: false
       };
-    case DEL_CLASS_ERROR:
+    case DEL_CLASSES_ERROR:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
 
-    case POST_CLASS_PENDING:
+    case ADD_CLASSES_PENDING:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
-    case POST_CLASS_SUCCESS:
+    case ADD_CLASSES_SUCCESS:
       return {
         ...state,
         error: action.payload,
         list: state.list.push(action.payload),
         isLoading: false
       };
-    case POST_CLASS_ERROR:
+    case ADD_CLASSES_ERROR:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
 
-    case PUT_CLASS_PENDING:
+    case PUT_CLASSES_PENDING:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
-    case PUT_CLASS_SUCCESS:
+    case PUT_CLASSES_SUCCESS:
       return {
         ...state,
         error: action.payload,
@@ -98,25 +98,25 @@ export const classesReducer = (state = initialState, action) => {
         ),
         isLoading: false
       };
-    case PUT_CLASS_ERROR:
+    case PUT_CLASSES_ERROR:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
 
-    case GET_BY_ID_CLASS_PENDING:
+    case GET_BY_ID_CLASSES_PENDING:
       return {
         ...state,
         isLoading: false
       };
-    case GET_BY_ID_CLASS_SUCCESS:
+    case GET_BY_ID_CLASSES_SUCCESS:
       return {
         ...state,
         item: action.payload,
         isLoading: false
       };
-    case GET_BY_ID_CLASS_ERROR:
+    case GET_BY_ID_CLASSES_ERROR:
       return {
         ...state,
         error: action.payload,

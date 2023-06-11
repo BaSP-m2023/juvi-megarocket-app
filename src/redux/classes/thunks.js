@@ -43,6 +43,7 @@ export const deleteClass = (id) => {
         throw new Error(responseJson.message);
       }
       dispatch(deleteClassSuccess(responseJson.data));
+      window.location.reload();
     } catch (error) {
       dispatch(deleteClassError(error));
     }

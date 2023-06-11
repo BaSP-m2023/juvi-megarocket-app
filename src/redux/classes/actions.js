@@ -2,18 +2,18 @@ import {
   GET_CLASSES_PENDING,
   GET_CLASSES_SUCCESS,
   GET_CLASSES_ERROR,
-  DEL_CLASS_PENDING,
-  DEL_CLASS_SUCCESS,
-  DEL_CLASS_ERROR,
-  POST_CLASS_PENDING,
-  POST_CLASS_SUCCESS,
-  POST_CLASS_ERROR,
-  PUT_CLASS_PENDING,
-  PUT_CLASS_SUCCESS,
-  PUT_CLASS_ERROR,
-  GET_BY_ID_CLASS_PENDING,
-  GET_BY_ID_CLASS_SUCCESS,
-  GET_BY_ID_CLASS_ERROR
+  DEL_CLASSES_PENDING,
+  DEL_CLASSES_SUCCESS,
+  DEL_CLASSES_ERROR,
+  ADD_CLASSES_PENDING,
+  ADD_CLASSES_SUCCESS,
+  ADD_CLASSES_ERROR,
+  PUT_CLASSES_PENDING,
+  PUT_CLASSES_SUCCESS,
+  PUT_CLASSES_ERROR,
+  GET_BY_ID_CLASSES_PENDING,
+  GET_BY_ID_CLASSES_SUCCESS,
+  GET_BY_ID_CLASSES_ERROR
 } from './constants';
 
 export const getClassesPending = () => {
@@ -38,80 +38,80 @@ export const getClassesError = (error) => {
 
 export const deleteClassPending = () => {
   return {
-    type: DEL_CLASS_PENDING
+    type: DEL_CLASSES_PENDING
   };
 };
 
 export const deleteClassSuccess = (_id) => {
   return {
-    type: DEL_CLASS_SUCCESS,
+    type: DEL_CLASSES_SUCCESS,
     payload: _id
   };
 };
 
 export const deleteClassError = (error) => {
   return {
-    type: DEL_CLASS_ERROR,
+    type: DEL_CLASSES_ERROR,
     payload: error
   };
 };
 
 export const postClassPending = () => {
   return {
-    type: POST_CLASS_PENDING
+    type: ADD_CLASSES_PENDING
   };
 };
 
 export const postClassSuccess = (aClass) => {
   return {
-    type: POST_CLASS_SUCCESS,
+    type: ADD_CLASSES_SUCCESS,
     payload: aClass
   };
 };
 
 export const postClassError = (error) => {
   return {
-    type: POST_CLASS_ERROR,
+    type: ADD_CLASSES_ERROR,
     payload: error
   };
 };
 
 export const putClassPending = () => {
   return {
-    type: PUT_CLASS_PENDING
+    type: PUT_CLASSES_PENDING
   };
 };
 
 export const putClassSuccess = (data) => {
   return {
-    type: PUT_CLASS_SUCCESS,
+    type: PUT_CLASSES_SUCCESS,
     payload: data
   };
 };
 
 export const putClassError = (error) => {
   return {
-    type: PUT_CLASS_ERROR,
+    type: PUT_CLASSES_ERROR,
     payload: error
   };
 };
 
 export const getByIdClassPending = () => {
   return {
-    type: GET_BY_ID_CLASS_PENDING
+    type: GET_BY_ID_CLASSES_PENDING
   };
 };
 
 export const getByIdClassSuccess = (data) => {
   return {
-    type: GET_BY_ID_CLASS_SUCCESS,
+    type: GET_BY_ID_CLASSES_SUCCESS,
     payload: data
   };
 };
 
 export const getByIdClassError = (error) => {
   return {
-    type: GET_BY_ID_CLASS_ERROR,
+    type: GET_BY_ID_CLASSES_ERROR,
     payload: error
   };
 };

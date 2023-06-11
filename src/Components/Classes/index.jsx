@@ -18,7 +18,7 @@ const Classes = () => {
   };
   return (
     <section className={styles.containerClass}>
-      <Link to="/classes/form">
+      <Link to="/classes/form" className={styles.contButton}>
         <Button type="add" resource="Class"></Button>
       </Link>
       {isLoading ? (
