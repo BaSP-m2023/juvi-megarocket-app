@@ -19,20 +19,22 @@ function Trainers() {
   };
 
   const closeAlert = () => {
-    resetErrorAndMessage();
+    dispatch(resetErrorAndMessage());
   };
 
   return (
     <section className={styles.container}>
-      <h1>Trainers</h1>
+      <h1 className={styles.title}>Trainers</h1>
       <Link to="/trainers/form" className={styles.link}>
         <Button type="add" resource="Trainer" />
       </Link>
-      {!isLoading && (
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : (
         <SharedTable data={list} editLink={'/trainers/form/'} handleDelete={handleDelete} />
       )}
-      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
       {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
     </section>
   );
 }

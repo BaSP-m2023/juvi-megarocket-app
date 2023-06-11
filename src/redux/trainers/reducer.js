@@ -1,18 +1,18 @@
 import {
-  GET_TRAINERS_PENDING,
   GET_TRAINERS_SUCCESS,
+  GET_TRAINERS_PENDING,
   GET_TRAINERS_ERROR,
-  GET_TRAINERS_BY_PENDING,
-  GET_TRAINERS_BY_SUCCESS,
-  GET_TRAINERS_BY_ERROR,
-  DEL_TRAINERS_PENDING,
-  DEL_TRAINERS_SUCCESS,
-  DEL_TRAINERS_ERROR,
-  ADD_TRAINERS_PENDING,
+  GET_BY_ID_TRAINERS_SUCCESS,
+  GET_BY_ID_TRAINERS_PENDING,
+  GET_BY_ID_TRAINERS_ERROR,
   ADD_TRAINERS_SUCCESS,
+  ADD_TRAINERS_PENDING,
   ADD_TRAINERS_ERROR,
-  PUT_TRAINERS_PENDING,
+  DEL_TRAINERS_SUCCESS,
+  DEL_TRAINERS_PENDING,
+  DEL_TRAINERS_ERROR,
   PUT_TRAINERS_SUCCESS,
+  PUT_TRAINERS_PENDING,
   PUT_TRAINERS_ERROR,
   RESET_ERROR_AND_MESSAGE
 } from './constants';
@@ -25,18 +25,18 @@ const initialState = {
   message: ''
 };
 
-const trainerReducer = (state = initialState, action) => {
+const trainersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_TRAINERS_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
     case GET_TRAINERS_SUCCESS:
       return {
         ...state,
         list: action.payload,
         isLoading: false
+      };
+    case GET_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
       };
     case GET_TRAINERS_ERROR:
       return {
@@ -45,54 +45,35 @@ const trainerReducer = (state = initialState, action) => {
         isLoading: false
       };
 
-    case GET_TRAINERS_BY_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case GET_TRAINERS_BY_SUCCESS:
+    case GET_BY_ID_TRAINERS_SUCCESS:
       return {
         ...state,
         item: action.payload,
         isLoading: false
       };
-    case GET_TRAINERS_BY_ERROR:
+    case GET_BY_ID_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_BY_ID_TRAINERS_ERROR:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
 
-    case DEL_TRAINERS_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case DEL_TRAINERS_SUCCESS:
-      return {
-        ...state,
-        item: action.payload.data,
-        message: action.payload.message,
-        isLoading: false
-      };
-    case DEL_TRAINERS_ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isLoading: false
-      };
-
-    case ADD_TRAINERS_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
     case ADD_TRAINERS_SUCCESS:
       return {
         ...state,
         item: action.payload.data,
         message: action.payload.message,
         isLoading: false
+      };
+    case ADD_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
       };
     case ADD_TRAINERS_ERROR:
       return {
@@ -101,17 +82,36 @@ const trainerReducer = (state = initialState, action) => {
         isLoading: false
       };
 
-    case PUT_TRAINERS_PENDING:
+    case DEL_TRAINERS_SUCCESS:
+      return {
+        ...state,
+        item: action.payload.data,
+        message: action.payload.message,
+        isLoading: false
+      };
+    case DEL_TRAINERS_PENDING:
       return {
         ...state,
         isLoading: true
       };
+    case DEL_TRAINERS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
     case PUT_TRAINERS_SUCCESS:
       return {
         ...state,
         item: action.payload.data,
         message: action.payload.message,
         isLoading: false
+      };
+    case PUT_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
       };
     case PUT_TRAINERS_ERROR:
       return {
@@ -129,30 +129,7 @@ const trainerReducer = (state = initialState, action) => {
 
     default:
       return state;
-
-    /* case FETCH_TRAINERS:
-      return {
-        ...state,
-        trainers: action.payload
-      };
-    case ADD_TRAINER:
-      return {
-        ...state,
-        trainers: [...state.trainers, action.payload]
-      };
-    case REMOVE_TRAINER:
-      return {
-        ...state,
-        trainers: state.trainers.filter((trainer) => trainer._id !== action.payload)
-      };
-    case EDIT_TRAINER:
-      return {
-        ...state,
-        trainers: state.trainers.map((trainer) =>
-          trainer._id === action.payload.id ? action.payload : trainer
-        )
-      };*/
   }
 };
 
-export default trainerReducer;
+export default trainersReducer;
