@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { GET_MEMBERS_PENDING, GET_MEMBERS_ERROR, GET_MEMBERS_SUCCESS } from './constants';
-import { GET_MEMBER_BY_ID_PENDING, GET_MEMBER_BY_ID_ERROR, GET_MEMBER_BY_ID_SUCCESS } from './constants';
+import { GET_BY_ID_MEMBER_PENDING, GET_BY_ID_MEMBER_ERROR, GET_BY_ID_MEMBER_SUCCESS } from './constants';
 import { ADD_MEMBER_PENDING, ADD_MEMBER_ERROR, ADD_MEMBER_SUCCESS } from './constants';
 import { PUT_MEMBER_PENDING, PUT_MEMBER_ERROR, PUT_MEMBER_SUCCESS } from './constants';
 import { DEL_MEMBER_PENDING, DEL_MEMBER_ERROR, DEL_MEMBER_SUCCESS } from './constants';
@@ -20,16 +20,16 @@ export const getMembersSuccess = (data) => ({
 });
 
 export const getMemberByIdPending = () => ({
-  type: GET_MEMBER_BY_ID_PENDING
+  type: GET_BY_ID_MEMBER_PENDING
 });
 
 export const getMemberByIdError = (error) => ({
-  type: GET_MEMBER_BY_ID_ERROR,
+  type: GET_BY_ID_MEMBER_ERROR,
   payload: error
 });
 
 export const getMemberByIdSuccess = (data) => ({
-  type: GET_MEMBER_BY_ID_SUCCESS,
+  type: GET_BY_ID_MEMBER_SUCCESS,
   payload: data
 });
 

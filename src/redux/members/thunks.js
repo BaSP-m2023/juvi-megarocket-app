@@ -77,7 +77,18 @@ export const putMember = (id, member, switchModal) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(member)
+        body: JSON.stringify({
+          firstName: member.firstName,
+          lastName: member.lastName,
+          dni: member.dni,
+          phone: member.phone,
+          email: member.email,
+          city: member.city,
+          birthDate: member.birthDate,
+          postalCode: member.postalCode,
+          memberships: member.memberships,
+          password: member.password
+        })
       });
       const data = await response.json();
       if (data.error) {

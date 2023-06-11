@@ -3,11 +3,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import { adminsReducer } from './admins/reducer';
-import { memberReducer } from './members/reducer';
+import { membersReducer } from './members/reducer';
 
 const rootReducer = combineReducers({
   admins: adminsReducer,
-  members: memberReducer
+  members: membersReducer
 });
 
 const configureStore = () => {
