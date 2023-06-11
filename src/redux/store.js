@@ -6,7 +6,7 @@ import { activitiesReducer } from './activities/reducer';
 
 const rootReducer = combineReducers({
   admins: adminsReducer,
-  activity: activitiesReducer
+  activities: activitiesReducer
 });
 
 const configureStore = () => {

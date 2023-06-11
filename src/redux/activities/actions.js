@@ -5,12 +5,12 @@ import {
   PUT_ACTIVITY_ERROR,
   PUT_ACTIVITY_SUCCESS,
   PUT_ACTIVITY_PENDING,
-  DELETE_ACTIVITY_ERROR,
-  DELETE_ACTIVITY_PENDING,
-  DELETE_ACTIVITY_SUCCESS,
-  POST_ACTIVITY_ERROR,
-  POST_ACTIVITY_PENDING,
-  POST_ACTIVITY_SUCCESS,
+  DEL_ACTIVITY_ERROR,
+  DEL_ACTIVITY_PENDING,
+  DEL_ACTIVITY_SUCCESS,
+  ADD_ACTIVITY_ERROR,
+  ADD_ACTIVITY_PENDING,
+  ADD_ACTIVITY_SUCCESS,
   GET_BY_ID_ACITIVITY_SUCCESS,
   GET_BY_ID_ACITIVITY_PENDING,
   GET_BY_ID_ACITIVITY_ERROR
@@ -58,37 +58,37 @@ export const putActivitiesError = (error) => {
 
 export const deleteActivityPending = () => {
   return {
-    type: DELETE_ACTIVITY_PENDING
+    type: DEL_ACTIVITY_PENDING
   };
 };
 
 export const deleteActivitySuccess = (_id) => {
   return {
-    type: DELETE_ACTIVITY_SUCCESS,
+    type: DEL_ACTIVITY_SUCCESS,
     payload: _id
   };
 };
 export const deleteActivityError = (error) => {
   return {
-    type: DELETE_ACTIVITY_ERROR,
+    type: DEL_ACTIVITY_ERROR,
     payload: error
   };
 };
 
 export const postActivitiesPending = () => {
   return {
-    type: POST_ACTIVITY_PENDING
+    type: ADD_ACTIVITY_PENDING
   };
 };
 export const postActivitiesSuccess = (newActivity) => {
   return {
-    type: POST_ACTIVITY_SUCCESS,
+    type: ADD_ACTIVITY_SUCCESS,
     payload: newActivity
   };
 };
 export const postActivitiesError = (error) => {
   return {
-    type: POST_ACTIVITY_ERROR,
+    type: ADD_ACTIVITY_ERROR,
     payload: error
   };
 };

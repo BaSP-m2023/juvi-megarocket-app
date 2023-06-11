@@ -1,13 +1,13 @@
 import {
-  DELETE_ACTIVITY_ERROR,
-  DELETE_ACTIVITY_PENDING,
-  DELETE_ACTIVITY_SUCCESS,
+  DEL_ACTIVITY_ERROR,
+  DEL_ACTIVITY_PENDING,
+  DEL_ACTIVITY_SUCCESS,
   GET_ACTIVITIES_ERROR,
   GET_ACTIVITIES_PENDING,
   GET_ACTIVITIES_SUCCESS,
-  POST_ACTIVITY_ERROR,
-  POST_ACTIVITY_PENDING,
-  POST_ACTIVITY_SUCCESS,
+  ADD_ACTIVITY_ERROR,
+  ADD_ACTIVITY_PENDING,
+  ADD_ACTIVITY_SUCCESS,
   PUT_ACTIVITY_PENDING,
   PUT_ACTIVITY_ERROR,
   PUT_ACTIVITY_SUCCESS,
@@ -43,35 +43,35 @@ export const activitiesReducer = (state = initialSate, action) => {
         error: action.payload
       };
 
-    case DELETE_ACTIVITY_PENDING:
+    case DEL_ACTIVITY_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case DELETE_ACTIVITY_SUCCESS:
+    case DEL_ACTIVITY_SUCCESS:
       return {
         ...state,
         list: state.list.filter((activity) => activity._id !== action.payload),
         isLoading: false
       };
-    case DELETE_ACTIVITY_ERROR:
+    case DEL_ACTIVITY_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload
       };
 
-    case POST_ACTIVITY_PENDING:
+    case ADD_ACTIVITY_PENDING:
       return {
         ...state
       };
-    case POST_ACTIVITY_SUCCESS:
+    case ADD_ACTIVITY_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.payload],
         isLoading: false
       };
-    case POST_ACTIVITY_ERROR:
+    case ADD_ACTIVITY_ERROR:
       return {
         ...state,
         error: action.payload,
