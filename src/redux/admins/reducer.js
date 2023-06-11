@@ -4,7 +4,7 @@ const initialState = {
   admins: []
 };
 
-const adminReducer = (state = initialState, action) => {
+export const adminsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ADMINS:
       return {
@@ -32,5 +32,3 @@ const adminReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default adminReducer;
