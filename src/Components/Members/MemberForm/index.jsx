@@ -38,6 +38,7 @@ const MemberForm = (props) => {
 
   useEffect(() => {
     if (id) {
+      dispatch(getMemberById(id));
       setMember({
         firstName: data.item.firstName,
         lastName: data.item.lastName,
@@ -54,7 +55,6 @@ const MemberForm = (props) => {
   }, [data.item, data.error, msg]);
 
   useEffect(() => {
-    dispatch(getMemberById(id));
     if (!id) {
       setMember({
         firstName: '',
