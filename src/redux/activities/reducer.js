@@ -11,6 +11,9 @@ import {
   PUT_ACTIVITY_PENDING,
   PUT_ACTIVITY_ERROR,
   PUT_ACTIVITY_SUCCESS
+  /* GETBYID_ACITIVITY_PENDING,
+  GETBYID_ACITIVITY_SUCCESS,
+  GETBYID_ACITIVITY_ERROR*/
 } from './constants';
 const initialSate = {
   list: [],
@@ -81,7 +84,9 @@ export const activitiesReducer = (state = initialSate, action) => {
     case PUT_ACTIVITY_SUCCESS:
       return {
         ...state,
-        list: state.list.map((activity) => (activity.id === action.id ? action.payload : activity)),
+        list: state.list.map((activity) =>
+          activity._id === action.id ? action.payload : activity
+        ),
         isLoading: false
       };
     case PUT_ACTIVITY_ERROR:
@@ -90,6 +95,25 @@ export const activitiesReducer = (state = initialSate, action) => {
         error: action.payload,
         isLoading: false
       };
+
+    // GET BY ID
+    /*case GETBYID_ACITIVITY_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GETBYID_ACITIVITY_SUCCESS:
+      return {
+        ...state,
+        item: action.payload,
+        isLoading: false
+      };
+    case GETBYID_ACITIVITY_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };*/
     default:
       return state;
   }

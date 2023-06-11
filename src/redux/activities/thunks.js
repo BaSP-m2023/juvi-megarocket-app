@@ -1,7 +1,18 @@
-import { getActivitiesError, getActivitiesPending, getActivitiesSuccess } from './actions';
-import { deleteActivityError, deleteActivitySuccess, deleteActivityPending } from './actions';
-import { postActivitiesError, postActivitiesPending, postActivitiesSuccess } from './actions';
-// import { putActivitiesPending, putActivitiesError, putActivitiesSuccess } from './actions';
+import {
+  getActivitiesError,
+  getActivitiesPending,
+  getActivitiesSuccess,
+  deleteActivityError,
+  deleteActivitySuccess,
+  deleteActivityPending,
+  postActivitiesError,
+  postActivitiesPending,
+  postActivitiesSuccess,
+  putActivitiesError,
+  putActivitiesSuccess,
+  putActivitiesPending
+} from './actions';
+//import { getByIdActivityError, getByIdActivitySuccess, getByIdActivityPending } from './actions';
 
 export const getActivities = () => {
   return async (dispatch) => {
@@ -59,7 +70,6 @@ export const addActivity = (formData, setModalText, setShowModal) => {
       if (response.ok) {
         const newActivity = responseData.data;
         dispatch(postActivitiesSuccess(newActivity));
-        // alert('activity created');
         setModalText(responseData.message);
         setShowModal(true);
       } else {
@@ -67,9 +77,55 @@ export const addActivity = (formData, setModalText, setShowModal) => {
       }
     } catch (error) {
       dispatch(postActivitiesError(error));
-      // alert('there was an error');
       setModalText('There was an error' + error);
       setShowModal(true);
     }
   };
 };
+export const editActivity = (updatedActivity, id, setModalText, setShowModal) => {
+  return async (dispatch) => {
+    try {
+      dispatch(putActivitiesPending);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedActivity)
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const updatedData = responseData.data;
+        dispatch(putActivitiesSuccess(updatedData, id));
+        setShowModal(true);
+        setModalText(responseData.message);
+      } else {
+        const responseData = await response.json();
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      dispatch(putActivitiesError(error));
+      setShowModal(true);
+      setModalText('There was an error' + error);
+    }
+  };
+};
+/*export const getByIdActivity = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getByIdActivityPending);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`);
+      const responseJson = await response.json();
+      const data = responseJson.data;
+      if (responseJson.error) {
+        throw new Error(responseJson.message);
+      }
+      dispatch(getByIdActivitySuccess(data));
+      alert('hecho');
+    } catch (error) {
+      dispatch(getByIdActivityError(error));
+      alert('hecho como la rosca');
+    }
+  };
+};*/

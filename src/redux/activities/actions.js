@@ -1,11 +1,22 @@
-import { GET_ACTIVITIES_PENDING, GET_ACTIVITIES_ERROR, GET_ACTIVITIES_SUCCESS } from './constants';
-import { PUT_ACTIVITY_ERROR, PUT_ACTIVITY_SUCCESS, PUT_ACTIVITY_PENDING } from './constants';
 import {
+  GET_ACTIVITIES_PENDING,
+  GET_ACTIVITIES_ERROR,
+  GET_ACTIVITIES_SUCCESS,
+  PUT_ACTIVITY_ERROR,
+  PUT_ACTIVITY_SUCCESS,
+  PUT_ACTIVITY_PENDING,
   DELETE_ACTIVITY_ERROR,
   DELETE_ACTIVITY_PENDING,
-  DELETE_ACTIVITY_SUCCESS
+  DELETE_ACTIVITY_SUCCESS,
+  POST_ACTIVITY_ERROR,
+  POST_ACTIVITY_PENDING,
+  POST_ACTIVITY_SUCCESS
 } from './constants';
-import { POST_ACTIVITY_ERROR, POST_ACTIVITY_PENDING, POST_ACTIVITY_SUCCESS } from './constants';
+/*import {
+  GETBYID_ACITIVITY_SUCCESS,
+  GETBYID_ACITIVITY_PENDING,
+  GETBYID_ACITIVITY_ERROR
+} from './constants';*/
 
 // ACA VA EL GET
 export const getActivitiesPending = () => {
@@ -87,3 +98,22 @@ export const postActivitiesError = (error) => {
     payload: error
   };
 };
+
+// ACÁ COMIENZA EL GETBYID
+/*export const getByIdActivityPending = () => {
+  return {
+    type: GETBYID_ACITIVITY_PENDING
+  };
+};
+export const getByIdActivitySuccess = (_id) => {
+  return {
+    type: GETBYID_ACITIVITY_SUCCESS,
+    payload: _id
+  };
+};
+export const getByIdActivityError = (error) => {
+  return {
+    type: GETBYID_ACITIVITY_ERROR,
+    payload: error
+  };
+};*/
