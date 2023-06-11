@@ -10,7 +10,10 @@ import {
   POST_CLASS_ERROR,
   PUT_CLASS_PENDING,
   PUT_CLASS_SUCCESS,
-  PUT_CLASS_ERROR
+  PUT_CLASS_ERROR,
+  GET_BY_ID_CLASS_PENDING,
+  GET_BY_ID_CLASS_SUCCESS,
+  GET_BY_ID_CLASS_ERROR
 } from './constants';
 
 export const getClassesPending = () => {
@@ -89,6 +92,26 @@ export const putClassSuccess = (data) => {
 export const putClassError = (error) => {
   return {
     type: PUT_CLASS_ERROR,
+    payload: error
+  };
+};
+
+export const getByIdClassPending = () => {
+  return {
+    type: GET_BY_ID_CLASS_PENDING
+  };
+};
+
+export const getByIdClassSuccess = (data) => {
+  return {
+    type: GET_BY_ID_CLASS_SUCCESS,
+    payload: data
+  };
+};
+
+export const getByIdClassError = (error) => {
+  return {
+    type: GET_BY_ID_CLASS_ERROR,
     payload: error
   };
 };

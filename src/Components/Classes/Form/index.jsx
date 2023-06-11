@@ -4,15 +4,14 @@ import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import { Input } from '../../Shared';
 import ModalAlert from '../../Shared/ModalAlert';
-import { postClass } from '../../../redux/classes/thunks';
-import { useDispatch } from 'react-redux';
+import { postClass, getByIdClasses, putClass } from '../../../redux/classes/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormClasses = () => {
+  const classData = useSelector((state) => state.classes);
   const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
-  const [classesData, setClassData] = useState([]);
-  const [selectedClass, setSelectedClass] = useState({});
   const [formData, setFormData] = useState({
     activity: '',
     trainer: '',
@@ -20,33 +19,35 @@ const FormClasses = () => {
     hour: '',
     slots: ''
   });
+  console.log(classData);
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
   const [isTrue, setIsTrue] = useState(false);
 
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`)
+      dispatch(getByIdClasses(id, setFormData));
+      /*fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setSelectedClass(data.data);
         })
         .catch((error) => {
           console.log(error);
-        });
+        });*/
     }
   }, [id]);
-
+  /*
   useEffect(() => {
     setFormData({
-      activity: selectedClass.activity?._id || '',
-      trainer: selectedClass.trainer?._id || '',
-      day: selectedClass.day || '',
-      hour: selectedClass.hour || '',
-      slots: selectedClass.slots || ''
+      activity: classData.item.activity._id || '',
+      trainer: classData.item.trainer._id || '',
+      day: classData.item.day || '',
+      hour: classData.item.hour || '',
+      slots: classData.item.slots || ''
     });
-  }, [selectedClass]);
-
+  }, []);
+*/
   const onChangeInput = (e) => {
     setFormData({
       ...formData,
@@ -54,39 +55,10 @@ const FormClasses = () => {
     });
   };
 
-  const editClass = async (updatedClass, classId) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${classId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedClass)
-      });
-      const responseData = await response.json();
-      if (response.ok) {
-        const updatedClassData = responseData.data;
-        setClassData(
-          classesData.map((itemClass) =>
-            itemClass._id === updatedClassData._id ? updatedClassData : itemClass
-          )
-        );
-        setIsTrue(true);
-        setModalText('Class updated correctly!');
-        setShowModal(true);
-      } else {
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      setModalText('Error updating Class: ' + error);
-      setShowModal(true);
-    }
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      editClass(formData, selectedClass._id);
+      dispatch(putClass(id, formData, setModalText, setShowModal, setIsTrue));
     } else {
       dispatch(postClass(formData, setModalText, setShowModal, setIsTrue));
     }

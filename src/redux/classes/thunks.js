@@ -10,7 +10,10 @@ import {
   postClassSuccess,
   putClassError,
   putClassPending,
-  putClassSuccess
+  putClassSuccess,
+  getByIdClassError,
+  getByIdClassPending,
+  getByIdClassSuccess
 } from './actions';
 
 export const getClasses = () => {
@@ -77,7 +80,7 @@ export const postClass = (
     }
   };
 };
-export const editClass = (
+export const putClass = (
   id,
   { activity, trainer, day, hour, slots },
   setModalText,
@@ -108,6 +111,32 @@ export const editClass = (
       dispatch(putClassError(error));
       setModalText('Error updating Class: ' + error);
       setShowModal(true);
+    }
+  };
+};
+
+export const getByIdClasses = (id, setSelectedClass) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getByIdClassPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`);
+      const responseJson = await response.json();
+      const data = responseJson.data;
+      if (responseJson.error) {
+        throw new Error(responseJson.message);
+      }
+      console.log(data);
+      setSelectedClass({
+        activity: data.activity._id,
+        trainer: data.trainer._id,
+        day: data.day,
+        hour: data.hour,
+        slots: data.slots
+      });
+
+      dispatch(getByIdClassSuccess(data));
+    } catch (error) {
+      dispatch(getByIdClassError(error));
     }
   };
 };

@@ -10,7 +10,10 @@ import {
   POST_CLASS_ERROR,
   PUT_CLASS_PENDING,
   PUT_CLASS_SUCCESS,
-  PUT_CLASS_ERROR
+  PUT_CLASS_ERROR,
+  GET_BY_ID_CLASS_PENDING,
+  GET_BY_ID_CLASS_SUCCESS,
+  GET_BY_ID_CLASS_ERROR
 } from './constants';
 
 const initialState = {
@@ -96,6 +99,24 @@ export const classReducer = (state = initialState, action) => {
         isLoading: false
       };
     case PUT_CLASS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
+    case GET_BY_ID_CLASS_PENDING:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case GET_BY_ID_CLASS_SUCCESS:
+      return {
+        ...state,
+        item: action.payload,
+        isLoading: false
+      };
+    case GET_BY_ID_CLASS_ERROR:
       return {
         ...state,
         error: action.payload,
