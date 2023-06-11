@@ -23,7 +23,7 @@ const MemberForm = (props) => {
     city: data.item.city ?? '',
     birthDate: data.item.birthDate ?? '',
     postalCode: data.item.postalCode ?? '',
-    memberships: data.item.memberships ?? '',
+    memberships: data.item.memberships ?? 'Only Classes',
     password: data.item.password ?? ''
   });
 
@@ -65,7 +65,7 @@ const MemberForm = (props) => {
         city: '',
         birthDate: '',
         postalCode: '',
-        memberships: '',
+        memberships: 'Only Classes',
         password: ''
       });
     }
