@@ -37,13 +37,24 @@ const MemberForm = (props) => {
   }
 
   useEffect(() => {
-    setMsg(data.error.message);
     if (id) {
-      dispatch(getMemberById(id));
+      setMember({
+        firstName: data.item.firstName,
+        lastName: data.item.lastName,
+        dni: data.item.dni,
+        phone: data.item.phone,
+        email: data.item.email,
+        city: data.item.city,
+        birthDate: data.item.birthDate,
+        postalCode: data.item.postalCode,
+        memberships: data.item.memberships,
+        password: data.item.password
+      });
     }
-  }, [data.item, data.error, msg, member]);
+  }, [data.item, data.error, msg]);
 
   useEffect(() => {
+    dispatch(getMemberById(id));
     if (!id) {
       setMember({
         firstName: '',
@@ -58,7 +69,7 @@ const MemberForm = (props) => {
         password: ''
       });
     }
-  }, [data.item]);
+  }, []);
 
   const onChange = (event) => {
     setMember({
@@ -84,25 +95,22 @@ const MemberForm = (props) => {
     setModalDone(!modalDone);
   };
 
-  const switchModal = (msg, succMsg) => {
-    if (msg !== '') {
+  const switchModal = (error, msg) => {
+    if (error) {
       replaceBd();
       errorAlert(msg);
     } else {
-      successAlert(succMsg);
+      successAlert(msg);
     }
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
     if (text === 'Add member') {
-      dispatch(addMember(member));
-      console.log(data.error.message);
-      switchModal(data.error.message, 'Member created!');
+      dispatch(addMember(member, switchModal));
     } else {
-      dispatch(putMember(id, member));
-      switchModal(data.error.message, 'Member updated!');
+      dispatch(putMember(id, member, switchModal));
     }
   };
 

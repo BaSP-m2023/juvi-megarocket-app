@@ -46,7 +46,7 @@ export const getMemberById = (id) => {
   };
 };
 
-export const addMember = (member) => {
+export const addMember = (member, switchModal) => {
   return async (dispatch) => {
     try {
       dispatch(addMemberPending());
@@ -58,9 +58,10 @@ export const addMember = (member) => {
       const newMemb = await response.json();
 
       if (newMemb.error) {
+        switchModal(newMemb.error, newMemb.message);
         throw new Error(newMemb.message);
       }
-
+      switchModal(newMemb.error, newMemb.message);
       dispatch(addMemberSuccess());
     } catch (error) {
       dispatch(addMemberError(error));
@@ -68,7 +69,8 @@ export const addMember = (member) => {
   };
 };
 
-export const putMember = (id, member) => {
+export const putMember = (id, member, switchModal) => {
+  console.log(member);
   return async (dispatch) => {
     try {
       dispatch(putMemberPending());
@@ -79,8 +81,10 @@ export const putMember = (id, member) => {
       });
       const data = await response.json();
       if (data.error) {
+        switchModal(data.error, data.message);
         throw new Error(data.message);
       }
+      switchModal(data.error, data.message);
       dispatch(putMemberSuccess());
     } catch (error) {
       dispatch(putMemberError(error));
