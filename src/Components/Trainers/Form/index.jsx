@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
-import { addTrainer } from '../../../redux/trainers/thunks';
-
-import { Button, Input } from '../../Shared';
-import { useDispatch } from 'react-redux';
+import { addTrainer, getTrainersBy, putTrainer } from '../../../redux/trainers/thunks';
+import { resetErrorAndMessage } from '../../../redux/trainers/actions';
+import { Button, Input, ModalAlert } from '../../Shared';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
+  const { error, message, item } = useSelector((state) => state.trainers);
   const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
@@ -20,43 +21,27 @@ const Form = () => {
     password: '',
     salary: ''
   });
-  const [selectedTrainer, setSelectedTrainer] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: ''
-  });
+
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedTrainer(data.data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+      dispatch(getTrainersBy(id));
     }
   }, [id]);
 
   useEffect(() => {
-    if (id) {
+    if (id && item) {
       setFormData({
-        firstName: selectedTrainer.firstName,
-        lastName: selectedTrainer.lastName,
-        dni: selectedTrainer.dni,
-        phone: selectedTrainer.phone,
-        email: selectedTrainer.email,
-        city: selectedTrainer.city,
-        password: selectedTrainer.password,
-        salary: selectedTrainer.salary
+        firstName: item.firstName,
+        lastName: item.lastName,
+        dni: item.dni,
+        phone: item.phone,
+        email: item.email,
+        city: item.city,
+        password: item.password,
+        salary: item.salary
       });
     }
-  }, [selectedTrainer]);
+  }, [item]);
 
   const onChangeInput = (e) => {
     setFormData({
@@ -65,130 +50,98 @@ const Form = () => {
     });
   };
 
-  const addNewTrainer = async ({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    city,
-    password,
-    salary
-  }) => {
-    const requestData = {
-      firstName: firstName,
-      lastName: lastName,
-      dni: dni,
-      phone: phone,
-      email: email,
-      city: city,
-      password: password,
-      salary: salary
-    };
-    dispatch(addTrainer(requestData));
-  };
-
-  const editTrainer = async (updatedTrainer, trainerId) => {
-    const requestData = {
-      firstName: updatedTrainer.firstName,
-      lastName: updatedTrainer.lastName,
-      dni: updatedTrainer.dni,
-      phone: updatedTrainer.phone,
-      email: updatedTrainer.email,
-      city: updatedTrainer.city,
-      password: updatedTrainer.password,
-      salary: updatedTrainer.salary
-    };
-
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${trainerId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestData)
-    });
-    const responseData = await response.json();
-  };
   const handleCancel = () => {
     history.push('/trainers');
+    dispatch(resetErrorAndMessage());
   };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      await editTrainer(formData, id);
+      dispatch(putTrainer(formData, id));
     } else {
-      console.log('hola');
-      addNewTrainer(formData);
+      dispatch(addTrainer(formData));
     }
   };
 
+  const closeAlert = () => {
+    if (error === '') {
+      history.push('/trainers');
+    }
+    dispatch(resetErrorAndMessage());
+  };
+
   return (
-    <form className={styles.addTrainer} onSubmit={onSubmit}>
-      <div className={styles.column}>
-        <Input
-          labelText={`First name`}
-          type={'text'}
-          name={`firstName`}
-          value={formData.firstName}
-          onChange={onChangeInput}
-        ></Input>
-        <Input
-          labelText={`Last Name`}
-          type={'text'}
-          name={`lastName`}
-          value={formData.lastName}
-          onChange={onChangeInput}
-        ></Input>
-        <Input
-          labelText={`City`}
-          type={'text'}
-          name={`city`}
-          value={formData.city}
-          onChange={onChangeInput}
-        ></Input>
-        <Input
-          labelText={`Dni`}
-          type={'text'}
-          name={`dni`}
-          value={formData.dni}
-          onChange={onChangeInput}
-        ></Input>
-      </div>
-      <div className={styles.column}>
-        <Input
-          labelText={`Email`}
-          type={'text'}
-          name={`email`}
-          value={formData.email}
-          onChange={onChangeInput}
-        ></Input>
-        <Input
-          labelText={`Phone`}
-          type={'text'}
-          name={`phone`}
-          value={formData.phone}
-          onChange={onChangeInput}
-        ></Input>
-        <Input
-          labelText={`Salary`}
-          type={'text'}
-          name={`salary`}
-          value={formData.salary}
-          onChange={onChangeInput}
-        ></Input>
-        <Input
-          labelText={`Password`}
-          type={'password'}
-          name={`password`}
-          value={formData.password}
-          onChange={onChangeInput}
-        ></Input>
-      </div>
-      <Button type="submit" />
-      <Button type="cancel" onClick={handleCancel}>
-        Cancel
-      </Button>
-    </form>
+    <div>
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
+      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      <form className={styles.addTrainer} onSubmit={onSubmit}>
+        <div className={styles.column}>
+          <Input
+            labelText={`First name`}
+            type={'text'}
+            name={`firstName`}
+            value={formData.firstName ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+          <Input
+            labelText={`Last Name`}
+            type={'text'}
+            name={`lastName`}
+            value={formData.lastName ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+          <Input
+            labelText={`City`}
+            type={'text'}
+            name={`city`}
+            value={formData.city ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+          <Input
+            labelText={`Dni`}
+            type={'text'}
+            name={`dni`}
+            value={formData.dni ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+        </div>
+        <div className={styles.column}>
+          <Input
+            labelText={`Email`}
+            type={'text'}
+            name={`email`}
+            value={formData.email ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+          <Input
+            labelText={`Phone`}
+            type={'text'}
+            name={`phone`}
+            value={formData.phone ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+          <Input
+            labelText={`Salary`}
+            type={'text'}
+            name={`salary`}
+            value={formData.salary ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+          <Input
+            labelText={`Password`}
+            type={'password'}
+            name={`password`}
+            value={formData.password ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+        </div>
+        <Button type="submit" />
+        <Button type="cancel" onClick={handleCancel}>
+          Cancel
+        </Button>
+      </form>
+    </div>
   );
 };
 

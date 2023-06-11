@@ -1,15 +1,12 @@
 import { Button, SharedTable, ModalAlert } from '../Shared';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './trainers.module.css';
-
+import { resetErrorAndMessage } from '../../redux/trainers/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers, delTrainer } from '../../redux/trainers/thunks';
 
 function Trainers() {
-  const [showAlert, setshowAlert] = useState(false);
-  const [deleteTrigger, setDeleteTrigger] = useState(false);
-
   const { list, isLoading, error, message, item } = useSelector((state) => state.trainers);
   const dispatch = useDispatch();
 
@@ -17,20 +14,12 @@ function Trainers() {
     dispatch(getTrainers());
   }, [item]);
 
-  useEffect(() => {
-    if (deleteTrigger === true) {
-      setshowAlert(true);
-      setDeleteTrigger((prevTrigger) => !prevTrigger);
-    }
-  }, [deleteTrigger]);
-
   const handleDelete = async (id) => {
     dispatch(delTrainer(id));
-    setDeleteTrigger((prevTrigger) => !prevTrigger);
   };
 
   const closeAlert = () => {
-    setshowAlert(false);
+    resetErrorAndMessage();
   };
 
   return (
@@ -42,8 +31,8 @@ function Trainers() {
       {!isLoading && (
         <SharedTable data={list} editLink={'/trainers/form/'} handleDelete={handleDelete} />
       )}
-      {showAlert && error != '' && <ModalAlert text={error} onClick={closeAlert} />}
-      {showAlert && message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
+      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
     </section>
   );
 }

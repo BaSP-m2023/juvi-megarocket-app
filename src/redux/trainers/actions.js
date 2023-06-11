@@ -10,7 +10,11 @@ import {
   DEL_TRAINERS_ERROR,
   ADD_TRAINERS_PENDING,
   ADD_TRAINERS_SUCCESS,
-  ADD_TRAINERS_ERROR
+  ADD_TRAINERS_ERROR,
+  PUT_TRAINERS_PENDING,
+  PUT_TRAINERS_SUCCESS,
+  PUT_TRAINERS_ERROR,
+  RESET_ERROR_AND_MESSAGE
 } from './constants';
 
 export const getTrainersPending = () => {
@@ -33,7 +37,7 @@ export const getTrainersError = (error) => {
 
 export const getTrainerByIdPending = () => {
   return {
-    type: GET_TRAINERS_BY_ERROR
+    type: GET_TRAINERS_BY_PENDING
   };
 };
 export const getTrainerByIdSuccess = (data) => {
@@ -44,7 +48,7 @@ export const getTrainerByIdSuccess = (data) => {
 };
 export const getTrainerByIdError = (error) => {
   return {
-    type: GET_TRAINERS_BY_PENDING,
+    type: GET_TRAINERS_BY_ERROR,
     payload: error
   };
 };
@@ -82,5 +86,27 @@ export const addTrainerError = (error) => {
   return {
     type: ADD_TRAINERS_ERROR,
     payload: error
+  };
+};
+export const putTrainerPending = () => {
+  return {
+    type: PUT_TRAINERS_PENDING
+  };
+};
+export const putTrainerSuccess = (data) => {
+  return {
+    type: PUT_TRAINERS_SUCCESS,
+    payload: data
+  };
+};
+export const puitTrainerError = (error) => {
+  return {
+    type: PUT_TRAINERS_ERROR,
+    payload: error
+  };
+};
+export const resetErrorAndMessage = () => {
+  return {
+    type: RESET_ERROR_AND_MESSAGE
   };
 };
