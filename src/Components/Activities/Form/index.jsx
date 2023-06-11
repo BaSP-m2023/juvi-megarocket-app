@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.activity);
+  const data = useSelector((state) => state.activities);
   const { id } = useParams();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);

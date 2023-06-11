@@ -9,7 +9,7 @@ const Activities = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
 
-  const { list, isLoading } = useSelector((state) => state.activity);
+  const { list, isLoading } = useSelector((state) => state.activities);
   const dispatch = useDispatch();
 
   useEffect(() => {
