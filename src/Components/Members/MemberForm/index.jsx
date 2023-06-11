@@ -7,21 +7,24 @@ import styles from './form.module.css';
 import { ModalAlert, Button, Input } from '../../Shared';
 
 const MemberForm = (props) => {
-  const [members, setMembers] = useState([]);
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const data = useSelector((state) => state.members);
+  const dispatch = useDispatch();
+
   const [member, setMember] = useState({
-    firstName: members.firstName ?? '',
-    lastName: members.lastName ?? '',
-    dni: members.dni ?? '',
-    phone: members.phone ?? '',
-    email: members.email ?? '',
-    city: members.city ?? '',
-    birthDate: members.birthDate ?? '',
-    postalCode: members.postalCode ?? '',
-    memberships: members.memberships ?? '',
-    password: members.password ?? ''
+    firstName: data.item.firstName ?? '',
+    lastName: data.item.lastName ?? '',
+    dni: data.item.dni ?? '',
+    phone: data.item.phone ?? '',
+    email: data.item.email ?? '',
+    city: data.item.city ?? '',
+    birthDate: data.item.birthDate ?? '',
+    postalCode: data.item.postalCode ?? '',
+    memberships: data.item.memberships ?? '',
+    password: data.item.password ?? ''
   });
 
   const { id } = useParams();
@@ -33,35 +36,41 @@ const MemberForm = (props) => {
     text = 'Add member';
   }
 
-  const data = useSelector((state) => state.members);
-  const dispatch = useDispatch();
-
   useEffect(() => {
+    setMsg(data.error.message);
     if (id) {
       dispatch(getMemberById(id));
-      setMembers(data.item);
     }
-  }, []);
+  }, [data.item, data.error, msg, member]);
 
   useEffect(() => {
-    setMember({
-      firstName: members.firstName ?? '',
-      lastName: members.lastName ?? '',
-      dni: members.dni ?? '',
-      phone: members.phone ?? '',
-      email: members.email ?? '',
-      city: members.city ?? '',
-      birthDate: members.birthDate ?? '',
-      postalCode: members.postalCode ?? '',
-      memberships: members.memberships ?? '',
-      password: members.password ?? ''
-    });
-  }, [members]);
+    if (!id) {
+      setMember({
+        firstName: '',
+        lastName: '',
+        dni: '',
+        phone: '',
+        email: '',
+        city: '',
+        birthDate: '',
+        postalCode: '',
+        memberships: '',
+        password: ''
+      });
+    }
+  }, [data.item]);
 
   const onChange = (event) => {
     setMember({
       ...member,
       [event.target.name]: event.target.value
+    });
+  };
+
+  const replaceBd = () => {
+    setMember({
+      ...member,
+      birthDate: member.birthDate.substring(0, 10)
     });
   };
 
@@ -75,24 +84,25 @@ const MemberForm = (props) => {
     setModalDone(!modalDone);
   };
 
-  const onSubmit = (event) => {
+  const switchModal = (msg, succMsg) => {
+    if (msg !== '') {
+      replaceBd();
+      errorAlert(msg);
+    } else {
+      successAlert(succMsg);
+    }
+  };
+
+  const onSubmit = async (event) => {
     event.preventDefault();
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
     if (text === 'Add member') {
       dispatch(addMember(member));
-      if (data.error != '') {
-        errorAlert(data.error);
-      } else {
-        successAlert('Member created!');
-      }
+      console.log(data.error.message);
+      switchModal(data.error.message, 'Member created!');
     } else {
       dispatch(putMember(id, member));
-      dispatch(getMemberById(id));
-      if (data.error != '') {
-        errorAlert(data.error);
-      } else {
-        successAlert('Member updated!');
-      }
+      switchModal(data.error.message, 'Member updated!');
     }
   };
 

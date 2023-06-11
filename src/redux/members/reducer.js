@@ -9,7 +9,7 @@ const initialState = {
   list: [],
   item: {},
   isLoading: false,
-  error: ''
+  error: {}
 };
 
 export const memberReducer = (state = initialState, action) => {
@@ -29,6 +29,7 @@ export const memberReducer = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload,
+        error: '',
         isLoading: false
       };
     case GET_MEMBER_BY_ID_PENDING:
@@ -46,6 +47,7 @@ export const memberReducer = (state = initialState, action) => {
       return {
         ...state,
         item: action.payload,
+        error: '',
         isLoading: false
       };
     case ADD_MEMBER_PENDING:
@@ -62,6 +64,7 @@ export const memberReducer = (state = initialState, action) => {
     case ADD_MEMBER_SUCCESS:
       return {
         ...state,
+        error: '',
         isLoading: false
       };
     case PUT_MEMBER_PENDING:
@@ -78,6 +81,7 @@ export const memberReducer = (state = initialState, action) => {
     case PUT_MEMBER_SUCCESS:
       return {
         ...state,
+        error: '',
         isLoading: false
       };
     case DEL_MEMBER_PENDING:
@@ -94,6 +98,7 @@ export const memberReducer = (state = initialState, action) => {
     case DEL_MEMBER_SUCCESS:
       return {
         ...state,
+        error: '',
         isLoading: false
       };
     default:
