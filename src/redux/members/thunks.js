@@ -4,10 +4,11 @@ import { addMemberPending, addMemberError, addMemberSuccess } from './actions';
 import { putMemberPending, putMemberError, putMemberSuccess } from './actions';
 import { delMemberPending, delMemberError, delMemberSuccess } from './actions';
 
-export const getMembers = () => {
+export const getMembers = (setLoading) => {
   return async (dispatch) => {
     try {
       dispatch(getMembersPending());
+      setLoading(true);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
       const data = await response.json();
 
@@ -20,8 +21,10 @@ export const getMembers = () => {
       });
 
       dispatch(getMembersSuccess(data.data));
+      setLoading(false);
     } catch (error) {
       dispatch(getMembersError(error));
+      setLoading(false);
     }
   };
 };
