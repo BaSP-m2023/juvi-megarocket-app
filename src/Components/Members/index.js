@@ -8,17 +8,18 @@ import { SharedTable, Button } from '../Shared';
 
 function Members(props) {
   const [loading, setLoading] = useState(true);
+  const [members, setMembers] = useState([]);
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(getMembers(setLoading));
-    }, 2000);
-  }, []);
+    dispatch(getMembers(setLoading));
+    setMembers(data.list);
+  }, [members]);
 
   const delMember = (id) => {
     dispatch(deleteMember(id));
+    setMembers(members.filter((member) => member._id !== id));
   };
 
   return (
