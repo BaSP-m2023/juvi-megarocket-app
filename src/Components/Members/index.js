@@ -1,30 +1,23 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getMembers, deleteMember } from '../../redux/members/thunks';
+
 import styles from './members.module.css';
-import { SharedTable, Button } from '../Shared';
+import { SharedTable, Button, ModalAlert } from '../Shared';
 
 function Members(props) {
-  const [members, setMembers] = useState([]);
-
-  const getMembs = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
-    const data = await response.json();
-    data.data.forEach((item) => {
-      item.birthDate = item.birthDate.substring(0, 10);
-    });
-    setMembers(data.data);
-  };
+  const [modal, setModal] = useState(false);
+  const data = useSelector((state) => state.members);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getMembs();
+    dispatch(getMembers());
   }, []);
 
-  const deleteMemb = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, { method: 'DELETE' });
-      setMembers(members.filter((member) => member._id !== id));
-    } catch (error) {
-      alert(error.message);
-    }
+  const delMember = (id) => {
+    dispatch(deleteMember(id));
+    setModal(!modal);
   };
 
   return (
@@ -34,7 +27,19 @@ function Members(props) {
         resource={'Member'}
         onClick={() => props.history.push('/members/form')}
       />
-      <SharedTable data={members} handleDelete={deleteMemb} editLink={'members/form/'} />
+      {data.isLoading && <h1>Loading</h1>}
+      {!data.isLoading && (
+        <SharedTable data={data.list} handleDelete={delMember} editLink={'members/form/'} />
+      )}
+      {modal && (
+        <ModalAlert
+          text={'Member deleted successfully'}
+          onClick={() => {
+            setModal(!modal);
+            props.history.push('/members');
+          }}
+        />
+      )}
     </section>
   );
 }
