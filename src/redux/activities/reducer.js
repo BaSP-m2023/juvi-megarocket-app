@@ -10,10 +10,10 @@ import {
   POST_ACTIVITY_SUCCESS,
   PUT_ACTIVITY_PENDING,
   PUT_ACTIVITY_ERROR,
-  PUT_ACTIVITY_SUCCESS
-  /* GETBYID_ACITIVITY_PENDING,
-  GETBYID_ACITIVITY_SUCCESS,
-  GETBYID_ACITIVITY_ERROR*/
+  PUT_ACTIVITY_SUCCESS,
+  GET_BY_ID_ACITIVITY_PENDING,
+  GET_BY_ID_ACITIVITY_SUCCESS,
+  GET_BY_ID_ACITIVITY_ERROR
 } from './constants';
 const initialSate = {
   list: [],
@@ -33,6 +33,7 @@ export const activitiesReducer = (state = initialSate, action) => {
       return {
         ...state,
         list: action.payload,
+        item: {},
         isLoading: false
       };
     case GET_ACTIVITIES_ERROR:
@@ -41,7 +42,7 @@ export const activitiesReducer = (state = initialSate, action) => {
         isLoading: false,
         error: action.payload
       };
-    // DELETE
+
     case DELETE_ACTIVITY_PENDING:
       return {
         ...state,
@@ -59,6 +60,7 @@ export const activitiesReducer = (state = initialSate, action) => {
         isLoading: false,
         error: action.payload
       };
+
     case POST_ACTIVITY_PENDING:
       return {
         ...state
@@ -76,7 +78,6 @@ export const activitiesReducer = (state = initialSate, action) => {
         isLoading: false
       };
 
-    // PUT
     case PUT_ACTIVITY_PENDING:
       return {
         ...state
@@ -96,24 +97,23 @@ export const activitiesReducer = (state = initialSate, action) => {
         isLoading: false
       };
 
-    // GET BY ID
-    /*case GETBYID_ACITIVITY_PENDING:
+    case GET_BY_ID_ACITIVITY_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case GETBYID_ACITIVITY_SUCCESS:
+    case GET_BY_ID_ACITIVITY_SUCCESS:
       return {
         ...state,
         item: action.payload,
         isLoading: false
       };
-    case GETBYID_ACITIVITY_ERROR:
+    case GET_BY_ID_ACITIVITY_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload
-      };*/
+      };
     default:
       return state;
   }

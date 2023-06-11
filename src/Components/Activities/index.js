@@ -6,17 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getActivities, deleteActivity } from '../../redux/activities/thunks';
 
 const Activities = () => {
-  // const [activities, setActivities] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
 
-  const { list, isLoading, error, item } = useSelector((state) => state.activity);
+  const { list, isLoading } = useSelector((state) => state.activity);
   const dispatch = useDispatch();
-
-  console.log('list', list);
-  console.log('isLoading', isLoading);
-  console.log('error', error);
-  console.log('item', item);
 
   useEffect(() => {
     dispatch(getActivities());

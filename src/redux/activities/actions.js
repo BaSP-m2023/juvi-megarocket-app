@@ -10,15 +10,12 @@ import {
   DELETE_ACTIVITY_SUCCESS,
   POST_ACTIVITY_ERROR,
   POST_ACTIVITY_PENDING,
-  POST_ACTIVITY_SUCCESS
+  POST_ACTIVITY_SUCCESS,
+  GET_BY_ID_ACITIVITY_SUCCESS,
+  GET_BY_ID_ACITIVITY_PENDING,
+  GET_BY_ID_ACITIVITY_ERROR
 } from './constants';
-/*import {
-  GETBYID_ACITIVITY_SUCCESS,
-  GETBYID_ACITIVITY_PENDING,
-  GETBYID_ACITIVITY_ERROR
-} from './constants';*/
 
-// ACA VA EL GET
 export const getActivitiesPending = () => {
   return {
     type: GET_ACTIVITIES_PENDING
@@ -39,7 +36,6 @@ export const getActivitiesError = (error) => {
   };
 };
 
-// ACÁ COMIENZA EL PUT.
 export const putActivitiesPending = () => {
   return {
     type: PUT_ACTIVITY_PENDING
@@ -60,7 +56,6 @@ export const putActivitiesError = (error) => {
   };
 };
 
-// ACÁ COMIENZA EL DELETE.
 export const deleteActivityPending = () => {
   return {
     type: DELETE_ACTIVITY_PENDING
@@ -80,7 +75,6 @@ export const deleteActivityError = (error) => {
   };
 };
 
-// ACÁ COMIENZA EL POST
 export const postActivitiesPending = () => {
   return {
     type: POST_ACTIVITY_PENDING
@@ -99,21 +93,20 @@ export const postActivitiesError = (error) => {
   };
 };
 
-// ACÁ COMIENZA EL GETBYID
-/*export const getByIdActivityPending = () => {
+export const getByIdActivityPending = () => {
   return {
-    type: GETBYID_ACITIVITY_PENDING
+    type: GET_BY_ID_ACITIVITY_PENDING
   };
 };
-export const getByIdActivitySuccess = (_id) => {
+export const getByIdActivitySuccess = (data) => {
   return {
-    type: GETBYID_ACITIVITY_SUCCESS,
-    payload: _id
+    type: GET_BY_ID_ACITIVITY_SUCCESS,
+    payload: data
   };
 };
 export const getByIdActivityError = (error) => {
   return {
-    type: GETBYID_ACITIVITY_ERROR,
+    type: GET_BY_ID_ACITIVITY_ERROR,
     payload: error
   };
-};*/
+};

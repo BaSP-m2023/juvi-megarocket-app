@@ -10,9 +10,11 @@ import {
   postActivitiesSuccess,
   putActivitiesError,
   putActivitiesSuccess,
-  putActivitiesPending
+  putActivitiesPending,
+  getByIdActivityError,
+  getByIdActivitySuccess,
+  getByIdActivityPending
 } from './actions';
-//import { getByIdActivityError, getByIdActivitySuccess, getByIdActivityPending } from './actions';
 
 export const getActivities = () => {
   return async (dispatch) => {
@@ -111,10 +113,10 @@ export const editActivity = (updatedActivity, id, setModalText, setShowModal) =>
     }
   };
 };
-/*export const getByIdActivity = (id) => {
+export const getByIdActivity = (id) => {
   return async (dispatch) => {
     try {
-      dispatch(getByIdActivityPending);
+      dispatch(getByIdActivityPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`);
       const responseJson = await response.json();
       const data = responseJson.data;
@@ -122,10 +124,8 @@ export const editActivity = (updatedActivity, id, setModalText, setShowModal) =>
         throw new Error(responseJson.message);
       }
       dispatch(getByIdActivitySuccess(data));
-      alert('hecho');
     } catch (error) {
       dispatch(getByIdActivityError(error));
-      alert('hecho como la rosca');
     }
   };
-};*/
+};
