@@ -7,7 +7,10 @@ import {
   deleteClassSuccess,
   postClassError,
   postClassPending,
-  postClassSuccess
+  postClassSuccess,
+  putClassError,
+  putClassPending,
+  putClassSuccess
 } from './actions';
 
 export const getClasses = () => {
@@ -25,7 +28,6 @@ export const getClasses = () => {
     }
   };
 };
-
 export const deleteClass = (id) => {
   return async (dispatch) => {
     try {
@@ -71,6 +73,40 @@ export const postClass = (
     } catch (error) {
       dispatch(postClassError(error));
       setModalText('Error creating Class: ' + error);
+      setShowModal(true);
+    }
+  };
+};
+export const editClass = (
+  id,
+  { activity, trainer, day, hour, slots },
+  setModalText,
+  setShowModal,
+  setIsTrue
+) => {
+  return async (dispatch) => {
+    try {
+      dispatch(putClassPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ activity, trainer, day, hour, slots })
+      });
+      const responseData = await response.json();
+      const updatedClassData = responseData.data;
+      if (response.ok) {
+        setIsTrue(true);
+        setModalText('Class updated correctly!');
+        setShowModal(true);
+      } else {
+        throw new Error(responseData.message);
+      }
+      dispatch(putClassSuccess(updatedClassData));
+    } catch (error) {
+      dispatch(putClassError(error));
+      setModalText('Error updating Class: ' + error);
       setShowModal(true);
     }
   };

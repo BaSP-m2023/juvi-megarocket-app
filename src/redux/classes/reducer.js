@@ -7,7 +7,10 @@ import {
   DELETE_CLASS_ERROR,
   POST_CLASS_PENDING,
   POST_CLASS_SUCCESS,
-  POST_CLASS_ERROR
+  POST_CLASS_ERROR,
+  PUT_CLASS_PENDING,
+  PUT_CLASS_SUCCESS,
+  PUT_CLASS_ERROR
 } from './constants';
 
 const initialState = {
@@ -36,6 +39,7 @@ export const classReducer = (state = initialState, action) => {
         error: action.payload,
         isLoading: false
       };
+
     case DELETE_CLASS_PENDING:
       return {
         ...state,
@@ -55,6 +59,7 @@ export const classReducer = (state = initialState, action) => {
         error: action.payload,
         isLoading: false
       };
+
     case POST_CLASS_PENDING:
       return {
         ...state,
@@ -69,6 +74,28 @@ export const classReducer = (state = initialState, action) => {
         isLoading: false
       };
     case POST_CLASS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
+    case PUT_CLASS_PENDING:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case PUT_CLASS_SUCCESS:
+      return {
+        ...state,
+        error: action.payload,
+        list: state.list.map((itemClass) =>
+          itemClass._id === action.id ? action.payload : itemClass
+        ),
+        isLoading: false
+      };
+    case PUT_CLASS_ERROR:
       return {
         ...state,
         error: action.payload,

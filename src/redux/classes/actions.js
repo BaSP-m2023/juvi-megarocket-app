@@ -7,7 +7,10 @@ import {
   DELETE_CLASS_ERROR,
   POST_CLASS_PENDING,
   POST_CLASS_SUCCESS,
-  POST_CLASS_ERROR
+  POST_CLASS_ERROR,
+  PUT_CLASS_PENDING,
+  PUT_CLASS_SUCCESS,
+  PUT_CLASS_ERROR
 } from './constants';
 
 export const getClassesPending = () => {
@@ -56,16 +59,36 @@ export const postClassPending = () => {
   };
 };
 
-export const postClassSuccess = (data) => {
+export const postClassSuccess = (aClass) => {
   return {
     type: POST_CLASS_SUCCESS,
-    payload: data
+    payload: aClass
   };
 };
 
 export const postClassError = (error) => {
   return {
     type: POST_CLASS_ERROR,
+    payload: error
+  };
+};
+
+export const putClassPending = () => {
+  return {
+    type: PUT_CLASS_PENDING
+  };
+};
+
+export const putClassSuccess = (data) => {
+  return {
+    type: PUT_CLASS_SUCCESS,
+    payload: data
+  };
+};
+
+export const putClassError = (error) => {
+  return {
+    type: PUT_CLASS_ERROR,
     payload: error
   };
 };
