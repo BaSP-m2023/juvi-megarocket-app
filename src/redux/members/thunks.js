@@ -26,7 +26,7 @@ export const getMembers = () => {
   };
 };
 
-export const getMemberById = (id) => {
+export const getMemberById = (id, setMember) => {
   return async (dispatch) => {
     try {
       dispatch(getMemberByIdPending());
@@ -39,6 +39,7 @@ export const getMemberById = (id) => {
 
       data.data.birthDate = data.data.birthDate.substring(0, 10);
 
+      setMember(data.data);
       dispatch(getMemberByIdSuccess(data.data));
     } catch (error) {
       dispatch(getMemberByIdError(error));

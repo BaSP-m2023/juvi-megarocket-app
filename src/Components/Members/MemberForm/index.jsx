@@ -38,21 +38,9 @@ const MemberForm = (props) => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getMemberById(id));
-      setMember({
-        firstName: data.item.firstName,
-        lastName: data.item.lastName,
-        dni: data.item.dni,
-        phone: data.item.phone,
-        email: data.item.email,
-        city: data.item.city,
-        birthDate: data.item.birthDate,
-        postalCode: data.item.postalCode,
-        memberships: data.item.memberships,
-        password: data.item.password
-      });
+      dispatch(getMemberById(id, setMember));
     }
-  }, [data.item, data.error, msg]);
+  }, [data.error, msg]);
 
   useEffect(() => {
     if (!id) {

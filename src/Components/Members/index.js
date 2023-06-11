@@ -12,7 +12,6 @@ function Members(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('');
     dispatch(getMembers());
   }, []);
 
