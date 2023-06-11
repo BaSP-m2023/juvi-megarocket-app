@@ -2,9 +2,9 @@ import {
   GET_CLASSES_PENDING,
   GET_CLASSES_SUCCESS,
   GET_CLASSES_ERROR,
-  DELETE_CLASS_PENDING,
-  DELETE_CLASS_SUCCESS,
-  DELETE_CLASS_ERROR,
+  DEL_CLASS_PENDING,
+  DEL_CLASS_SUCCESS,
+  DEL_CLASS_ERROR,
   POST_CLASS_PENDING,
   POST_CLASS_SUCCESS,
   POST_CLASS_ERROR,
@@ -23,7 +23,7 @@ const initialState = {
   error: ''
 };
 
-export const classReducer = (state = initialState, action) => {
+export const classesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CLASSES_PENDING:
       return {
@@ -43,20 +43,20 @@ export const classReducer = (state = initialState, action) => {
         isLoading: false
       };
 
-    case DELETE_CLASS_PENDING:
+    case DEL_CLASS_PENDING:
       return {
         ...state,
         error: action.payload,
         isLoading: false
       };
-    case DELETE_CLASS_SUCCESS:
+    case DEL_CLASS_SUCCESS:
       return {
         ...state,
         error: action.payload,
         list: state.list.filter((classes) => classes._id !== action.payload),
         isLoading: false
       };
-    case DELETE_CLASS_ERROR:
+    case DEL_CLASS_ERROR:
       return {
         ...state,
         error: action.payload,

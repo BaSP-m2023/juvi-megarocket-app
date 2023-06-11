@@ -5,10 +5,9 @@ import Button from '../../Shared/Button';
 import { Input } from '../../Shared';
 import ModalAlert from '../../Shared/ModalAlert';
 import { postClass, getByIdClasses, putClass } from '../../../redux/classes/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const FormClasses = () => {
-  const classData = useSelector((state) => state.classes);
   const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
@@ -19,7 +18,6 @@ const FormClasses = () => {
     hour: '',
     slots: ''
   });
-  console.log(classData);
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
   const [isTrue, setIsTrue] = useState(false);
@@ -27,27 +25,9 @@ const FormClasses = () => {
   useEffect(() => {
     if (id) {
       dispatch(getByIdClasses(id, setFormData));
-      /*fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedClass(data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });*/
     }
   }, [id]);
-  /*
-  useEffect(() => {
-    setFormData({
-      activity: classData.item.activity._id || '',
-      trainer: classData.item.trainer._id || '',
-      day: classData.item.day || '',
-      hour: classData.item.hour || '',
-      slots: classData.item.slots || ''
-    });
-  }, []);
-*/
+
   const onChangeInput = (e) => {
     setFormData({
       ...formData,

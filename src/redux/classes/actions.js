@@ -2,9 +2,9 @@ import {
   GET_CLASSES_PENDING,
   GET_CLASSES_SUCCESS,
   GET_CLASSES_ERROR,
-  DELETE_CLASS_PENDING,
-  DELETE_CLASS_SUCCESS,
-  DELETE_CLASS_ERROR,
+  DEL_CLASS_PENDING,
+  DEL_CLASS_SUCCESS,
+  DEL_CLASS_ERROR,
   POST_CLASS_PENDING,
   POST_CLASS_SUCCESS,
   POST_CLASS_ERROR,
@@ -38,20 +38,20 @@ export const getClassesError = (error) => {
 
 export const deleteClassPending = () => {
   return {
-    type: DELETE_CLASS_PENDING
+    type: DEL_CLASS_PENDING
   };
 };
 
 export const deleteClassSuccess = (_id) => {
   return {
-    type: DELETE_CLASS_SUCCESS,
+    type: DEL_CLASS_SUCCESS,
     payload: _id
   };
 };
 
 export const deleteClassError = (error) => {
   return {
-    type: DELETE_CLASS_ERROR,
+    type: DEL_CLASS_ERROR,
     payload: error
   };
 };

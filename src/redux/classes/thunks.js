@@ -125,7 +125,6 @@ export const getByIdClasses = (id, setSelectedClass) => {
       if (responseJson.error) {
         throw new Error(responseJson.message);
       }
-      console.log(data);
       setSelectedClass({
         activity: data.activity._id,
         trainer: data.trainer._id,
@@ -133,7 +132,6 @@ export const getByIdClasses = (id, setSelectedClass) => {
         hour: data.hour,
         slots: data.slots
       });
-
       dispatch(getByIdClassSuccess(data));
     } catch (error) {
       dispatch(getByIdClassError(error));
