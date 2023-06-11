@@ -4,7 +4,13 @@ import {
   DELETE_ACTIVITY_SUCCESS,
   GET_ACTIVITIES_ERROR,
   GET_ACTIVITIES_PENDING,
-  GET_ACTIVITIES_SUCCESS
+  GET_ACTIVITIES_SUCCESS,
+  POST_ACTIVITY_ERROR,
+  POST_ACTIVITY_PENDING,
+  POST_ACTIVITY_SUCCESS,
+  PUT_ACTIVITY_PENDING,
+  PUT_ACTIVITY_ERROR,
+  PUT_ACTIVITY_SUCCESS
 } from './constants';
 const initialSate = {
   list: [],
@@ -49,6 +55,40 @@ export const activitiesReducer = (state = initialSate, action) => {
         ...state,
         isLoading: false,
         error: action.payload
+      };
+    case POST_ACTIVITY_PENDING:
+      return {
+        ...state
+      };
+    case POST_ACTIVITY_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        isLoading: false
+      };
+    case POST_ACTIVITY_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
+    // PUT
+    case PUT_ACTIVITY_PENDING:
+      return {
+        ...state
+      };
+    case PUT_ACTIVITY_SUCCESS:
+      return {
+        ...state,
+        list: state.list.map((activity) => (activity.id === action.id ? action.payload : activity)),
+        isLoading: false
+      };
+    case PUT_ACTIVITY_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
       };
     default:
       return state;

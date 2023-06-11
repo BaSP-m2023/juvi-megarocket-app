@@ -35,10 +35,11 @@ export const putActivitiesPending = () => {
   };
 };
 
-export const putActivitiesSuccess = (data) => {
+export const putActivitiesSuccess = (updatedActivity, id) => {
   return {
     type: PUT_ACTIVITY_SUCCESS,
-    payload: data
+    payload: updatedActivity,
+    id
   };
 };
 export const putActivitiesError = (error) => {
@@ -74,10 +75,10 @@ export const postActivitiesPending = () => {
     type: POST_ACTIVITY_PENDING
   };
 };
-export const postActivitiesSuccess = (data) => {
+export const postActivitiesSuccess = (newActivity) => {
   return {
     type: POST_ACTIVITY_SUCCESS,
-    payload: data
+    payload: newActivity
   };
 };
 export const postActivitiesError = (error) => {

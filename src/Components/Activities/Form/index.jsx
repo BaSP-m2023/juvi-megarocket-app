@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import { Button, Input, ModalAlert } from '../../Shared';
+import { addActivity } from '../../../redux/activities/thunks';
+import { useDispatch } from 'react-redux';
 
 const Form = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
   const [activities, setActivities] = useState([]);
@@ -34,7 +37,7 @@ const Form = () => {
     });
   }, [selectedActivity]);
 
-  const addActivity = async ({ name, description }) => {
+  /*const addActivityLocal = async ({ name, description }) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`, {
         method: 'POST',
@@ -57,9 +60,9 @@ const Form = () => {
       setModalText('Error creating activity: ' + error);
       setShowModal(true);
     }
-  };
+  };*/
 
-  const editActivity = async (updatedActivity, id) => {
+  const editActivityLocal = async (updatedActivity, id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'PUT',
@@ -97,9 +100,9 @@ const Form = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      editActivity(formData, selectedActivity._id);
+      editActivityLocal(formData, selectedActivity._id);
     } else {
-      addActivity(formData);
+      dispatch(addActivity(formData, setModalText, setShowModal));
     }
     setFormData({
       name: '',
