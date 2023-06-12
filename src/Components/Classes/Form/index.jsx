@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import { Input } from '../../Shared';
 import ModalAlert from '../../Shared/ModalAlert';
-import { postClass, getByIdClasses, putClass } from '../../../redux/classes/thunks';
+import { postClass, getByIdClasses, putClass, deleteClass } from '../../../redux/classes/thunks';
 import { useDispatch } from 'react-redux';
 
 const FormClasses = () => {
@@ -38,9 +38,9 @@ const FormClasses = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      dispatch(putClass(id, formData, setModalText, setShowModal, setIsTrue));
+      dispatch(putClass(id, formData, setModalText, setShowModal, setIsTrue, deleteClass));
     } else {
-      dispatch(postClass(formData, setModalText, setShowModal, setIsTrue));
+      dispatch(postClass(formData, setModalText, setShowModal, setIsTrue, deleteClass));
     }
   };
 

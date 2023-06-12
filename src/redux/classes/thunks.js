@@ -31,7 +31,7 @@ export const getClasses = () => {
     }
   };
 };
-export const deleteClass = (id) => {
+export const deleteClass = (id, setModalText, setShowModal) => {
   return async (dispatch) => {
     try {
       dispatch(deleteClassPending());
@@ -43,7 +43,8 @@ export const deleteClass = (id) => {
         throw new Error(responseJson.message);
       }
       dispatch(deleteClassSuccess(responseJson.data));
-      window.location.reload();
+      setModalText('Class deleted correctly');
+      setShowModal(true);
     } catch (error) {
       dispatch(deleteClassError(error));
     }
