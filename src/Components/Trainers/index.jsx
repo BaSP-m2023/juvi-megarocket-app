@@ -1,107 +1,40 @@
 import { Button, SharedTable, ModalAlert } from '../Shared';
-import Form from './Form/addForm';
-import FormEdit from './Form/editForm';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import styles from './trainers.module.css';
+import { resetErrorAndMessage } from '../../redux/trainers/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTrainers, delTrainer } from '../../redux/trainers/thunks';
 
 function Trainers() {
-  const [trainers, setTrainers] = useState([]);
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isFormEditOpen, setIsFormEditOpen] = useState(false);
-  const [deletedTrainerId, setDeletedTrainerId] = useState(null);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: ''
-  });
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const { list, isLoading, error, message, item } = useSelector((state) => state.trainers);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/trainer/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setTrainers(data);
-      })
-      .catch((error) => {
-        setIsAlertOpen(true);
-        setAlertMessage(error);
-      });
-  }, [deletedTrainerId]);
+    dispatch(getTrainers());
+  }, [item]);
 
-  // eslint-disable-next-line no-unused-vars
-  const getEditId = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.error) {
-          setFormData(data.data);
-        }
-      })
-      .catch((error) => {
-        setIsAlertOpen(true);
-        setAlertMessage(error);
-      });
-  };
-  const toggleFormAdd = () => {
-    setIsFormOpen(!isFormOpen);
-  };
-
-  /* const toggleFormEdit = (id) => {
-    setIsFormEditOpen(!isFormEditOpen);
-    getEditId(id);
-  };*/
-
-  const toggleFormEditClose = () => {
-    setIsFormEditOpen(!isFormEditOpen);
-  };
   const handleDelete = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    if (response.status === 200) {
-      setIsAlertOpen(true);
-      setAlertMessage('Trainer deleted');
-      setDeletedTrainerId(id);
-    } else {
-      setIsAlertOpen(true);
-      setAlertMessage('Error deleting trainer');
-    }
+    dispatch(delTrainer(id));
   };
 
   const closeAlert = () => {
-    setIsAlertOpen(false);
+    dispatch(resetErrorAndMessage());
   };
 
   return (
-    <section>
-      <Link to="/trainers/add">
-        <Button type="add" resource="Trainer" onClick={toggleFormAdd} />
+    <section className={styles.container}>
+      <h1 className={styles.title}>Trainers</h1>
+      <Link to="/trainers/form" className={styles.link}>
+        <Button type="add" resource="Trainer" />
       </Link>
-      <SharedTable
-        data={trainers.data}
-        editLink={'/trainers/edit/'}
-        handleDelete={handleDelete}
-      ></SharedTable>
-      {isFormOpen && <Form />}
-      {isFormEditOpen && (
-        <FormEdit formData={formData} setFormData={setFormData} close={toggleFormEditClose} />
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : (
+        <SharedTable data={list} editLink={'/trainers/form/'} handleDelete={handleDelete} />
       )}
-      {isAlertOpen && <ModalAlert text={alertMessage} onClick={closeAlert} />}
+      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
     </section>
   );
 }
