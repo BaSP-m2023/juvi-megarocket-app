@@ -3,3 +3,8 @@
   align-items: center;
   flex-direction: column;
 }
+
+.contButton {
+  align-self: end;
+  margin-bottom: 20px;
+}
