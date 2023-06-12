@@ -101,7 +101,7 @@ export const putTrainerPending = () => {
   };
 };
 
-export const puitTrainerError = (error) => {
+export const putTrainerError = (error) => {
   return {
     type: PUT_TRAINERS_ERROR,
     payload: error
