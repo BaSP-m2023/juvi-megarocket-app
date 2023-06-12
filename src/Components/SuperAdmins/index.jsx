@@ -2,45 +2,29 @@ import React, { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import { Link } from 'react-router-dom';
 import { Button, SharedTable, ModalAlert } from '../Shared';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superadmins/thunks';
 
 const AdminsPage = () => {
-  const [admin, setAdmins] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
 
-  const getAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/`);
-      const responseData = await response.json();
-      const data = responseData.data;
-      setAdmins(data);
-    } catch (error) {
-      setModalText('Error fetching admins: ' + error);
-      setShowModal(true);
-    }
-  };
+  const { list, isLoading, item, error } = useSelector((state) => state.superAdmins);
+  const dispatch = useDispatch();
+
+  console.log('list', list);
+  console.log('isLoading', isLoading);
+  console.log('item', item);
+  console.log('error', error);
 
   useEffect(() => {
-    getAdmins();
+    dispatch(getSuperAdmins());
+    dispatch(deleteSuperAdmins());
   }, []);
 
-  const deleteItem = async (_id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${_id}`, {
-        method: 'DELETE'
-      });
-
-      if (response.ok) {
-        setAdmins(admin.filter((admin) => admin._id !== _id));
-        setModalText('Admin deleted successfully!');
-        setShowModal(true);
-      } else {
-        throw new Error('Error deleting admin');
-      }
-    } catch (error) {
-      setModalText('Error deleting admin: ' + error);
-      setShowModal(true);
-    }
+  const deleteItem = (_id) => {
+    dispatch(deleteSuperAdmins(_id, setModalText));
+    setShowModal(true);
   };
 
   const closeModal = () => {
@@ -50,11 +34,15 @@ const AdminsPage = () => {
   return (
     <>
       <section className={styles.container}>
-        <h2 className={styles.titleAdmins}>SuperAdmin</h2>
+        <h2 className={styles.titleAdmins}>SuperAdmins</h2>
         <Link to="/super-admins/form">
           <Button type="add" resource="superAdmin" />
         </Link>
-        <SharedTable data={admin} editLink={'super-admins/form/'} handleDelete={deleteItem} />
+        {isLoading ? (
+          <div>Is loading</div>
+        ) : (
+          <SharedTable data={list} editLink={'super-admins/form/'} handleDelete={deleteItem} />
+        )}
       </section>
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </>

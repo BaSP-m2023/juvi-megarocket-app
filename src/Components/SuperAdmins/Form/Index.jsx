@@ -1,151 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import styles from './super-admins-form.module.css';
+import { useState, useEffect } from 'react';
+import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
+import {
+  addSuperAdmins,
+  getSuperAdminsBy,
+  putSuperAdmins
+} from '../../../redux/superadmins/thunks';
 import { Button, Input, ModalAlert } from '../../Shared';
+import { useDispatch, useSelector } from 'react-redux';
 
-const FormSuperAdmin = () => {
+const FormSuperAdmins = () => {
+  const { error, message, item } = useSelector((state) => state.superadmins);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
-  const [adminsData, setAdminsData] = useState([]);
-  const [selectedAdmin, setSelectedAdmin] = useState({});
-  const [showModal, setShowModal] = useState(false);
-  const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
-    email: selectedAdmin.email || '',
-    password: selectedAdmin.password || ''
+    email: '',
+    password: ''
   });
 
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedAdmin(data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      dispatch(getSuperAdminsBy(id));
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
-    setFormData(selectedAdmin);
-  }, [selectedAdmin]);
+    if (id && item) {
+      setFormData({
+        email: item.email,
+        password: item.password
+      });
+    }
+  }, [item]);
 
-  const onChange = (e) => {
+  const onChangeInput = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const addAdmin = async ({ email, password }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-      const responseData = await response.json();
-
-      if (responseData.error) {
-        throw new Error(responseData.message);
-      } else {
-        const newAdmin = responseData.data;
-        setAdminsData([...adminsData, newAdmin]);
-        setModalText('Admin add successfully!');
-        setShowModal(true);
-      }
-    } catch (error) {
-      console.log(error);
-      alert('Error creating admin: ' + error);
-    }
+  const handleCancel = () => {
+    history.push('/superadmins');
   };
 
-  const editAdmin = async (updatedAdmin, adminId) => {
-    const dataUpdate = {
-      email: updatedAdmin.email,
-      password: updatedAdmin.password
-    };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${adminId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataUpdate)
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const updatedAdminData = responseData.data;
-        setAdminsData(
-          adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
-        );
-        setModalText('Admin updated correctly!');
-        setShowModal(true);
-      } else {
-        const responseData = await response.json();
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      console.log(formData);
-      setModalText('Error updating admin: ' + error);
-      setShowModal(true);
-    }
-  };
-
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      editAdmin(formData, selectedAdmin._id);
-      history.goBack();
+      dispatch(putSuperAdmins(formData, id));
     } else {
-      addAdmin(formData);
-      history.goBack();
+      dispatch(addSuperAdmins(formData));
     }
   };
 
-  const closeModal = () => {
-    setShowModal(!showModal);
-  };
-
-  const onSubmitCancel = (e) => {
-    e.preventDefault();
-    history.goBack();
+  const closeAlert = () => {
+    if (error === '') {
+      history.push('/superadmins');
+    }
   };
 
   return (
-    <>
-      <form className={styles.formAdmin}>
-        <div className={styles.formContainer}>
-          <div className={styles.inputAdmin}>
-            <Input
-              labelText="Email"
-              onChange={onChange}
-              type="text"
-              name="email"
-              value={formData.email}
-            />
-          </div>
+    <div>
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
+      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      <form className={styles.addSuperAdmins} onSubmit={onSubmit}>
+        <div className={styles.column}>
           <Input
-            labelText="Contraseña"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={onChange}
-          />
+            labelText={`Email`}
+            type={'text'}
+            name={`email`}
+            value={formData.email ?? ''}
+            onChange={onChangeInput}
+          ></Input>
+          <Input
+            labelText={`Password`}
+            type={'password'}
+            name={`password`}
+            value={formData.password ?? ''}
+            onChange={onChangeInput}
+          ></Input>
         </div>
-        <div className={styles.buttonContainer}>
-          <Button type="confirm" onClick={onSubmit}></Button>
-          <Button type="cancel" onClick={onSubmitCancel}></Button>
-        </div>
+        <Button type="submit" />
+        <Button type="cancel" onClick={handleCancel}>
+          Cancel
+        </Button>
       </form>
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
-    </>
+    </div>
   );
 };
 
-export default FormSuperAdmin;
+export default FormSuperAdmins;
