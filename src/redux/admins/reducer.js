@@ -24,20 +24,17 @@ export const adminsReducer = (state = initialState, action) => {
   console.log(action.type);
   switch (action.type) {
     case GET_ADMIN_PENDING:
-      console.log('pending');
       return {
         ...state,
         isLoading: true
       };
     case GET_ADMIN_SUCCESS:
-      console.log('success');
       return {
         ...state,
         list: action.payload,
         isLoading: false
       };
     case GET_ADMIN_ERROR:
-      console.log('pending');
       return {
         ...state,
         error: action.payload,
@@ -69,9 +66,7 @@ export const adminsReducer = (state = initialState, action) => {
     case PUT_ADMIN_SUCCESS:
       return {
         ...state,
-        admins: state.admins.map((admin) =>
-          admin.id === action.payload.id ? action.payload : admin
-        )
+        admins: state.list.map((admin) => (admin.id === action.payload.id ? action.payload : admin))
       };
     case PUT_ADMIN_ERROR:
       return {

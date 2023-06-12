@@ -19,7 +19,6 @@ export const getAdminsPending = () => {
   };
 };
 export const getAdminsSuccess = (data) => {
-  console.log('asdasd');
   return {
     type: GET_ADMIN_SUCCESS,
     payload: data
@@ -34,23 +33,6 @@ export const getAdminError = (error) => {
   };
 };
 
-/* export const getAdminsByIdPending = () => {
-  return {
-    type: GET_BY_ID_ADMIN_PENDING
-  };
-};
-export const getAdminsByIdSucess = (data) => {
-  return {
-    type: GET_BY_ID_ADMIN_SUCCESS,
-    payload: data
-  };
-};
-export const getAdminsByIdError = (error) => {
-  return {
-    type: GET_BY_ID_ADMIN_ERROR,
-    payload: error
-  };
-}; */
 export const addAdminsPending = () => {
   return {
     type: ADD_ADMIN_PENDING
@@ -104,13 +86,3 @@ export const putAdminsError = (error) => {
     payload: error
   };
 };
-/* export const removeAdmin = (adminId) => ({
-  type: REMOVE_ADMIN,
-  payload: adminId
-});
-
-export const editAdmin = (adminData) => ({
-  type: EDIT_ADMIN,
-  payload: adminData
-});
- */

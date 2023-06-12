@@ -12,46 +12,17 @@ function Admins() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const data = useSelector((state) => state.admins);
-  const dispatch = useDispatch;
-  console.log(data);
-
-  /*  const getAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-      const jsonData = await response.json();
-      const adminData = jsonData.data;
-      setAdminsData(adminData);
-    } catch (error) {
-      setModalText('Error getting Admins.');
-    }
-  }; */
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAdmins(dispatch);
+    dispatch(getAdmins());
   }, [dispatch]);
 
-  /* const deleteAdmin = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'DELETE'
-      });
-      if (response.ok) {
-        setAdminsData(adminsData.filter((admin) => admin._id !== id));
-        setModalText('Admin deleted correctly!');
-        setIsModalOpen(true);
-      } else {
-        throw new Error('Error deleting Admin.');
-      }
-    } catch (error) {
-      setModalText(`Error : ${error}`);
-      setIsModalOpen(true);
-    }
-  }; */
   const closeModal = () => {
     setIsModalOpen(false);
   };
   const onDelete = (id) => {
-    dispatch(deleteAdmin(id, setModalText(), setIsModalOpen()));
+    dispatch(deleteAdmin(id, setModalText, setIsModalOpen));
   };
 
   return (
