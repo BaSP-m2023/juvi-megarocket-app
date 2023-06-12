@@ -11,8 +11,9 @@ import {
   addTrainerPending,
   addTrainerSuccess,
   addTrainerError,
-  puitTrainerError,
-  putTrainerSuccess
+  putTrainerError,
+  putTrainerSuccess,
+  putTrainerPending
 } from './actions';
 
 export const getTrainers = () => {
@@ -60,7 +61,7 @@ export const delTrainer = (id) => {
       const { data, message } = responseJson;
       dispatch(delTrainerSuccess({ data, message }));
     } catch (error) {
-      dispatch(delTrainerError(error));
+      dispatch(delTrainerError(error.message));
     }
   };
 };
@@ -90,7 +91,7 @@ export const addTrainer = (request) => {
 export const putTrainer = (request, id) => {
   return async (dispatch) => {
     try {
-      dispatch(delTrainerPending());
+      dispatch(putTrainerPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'PUT',
         headers: {
@@ -99,14 +100,13 @@ export const putTrainer = (request, id) => {
         body: JSON.stringify(request)
       });
       const responseJson = await response.json();
-      if (response.error) {
+      if (responseJson.error) {
         throw new Error(responseJson.message);
       }
-
       const { data, message } = responseJson;
       dispatch(putTrainerSuccess({ data, message }));
     } catch (error) {
-      dispatch(puitTrainerError(error));
+      dispatch(putTrainerError(error.message));
     }
   };
 };
