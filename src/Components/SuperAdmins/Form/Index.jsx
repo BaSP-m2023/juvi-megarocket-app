@@ -64,7 +64,7 @@ const FormSuperAdmins = () => {
       {data.isLoading ? (
         <div>is Loading</div>
       ) : (
-        <form className={styles.form} onSubmit={onSubmit}>
+        <form className={styles.FormSuperAdmins} onSubmit={onSubmit}>
           <div className={styles.subContainer}>
             <Input
               labelText="Email"
