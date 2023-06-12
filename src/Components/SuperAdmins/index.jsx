@@ -4,28 +4,20 @@ import { Link } from 'react-router-dom';
 import { Button, SharedTable, ModalAlert } from '../Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superadmins/thunks';
-
 const SuperAdminsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
-
   const { list, isLoading } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getSuperAdmins());
-    dispatch(deleteSuperAdmins());
   }, []);
-
   const deleteItem = (_id) => {
-    dispatch(deleteSuperAdmins(_id, setModalText));
-    setShowModal(true);
+    dispatch(deleteSuperAdmins(_id, setModalText, setShowModal));
   };
-
   const closeModal = () => {
     setShowModal(!showModal);
   };
-
   return (
     <>
       <section className={styles.container}>
@@ -43,5 +35,4 @@ const SuperAdminsPage = () => {
     </>
   );
 };
-
 export default SuperAdminsPage;

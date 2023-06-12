@@ -8,29 +8,33 @@ import {
   getByIdSuperAdmins
 } from '../../../redux/superadmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-
 const FormSuperAdmins = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.superadmins);
+  const data = useSelector((state) => state.superAdmins);
   const { id } = useParams();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
-    name: data.item?.email || '',
-    description: data.item?.password || ''
+    email: data.item?.email || '',
+    password: data.item?.password || ''
   });
-
   useEffect(() => {
     if (id) {
       dispatch(getByIdSuperAdmins(id));
+    } else {
+      setFormData({
+        email: '',
+        password: ''
+      });
     }
-  }, [id]);
+  }, [id, dispatch]);
   useEffect(() => {
-    setFormData({
-      name: data.item?.email || '',
-      description: data.item?.password || ''
-    });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      email: data.item?.email || '',
+      password: data.item?.password || ''
+    }));
   }, [data.item]);
   const onSubmit = (e) => {
     e.preventDefault();
@@ -38,25 +42,23 @@ const FormSuperAdmins = () => {
       dispatch(editSuperAdmins(formData, id, setModalText, setShowModal));
     } else {
       dispatch(addSuperAdmins(formData, setModalText, setShowModal));
+      console.log(formData);
     }
     setFormData({
       email: '',
       password: ''
     });
   };
-
   const onChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-
   const closeModal = () => {
     setShowModal(!showModal);
     history.goBack();
   };
-
   return (
     <>
       {data.isLoading ? (
@@ -89,5 +91,4 @@ const FormSuperAdmins = () => {
     </>
   );
 };
-
 export default FormSuperAdmins;
