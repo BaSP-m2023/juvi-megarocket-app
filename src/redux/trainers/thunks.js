@@ -78,13 +78,25 @@ export const addTrainer = (request) => {
       });
       const responseJson = await response.json();
       if (responseJson.error) {
+        if (responseJson.message.errors) {
+          throw new Error(responseJson.message.message);
+        }
         throw new Error(responseJson.message);
       } else {
         const { data, message } = responseJson;
         dispatch(addTrainerSuccess({ data, message }));
       }
     } catch (error) {
-      dispatch(addTrainerError(error.message));
+      if (error.message.length > 70) {
+        dispatch(
+          addTrainerError(
+            error.message.substring(26, 32) +
+              error.message.substring(error.message.length - 48, error.message.length)
+          )
+        );
+      } else {
+        dispatch(addTrainerError(error.message));
+      }
     }
   };
 };
