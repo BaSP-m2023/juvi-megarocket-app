@@ -1,92 +1,92 @@
-import { useState, useEffect } from 'react';
-import styles from './form.module.css';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import styles from './super-admins-form.module.css';
+import { Button, Input, ModalAlert } from '../../Shared';
 import {
   addSuperAdmins,
-  getSuperAdminsBy,
-  putSuperAdmins
+  editSuperAdmins,
+  getByIdSuperAdmins
 } from '../../../redux/superadmins/thunks';
-import { Button, Input, ModalAlert } from '../../Shared';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormSuperAdmins = () => {
-  const { error, message, item } = useSelector((state) => state.superadmins);
   const dispatch = useDispatch();
+  const data = useSelector((state) => state.superadmins);
   const { id } = useParams();
   const history = useHistory();
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    name: data.item?.email || '',
+    description: data.item?.password || ''
   });
 
   useEffect(() => {
     if (id) {
-      dispatch(getSuperAdminsBy(id));
+      dispatch(getByIdSuperAdmins(id));
     }
   }, [id]);
-
   useEffect(() => {
-    if (id && item) {
-      setFormData({
-        email: item.email,
-        password: item.password
-      });
+    setFormData({
+      name: data.item?.email || '',
+      description: data.item?.password || ''
+    });
+  }, [data.item]);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (id) {
+      dispatch(editSuperAdmins(formData, id, setModalText, setShowModal));
+    } else {
+      dispatch(addSuperAdmins(formData, setModalText, setShowModal));
     }
-  }, [item]);
+    setFormData({
+      email: '',
+      password: ''
+    });
+  };
 
-  const onChangeInput = (e) => {
+  const onChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleCancel = () => {
-    history.push('/superadmins');
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (id) {
-      dispatch(putSuperAdmins(formData, id));
-    } else {
-      dispatch(addSuperAdmins(formData));
-    }
-  };
-
-  const closeAlert = () => {
-    if (error === '') {
-      history.push('/superadmins');
-    }
+  const closeModal = () => {
+    setShowModal(!showModal);
+    history.goBack();
   };
 
   return (
-    <div>
-      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
-      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
-      <form className={styles.addSuperAdmins} onSubmit={onSubmit}>
-        <div className={styles.column}>
-          <Input
-            labelText={`Email`}
-            type={'text'}
-            name={`email`}
-            value={formData.email ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-          <Input
-            labelText={`Password`}
-            type={'password'}
-            name={`password`}
-            value={formData.password ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-        </div>
-        <Button type="submit" />
-        <Button type="cancel" onClick={handleCancel}>
-          Cancel
-        </Button>
-      </form>
-    </div>
+    <>
+      {data.isLoading ? (
+        <div>is Loading</div>
+      ) : (
+        <form className={styles.form} onSubmit={onSubmit}>
+          <div className={styles.subContainer}>
+            <Input
+              labelText="Email"
+              name="email"
+              type="text"
+              value={formData.email}
+              onChange={onChange}
+            />
+            <Input
+              labelText="Password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.buttonContainer}>
+            <Button type="confirm"></Button>
+            <Button type="cancel" onClick={closeModal}></Button>
+          </div>
+        </form>
+      )}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+    </>
   );
 };
 

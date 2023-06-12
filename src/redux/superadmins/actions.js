@@ -1,112 +1,112 @@
 import {
-  GET_SUPERADMIN_PENDING,
-  GET_SUPERADMIN_ERROR,
-  GET_SUPERADMIN_SUCCESS,
-  PUT_SUPERADMIN_ERROR,
-  PUT_SUPERADMIN_SUCCESS,
-  PUT_SUPERADMIN_PENDING,
-  DEL_SUPERADMIN_ERROR,
-  DEL_SUPERADMIN_PENDING,
-  DEL_SUPERADMIN_SUCCESS,
-  ADD_SUPERADMIN_ERROR,
-  ADD_SUPERADMIN_PENDING,
-  ADD_SUPERADMIN_SUCCESS,
-  GET_BY_ID_SUPERADMIN_SUCCESS,
-  GET_BY_ID_SUPERADMIN_PENDING,
-  GET_BY_ID_SUPERADMIN_ERROR
+  GET_SUPERADMINS_PENDING,
+  GET_SUPERADMINS_ERROR,
+  GET_SUPERADMINS_SUCCESS,
+  PUT_SUPERADMINS_ERROR,
+  PUT_SUPERADMINS_SUCCESS,
+  PUT_SUPERADMINS_PENDING,
+  DEL_SUPERADMINS_ERROR,
+  DEL_SUPERADMINS_PENDING,
+  DEL_SUPERADMINS_SUCCESS,
+  ADD_SUPERADMINS_ERROR,
+  ADD_SUPERADMINS_PENDING,
+  ADD_SUPERADMINS_SUCCESS,
+  GET_BY_ID_SUPERADMINS_SUCCESS,
+  GET_BY_ID_SUPERADMINS_PENDING,
+  GET_BY_ID_SUPERADMINS_ERROR
 } from './constants';
 
-export const getSuperAdminPending = () => {
+export const getSuperAdminsSuccess = (data) => {
   return {
-    type: GET_SUPERADMIN_PENDING
-  };
-};
-
-export const getSuperAdminSuccess = (data) => {
-  return {
-    type: GET_SUPERADMIN_SUCCESS,
+    type: GET_SUPERADMINS_SUCCESS,
     payload: data
   };
 };
 
-export const getSuperAdminError = (error) => {
+export const getSuperAdminsPending = () => {
   return {
-    type: GET_SUPERADMIN_ERROR,
+    type: GET_SUPERADMINS_PENDING
+  };
+};
+
+export const getSuperAdminsError = (error) => {
+  return {
+    type: GET_SUPERADMINS_ERROR,
     payload: error
   };
 };
 
-export const putSuperAdminPending = () => {
+export const putSuperAdminsPending = () => {
   return {
-    type: PUT_SUPERADMIN_PENDING
+    type: PUT_SUPERADMINS_PENDING
   };
 };
 
-export const putSuperAdminSuccess = (updatedActivity, id) => {
+export const putSuperAdminsSuccess = (updatedActivity, id) => {
   return {
-    type: PUT_SUPERADMIN_SUCCESS,
+    type: PUT_SUPERADMINS_SUCCESS,
     payload: updatedActivity,
     id
   };
 };
-export const putSuperAdminError = (error) => {
+export const putSuperAdminsError = (error) => {
   return {
-    type: PUT_SUPERADMIN_ERROR,
+    type: PUT_SUPERADMINS_ERROR,
     payload: error
   };
 };
 
-export const deleteSuperAdminPending = () => {
+export const deleteSuperAdminsPending = () => {
   return {
-    type: DEL_SUPERADMIN_PENDING
+    type: DEL_SUPERADMINS_PENDING
   };
 };
 
-export const deleteSuperAdminSuccess = (_id) => {
+export const deleteSuperAdminsSuccess = (_id) => {
   return {
-    type: DEL_SUPERADMIN_SUCCESS,
+    type: DEL_SUPERADMINS_SUCCESS,
     payload: _id
   };
 };
-export const deleteSuperAdminError = (error) => {
+export const deleteSuperAdminsError = (error) => {
   return {
-    type: DEL_SUPERADMIN_ERROR,
+    type: DEL_SUPERADMINS_ERROR,
     payload: error
   };
 };
 
-export const postSuperAdminPending = () => {
+export const postSuperAdminsPending = () => {
   return {
-    type: ADD_SUPERADMIN_PENDING
+    type: ADD_SUPERADMINS_PENDING
   };
 };
-export const postSuperAdminSuccess = (newActivity) => {
+export const postSuperAdminsSuccess = (newActivity) => {
   return {
-    type: ADD_SUPERADMIN_SUCCESS,
+    type: ADD_SUPERADMINS_SUCCESS,
     payload: newActivity
   };
 };
-export const postSuperAdminError = (error) => {
+export const postSuperAdminsError = (error) => {
   return {
-    type: ADD_SUPERADMIN_ERROR,
+    type: ADD_SUPERADMINS_ERROR,
     payload: error
   };
 };
 
-export const getByIdSuperAdminPending = () => {
+export const getByIdSuperAdminsPending = () => {
   return {
-    type: GET_BY_ID_SUPERADMIN_PENDING
+    type: GET_BY_ID_SUPERADMINS_PENDING
   };
 };
-export const getByIdSuperAdminSuccess = (data) => {
+export const getByIdSuperAdminsSuccess = (data) => {
   return {
-    type: GET_BY_ID_SUPERADMIN_SUCCESS,
+    type: GET_BY_ID_SUPERADMINS_SUCCESS,
     payload: data
   };
 };
-export const getByIdSuperAdminError = (error) => {
+export const getByIdSuperAdminsError = (error) => {
   return {
-    type: GET_BY_ID_SUPERADMIN_ERROR,
+    type: GET_BY_ID_SUPERADMINS_ERROR,
     payload: error
   };
 };

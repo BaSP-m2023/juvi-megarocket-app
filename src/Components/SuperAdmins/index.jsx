@@ -5,17 +5,12 @@ import { Button, SharedTable, ModalAlert } from '../Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superadmins/thunks';
 
-const AdminsPage = () => {
+const SuperAdminsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
 
-  const { list, isLoading, item, error } = useSelector((state) => state.superAdmins);
+  const { list, isLoading } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
-
-  console.log('list', list);
-  console.log('isLoading', isLoading);
-  console.log('item', item);
-  console.log('error', error);
 
   useEffect(() => {
     dispatch(getSuperAdmins());
@@ -49,4 +44,4 @@ const AdminsPage = () => {
   );
 };
 
-export default AdminsPage;
+export default SuperAdminsPage;
