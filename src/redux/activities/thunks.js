@@ -55,7 +55,7 @@ export const deleteActivity = (_id, setModalText) => {
   };
 };
 
-export const addActivity = (formData, setModalText, setShowModal) => {
+export const addActivity = (formData, setModalText, setShowModal, setShowModalSuccess) => {
   return async (dispatch) => {
     try {
       const { name, description } = formData;
@@ -73,7 +73,7 @@ export const addActivity = (formData, setModalText, setShowModal) => {
         const newActivity = responseData.data;
         dispatch(postActivitiesSuccess(newActivity));
         setModalText(responseData.message);
-        setShowModal(true);
+        setShowModalSuccess(true);
       } else {
         throw new Error(responseData.message);
       }
@@ -84,7 +84,13 @@ export const addActivity = (formData, setModalText, setShowModal) => {
     }
   };
 };
-export const editActivity = (updatedActivity, id, setModalText, setShowModal) => {
+export const editActivity = (
+  updatedActivity,
+  id,
+  setModalText,
+  setShowModal,
+  setShowModalSuccess
+) => {
   return async (dispatch) => {
     try {
       dispatch(putActivitiesPending);
@@ -100,7 +106,7 @@ export const editActivity = (updatedActivity, id, setModalText, setShowModal) =>
         const responseData = await response.json();
         const updatedData = responseData.data;
         dispatch(putActivitiesSuccess(updatedData, id));
-        setShowModal(true);
+        setShowModalSuccess(true);
         setModalText(responseData.message);
       } else {
         const responseData = await response.json();

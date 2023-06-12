@@ -11,6 +11,7 @@ const Form = () => {
   const { id } = useParams();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
     name: data.item?.name || '',
@@ -31,14 +32,10 @@ const Form = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      dispatch(editActivity(formData, id, setModalText, setShowModal));
+      dispatch(editActivity(formData, id, setModalText, setShowModal, setShowModalSuccess));
     } else {
-      dispatch(addActivity(formData, setModalText, setShowModal));
+      dispatch(addActivity(formData, setModalText, setShowModal, setShowModalSuccess));
     }
-    setFormData({
-      name: '',
-      description: ''
-    });
   };
 
   const onChange = (e) => {
@@ -50,7 +47,6 @@ const Form = () => {
 
   const closeModal = () => {
     setShowModal(!showModal);
-    history.goBack();
   };
 
   return (
@@ -77,12 +73,21 @@ const Form = () => {
           </div>
           <div className={styles.buttonContainer}>
             <Button type="confirm"></Button>
-            <Button type="cancel" onClick={closeModal}></Button>
+            <Button type="cancel" onClick={() => history.push('/activities')}></Button>
           </div>
         </form>
       )}
 
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModalSuccess && (
+        <ModalAlert
+          text={modalText}
+          onClick={() => {
+            history.push('/activities');
+            setShowModalSuccess(false);
+          }}
+        />
+      )}
     </>
   );
 };
