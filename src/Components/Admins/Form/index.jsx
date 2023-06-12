@@ -6,8 +6,11 @@ import ModalAlert from '../../Shared/ModalAlert/index.jsx';
 import { Input } from '../../Shared';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { editAdmin, addAdmin } from '../../../redux/admins/thunks';
 
 const AdminsForm = () => {
+  const dispatch = useDispatch();
   const [modalText, setModalText] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
@@ -65,7 +68,7 @@ const AdminsForm = () => {
     });
   }, [selectedAdmin]);
 
-  const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
+  /* const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
         method: 'POST',
@@ -113,7 +116,7 @@ const AdminsForm = () => {
       setModalText('Error updating Admin: ' + error.message);
       setIsModalOpen(true);
     }
-  };
+  }; */
 
   const onChange = (e) => {
     setFormData({
@@ -125,9 +128,11 @@ const AdminsForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      editAdmin(formData, selectedAdmin._id);
+      dispatch(
+        editAdmin(formData, selectedAdmin._id, setsuccess, setAdminsData, setModalText, adminsData)
+      );
     } else {
-      addAdmin(formData);
+      dispatch(addAdmin(formData));
     }
   };
 

@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom';
 import Button from '../Shared/Button/index.jsx';
 import { ModalAlert } from '../Shared/index.jsx';
 import { SharedTable } from '../Shared';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
 
 function Admins() {
-  const [adminsData, setAdminsData] = useState([]);
   const [modalText, setModalText] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const getAdmins = async () => {
+  const data = useSelector((state) => state.admins);
+  const dispatch = useDispatch;
+  console.log(data);
+
+  /*  const getAdmins = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
       const jsonData = await response.json();
@@ -19,13 +24,13 @@ function Admins() {
     } catch (error) {
       setModalText('Error getting Admins.');
     }
-  };
+  }; */
 
   useEffect(() => {
-    getAdmins();
-  }, []);
+    getAdmins(dispatch);
+  }, [dispatch]);
 
-  const deleteAdmin = async (id) => {
+  /* const deleteAdmin = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'DELETE'
@@ -41,12 +46,12 @@ function Admins() {
       setModalText(`Error : ${error}`);
       setIsModalOpen(true);
     }
-  };
+  }; */
   const closeModal = () => {
     setIsModalOpen(false);
   };
   const onDelete = (id) => {
-    deleteAdmin(id);
+    dispatch(deleteAdmin(id, setModalText(), setIsModalOpen()));
   };
 
   return (
@@ -59,7 +64,13 @@ function Admins() {
           </Button>
         </Link>
       </div>
-      <SharedTable data={adminsData} handleDelete={onDelete} editLink="/admins/form/" />
+      {data.isLoading ? (
+        <div>
+          <h3>Is loading..</h3>
+        </div>
+      ) : (
+        <SharedTable data={data.list} handleDelete={onDelete} editLink="/admins/form/" />
+      )}
       {isModalOpen && <ModalAlert text={modalText} onClick={closeModal} />}
     </section>
   );
