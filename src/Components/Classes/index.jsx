@@ -1,47 +1,45 @@
 import styles from './classes.module.css';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SharedTable, Button } from '../Shared';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClasses, deleteClass } from '../../redux/classes/thunks';
+import ModalAlert from '../Shared/ModalAlert';
 
 const Classes = () => {
-  const [classesData, setClassData] = useState([]);
+  const { list, isLoading } = useSelector((state) => state.classes);
+  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState('');
 
   useEffect(() => {
-    getDataClasses();
-  }, []);
+    dispatch(getClasses());
+  }, [dispatch]);
 
-  const getDataClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
-      const jsonData = await response.json();
-      const classData = jsonData.data;
-      setClassData(classData);
-    } catch (error) {
-      alert(error);
-    }
+  const deleteClasses = (_id) => {
+    dispatch(deleteClass(_id, setModalText, setShowModal));
   };
 
-  const deleteClass = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
-        method: 'DELETE'
-      });
-      if (response.ok) {
-        setClassData(classesData.filter((itemClass) => itemClass.id !== id));
-      } else {
-        throw new Error('Error deleting Class.');
-      }
-    } catch (error) {
-      alert(error);
-    }
+  const closeModal = () => {
+    setShowModal(false);
+    reloadPage();
+  };
+
+  const reloadPage = () => {
+    window.location.reload();
   };
 
   return (
     <section className={styles.containerClass}>
-      <Link to="/classes/form">
-        <Button type="add" resource="Class"></Button>
+      <Link to="/classes/form" className={styles.contButton}>
+        <Button type="add" resource="Class" />
       </Link>
-      <SharedTable data={classesData} editLink={'classes/form/'} handleDelete={deleteClass} />
+      {isLoading ? (
+        <div>Is Loading</div>
+      ) : (
+        <SharedTable data={list} editLink={'classes/form/'} handleDelete={deleteClasses} />
+      )}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </section>
   );
 };
