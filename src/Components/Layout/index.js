@@ -17,8 +17,7 @@ import FormClasses from '../Classes/Form';
 import MemberForm from '../Members/MemberForm';
 import SubForm from '../Subscriptions/Form';
 import FormSuperAdmin from '../SuperAdmins/Form/Index';
-import TrainerForm from '../Trainers/Form/addForm';
-import TrainerFormEdit from '../Trainers/Form/editForm';
+import TrainerForm from '../Trainers/Form';
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -54,9 +53,9 @@ function Layout() {
         <Route exact path="/super-admins/form" component={FormSuperAdmin} />
         <Route exact path="/super-admins/form/:id" component={FormSuperAdmin} />
 
-        <Route path="/trainers" exact component={Trainers} />
-        <Route path="/trainers/add" component={TrainerForm} />
-        <Route path="/trainers/edit/:id" component={TrainerFormEdit} />
+        <Route exact path="/trainers" component={Trainers} />
+        <Route exact path="/trainers/form" component={TrainerForm} />
+        <Route exact path="/trainers/form/:id" component={TrainerForm} />
       </Switch>
       <Footer />
     </div>

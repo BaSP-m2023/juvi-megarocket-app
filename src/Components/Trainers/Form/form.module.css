@@ -20,14 +20,15 @@
   margin-bottom: 0.5rem;
 }
 
-.formControl .inputTrainers[type="text"], .inputTrainers[type="password"] {
+.formControl .inputTrainers[type='text'],
+.inputTrainers[type='password'] {
   width: 80%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.formControl .inputTrainers[type="checkbox"] {
+.formControl .inputTrainers[type='checkbox'] {
   margin-left: 14px;
 }
 
@@ -35,7 +36,6 @@
   display: flex;
   align-items: center;
   margin-top: 45px;
-
 }
 
 .formControlCheck .labelTrainers {
@@ -54,6 +54,4 @@
   border-radius: 4px;
   cursor: pointer;
   margin: 2rem 7rem 2rem 7rem;
-
 }
-

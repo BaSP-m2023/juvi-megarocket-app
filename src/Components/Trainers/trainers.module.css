@@ -1,6 +1,14 @@
 .container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.link {
+  margin: 10px;
+  text-decoration: none;
+}
+.title{
+  align-self: center;
+}

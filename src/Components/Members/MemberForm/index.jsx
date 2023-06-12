@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMemberById, putMember, addMember } from '../../../redux/members/thunks';
+
 import styles from './form.module.css';
 import { ModalAlert, Button, Input } from '../../Shared';
-import { useParams } from 'react-router-dom';
 
 const MemberForm = (props) => {
-  const [members, setMembers] = useState([]);
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const data = useSelector((state) => state.members);
+  const dispatch = useDispatch();
+
   const [member, setMember] = useState({
-    firstName: members.firstName ?? '',
-    lastName: members.lastName ?? '',
-    dni: members.dni ?? '',
-    phone: members.phone ?? '',
-    email: members.email ?? '',
-    city: members.city ?? '',
-    birthDate: members.birthDate ?? '',
-    postalCode: members.postalCode ?? '',
-    memberships: members.memberships ?? '',
-    password: members.password ?? ''
+    firstName: data.item.firstName ?? '',
+    lastName: data.item.lastName ?? '',
+    dni: data.item.dni ?? '',
+    phone: data.item.phone ?? '',
+    email: data.item.email ?? '',
+    city: data.item.city ?? '',
+    birthDate: data.item.birthDate ?? '',
+    postalCode: data.item.postalCode ?? '',
+    memberships: data.item.memberships ?? 'Only Classes',
+    password: data.item.password ?? ''
   });
 
   const { id } = useParams();
@@ -30,33 +36,28 @@ const MemberForm = (props) => {
     text = 'Add member';
   }
 
-  const getMembs = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`);
-    const data = await response.json();
-    data.data.birthDate = data.data.birthDate.substring(0, 10);
-    setMembers(data.data);
-  };
-
   useEffect(() => {
     if (id) {
-      getMembs();
+      dispatch(getMemberById(id, setMember));
     }
-  }, []);
+  }, [data.error, msg]);
 
   useEffect(() => {
-    setMember({
-      firstName: members.firstName ?? '',
-      lastName: members.lastName ?? '',
-      dni: members.dni ?? '',
-      phone: members.phone ?? '',
-      email: members.email ?? '',
-      city: members.city ?? '',
-      birthDate: members.birthDate ?? '',
-      postalCode: members.postalCode ?? '',
-      memberships: members.memberships ?? '',
-      password: members.password ?? ''
-    });
-  }, [members]);
+    if (!id) {
+      setMember({
+        firstName: '',
+        lastName: '',
+        dni: '',
+        phone: '',
+        email: '',
+        city: '',
+        birthDate: '',
+        postalCode: '',
+        memberships: 'Only Classes',
+        password: ''
+      });
+    }
+  }, []);
 
   const onChange = (event) => {
     setMember({
@@ -65,76 +66,39 @@ const MemberForm = (props) => {
     });
   };
 
+  const replaceBd = () => {
+    setMember({
+      ...member,
+      birthDate: member.birthDate.substring(0, 10)
+    });
+  };
+
+  const errorAlert = (errorMsg) => {
+    setMsg(errorMsg);
+    setModal(!modal);
+  };
+
+  const successAlert = (successMsg) => {
+    setMsg(successMsg);
+    setModalDone(!modalDone);
+  };
+
+  const switchModal = (error, msg) => {
+    if (error) {
+      replaceBd();
+      errorAlert(msg);
+    } else {
+      successAlert(msg);
+    }
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
-    try {
-      if (text === 'Add member') {
-        addMember(member);
-      } else {
-        updateMemb(id, member);
-      }
-    } catch (error) {
-      setMsg(error);
-      setModal(!modal);
-    }
-  };
-
-  const addMember = async (member) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(member)
-      });
-
-      const newMemb = await response.json();
-
-      if (!newMemb.error) {
-        setMsg('Member created!');
-        setModalDone(!modalDone);
-        getMembs();
-      } else {
-        setMsg(newMemb.message);
-        setModal(!modal);
-      }
-    } catch (error) {
-      setMsg(error.message);
-      setModal(!modal);
-    }
-  };
-
-  const updateMemb = async (id, member) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(member)
-      }).then(async (response) => {
-        const data = await response.json();
-        if (!data.error) {
-          setMembers({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            dni: data.dni,
-            phone: data.phone,
-            email: data.email,
-            city: data.city,
-            birthDate: data.birthDate,
-            postalCode: data.postalCode,
-            memberships: data.memberships,
-            password: data.password
-          });
-          setMsg(`Member ${member.firstName} ${member.lastName} updated!`);
-          setModalDone(!modalDone);
-        } else {
-          setMsg(data.message);
-          setModal(!modal);
-        }
-      });
-    } catch (error) {
-      setMsg(error.message);
-      setModal(!modal);
+    if (text === 'Add member') {
+      dispatch(addMember(member, switchModal));
+    } else {
+      dispatch(putMember(id, member, switchModal));
     }
   };
 
