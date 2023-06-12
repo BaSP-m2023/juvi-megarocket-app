@@ -1,9 +1,9 @@
 .form {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 60vh;
   background-color: #fff;
 }
 
@@ -12,8 +12,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  width: 40vw;
-  height: 40vh;
+  width: 40%;
 }
 
 .fieldset {
