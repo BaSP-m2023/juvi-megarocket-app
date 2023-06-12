@@ -4,17 +4,14 @@ import thunk from 'redux-thunk';
 
 import { adminsReducer } from './admins/reducer';
 import { activitiesReducer } from './activities/reducer';
-
-const rootReducer = combineReducers({
-  admins: adminsReducer,
-  activities: activitiesReducer
 import { membersReducer } from './members/reducer';
 import { classesReducer } from './classes/reducer';
 
 const rootReducer = combineReducers({
   admins: adminsReducer,
   members: membersReducer,
-  classes: classesReducer
+  classes: classesReducer,
+  activities: activitiesReducer
 });
 
 const configureStore = () => {
