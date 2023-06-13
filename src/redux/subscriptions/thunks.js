@@ -52,7 +52,7 @@ export const deleteSubscription = (id, setAlertText) => {
   return async (dispatch) => {
     try {
       dispatch(deleteSubscriptionsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
         method: 'DELETE'
       });
       const responseJson = await response.json();

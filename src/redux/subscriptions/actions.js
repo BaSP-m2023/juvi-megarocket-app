@@ -36,10 +36,10 @@ export const getSubscriptionsError = (error) => {
   };
 };
 
-export const deleteSubscriptionsSuccess = (_id) => {
+export const deleteSubscriptionsSuccess = (data) => {
   return {
     type: DEL_SUBSCRIPTIONS_SUCCESS,
-    payload: _id
+    payload: data
   };
 };
 
