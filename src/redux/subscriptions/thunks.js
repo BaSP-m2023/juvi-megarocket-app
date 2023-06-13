@@ -36,7 +36,7 @@ export const getSubscriptionsById = (id) => {
   return async (dispatch) => {
     try {
       dispatch(getByIdSubscriptionPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`);
       const responseJson = await response.json();
       if (responseJson.error) {
         throw new Error(responseJson.message);
@@ -105,6 +105,7 @@ export const editSubscription = (id, formData) => {
         body: JSON.stringify(formData)
       });
       const responseJson = await response.json();
+      console.log(formData);
       if (responseJson.error) {
         throw new Error(responseJson.message);
       }

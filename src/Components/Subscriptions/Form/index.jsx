@@ -21,19 +21,19 @@ const SubForm = () => {
   const history = useHistory();
   const [selectedSubscription, setSelectedSubscription] = useState({
     classes: '',
-    members: '',
+    members: [],
     date: ''
   });
 
   const [formData, setFormData] = useState({
     classes: '',
-    members: '',
+    members: [],
     date: ''
   });
   const [showConfirm, setShowConfirm] = useState(false);
 
   const dispatch = useDispatch();
-  const subscription = useSelector((state) => state.subscription);
+  const subscription = useSelector((state) => state.subscriptions);
 
   useEffect(() => {
     getMembers();
@@ -47,19 +47,20 @@ const SubForm = () => {
   }, [id, dispatch]);
 
   useEffect(() => {
-    if (subscription) {
+    console.log(subscription.item);
+    if (subscription.item) {
       setSelectedSubscription({
-        classes: subscription.classes._id,
-        members: subscription.members[0],
-        date: subscription.date.slice(0, 16)
+        classes: subscription.item.classes?._id || '',
+        members: subscription.item.members || '',
+        date: subscription.item.date?.slice(0, 16)
       });
     }
-  }, [subscription]);
+  }, [subscription.item]);
 
   useEffect(() => {
     setFormData({
       classes: selectedSubscription.classes,
-      members: selectedSubscription.members._id,
+      members: selectedSubscription.members,
       date: selectedSubscription.date
     });
     setFilteredClasses(classesData.filter((classe) => classe._id !== selectedSubscription.classes));
@@ -110,10 +111,10 @@ const SubForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (id) {
+    if (!id) {
       await dispatch(addSubscription(id, formData));
     } else {
-      await dispatch(editSubscription(formData));
+      await dispatch(editSubscription(id, formData));
     }
   };
 
