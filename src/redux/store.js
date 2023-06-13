@@ -6,13 +6,15 @@ import { adminsReducer } from './admins/reducer';
 import { activitiesReducer } from './activities/reducer';
 import { membersReducer } from './members/reducer';
 import { classesReducer } from './classes/reducer';
+import { subscriptionsReducer } from './subscriptions/reducer';
 
 const rootReducer = combineReducers({
   trainers: trainersReducer,
   admins: adminsReducer,
   members: membersReducer,
   classes: classesReducer,
-  activities: activitiesReducer
+  activities: activitiesReducer,
+  subscriptions: subscriptionsReducer
 });
 
 const configureStore = () => {
