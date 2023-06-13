@@ -3,6 +3,12 @@ import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
 import { ModalAlert, Button, ModalConfirm } from '../../Shared';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addSubscription,
+  editSubscription,
+  getSubscriptionsById
+} from '../../../redux/subscriptions/thunks';
 
 const SubForm = () => {
   const { id } = useParams();
@@ -12,7 +18,6 @@ const SubForm = () => {
   const [filteredClassesData, setFilteredClasses] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
-  const [success, setSuccess] = useState(false);
   const history = useHistory();
   const [selectedSubscription, setSelectedSubscription] = useState({
     classes: '',
@@ -27,27 +32,29 @@ const SubForm = () => {
   });
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const dispatch = useDispatch();
+  const subscription = useSelector((state) => state.subscription);
+
   useEffect(() => {
     getMembers();
     getClasses();
   }, []);
+
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedSubscription({
-            classes: data.data.classes._id,
-            members: data.data.members[0],
-            date: data.data.date.slice(0, 16)
-          });
-        })
-        .catch((error) => {
-          setAlertText(error);
-          showAlertHandler();
-        });
+      dispatch(getSubscriptionsById(id));
     }
-  }, [id]);
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (subscription) {
+      setSelectedSubscription({
+        classes: subscription.classes._id,
+        members: subscription.members[0],
+        date: subscription.date.slice(0, 16)
+      });
+    }
+  }, [subscription]);
 
   useEffect(() => {
     setFormData({
@@ -79,6 +86,7 @@ const SubForm = () => {
         showAlertHandler();
       });
   };
+
   const getClasses = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/class/`)
       .then((response) => response.json())
@@ -103,76 +111,16 @@ const SubForm = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      await editSubscription(formData, id);
+      await dispatch(addSubscription(id, formData));
     } else {
-      await addSubscription(formData);
-    }
-  };
-
-  const addSubscription = async ({ classes, members, date }) => {
-    const requestData = {
-      classes: classes,
-      members: [members],
-      date: date
-    };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
-      });
-      const responseData = await response.json();
-      if (responseData.error) {
-        setAlertText(responseData.message);
-      } else {
-        setAlertText(responseData.message);
-        showAlertHandler();
-        setSuccess(true);
-        getClasses();
-      }
-    } catch (error) {
-      setAlertText(error);
-      showAlertHandler();
-    }
-  };
-
-  const editSubscription = async (updatedSubscription, subscriptionId) => {
-    const requestData = {
-      classes: updatedSubscription.classes,
-      members: [updatedSubscription.members],
-      date: updatedSubscription.date
-    };
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/subscriptions/${subscriptionId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(requestData)
-        }
-      );
-      const responseData = await response.json();
-      if (response.ok) {
-        setAlertText(responseData.message);
-        showAlertHandler();
-        setSuccess(true);
-        getClasses();
-      } else {
-        setAlertText(responseData.message);
-      }
-    } catch (error) {
-      setAlertText(error.message);
-      showAlertHandler();
+      await dispatch(editSubscription(formData));
     }
   };
 
   const showAlertHandler = () => {
     setShowAlert(true);
   };
+
   const handleFormClose = (e) => {
     e.preventDefault();
     history.push('/subscriptions');
@@ -181,7 +129,7 @@ const SubForm = () => {
   const handleConfirmClose = () => {
     setShowConfirm(false);
     setShowAlert(false);
-    if (success) {
+    if (subscription && subscription.success) {
       history.push('/subscriptions');
     }
   };
