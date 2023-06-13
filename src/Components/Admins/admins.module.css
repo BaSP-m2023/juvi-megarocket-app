@@ -12,6 +12,7 @@
   display: flex;
   width: 64vw;
   justify-content: space-between;
+  padding-bottom: 40px;
   align-items: center;
 }
 

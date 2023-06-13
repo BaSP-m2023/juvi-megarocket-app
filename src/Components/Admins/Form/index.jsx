@@ -7,7 +7,7 @@ import { Input } from '../../Shared';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
-import { editAdmin, addAdmin } from '../../../redux/admins/thunks';
+import { editAdmin, addAdmin, getByIdAdmins } from '../../../redux/admins/thunks';
 
 const AdminsForm = () => {
   const dispatch = useDispatch();
@@ -26,11 +26,13 @@ const AdminsForm = () => {
     password: selectedAdmin.password || ''
   });
 
-  const closeModalAndBack = () => {
+  const closeModalAndBack = (e) => {
+    e.preventDefault();
     setIsModalOpen(false);
     history.goBack();
   };
-  const closeModal = () => {
+  const closeModal = (e) => {
+    e.preventDefault();
     setIsModalOpen(false);
     if (success) {
       history.goBack();
@@ -46,16 +48,10 @@ const AdminsForm = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedAdmin(data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      dispatch(getByIdAdmins(id, setSelectedAdmin));
     }
-  }, []);
+  }, [id]);
+
   useEffect(() => {
     setFormData({
       firstName: selectedAdmin.firstName || '',
@@ -78,7 +74,7 @@ const AdminsForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      dispatch(editAdmin(selectedAdmin._id, formData, setSuccess, setModalText, setIsModalOpen));
+      dispatch(editAdmin(id, formData, setSuccess, setModalText, setIsModalOpen));
     } else {
       dispatch(addAdmin(formData, setModalText, setIsModalOpen, setSuccess));
     }
@@ -88,7 +84,7 @@ const AdminsForm = () => {
 
   return (
     <>
-      <form className={styles.myForm} onSubmit={onSubmit}>
+      <form className={styles.myForm}>
         <div className={styles.divContainer}>
           <div className={styles.inputDiv}>
             <label>First Name</label>
@@ -162,7 +158,7 @@ const AdminsForm = () => {
             </div>
           </div>
         </div>
-        <Button className={styles.addButton} type="confirm">
+        <Button className={styles.addButton} type="confirm" onClick={onSubmit}>
           {switchButtonText}
         </Button>
         <Button type="cancel" className={styles.cancelButton} onClick={closeModalAndBack}>

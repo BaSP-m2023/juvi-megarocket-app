@@ -5,6 +5,9 @@ import {
   ADD_ADMIN_SUCCESS,
   ADD_ADMIN_PENDING,
   ADD_ADMIN_ERROR,
+  GET_BY_ID_ADMIN_SUCCESS,
+  GET_BY_ID_ADMIN_PENDING,
+  GET_BY_ID_ADMIN_ERROR,
   DEL_ADMIN_SUCCESS,
   DEL_ADMIN_PENDING,
   DEL_ADMIN_ERROR,
@@ -21,7 +24,6 @@ const initialState = {
 };
 
 export const adminsReducer = (state = initialState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case GET_ADMIN_PENDING:
       return {
@@ -35,6 +37,23 @@ export const adminsReducer = (state = initialState, action) => {
         isLoading: false
       };
     case GET_ADMIN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case GET_BY_ID_ADMIN_PENDING:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case GET_BY_ID_ADMIN_SUCCESS:
+      return {
+        ...state,
+        item: action.payload,
+        isLoading: false
+      };
+    case GET_BY_ID_ADMIN_ERROR:
       return {
         ...state,
         error: action.payload,

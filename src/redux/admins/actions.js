@@ -2,6 +2,9 @@ import {
   GET_ADMIN_SUCCESS,
   GET_ADMIN_PENDING,
   GET_ADMIN_ERROR,
+  GET_BY_ID_ADMIN_SUCCESS,
+  GET_BY_ID_ADMIN_PENDING,
+  GET_BY_ID_ADMIN_ERROR,
   ADD_ADMIN_SUCCESS,
   ADD_ADMIN_PENDING,
   ADD_ADMIN_ERROR,
@@ -29,6 +32,25 @@ export const getAdminError = (error) => {
   console.log(error);
   return {
     type: GET_ADMIN_ERROR,
+    payload: error
+  };
+};
+export const getByIdAdminsPending = () => {
+  return {
+    type: GET_BY_ID_ADMIN_PENDING
+  };
+};
+
+export const getByIdAdminsSuccess = (data) => {
+  return {
+    type: GET_BY_ID_ADMIN_SUCCESS,
+    payload: data
+  };
+};
+
+export const getByIdAdminsError = (error) => {
+  return {
+    type: GET_BY_ID_ADMIN_ERROR,
     payload: error
   };
 };

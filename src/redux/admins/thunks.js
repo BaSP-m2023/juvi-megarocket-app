@@ -2,6 +2,9 @@ import {
   getAdminsSuccess,
   getAdminsPending,
   getAdminError,
+  getByIdAdminsSuccess,
+  getByIdAdminsPending,
+  getByIdAdminsError,
   addAdminsSuccess,
   addAdminsPending,
   addAdminsError,
@@ -28,7 +31,32 @@ export const getAdmins = () => {
     }
   };
 };
-
+export const getByIdAdmins = (id, setSelectedAdmin) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getByIdAdminsPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
+      const responseJson = await response.json();
+      const data = responseJson.data;
+      if (responseJson.error) {
+        throw new Error(responseJson.message);
+      }
+      setSelectedAdmin({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        dni: data.dni,
+        phone: data.phone,
+        email: data.email,
+        city: data.city,
+        password: data.password
+      });
+      console.log(setSelectedAdmin);
+      dispatch(getByIdAdminsSuccess(data.data));
+    } catch (error) {
+      dispatch(getByIdAdminsError(error));
+    }
+  };
+};
 export const addAdmin = (adminData, setModalText, setIsModalOpen, setSuccess) => {
   return async (dispatch) => {
     try {
