@@ -48,7 +48,7 @@ export const getSubscriptionsById = (id) => {
   };
 };
 
-export const deleteSubscription = (id) => {
+export const deleteSubscription = (id, setAlertText) => {
   return async (dispatch) => {
     try {
       dispatch(deleteSubscriptionsPending());
@@ -61,8 +61,10 @@ export const deleteSubscription = (id) => {
       }
       const { data, message } = responseJson;
       dispatch(deleteSubscriptionsSuccess({ data, message }));
+      setAlertText(responseJson.message);
     } catch (error) {
       dispatch(deleteSubscriptionsError(error.message));
+      setAlertText(error);
     }
   };
 };

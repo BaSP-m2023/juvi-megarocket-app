@@ -11,9 +11,9 @@ import {
   PUT_SUBSCRIPTIONS_SUCCESS,
   PUT_SUBSCRIPTIONS_PENDING,
   PUT_SUBSCRIPTIONS_ERROR,
-  GET_BY_ID_SUBSCRIPTIONS_SUCCESS,
-  GET_BY_ID_SUBSCRIPTIONS_PENDING,
-  GET_BY_ID_SUBSCRIPTIONS_ERROR
+  GET_BY_ID_SUBSCRIPTION_SUCCESS,
+  GET_BY_ID_SUBSCRIPTION_PENDING,
+  GET_BY_ID_SUBSCRIPTION_ERROR
 } from './constants';
 
 const initialSate = {
@@ -99,18 +99,18 @@ export const subscriptionsReducer = (state = initialSate, action) => {
         isLoading: false
       };
 
-    case GET_BY_ID_SUBSCRIPTIONS_PENDING:
+    case GET_BY_ID_SUBSCRIPTION_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case GET_BY_ID_SUBSCRIPTIONS_SUCCESS:
+    case GET_BY_ID_SUBSCRIPTION_SUCCESS:
       return {
         ...state,
         item: action.payload,
         isLoading: false
       };
-    case GET_BY_ID_SUBSCRIPTIONS_ERROR:
+    case GET_BY_ID_SUBSCRIPTION_ERROR:
       return {
         ...state,
         isLoading: false,
