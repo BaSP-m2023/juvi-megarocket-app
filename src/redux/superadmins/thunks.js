@@ -52,7 +52,7 @@ export const deleteSuperAdmins = (_id, setModalText, setShowModal) => {
     }
   };
 };
-export const addSuperAdmins = (formData, setModalText, setShowModal) => {
+export const addSuperAdmins = (formData, setModalText, setShowModal, setShowModalSuccess) => {
   return async (dispatch) => {
     try {
       const { email, password } = formData;
@@ -69,7 +69,7 @@ export const addSuperAdmins = (formData, setModalText, setShowModal) => {
         const newSuperAdmin = responseData.data;
         dispatch(postSuperAdminsSuccess(newSuperAdmin));
         setModalText(responseData.message);
-        setShowModal(true);
+        setShowModalSuccess(true);
       } else {
         throw new Error(responseData.message);
       }
@@ -80,7 +80,13 @@ export const addSuperAdmins = (formData, setModalText, setShowModal) => {
     }
   };
 };
-export const editSuperAdmins = (updatedSuperAdmin, id, setModalText, setShowModal) => {
+export const editSuperAdmins = (
+  updatedSuperAdmin,
+  id,
+  setModalText,
+  setShowModal,
+  setShowModalSuccess
+) => {
   return async (dispatch) => {
     try {
       dispatch(putSuperAdminsPending());
@@ -95,7 +101,7 @@ export const editSuperAdmins = (updatedSuperAdmin, id, setModalText, setShowModa
         const responseData = await response.json();
         const updatedData = responseData.data;
         dispatch(putSuperAdminsSuccess(updatedData, id));
-        setShowModal(true);
+        setShowModalSuccess(true);
         setModalText(responseData.message);
       } else {
         const responseData = await response.json();

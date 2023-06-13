@@ -14,6 +14,7 @@ const FormSuperAdmins = () => {
   const { id } = useParams();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
     email: data.item?.email || '',
@@ -39,15 +40,10 @@ const FormSuperAdmins = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      dispatch(editSuperAdmins(formData, id, setModalText, setShowModal));
+      dispatch(editSuperAdmins(formData, id, setModalText, setShowModal, setShowModalSuccess));
     } else {
-      dispatch(addSuperAdmins(formData, setModalText, setShowModal));
-      console.log(formData);
+      dispatch(addSuperAdmins(formData, setModalText, setShowModal, setShowModalSuccess));
     }
-    setFormData({
-      email: '',
-      password: ''
-    });
   };
   const onChange = (e) => {
     setFormData({
@@ -56,8 +52,12 @@ const FormSuperAdmins = () => {
     });
   };
   const closeModal = () => {
-    setShowModal(!showModal);
-    history.goBack();
+    if (showModal) {
+      setShowModal(!showModal);
+    } else {
+      setShowModalSuccess(false);
+      history.goBack();
+    }
   };
   return (
     <>
@@ -88,6 +88,7 @@ const FormSuperAdmins = () => {
         </form>
       )}
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModalSuccess && <ModalAlert text={modalText} onClick={closeModal} />}
     </>
   );
 };
