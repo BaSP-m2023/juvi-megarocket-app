@@ -1,6 +1,8 @@
 import { combineReducers, legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
+import { SuperAdminsReducer } from './superadmins/reducer';
+
 import trainersReducer from './trainers/reducer';
 import { adminsReducer } from './admins/reducer';
 import { activitiesReducer } from './activities/reducer';
@@ -12,7 +14,8 @@ const rootReducer = combineReducers({
   admins: adminsReducer,
   members: membersReducer,
   classes: classesReducer,
-  activities: activitiesReducer
+  activities: activitiesReducer,
+  superAdmins: SuperAdminsReducer
 });
 
 const configureStore = () => {
