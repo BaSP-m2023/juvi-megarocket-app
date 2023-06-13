@@ -48,11 +48,11 @@ export const getSubscriptionsById = (id) => {
   };
 };
 
-export const deleteSubscription = (id, setAlertText) => {
+export const deleteSubscription = (id, setAlertText, setShowAlert) => {
   return async (dispatch) => {
     try {
       dispatch(deleteSubscriptionsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'DELETE'
       });
       const responseJson = await response.json();
@@ -61,10 +61,12 @@ export const deleteSubscription = (id, setAlertText) => {
       }
       const { data, message } = responseJson;
       dispatch(deleteSubscriptionsSuccess({ data, message }));
+      setShowAlert(true);
       setAlertText(responseJson.message);
     } catch (error) {
       dispatch(deleteSubscriptionsError(error.message));
       setAlertText(error);
+      setShowAlert(true);
     }
   };
 };

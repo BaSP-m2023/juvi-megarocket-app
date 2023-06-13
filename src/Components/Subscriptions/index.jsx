@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import styles from './subscriptions.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
@@ -18,8 +17,7 @@ function Subscriptions() {
   }, []);
 
   const handleDelete = (id) => {
-    dispatch(deleteSubscription(id, setAlertText));
-    setAlertText('');
+    dispatch(deleteSubscription(id, setAlertText, setshowAlert));
   };
 
   const showAlertHandler = () => {
@@ -27,16 +25,19 @@ function Subscriptions() {
   };
 
   return (
-    <section className={styles.container}>
-      <Link to="/subscriptions/form">
-        <Button type="add" resource="Subscription"></Button>
-      </Link>
-      {isLoading ? (
-        <h2>Loading...</h2>
-      ) : (
-        <SharedTable data={list} editLink={'/trainers/form/'} handleDelete={handleDelete} />
-      )}
-    </section>
+    <>
+      <section className={styles.container}>
+        <Link to="/subscriptions/form">
+          <Button type="add" resource="Subscription"></Button>
+        </Link>
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <SharedTable data={list} editLink={'/subscriptions/form/'} handleDelete={handleDelete} />
+        )}
+      </section>
+      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
+    </>
   );
 }
 
