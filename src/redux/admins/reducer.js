@@ -1,33 +1,117 @@
-import { FETCH_ADMINS, ADD_ADMIN, REMOVE_ADMIN, EDIT_ADMIN } from './constants';
+import {
+  GET_ADMIN_SUCCESS,
+  GET_ADMIN_PENDING,
+  GET_ADMIN_ERROR,
+  ADD_ADMIN_SUCCESS,
+  ADD_ADMIN_PENDING,
+  ADD_ADMIN_ERROR,
+  GET_BY_ID_ADMIN_SUCCESS,
+  GET_BY_ID_ADMIN_PENDING,
+  GET_BY_ID_ADMIN_ERROR,
+  DEL_ADMIN_SUCCESS,
+  DEL_ADMIN_PENDING,
+  DEL_ADMIN_ERROR,
+  PUT_ADMIN_SUCCESS,
+  PUT_ADMIN_PENDING,
+  PUT_ADMIN_ERROR
+} from './constants';
 
 const initialState = {
-  admins: []
+  list: [],
+  item: {},
+  isLoading: false,
+  error: ''
 };
 
 export const adminsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_ADMINS:
+    case GET_ADMIN_PENDING:
       return {
         ...state,
-        admins: action.payload
+        isLoading: true
       };
-    case ADD_ADMIN:
+    case GET_ADMIN_SUCCESS:
       return {
         ...state,
-        admins: [...state.admins, action.payload]
+        list: action.payload,
+        isLoading: false
       };
-    case REMOVE_ADMIN:
+    case GET_ADMIN_ERROR:
       return {
         ...state,
-        admins: state.admins.filter((admin) => admin.id !== action.payload)
+        error: action.payload,
+        isLoading: false
       };
-    case EDIT_ADMIN:
+    case GET_BY_ID_ADMIN_PENDING:
       return {
         ...state,
-        admins: state.admins.map((admin) =>
-          admin.id === action.payload.id ? action.payload : admin
-        )
+        isLoading: false
       };
+    case GET_BY_ID_ADMIN_SUCCESS:
+      return {
+        ...state,
+        item: action.payload,
+        isLoading: false
+      };
+    case GET_BY_ID_ADMIN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case ADD_ADMIN_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ADD_ADMIN_SUCCESS:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case ADD_ADMIN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case PUT_ADMIN_PENDING:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case PUT_ADMIN_SUCCESS:
+      return {
+        ...state,
+        admins: state.list.map((admin) => (admin.id === action.payload.id ? action.payload : admin))
+      };
+    case PUT_ADMIN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case DEL_ADMIN_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case DEL_ADMIN_SUCCESS:
+      return {
+        ...state,
+        error: action.payload,
+        list: state.list.filter((admin) => admin._id !== action.payload),
+        isLoading: false
+      };
+    case DEL_ADMIN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
     default:
       return state;
   }
