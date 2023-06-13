@@ -2,14 +2,18 @@ import styles from './subscriptions.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { SharedTable, ModalAlert, Button } from '../Shared';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Subscriptions() {
   const [showAlert, setshowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
   const [subscriptions, setSubscriptions] = useState([]);
 
+  const { list, isLoading } = useSelector((state) => state.activities);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    getData();
+    dispatch(getData());
   }, []);
 
   const handleDelete = async (id) => {
