@@ -32,18 +32,31 @@ export const getSubscriptions = () => {
   };
 };
 
-export const getSubscriptionsById = (id) => {
+export const getSubscriptionsById = (
+  id,
+  setSelectedSubscription,
+  setAlertText,
+  showAlertHandler
+) => {
   return async (dispatch) => {
     try {
       dispatch(getByIdSubscriptionPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`);
       const responseJson = await response.json();
+      const data = responseJson.data;
       if (responseJson.error) {
         throw new Error(responseJson.message);
       }
+      setSelectedSubscription({
+        classes: data.classes._id,
+        members: data.members[0],
+        date: data.date.slice(0, 16)
+      });
       dispatch(getByIdSubscriptionSuccess(responseJson.data));
     } catch (error) {
       dispatch(getByIdSubscriptionError(error));
+      setAlertText(error);
+      showAlertHandler();
     }
   };
 };
@@ -71,30 +84,60 @@ export const deleteSubscription = (id, setAlertText, setShowAlert) => {
   };
 };
 
-export const addSubscription = (formData) => {
+export const addSubscription = (
+  formData,
+  setAlertText,
+  showAlertHandler,
+  setSuccess,
+  getClasses
+) => {
   return async (dispatch) => {
+    dispatch(postSubscriptionsPending());
+    const requestData = {
+      classes: formData.classes,
+      members: [formData.members],
+      date: formData.date
+    };
     try {
-      dispatch(postSubscriptionsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(requestData)
       });
-      const responseJson = await response.json();
-      if (responseJson.error) {
-        throw new Error(responseJson.error);
+      const responseData = await response.json();
+      if (responseData.error) {
+        setAlertText(responseData.message);
+      } else {
+        dispatch(postSubscriptionsSuccess(responseData.data));
+        setAlertText(responseData.message);
+        showAlertHandler();
+        setSuccess(true);
+        getClasses();
       }
-      dispatch(postSubscriptionsSuccess(responseJson.data));
     } catch (error) {
       dispatch(postSubscriptionsError(error));
+      setAlertText(error);
+      showAlertHandler();
     }
   };
 };
 
-export const editSubscription = (id, formData) => {
+export const editSubscription = (
+  id,
+  formData,
+  setAlertText,
+  showAlertHandler,
+  setSuccess,
+  getClasses
+) => {
   return async (dispatch) => {
+    const requestData = {
+      classes: formData.classes,
+      members: [formData.members],
+      date: formData.date
+    };
     try {
       dispatch(putSubscriptionsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
@@ -102,16 +145,22 @@ export const editSubscription = (id, formData) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(requestData)
       });
-      const responseJson = await response.json();
-      console.log(formData);
-      if (responseJson.error) {
-        throw new Error(responseJson.message);
+      const responseData = await response.json();
+      if (response.ok) {
+        dispatch(putSubscriptionsSuccess(responseData.data));
+        setAlertText(responseData.message);
+        showAlertHandler();
+        setSuccess(true);
+        getClasses();
+      } else {
+        setAlertText(responseData.message);
       }
-      dispatch(putSubscriptionsSuccess(responseJson.data));
     } catch (error) {
       dispatch(putSubscriptionsError(error));
+      setAlertText(error.message);
+      showAlertHandler();
     }
   };
 };

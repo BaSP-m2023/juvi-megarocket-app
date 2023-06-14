@@ -3,7 +3,7 @@ import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
 import { ModalAlert, Button, ModalConfirm } from '../../Shared';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   addSubscription,
   editSubscription,
@@ -18,22 +18,24 @@ const SubForm = () => {
   const [filteredClassesData, setFilteredClasses] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [success, setSuccess] = useState('');
   const history = useHistory();
   const [selectedSubscription, setSelectedSubscription] = useState({
     classes: '',
-    members: [],
+    members: '',
     date: ''
   });
 
   const [formData, setFormData] = useState({
     classes: '',
-    members: [],
+    members: '',
     date: ''
   });
   const [showConfirm, setShowConfirm] = useState(false);
 
   const dispatch = useDispatch();
-  const subscription = useSelector((state) => state.subscriptions);
+  // const subscription = useSelector((state) => state.subscriptions);
 
   useEffect(() => {
     getMembers();
@@ -42,20 +44,9 @@ const SubForm = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getSubscriptionsById(id));
+      dispatch(getSubscriptionsById(id, setSelectedSubscription, setAlertText, showAlertHandler));
     }
-  }, [id, dispatch]);
-
-  useEffect(() => {
-    console.log(subscription.item);
-    if (subscription.item) {
-      setSelectedSubscription({
-        classes: subscription.item.classes?._id || '',
-        members: subscription.item.members || '',
-        date: subscription.item.date?.slice(0, 16)
-      });
-    }
-  }, [subscription.item]);
+  }, [id]);
 
   useEffect(() => {
     setFormData({
@@ -70,7 +61,7 @@ const SubForm = () => {
   }, [selectedSubscription]);
 
   useEffect(() => {
-    if (window.location.pathname === '/subscriptions') {
+    if (window.location.pathname === '/subscription') {
       setShowConfirm(true);
     }
   }, [window.location.pathname]);
@@ -112,9 +103,13 @@ const SubForm = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!id) {
-      await dispatch(addSubscription(id, formData));
+      await dispatch(
+        addSubscription(formData, setAlertText, showAlertHandler, setSuccess, getClasses)
+      );
     } else {
-      await dispatch(editSubscription(id, formData));
+      await dispatch(
+        editSubscription(id, formData, setAlertText, showAlertHandler, setSuccess, getClasses)
+      );
     }
   };
 
@@ -130,7 +125,7 @@ const SubForm = () => {
   const handleConfirmClose = () => {
     setShowConfirm(false);
     setShowAlert(false);
-    if (subscription && subscription.success) {
+    if (success) {
       history.push('/subscriptions');
     }
   };
