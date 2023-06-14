@@ -70,7 +70,9 @@ const FormClasses = () => {
       <form className={styles.formClasses}>
         <div className={styles.formContainer}>
           <div className={styles.inputClass}>
-            <label htmlFor="activity">Activity</label>
+            <label className={styles.labelClasses} htmlFor="activity">
+              Activity
+            </label>
             <select
               id="activity"
               name="activity"
@@ -86,7 +88,9 @@ const FormClasses = () => {
             </select>
           </div>
           <div className={styles.inputClass}>
-            <label htmlFor="trainer">Trainer</label>
+            <label className={styles.labelClasses} htmlFor="trainer">
+              Trainer
+            </label>
             <select id="trainer" name="trainer" value={formData.trainer} onChange={onChangeInput}>
               <option value="">Choose a Trainer</option>
               {trainers.list.map((trainer) => (
@@ -127,7 +131,7 @@ const FormClasses = () => {
         <Button type="confirm" onClick={onSubmit} buttonText="Confirm" />
         <Button type="cancel" onClick={onSubmitCancel} buttonText="Cancel" />
       </form>
-      {showModal && <ModalAlert text={modalText} onClose={closeModal} />}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </>
   );
 };
