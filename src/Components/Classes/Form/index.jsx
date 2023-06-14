@@ -65,18 +65,12 @@ const FormClasses = () => {
     }
   };
 
-  // console.log(activities.list.map((activity) => activity.name));
-  // console.log(trainers.list.map((train) => train.firstName));
-  // console.log(formData);
-  console.log(activities);
-  console.log(trainers);
-
   return (
     <>
       <form className={styles.formClasses}>
         <div className={styles.formContainer}>
           <div className={styles.inputClass}>
-            <label htmlFor="activity">ID Activity</label>
+            <label htmlFor="activity">Activity</label>
             <select
               id="activity"
               name="activity"
@@ -92,12 +86,12 @@ const FormClasses = () => {
             </select>
           </div>
           <div className={styles.inputClass}>
-            <label htmlFor="trainer">ID Trainer</label>
+            <label htmlFor="trainer">Trainer</label>
             <select id="trainer" name="trainer" value={formData.trainer} onChange={onChangeInput}>
               <option value="">Choose a Trainer</option>
               {trainers.list.map((trainer) => (
                 <option key={trainer._id} value={trainer._id}>
-                  {trainer._id} = {trainer.firstName} {trainer.lastName}
+                  {trainer.firstName} {trainer.lastName}
                 </option>
               ))}
             </select>
