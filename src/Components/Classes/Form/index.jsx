@@ -74,6 +74,7 @@ const FormClasses = () => {
               Activity
             </label>
             <select
+              className={styles.selectClasses}
               id="activity"
               name="activity"
               value={formData.activity}
@@ -91,7 +92,13 @@ const FormClasses = () => {
             <label className={styles.labelClasses} htmlFor="trainer">
               Trainer
             </label>
-            <select id="trainer" name="trainer" value={formData.trainer} onChange={onChangeInput}>
+            <select
+              className={styles.selectClasses}
+              id="trainer"
+              name="trainer"
+              value={formData.trainer}
+              onChange={onChangeInput}
+            >
               <option value="">Choose a Trainer</option>
               {trainers.list.map((trainer) => (
                 <option key={trainer._id} value={trainer._id}>

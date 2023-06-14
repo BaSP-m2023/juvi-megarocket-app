@@ -1,5 +1,27 @@
 .formClasses {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.labelClasses {
+  padding-bottom: 5px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #0F232E;
+  align-self: flex-start;
+}
+
+.selectClasses {
+  width: 15vw;
+  padding: 5px;
+  border: 1px solid #8f9294;
+  border-radius: 4px;
+}
+
+.inputClass {
+  display: flex;
   flex-direction: column;
 }
