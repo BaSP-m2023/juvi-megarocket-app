@@ -5,7 +5,9 @@ import Button from '../../Shared/Button';
 import { Input } from '../../Shared';
 import ModalAlert from '../../Shared/ModalAlert';
 import { postClass, getByIdClasses, putClass, deleteClass } from '../../../redux/classes/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTrainers } from '../../../redux/trainers/thunks';
+import { getActivities } from '../../../redux/activities/thunks';
 
 const FormClasses = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,13 @@ const FormClasses = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
   const [isTrue, setIsTrue] = useState(false);
+  const trainers = useSelector((state) => state.trainers);
+  const activities = useSelector((state) => state.activities);
+
+  useEffect(() => {
+    dispatch(getTrainers());
+    dispatch(getActivities());
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -56,27 +65,42 @@ const FormClasses = () => {
     }
   };
 
+  // console.log(activities.list.map((activity) => activity.name));
+  // console.log(trainers.list.map((train) => train.firstName));
+  // console.log(formData);
+  console.log(activities);
+  console.log(trainers);
+
   return (
     <>
       <form className={styles.formClasses}>
         <div className={styles.formContainer}>
           <div className={styles.inputClass}>
-            <Input
-              labelText="ID Activity"
-              onChange={onChangeInput}
-              type="text"
+            <label htmlFor="activity">ID Activity</label>
+            <select
+              id="activity"
               name="activity"
               value={formData.activity}
-            />
+              onChange={onChangeInput}
+            >
+              <option value="">Choose an Activity</option>
+              {activities.list.map((activity) => (
+                <option key={activity._id} value={activity._id}>
+                  {activity.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className={styles.inputClass}>
-            <Input
-              labelText="ID Trainer"
-              onChange={onChangeInput}
-              type="text"
-              name="trainer"
-              value={formData.trainer}
-            />
+            <label htmlFor="trainer">ID Trainer</label>
+            <select id="trainer" name="trainer" value={formData.trainer} onChange={onChangeInput}>
+              <option value="">Choose a Trainer</option>
+              {trainers.list.map((trainer) => (
+                <option key={trainer._id} value={trainer._id}>
+                  {trainer._id} = {trainer.firstName} {trainer.lastName}
+                </option>
+              ))}
+            </select>
           </div>
           <div className={styles.inputClass}>
             <Input
@@ -106,10 +130,10 @@ const FormClasses = () => {
             />
           </div>
         </div>
-        <Button type="confirm" onClick={onSubmit} />
-        <Button type="cancel" onClick={onSubmitCancel} />
+        <Button type="confirm" onClick={onSubmit} buttonText="Confirm" />
+        <Button type="cancel" onClick={onSubmitCancel} buttonText="Cancel" />
       </form>
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModal && <ModalAlert text={modalText} onClose={closeModal} />}
     </>
   );
 };
