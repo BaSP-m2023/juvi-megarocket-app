@@ -22,9 +22,9 @@ const SuperAdminsPage = () => {
     <>
       <section className={styles.container}>
         <div className={styles.titleSuperAdmins}>
-          <h2>SuperAdmins</h2>
+          <h2>Super Admins</h2>
           <Link to="/super-admins/form">
-            <Button type="add" resource="superAdmin" />
+            <Button type="add" resource="Super Admin" />
           </Link>
         </div>
         {isLoading ? (
