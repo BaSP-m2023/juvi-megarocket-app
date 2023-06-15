@@ -32,12 +32,7 @@ export const getSubscriptions = () => {
   };
 };
 
-export const getSubscriptionsById = (
-  id,
-  setSelectedSubscription,
-  setAlertText,
-  showAlertHandler
-) => {
+export const getSubscriptionById = (id, setSelectedSubscription) => {
   return async (dispatch) => {
     try {
       dispatch(getByIdSubscriptionPending());
@@ -47,16 +42,14 @@ export const getSubscriptionsById = (
       if (responseJson.error) {
         throw new Error(responseJson.message);
       }
+      dispatch(getByIdSubscriptionSuccess(responseJson.data));
       setSelectedSubscription({
         classes: data.classes._id,
         members: data.members[0],
         date: data.date.slice(0, 16)
       });
-      dispatch(getByIdSubscriptionSuccess(responseJson.data));
     } catch (error) {
       dispatch(getByIdSubscriptionError(error));
-      setAlertText(error);
-      showAlertHandler();
     }
   };
 };

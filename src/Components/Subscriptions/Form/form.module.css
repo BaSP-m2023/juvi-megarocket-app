@@ -1,5 +1,4 @@
-.form, .form2 {
-  background-color: #0f232e;
+.form {
   color: #f9a414;
   font-size: 15px;
   padding: 20px;
@@ -15,24 +14,22 @@
   justify-content: space-between;
   align-items: start;
 }
-.inputContainer, .form2 {
+.inputContainer {
 margin: 5px;
 padding: 5px;
 }
 
-.input, .form2 {
-  margin-left: 15px;
+.label {
+  padding: 2px 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #0F232E;
 }
 
-.button {
-  background-color: #f9a414;
-  margin-left: 240px;
-}
-.buttons{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.buttonClose {
-  background-color: #e33613;
+.form select, .form input {
+  width: 15vw;
+  padding: 5px;
+  border: 1px solid #8f9294;
+  border-radius: 4px;
 }
