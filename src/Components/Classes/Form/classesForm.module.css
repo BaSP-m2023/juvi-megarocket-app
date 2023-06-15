@@ -1,6 +1,26 @@
 .formClasses {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   margin: 20px;
+}
+
+.labelClasses {
+  padding-bottom: 5px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #0f232e;
+  align-self: flex-start;
+}
+
+.selectClasses {
+  width: 16vw;
+  padding: 5px;
+}
+
+.inputClass {
+  display: flex;
+  flex-direction: column;
 }
