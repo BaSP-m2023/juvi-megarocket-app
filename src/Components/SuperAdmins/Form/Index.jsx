@@ -8,6 +8,9 @@ import {
   getByIdSuperAdmins
 } from '../../../redux/superadmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 const FormSuperAdmins = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.superAdmins);
@@ -20,6 +23,7 @@ const FormSuperAdmins = () => {
     email: data.item?.email || '',
     password: data.item?.password || ''
   });
+  const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     if (id) {
       dispatch(getByIdSuperAdmins(id));
@@ -59,6 +63,10 @@ const FormSuperAdmins = () => {
       history.goBack();
     }
   };
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       {data.isLoading ? (
@@ -73,18 +81,23 @@ const FormSuperAdmins = () => {
               value={formData.email}
               onChange={onChange}
             />
-            <Input
-              labelText="Password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={onChange}
-            />
+            <div className={styles.password}>
+              <Input
+                labelText="Password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={onChange}
+              />
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className={styles.showPasswordIcon}
+                onClick={togglePassword}
+              />
+            </div>
           </div>
-          <div className={styles.buttonContainer}>
-            <Button type="confirm"></Button>
-            <Button type="cancel" onClick={closeModal}></Button>
-          </div>
+          <Button type="confirm"></Button>
+          <Button type="cancel" onClick={closeModal}></Button>
         </form>
       )}
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}

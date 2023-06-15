@@ -1,5 +1,24 @@
 .container {
+  flex: 1;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+.container a {
+  text-decoration: none;
+}
+.titleSubscriptions {
+  display: flex;
+  width: 78vw;
+  justify-content: space-between;
+  padding-bottom: 36px;
+  align-items: center;
+}
+.titleSubscriptions button {
+  margin-left: auto;
+}
+.titleSubscriptions h2 {
+  align-self: center;
 }

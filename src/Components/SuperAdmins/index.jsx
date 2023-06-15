@@ -21,10 +21,12 @@ const SuperAdminsPage = () => {
   return (
     <>
       <section className={styles.container}>
-        <h2 className={styles.titleAdmins}>SuperAdmins</h2>
-        <Link to="/super-admins/form">
-          <Button type="add" resource="superAdmin" />
-        </Link>
+        <div className={styles.titleSuperAdmins}>
+          <h2>SuperAdmins</h2>
+          <Link to="/super-admins/form">
+            <Button type="add" resource="superAdmin" />
+          </Link>
+        </div>
         {isLoading ? (
           <div>Is loading</div>
         ) : (

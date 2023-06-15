@@ -3,6 +3,7 @@ import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
 import { ModalAlert, Button, ModalConfirm } from '../../Shared';
 import { useHistory } from 'react-router-dom';
+import { Input } from '../../Shared';
 
 const SubForm = () => {
   const { id } = useParams();
@@ -188,7 +189,6 @@ const SubForm = () => {
 
   return (
     <div>
-      {showAlert && <ModalAlert text={alertText} onClick={handleConfirmClose} />}
       <form className={style.form} onSubmit={onSubmit}>
         <div>
           <div className={style.forms}>
@@ -219,8 +219,8 @@ const SubForm = () => {
           </div>
           {id ? (
             <div className={style.forms}>
-              <label>Date</label>
-              <input
+              <Input
+                labelText="Date"
                 name="date"
                 type="datetime-local"
                 value={formData.date}
@@ -229,8 +229,8 @@ const SubForm = () => {
             </div>
           ) : (
             <div className={style.forms}>
-              <label>Date</label>
-              <input
+              <Input
+                labelText="Date"
                 name="date"
                 type="datetime-local"
                 value={formData.date}
@@ -261,11 +261,10 @@ const SubForm = () => {
             )}
           </div>
         </div>
-        <div className={style.buttons}>
-          <Button className={style.button} type="submit" />
-          <Button className={style.buttonClose} onClick={handleFormClose} type="cancel" />
-        </div>
+        <Button className={style.button} type="confirm" />
+        <Button className={style.buttonClose} onClick={handleFormClose} type="cancel" />
       </form>
+      {showAlert && <ModalAlert text={alertText} onClick={handleConfirmClose} />}
       {showConfirm && (
         <ModalConfirm text="¿Desea confirmar la acción?" onClose={handleConfirmClose} />
       )}

@@ -1,7 +1,4 @@
 .table {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Roboto';
   font-style: normal;
   color: #0f232e;
   width: 80vw;
@@ -11,7 +8,7 @@
   background-color: rgba(55, 56, 103, 0.1);
 }
 .table th {
-  width: 8vw;
+  width: auto;
   text-transform: capitalize;
   font-style: normal;
   font-weight: 600;
@@ -34,7 +31,7 @@
   padding: 0;
 }
 .table td {
-  width: 8vw;
+  width: auto;
   padding: 10px;
   font-style: normal;
   font-weight: 400;

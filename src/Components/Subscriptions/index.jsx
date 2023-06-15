@@ -52,15 +52,18 @@ function Subscriptions() {
 
   return (
     <section className={styles.container}>
-      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
-      <Link to="/subscriptions/form">
-        <Button type="add" resource="Subscription"></Button>
-      </Link>
+      <div className={styles.titleSubscriptions}>
+        <h2>Subscriptions</h2>
+        <Link to="/subscriptions/form">
+          <Button type="add" resource="Subscription"></Button>
+        </Link>
+      </div>
       <SharedTable
         data={subscriptions}
         editLink={'/subscriptions/form/'}
         handleDelete={handleDelete}
       />
+      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
     </section>
   );
 }
