@@ -24,10 +24,12 @@ function Trainers() {
 
   return (
     <section className={styles.container}>
-      <h1 className={styles.title}>Trainers</h1>
-      <Link to="/trainers/form" className={styles.link}>
-        <Button type="add" resource="Trainer" />
-      </Link>
+      <div className={styles.titleTrainers}>
+        <h2>Trainers</h2>
+        <Link to="/trainers/form" className={styles.link}>
+          <Button type="add" resource="Trainer" />
+        </Link>
+      </div>
       {isLoading ? (
         <h2>Loading...</h2>
       ) : (

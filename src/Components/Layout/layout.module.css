@@ -4,3 +4,16 @@
   justify-content: space-between;
   min-height: 100vh;
 }
+.mainContainer {
+  display: flex;
+}
+
+@media screen and (min-width: 1024px) {
+  .mainContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  .homeContainer {
+    width: 84vw;
+  }
+}

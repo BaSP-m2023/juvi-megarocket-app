@@ -1,18 +1,19 @@
 .form {
   display: flex;
   flex-direction: column;
-  align-self: center;
+  align-items: center;
+  margin: 20px;
 }
 
-.formActivities{
+.formActivities {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px;
   color: white;
 }
 
-.subContainer {
+.divContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;

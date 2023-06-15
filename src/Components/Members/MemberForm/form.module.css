@@ -7,17 +7,28 @@
   background-color: #fff;
 }
 
-.formContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  width: 40%;
-}
-
 .fieldset {
   display: flex;
   flex-direction: column;
   width: 40%;
   border: none;
+}
+.fieldset label {
+  padding: 2px 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #0f232e;
+}
+.fieldset select {
+  width: 16vw;
+  padding: 5px;
+}
+.password {
+  display: flex;
+  align-items: center;
+}
+.showPasswordIcon {
+  padding-left: 10px;
+  padding-top: 30px;
 }

@@ -55,7 +55,7 @@ const Form = () => {
         <div>is Loading</div>
       ) : (
         <form className={styles.form} onSubmit={onSubmit}>
-          <div className={styles.subContainer}>
+          <div className={styles.divContainer}>
             <Input
               labelText="Name"
               name="name"
@@ -71,10 +71,12 @@ const Form = () => {
               onChange={onChange}
             />
           </div>
-          <div className={styles.buttonContainer}>
-            <Button type="confirm"></Button>
-            <Button type="cancel" onClick={() => history.push('/activities')}></Button>
-          </div>
+          <Button className={styles.addButton} type="confirm"></Button>
+          <Button
+            className={styles.addButton}
+            type="cancel"
+            onClick={() => history.push('/activities')}
+          ></Button>
         </form>
       )}
 
