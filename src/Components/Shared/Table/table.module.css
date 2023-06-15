@@ -1,14 +1,17 @@
 .table {
+  display: flex;
+  flex-direction: column;
   font-family: 'Roboto';
   font-style: normal;
   color: #0f232e;
-  width: 65vw;
+  width: 80vw;
   border-collapse: collapse;
 }
 .table thead {
   background-color: rgba(55, 56, 103, 0.1);
 }
 .table th {
+  width: 8vw;
   text-transform: capitalize;
   font-style: normal;
   font-weight: 600;
@@ -17,17 +20,35 @@
   text-align: start;
   padding: 10px;
 }
-
+.edit div {
+  margin: 0;
+}
+.edit {
+  padding: 0;
+}
+.delete {
+  padding: 0;
+}
+.delete div {
+  margin: 0;
+  padding: 0;
+}
 .table td {
+  width: 8vw;
+  padding: 10px;
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 100%;
-  padding: 10px;
+  word-wrap: break-word;
+}
+.table tr {
+  width: 80vw;
 }
 .table tr:nth-child(even) {
   background-color: rgba(249, 164, 20, 0.2);
 }
-.table   td:last-child {
-  text-align: right;
+.table td:last-child {
+  text-align: left;
+  width: 0vh;
 }
