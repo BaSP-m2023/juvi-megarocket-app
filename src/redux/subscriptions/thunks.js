@@ -121,9 +121,10 @@ export const editSubscription = (
   id,
   formData,
   setAlertText,
-  showAlertHandler,
-  setSuccess,
-  getClasses
+  setShowAlert,
+  getClasses,
+  memberId,
+  classId
 ) => {
   return async (dispatch) => {
     const requestData = {
@@ -141,11 +142,16 @@ export const editSubscription = (
         body: JSON.stringify(requestData)
       });
       const responseData = await response.json();
+      const data = responseData.data;
+      console.log(data);
       if (response.ok) {
-        dispatch(putSubscriptionsSuccess(responseData.data));
+        if (data.members === memberId && data.classes === classId) {
+          setAlertText('No change has been made');
+          setShowAlert(true);
+        }
+        dispatch(putSubscriptionsSuccess(data));
         setAlertText(responseData.message);
-        showAlertHandler();
-        setSuccess(true);
+        setShowAlert(true);
         getClasses();
       } else {
         setAlertText(responseData.message);
@@ -153,7 +159,7 @@ export const editSubscription = (
     } catch (error) {
       dispatch(putSubscriptionsError(error));
       setAlertText(error.message);
-      showAlertHandler();
+      setShowAlert(true);
     }
   };
 };

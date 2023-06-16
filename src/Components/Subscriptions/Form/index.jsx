@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
@@ -21,12 +22,12 @@ const SubForm = () => {
   const [success, setSuccess] = useState('');
   const [selectedSubscription, setSelectedSubscription] = useState({
     classes: '',
-    members: [],
+    members: '',
     date: ''
   });
   const [formData, setFormData] = useState({
     classes: '',
-    members: [],
+    members: '',
     date: ''
   });
   const history = useHistory();
@@ -79,6 +80,7 @@ const SubForm = () => {
     setFilteredMembers(
       membersData.filter((member) => member._id !== selectedSubscription.members._id)
     );
+    console.log(filteredMembersData);
   }, [selectedSubscription]);
 
   const onChange = (e) => {
@@ -91,11 +93,9 @@ const SubForm = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!id) {
-      dispatch(addSubscription(formData, setAlertText, showAlertHandler, setSuccess, getClasses));
+      dispatch(addSubscription(formData, setAlertText, showAlertHandler, getClasses));
     } else {
-      dispatch(
-        editSubscription(id, formData, setAlertText, showAlertHandler, setSuccess, getClasses)
-      );
+      dispatch(editSubscription(id, formData, setAlertText, showAlertHandler, getClasses));
     }
   };
 
@@ -120,7 +120,7 @@ const SubForm = () => {
       <form className={style.form} onSubmit={onSubmit}>
         <div>
           <div className={style.forms}>
-            <label className={style.label}>ID member</label>
+            <label className={style.label}>Member ID</label>
             {id ? (
               <select name="members" onChange={onChange}>
                 <option value={selectedSubscription.members._id}>
@@ -128,7 +128,7 @@ const SubForm = () => {
                     ' ' +
                     selectedSubscription.members.lastName}
                 </option>
-                {filteredMembersData.map((member) => (
+                {membersData.map((member) => (
                   <option key={member._id} value={member._id}>
                     {member.firstName} {member.lastName}
                   </option>
@@ -136,7 +136,7 @@ const SubForm = () => {
               </select>
             ) : (
               <select name="members" onChange={onChange}>
-                <option value={null}>Seleccione un Miembro</option>
+                <option value={null}>Select a member</option>
                 {membersData.map((member) => (
                   <option key={member._id} value={member._id}>
                     {member.firstName} {member.lastName}
@@ -150,11 +150,13 @@ const SubForm = () => {
             <input name="date" type="datetime-local" value={formData.date} onChange={onChange} />
           </div>
           <div className={style.forms}>
-            <label className={style.label}>ID class</label>
+            <label className={style.label}>Class ID</label>
             {id ? (
               <select value={selectedSubscription.classes} onChange={onChange}>
-                <option value={selectedSubscription.classes}>{selectedSubscription.classes}</option>
-                {filteredClassesData.map((classes) => (
+                <option value={selectedSubscription.classes._id}>
+                  {selectedSubscription.classes}
+                </option>
+                {classesData.map((classes) => (
                   <option key={classes._id} value={classes._id}>
                     {classes._id}
                   </option>
@@ -177,7 +179,7 @@ const SubForm = () => {
           <Button onClick={handleFormClose} type="cancel" />
         </div>
       </form>
-      {showAlert && <ModalAlert text={alertText} onClick={handleConfirmClose} />}
+      {showAlert && <ModalAlert text={alertText} onClick={handleFormClose} />}
     </div>
   );
 };
