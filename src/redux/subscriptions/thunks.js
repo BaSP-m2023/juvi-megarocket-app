@@ -77,13 +77,7 @@ export const deleteSubscription = (id, setAlertText, setShowAlert) => {
   };
 };
 
-export const addSubscription = (
-  formData,
-  setAlertText,
-  showAlertHandler,
-  setSuccess,
-  getClasses
-) => {
+export const addSubscription = (formData, setAlertText, setShowAlert) => {
   return async (dispatch) => {
     dispatch(postSubscriptionsPending());
     const requestData = {
@@ -100,36 +94,26 @@ export const addSubscription = (
         body: JSON.stringify(requestData)
       });
       const responseData = await response.json();
-      if (responseData.error) {
-        setAlertText(responseData.message);
-      } else {
+      if (response.ok) {
         dispatch(postSubscriptionsSuccess(responseData.data));
         setAlertText(responseData.message);
-        showAlertHandler();
-        setSuccess(true);
-        getClasses();
+        setShowAlert(true);
+      } else {
+        throw new Error(responseData.message);
       }
     } catch (error) {
       dispatch(postSubscriptionsError(error));
-      setAlertText(error);
-      showAlertHandler();
+      setAlertText(error.message);
+      setShowAlert(true);
     }
   };
 };
 
-export const editSubscription = (
-  id,
-  formData,
-  setAlertText,
-  setShowAlert,
-  getClasses,
-  memberId,
-  classId
-) => {
+export const editSubscription = (id, formData, setAlertText, setShowAlert) => {
   return async (dispatch) => {
     const requestData = {
       classes: formData.classes,
-      members: [formData.members],
+      members: [formData.members._id],
       date: formData.date
     };
     try {
@@ -143,18 +127,12 @@ export const editSubscription = (
       });
       const responseData = await response.json();
       const data = responseData.data;
-      console.log(data);
       if (response.ok) {
-        if (data.members === memberId && data.classes === classId) {
-          setAlertText('No change has been made');
-          setShowAlert(true);
-        }
         dispatch(putSubscriptionsSuccess(data));
         setAlertText(responseData.message);
         setShowAlert(true);
-        getClasses();
       } else {
-        setAlertText(responseData.message);
+        throw new Error(responseData.message);
       }
     } catch (error) {
       dispatch(putSubscriptionsError(error));

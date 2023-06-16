@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
@@ -19,7 +18,6 @@ const SubForm = () => {
   const [filteredClassesData, setFilteredClasses] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
-  const [success, setSuccess] = useState('');
   const [selectedSubscription, setSelectedSubscription] = useState({
     classes: '',
     members: '',
@@ -48,7 +46,7 @@ const SubForm = () => {
       })
       .catch((error) => {
         setAlertText(error);
-        showAlertHandler();
+        setShowAlert(true);
       });
   };
 
@@ -61,7 +59,7 @@ const SubForm = () => {
       })
       .catch((error) => {
         setAlertText(error);
-        showAlertHandler();
+        setShowAlert(true);
       });
   };
 
@@ -80,7 +78,6 @@ const SubForm = () => {
     setFilteredMembers(
       membersData.filter((member) => member._id !== selectedSubscription.members._id)
     );
-    console.log(filteredMembersData);
   }, [selectedSubscription]);
 
   const onChange = (e) => {
@@ -93,14 +90,10 @@ const SubForm = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!id) {
-      dispatch(addSubscription(formData, setAlertText, showAlertHandler, getClasses));
+      dispatch(addSubscription(formData, setAlertText, setShowAlert));
     } else {
-      dispatch(editSubscription(id, formData, setAlertText, showAlertHandler, getClasses));
+      dispatch(editSubscription(id, formData, setAlertText, setShowAlert));
     }
-  };
-
-  const showAlertHandler = () => {
-    setShowAlert(true);
   };
 
   const handleFormClose = (e) => {
@@ -108,79 +101,74 @@ const SubForm = () => {
     history.push('/subscriptions');
   };
 
-  const handleConfirmClose = () => {
-    setShowAlert(false);
-    if (success) {
-      history.push('/subscriptions');
-    }
-  };
-
   return (
-    <div>
-      <form className={style.form} onSubmit={onSubmit}>
-        <div>
-          <div className={style.forms}>
-            <label className={style.label}>Member ID</label>
-            {id ? (
-              <select name="members" onChange={onChange}>
-                <option value={selectedSubscription.members._id}>
-                  {selectedSubscription.members.firstName +
-                    ' ' +
-                    selectedSubscription.members.lastName}
-                </option>
-                {membersData.map((member) => (
-                  <option key={member._id} value={member._id}>
-                    {member.firstName} {member.lastName}
+    <>
+      <div>
+        <form className={style.form} onSubmit={onSubmit}>
+          <div>
+            <div className={style.forms}>
+              <label className={style.label}>Member ID</label>
+              {id ? (
+                <select name="members" onChange={onChange}>
+                  <option value={selectedSubscription.members._id}>
+                    {selectedSubscription.members.firstName +
+                      ' ' +
+                      selectedSubscription.members.lastName}
                   </option>
-                ))}
-              </select>
-            ) : (
-              <select name="members" onChange={onChange}>
-                <option value={null}>Select a member</option>
-                {membersData.map((member) => (
-                  <option key={member._id} value={member._id}>
-                    {member.firstName} {member.lastName}
+                  {filteredMembersData.map((member) => (
+                    <option key={member._id} value={member._id}>
+                      {member.firstName} {member.lastName}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <select name="members" onChange={onChange}>
+                  <option value={null}>Select a member</option>
+                  {membersData.map((member) => (
+                    <option key={member._id} value={member._id}>
+                      {member.firstName} {member.lastName}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+            <div className={style.forms}>
+              <label className={style.label}>Date</label>
+              <input name="date" type="datetime-local" value={formData.date} onChange={onChange} />
+            </div>
+            <div className={style.forms}>
+              <label className={style.label}>Class ID</label>
+              {id ? (
+                <select value={selectedSubscription.classes} onChange={onChange}>
+                  <option value={selectedSubscription.classes._id}>
+                    {selectedSubscription.classes}
                   </option>
-                ))}
-              </select>
-            )}
+                  {filteredClassesData.map((classes) => (
+                    <option key={classes._id} value={classes._id}>
+                      {classes._id}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <select name="classes" onChange={onChange}>
+                  <option value={null}>Choose Class</option>
+                  {classesData.map((classes) => (
+                    <option key={classes._id} value={classes._id}>
+                      {classes._id}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
-          <div className={style.forms}>
-            <label className={style.label}>Date</label>
-            <input name="date" type="datetime-local" value={formData.date} onChange={onChange} />
+          <div className={style.buttons}>
+            <Button type="submit" />
+            <Button onClick={handleFormClose} type="cancel" />
           </div>
-          <div className={style.forms}>
-            <label className={style.label}>Class ID</label>
-            {id ? (
-              <select value={selectedSubscription.classes} onChange={onChange}>
-                <option value={selectedSubscription.classes._id}>
-                  {selectedSubscription.classes}
-                </option>
-                {classesData.map((classes) => (
-                  <option key={classes._id} value={classes._id}>
-                    {classes._id}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <select name="classes" onChange={onChange}>
-                <option value={null}>Choose Class</option>
-                {classesData.map((classes) => (
-                  <option key={classes._id} value={classes._id}>
-                    {classes._id}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
-        </div>
-        <div className={style.buttons}>
-          <Button type="submit" />
-          <Button onClick={handleFormClose} type="cancel" />
-        </div>
-      </form>
-      {showAlert && <ModalAlert text={alertText} onClick={handleFormClose} />}
-    </div>
+        </form>
+        {showAlert && <ModalAlert text={alertText} onClick={handleFormClose} />}
+      </div>
+    </>
   );
 };
 
