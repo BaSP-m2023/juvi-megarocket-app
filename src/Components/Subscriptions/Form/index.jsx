@@ -3,16 +3,12 @@ import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
 import { ModalAlert, Button } from '../../Shared';
 import { useHistory } from 'react-router-dom';
-<<<<<<< HEAD
 import { useDispatch } from 'react-redux';
 import {
   addSubscription,
   editSubscription,
   getSubscriptionById
 } from '../../../redux/subscriptions/thunks';
-=======
-import { Input } from '../../Shared';
->>>>>>> master
 
 const SubForm = () => {
   const { id } = useParams();
@@ -106,7 +102,6 @@ const SubForm = () => {
   };
 
   return (
-<<<<<<< HEAD
     <>
       <div>
         <form className={style.form} onSubmit={onSubmit}>
@@ -136,60 +131,10 @@ const SubForm = () => {
                   ))}
                 </select>
               )}
-=======
-    <div>
-      <form className={style.form} onSubmit={onSubmit}>
-        <div>
-          <div className={style.forms}>
-            <label>ID member</label>
-            {id ? (
-              <select name="members" onChange={onChangeInput}>
-                <option value={selectedSubscription.members._id}>
-                  {selectedSubscription.members.firstName +
-                    ' ' +
-                    selectedSubscription.members.lastName}
-                </option>
-                {filteredMembersData.map((member) => (
-                  <option key={member._id} value={member._id}>
-                    {member.firstName} {member.lastName}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <select name="members" onChange={onChangeInput}>
-                <option value={null}>Seleccione un Miembro</option>
-                {membersData.map((member) => (
-                  <option key={member._id} value={member._id}>
-                    {member.firstName} {member.lastName}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
-          {id ? (
-            <div className={style.forms}>
-              <Input
-                labelText="Date"
-                name="date"
-                type="datetime-local"
-                value={formData.date}
-                onChange={onChangeInput}
-              />
->>>>>>> master
             </div>
             <div className={style.forms}>
-<<<<<<< HEAD
               <label className={style.label}>Date</label>
               <input name="date" type="datetime-local" value={formData.date} onChange={onChange} />
-=======
-              <Input
-                labelText="Date"
-                name="date"
-                type="datetime-local"
-                value={formData.date}
-                onChange={onChangeInput}
-              />
->>>>>>> master
             </div>
             <div className={style.forms}>
               <label className={style.label}>Class ID</label>
@@ -216,7 +161,6 @@ const SubForm = () => {
               )}
             </div>
           </div>
-<<<<<<< HEAD
           <div className={style.buttons}>
             <Button type="submit" />
             <Button onClick={handleFormClose} type="cancel" />
@@ -225,17 +169,6 @@ const SubForm = () => {
         {showAlert && <ModalAlert text={alertText} onClick={handleFormClose} />}
       </div>
     </>
-=======
-        </div>
-        <Button className={style.button} type="confirm" />
-        <Button className={style.buttonClose} onClick={handleFormClose} type="cancel" />
-      </form>
-      {showAlert && <ModalAlert text={alertText} onClick={handleConfirmClose} />}
-      {showConfirm && (
-        <ModalConfirm text="¿Desea confirmar la acción?" onClose={handleConfirmClose} />
-      )}
-    </div>
->>>>>>> master
   );
 };
 
