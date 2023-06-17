@@ -1,28 +1,66 @@
-import { FETCH_ADMINS, ADD_ADMIN, REMOVE_ADMIN, EDIT_ADMIN } from './constants';
+import {
+  getAdminsSuccess,
+  getAdminsPending,
+  getAdminError,
+  getByIdAdminsSuccess,
+  getByIdAdminsPending,
+  getByIdAdminsError,
+  addAdminsSuccess,
+  addAdminsPending,
+  addAdminsError,
+  deleteAdminsSuccess,
+  deleteAdminsPending,
+  deleteAdminsError,
+  putAdminsSuccess,
+  putAdminsPending,
+  putAdminsError
+} from './actions';
 
-export const fetchAdminsAsync = (setModalText) => {
+export const getAdmins = () => {
   return async (dispatch) => {
     try {
+      dispatch(getAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch admins.');
+      const data = await response.json();
+      if (response.error) {
+        throw new Error(data.message);
       }
-      const jsonData = await response.json();
-      const adminData = jsonData.data;
-
-      dispatch({
-        type: FETCH_ADMINS,
-        payload: adminData
-      });
+      dispatch(getAdminsSuccess(data.data));
     } catch (error) {
-      setModalText(`Error getting Admins: ${error}`);
+      dispatch(getAdminError(error));
     }
   };
 };
-
-export const addAdminAsync = (adminData, setModalText) => {
+export const getByIdAdmins = (id, setSelectedAdmin) => {
   return async (dispatch) => {
     try {
+      dispatch(getByIdAdminsPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
+      const responseJson = await response.json();
+      const data = responseJson.data;
+      if (responseJson.error) {
+        throw new Error(responseJson.message);
+      }
+      setSelectedAdmin({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        dni: data.dni,
+        phone: data.phone,
+        email: data.email,
+        city: data.city,
+        password: data.password
+      });
+      console.log(setSelectedAdmin);
+      dispatch(getByIdAdminsSuccess(data.data));
+    } catch (error) {
+      dispatch(getByIdAdminsError(error));
+    }
+  };
+};
+export const addAdmin = (adminData, setModalText, setIsModalOpen, setSuccess) => {
+  return async (dispatch) => {
+    try {
+      dispatch(addAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
@@ -30,65 +68,70 @@ export const addAdminAsync = (adminData, setModalText) => {
         },
         body: JSON.stringify(adminData)
       });
-      if (!response.ok) {
-        throw new Error('Failed to add admin.');
-      }
       const jsonData = await response.json();
       const newAdmin = jsonData.data;
-
-      dispatch({
-        type: ADD_ADMIN,
-        payload: newAdmin
-      });
+      if (response.ok) {
+        setModalText('Admin created correctly!');
+        setSuccess(true);
+        setIsModalOpen(true);
+        return dispatch(addAdminsSuccess(newAdmin));
+      }
+      dispatch(addAdminsError(jsonData.error));
+      setIsModalOpen(true);
+      setModalText(`${jsonData.message}`);
     } catch (error) {
-      setModalText(`Error adding Admin: ${error}`);
+      dispatch(addAdminsError(error));
     }
   };
 };
 
-export const removeAdminAsync = (adminId, setModalText, setIsModalOpen) => {
+export const deleteAdmin = (adminId, setModalText, setIsModalOpen) => {
   return async (dispatch) => {
     try {
+      dispatch(deleteAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
         method: 'DELETE'
       });
       if (!response.ok) {
-        throw new Error('Failed to delete admin.');
+        throw new Error('Error deleting Admin.');
       }
 
-      dispatch({
-        type: REMOVE_ADMIN,
-        payload: adminId
-      });
+      dispatch(deleteAdminsSuccess());
+      dispatch(getAdmins());
+      setModalText('Admin deleted correctly!');
+      setIsModalOpen(true);
     } catch (error) {
+      dispatch(deleteAdminsError());
       setModalText(`Error deleting Admin: ${error}`);
       setIsModalOpen(true);
     }
   };
 };
 
-export const editAdminAsync = (adminData, adminId, setModalText) => {
+export const editAdmin = (adminId, formData, setSuccess, setModalText, setIsModalOpen) => {
   return async (dispatch) => {
     try {
+      dispatch(putAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(adminData)
+        body: JSON.stringify(formData)
       });
-      if (!response.ok) {
-        throw new Error('Failed to edit admin.');
-      }
-      const jsonData = await response.json();
-      const editedAdmin = jsonData.data;
 
-      dispatch({
-        type: EDIT_ADMIN,
-        payload: editedAdmin
-      });
+      const responseData = await response.json();
+      if (response.ok) {
+        setIsModalOpen(true);
+        setSuccess(true);
+        setModalText('Admin edited successfully ');
+        return dispatch(putAdminsSuccess(responseData.data));
+      }
+      dispatch(putAdminsError(responseData.error));
+      setIsModalOpen(true);
+      setModalText(`${responseData.message}`);
     } catch (error) {
-      setModalText(`Error editing Admin: ${error}`);
+      return dispatch(putAdminsError(error));
     }
   };
 };

@@ -1,14 +1,25 @@
 .container {
   flex: 1;
+  margin-top: 30px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
-.link {
-  margin: 10px;
+.container a {
   text-decoration: none;
 }
-.title{
+.titleTrainers {
+  display: flex;
+  width: 78vw;
+  justify-content: space-between;
+  padding-bottom: 36px;
+  align-items: center;
+}
+
+.titleTrainers button {
+  margin-left: auto;
+}
+.titleTrainers h2 {
   align-self: center;
 }

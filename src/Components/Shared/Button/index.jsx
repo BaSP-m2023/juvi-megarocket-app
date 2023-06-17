@@ -13,7 +13,7 @@ const Button = ({ type, resource, onClick }) => {
         text = del;
         return styles.btnDelete;
       case 'add':
-        text = `+ Add ${resource}`;
+        text = `Add ${resource}`;
         return styles.btnAdd;
       case 'confirm':
         text = 'Confirm';

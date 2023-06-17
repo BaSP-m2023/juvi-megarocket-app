@@ -25,6 +25,7 @@ function Subscriptions() {
   };
 
   return (
+<<<<<<< HEAD
     <>
       <section className={styles.container}>
         <Link to="/subscriptions/form">
@@ -38,6 +39,22 @@ function Subscriptions() {
       </section>
       {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
     </>
+=======
+    <section className={styles.container}>
+      <div className={styles.titleSubscriptions}>
+        <h2>Subscriptions</h2>
+        <Link to="/subscriptions/form">
+          <Button type="add" resource="Subscription"></Button>
+        </Link>
+      </div>
+      <SharedTable
+        data={subscriptions}
+        editLink={'/subscriptions/form/'}
+        handleDelete={handleDelete}
+      />
+      {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}
+    </section>
+>>>>>>> master
   );
 }
 

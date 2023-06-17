@@ -6,14 +6,16 @@ import ModalAlert from '../../Shared/ModalAlert/index.jsx';
 import { Input } from '../../Shared';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { editAdmin, addAdmin, getByIdAdmins } from '../../../redux/admins/thunks';
 
 const AdminsForm = () => {
+  const dispatch = useDispatch();
   const [modalText, setModalText] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
-  const [adminsData, setAdminsData] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState({});
-  const [success, setsuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     firstName: selectedAdmin.firstName || '',
     lastName: selectedAdmin.lastName || '',
@@ -23,11 +25,14 @@ const AdminsForm = () => {
     city: selectedAdmin.city || '',
     password: selectedAdmin.password || ''
   });
-  const closeModalAndBack = () => {
+
+  const closeModalAndBack = (e) => {
+    e.preventDefault();
     setIsModalOpen(false);
     history.goBack();
   };
-  const closeModal = () => {
+  const closeModal = (e) => {
+    e.preventDefault();
     setIsModalOpen(false);
     if (success) {
       history.goBack();
@@ -43,16 +48,10 @@ const AdminsForm = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedAdmin(data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      dispatch(getByIdAdmins(id, setSelectedAdmin));
     }
-  }, []);
+  }, [id]);
+
   useEffect(() => {
     setFormData({
       firstName: selectedAdmin.firstName || '',
@@ -65,56 +64,6 @@ const AdminsForm = () => {
     });
   }, [selectedAdmin]);
 
-  const addAdmin = async ({ firstName, lastName, dni, phone, email, city, password }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ firstName, lastName, dni, phone, email, city, password })
-      });
-      const responseData = await response.json();
-
-      if (!responseData.error) {
-        setModalText('Admin created correctly!');
-        setIsModalOpen(true);
-        setsuccess(true);
-      } else {
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      setModalText('Creating admin ' + error);
-      setIsModalOpen(true);
-    }
-  };
-  const editAdmin = async (updatedAdmin, adminId) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedAdmin)
-      });
-      const responseData = await response.json();
-      if (response.ok) {
-        const updatedAdminData = responseData.data;
-        setAdminsData(
-          adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
-        );
-        setModalText('Admin updated correctly!');
-        setIsModalOpen(true);
-        setsuccess(true);
-      } else {
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      setModalText('Error updating Admin: ' + error.message);
-      setIsModalOpen(true);
-    }
-  };
-
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -125,9 +74,9 @@ const AdminsForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      editAdmin(formData, selectedAdmin._id);
+      dispatch(editAdmin(id, formData, setSuccess, setModalText, setIsModalOpen));
     } else {
-      addAdmin(formData);
+      dispatch(addAdmin(formData, setModalText, setIsModalOpen, setSuccess));
     }
   };
 
@@ -135,15 +84,20 @@ const AdminsForm = () => {
 
   return (
     <>
-      <form className={styles.myForm} onSubmit={onSubmit}>
+      <form className={styles.myForm}>
         <div className={styles.divContainer}>
           <div className={styles.inputDiv}>
-            <label>First Name</label>
-            <Input name="firstName" type="text" value={formData.firstName} onChange={onChange} />
+            <Input
+              labelText="First Name"
+              name="firstName"
+              type="text"
+              value={formData.firstName}
+              onChange={onChange}
+            />
           </div>
           <div className={styles.inputDiv}>
-            <label>Last Name</label>
             <Input
+              labelText="Last Name"
               className={styles.input}
               type="text"
               name="lastName"
@@ -152,8 +106,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>DNI</label>
             <Input
+              labelText="DNI"
               className={styles.input}
               type="text"
               name="dni"
@@ -162,8 +116,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>Phone</label>
             <Input
+              labelText="Phone"
               className={styles.input}
               type="text"
               name="phone"
@@ -172,8 +126,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>Email</label>
             <Input
+              labelText="Email"
               className={styles.input}
               type="text"
               name="email"
@@ -182,8 +136,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>City</label>
             <Input
+              labelText="City"
               className={styles.input}
               type="text"
               name="city"
@@ -192,9 +146,9 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>Password</label>
             <div className={styles.password}>
               <Input
+                labelText="Password"
                 className={styles.input}
                 type={showPassword ? 'text' : 'password'}
                 name="password"
@@ -209,7 +163,7 @@ const AdminsForm = () => {
             </div>
           </div>
         </div>
-        <Button className={styles.addButton} type="confirm">
+        <Button className={styles.addButton} type="confirm" onClick={onSubmit}>
           {switchButtonText}
         </Button>
         <Button type="cancel" className={styles.cancelButton} onClick={closeModalAndBack}>

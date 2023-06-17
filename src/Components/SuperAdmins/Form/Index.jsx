@@ -1,151 +1,108 @@
 import React, { useState, useEffect } from 'react';
-import styles from './super-admins-form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
+import styles from './super-admins-form.module.css';
 import { Button, Input, ModalAlert } from '../../Shared';
+import {
+  addSuperAdmins,
+  editSuperAdmins,
+  getByIdSuperAdmins
+} from '../../../redux/superadmins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-const FormSuperAdmin = () => {
+const FormSuperAdmins = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.superAdmins);
   const { id } = useParams();
   const history = useHistory();
-  const [adminsData, setAdminsData] = useState([]);
-  const [selectedAdmin, setSelectedAdmin] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [modalText, setModalText] = useState('');
   const [formData, setFormData] = useState({
-    email: selectedAdmin.email || '',
-    password: selectedAdmin.password || ''
+    email: data.item?.email || '',
+    password: data.item?.password || ''
   });
-
+  const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedAdmin(data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      dispatch(getByIdSuperAdmins(id));
+    } else {
+      setFormData({
+        email: '',
+        password: ''
+      });
     }
-  }, []);
-
+  }, [id, dispatch]);
   useEffect(() => {
-    setFormData(selectedAdmin);
-  }, [selectedAdmin]);
-
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      email: data.item?.email || '',
+      password: data.item?.password || ''
+    }));
+  }, [data.item]);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (id) {
+      dispatch(editSuperAdmins(formData, id, setModalText, setShowModal, setShowModalSuccess));
+    } else {
+      dispatch(addSuperAdmins(formData, setModalText, setShowModal, setShowModalSuccess));
+    }
+  };
   const onChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-
-  const addAdmin = async ({ email, password }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-      const responseData = await response.json();
-
-      if (responseData.error) {
-        throw new Error(responseData.message);
-      } else {
-        const newAdmin = responseData.data;
-        setAdminsData([...adminsData, newAdmin]);
-        setModalText('Admin add successfully!');
-        setShowModal(true);
-      }
-    } catch (error) {
-      console.log(error);
-      alert('Error creating admin: ' + error);
-    }
-  };
-
-  const editAdmin = async (updatedAdmin, adminId) => {
-    const dataUpdate = {
-      email: updatedAdmin.email,
-      password: updatedAdmin.password
-    };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${adminId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataUpdate)
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const updatedAdminData = responseData.data;
-        setAdminsData(
-          adminsData.map((admin) => (admin._id === updatedAdminData._id ? updatedAdminData : admin))
-        );
-        setModalText('Admin updated correctly!');
-        setShowModal(true);
-      } else {
-        const responseData = await response.json();
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      console.log(formData);
-      setModalText('Error updating admin: ' + error);
-      setShowModal(true);
-    }
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (id) {
-      editAdmin(formData, selectedAdmin._id);
-      history.goBack();
-    } else {
-      addAdmin(formData);
-      history.goBack();
-    }
-  };
-
   const closeModal = () => {
-    setShowModal(!showModal);
+    if (showModal) {
+      setShowModal(!showModal);
+    } else {
+      setShowModalSuccess(false);
+      history.goBack();
+    }
   };
-
-  const onSubmitCancel = (e) => {
-    e.preventDefault();
-    history.goBack();
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
     <>
-      <form className={styles.formAdmin}>
-        <div className={styles.formContainer}>
-          <div className={styles.inputAdmin}>
+      {data.isLoading ? (
+        <div>is Loading</div>
+      ) : (
+        <form className={styles.FormSuperAdmins} onSubmit={onSubmit}>
+          <div className={styles.subContainer}>
             <Input
               labelText="Email"
-              onChange={onChange}
-              type="text"
               name="email"
+              type="text"
               value={formData.email}
+              onChange={onChange}
             />
+            <div className={styles.password}>
+              <Input
+                labelText="Password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={onChange}
+              />
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className={styles.showPasswordIcon}
+                onClick={togglePassword}
+              />
+            </div>
           </div>
-          <Input
-            labelText="Contraseña"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.buttonContainer}>
-          <Button type="confirm" onClick={onSubmit}></Button>
-          <Button type="cancel" onClick={onSubmitCancel}></Button>
-        </div>
-      </form>
+          <Button type="confirm"></Button>
+          <Button type="cancel" onClick={closeModal}></Button>
+        </form>
+      )}
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModalSuccess && <ModalAlert text={modalText} onClick={closeModal} />}
     </>
   );
 };
-
-export default FormSuperAdmin;
+export default FormSuperAdmins;

@@ -5,7 +5,6 @@ function Footer() {
   return (
     <footer className={styles.container}>
       <div className={styles.main}>
-        <p className={styles.appName}>MegaRocket</p>
         <ul className={styles.rutes}>
           <li>
             <Link to="/">Home</Link>

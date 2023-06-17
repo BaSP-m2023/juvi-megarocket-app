@@ -28,10 +28,12 @@ const Activities = () => {
   return (
     <>
       <section className={styles.container}>
-        <h2 className={styles.titleActivities}>Activities</h2>
-        <Link to="/activities/ActivitiesForm">
-          <Button type="add" resource="Activity" />
-        </Link>
+        <div className={styles.titleActivities}>
+          <h2>Activities</h2>
+          <Link to="/activities/ActivitiesForm">
+            <Button type="add" resource="Activity" />
+          </Link>
+        </div>
         {isLoading ? (
           <div>is Loading</div>
         ) : (

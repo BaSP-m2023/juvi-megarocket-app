@@ -2,17 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMemberById, putMember, addMember } from '../../../redux/members/thunks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './form.module.css';
 import { ModalAlert, Button, Input } from '../../Shared';
+import { useForm } from 'react-hook-form';
 
 const MemberForm = (props) => {
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false);
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
+  const { handleSubmit } = useForm();
 
   const [member, setMember] = useState({
     firstName: data.item.firstName ?? '',
@@ -72,6 +76,9 @@ const MemberForm = (props) => {
       birthDate: member.birthDate.substring(0, 10)
     });
   };
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const errorAlert = (errorMsg) => {
     setMsg(errorMsg);
@@ -92,8 +99,7 @@ const MemberForm = (props) => {
     }
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = () => {
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
     if (text === 'Add member') {
       dispatch(addMember(member, switchModal));
@@ -103,12 +109,11 @@ const MemberForm = (props) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
-      <h1>{text}</h1>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formContainer}>
         <fieldset className={styles.fieldset}>
-          <label className={styles.label}>First name</label>
           <Input
+            labelText="First Name"
             className={styles.input}
             name="firstName"
             type="text"
@@ -118,8 +123,8 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>Last Name</label>
           <Input
+            labelText="Last Name"
             className={styles.input}
             name="lastName"
             type="text"
@@ -129,8 +134,8 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>DNI</label>
           <Input
+            labelText="DNI"
             className={styles.input}
             name="dni"
             type="number"
@@ -140,8 +145,8 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>Phone</label>
           <Input
+            labelText="Phone"
             className={styles.input}
             name="phone"
             type="number"
@@ -151,8 +156,8 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>Email</label>
           <Input
+            labelText="Email"
             className={styles.input}
             name="email"
             type="text"
@@ -162,8 +167,8 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>City</label>
           <Input
+            labelText="City"
             className={styles.input}
             name="city"
             type="text"
@@ -173,8 +178,8 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>Birth Day</label>
           <Input
+            labelText="Birth Day"
             className={styles.input}
             name="birthDate"
             type="date"
@@ -183,8 +188,8 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>Zip</label>
           <Input
+            labelText="Zip"
             className={styles.input}
             name="postalCode"
             type="number"
@@ -194,15 +199,22 @@ const MemberForm = (props) => {
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
-          <label>Password</label>
-          <Input
-            className={styles.input}
-            name="password"
-            type="password"
-            value={member.password}
-            onChange={onChange}
-            placeholder="Password"
-          />
+          <div className={styles.password}>
+            <Input
+              labelText="Password"
+              className={styles.input}
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              value={member.password}
+              onChange={onChange}
+              placeholder="Password"
+            />
+            <FontAwesomeIcon
+              icon={showPassword ? faEyeSlash : faEye}
+              className={styles.showPasswordIcon}
+              onClick={togglePassword}
+            />
+          </div>
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Membership</label>
@@ -212,17 +224,17 @@ const MemberForm = (props) => {
             <option value="Black">Black</option>
           </select>
         </fieldset>
-        <Button
-          type={'confirm'}
-          resource={'Member'}
-          onClick={() => {
-            onSubmit;
-          }}
-        />
-        <Button type={'cancel'} onClick={() => props.history.push('/members')} />
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-        {modalDone && <ModalAlert text={msg} onClick={() => props.history.push('/members')} />}
       </div>
+      <Button
+        type={'confirm'}
+        resource={'Member'}
+        onClick={() => {
+          onSubmit;
+        }}
+      />
+      <Button type={'cancel'} onClick={() => props.history.push('/members')} />
+      {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+      {modalDone && <ModalAlert text={msg} onClick={() => props.history.push('/members')} />}
     </form>
   );
 };
