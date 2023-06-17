@@ -48,7 +48,7 @@ export const deleteSuperAdmins = (_id, setModalText, setShowModal) => {
       }
     } catch (error) {
       dispatch(deleteSuperAdminsError(error));
-      setModalText('Error deleting superAdmin: ' + error);
+      setModalText('Error deleting SuperAdmins: ' + error);
     }
   };
 };
