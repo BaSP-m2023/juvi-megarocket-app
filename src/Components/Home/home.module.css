@@ -2,5 +2,86 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+}
+.spam {
+  color: black;
+  font-weight: bold;
+}
+.mainTitle {
+  height: 30vh;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+}
+.mainTitle h1 {
+  font-size: 24px;
+}
+
+.mainTitle h2 {
+  font-size: 18px;
+  font-weight: normal;
+  color: #0f232e;
+}
+.mainImg {
+  height: 35vw;
+}
+
+.mainBtn {
+  border-radius: 7px;
+  border-width: 1px;
+  width: 11vw;
+  height: 4vh;
+}
+.mainBtn:hover {
+  background-color: #0f232e;
+  color: #fff;
+}
+
+.learnMore {
+  display: flex;
+  justify-content: right;
+  padding-top: 41px;
+}
+
+.sectionServices {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 30px;
+  padding-top: 20px;
+  border-top: #808080 1px solid;
+  border-bottom: #808080 1px solid;
+  max-width: 90%;
+}
+.sectionServices h3 {
+  padding-left: 20px;
+}
+
+.containerServices {
+  display: flex;
+  height: 60vh;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.services {
+  width: 36vw;
+  height: 23vh;
+  display: flex;
+}
+.servicesMedia {
+  display: flex;
+}
+.servicesMedia img {
+  height: 14vh;
+  align-self: center;
+}
+.servicesText h4 {
+  border-bottom: 1px solid black;
+}
+.servicesText {
+  padding-left: 20px;
+}
+@media screen and (min-width: 1024px) {
 }

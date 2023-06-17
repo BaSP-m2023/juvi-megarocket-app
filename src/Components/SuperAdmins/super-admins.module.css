@@ -1,25 +1,43 @@
 .container {
   flex: 1;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5rem;
 }
-.firstBox{
+.container a {
+  text-decoration: none;
+}
+.titleSuperAdmins {
+  display: flex;
+  width: 78vw;
+  justify-content: space-between;
+  padding-bottom: 36px;
+  align-items: center;
+}
+
+.titleSuperAdmins button {
+  margin-left: auto;
+}
+.titleSuperAdmins h2 {
+  align-self: center;
+}
+
+.firstBox {
   display: flex;
   gap: 20rem;
   justify-content: center;
   align-items: center;
 }
-.firstBox .buttonSuperAdmins{
+.firstBox .buttonSuperAdmins {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 50px;
 }
-.firstBox .buttonSuperAdmins:hover{
+.firstBox .buttonSuperAdmins:hover {
   background-color: #d8d8d8;
   cursor: pointer;
 }
@@ -50,4 +68,3 @@
   font-size: 18px;
   color: #aaa;
 }
-

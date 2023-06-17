@@ -136,7 +136,7 @@ const Form = () => {
             onChange={onChangeInput}
           ></Input>
         </div>
-        <Button type="submit" />
+        <Button type="confirm" />
         <Button type="cancel" onClick={handleCancel}>
           Cancel
         </Button>

@@ -1,9 +1,8 @@
 .addTrainer {
-  max-width: 800px;
-  margin: auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
 }
 
 .column {

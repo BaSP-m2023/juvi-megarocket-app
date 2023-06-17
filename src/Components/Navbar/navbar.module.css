@@ -1,0 +1,88 @@
+.navbar {
+  display: flex;
+  position: sticky;
+  flex-direction: column;
+  top: 0;
+  height: 100vh;
+
+  list-style-type: none;
+  background-color: #0f232e;
+}
+
+.rutes li > a:hover {
+  color: #f9a414;
+  background-color: #1c4257;
+  border-radius: 4px;
+}
+.navShadow {
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.rutes {
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  padding: 0px 10px;
+  justify-content: space-evenly;
+  list-style-type: none;
+}
+
+.rutes li > a {
+  margin-left: 15px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.showNav {
+  max-height: 500px;
+  opacity: 1;
+  display: flex;
+  transition: all 0.3s ease-out;
+}
+
+.hideNav {
+  display: none;
+  opacity: 0;
+}
+
+.arrowIcon {
+  align-self: center;
+  color: #fff;
+}
+.arrowIconActive {
+  transform: rotate(-180deg);
+}
+@media screen and (min-width: 1024px) {
+  .hideNav {
+    display: flex;
+    opacity: 1;
+  }
+  .arrowIcon {
+    display: none;
+  }
+
+  .navbar {
+    width: 14vw;
+  }
+  .navShadow {
+    box-shadow: none;
+  }
+  .navContainer {
+    justify-content: flex-start;
+    align-items: baseline;
+  }
+
+  .rutes li {
+    padding-top: 10px;
+  }
+}

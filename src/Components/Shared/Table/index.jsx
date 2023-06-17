@@ -44,6 +44,7 @@ const SharedTable = ({ data, handleDelete, editLink }) => {
               <th key={propertyName}>{propertyName}</th>
             ))}
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -84,10 +85,12 @@ const TableRow = ({ item, propertyNames, editLink, handleDelete, renderCellValue
       {propertyNames.map((propertyName) => (
         <td key={propertyName}>{renderCellValue(item[propertyName], propertyName)}</td>
       ))}
-      <td>
+      <td className={styles.edit}>
         <Link to={editLink + item._id}>
           <Button type="edit" />
         </Link>
+      </td>
+      <td className={styles.delete}>
         <Button type="delete" onClick={showAlertHandler} />
         {showAlert && (
           <ModalConfirm

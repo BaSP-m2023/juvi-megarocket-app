@@ -1,10 +1,24 @@
 .containerClass {
   display: flex;
+  margin-top: 30px;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
+}
+.containerClass a {
+  text-decoration: none;
 }
 
-.contButton {
-  align-self: end;
-  margin-bottom: 20px;
+.titleClass {
+  display: flex;
+  width: 78vw;
+  justify-content: space-between;
+  padding-bottom: 36px;
+  align-items: center;
+}
+.titleClass button {
+  margin-left: auto;
+}
+.titleClass h2 {
+  align-self: center;
 }

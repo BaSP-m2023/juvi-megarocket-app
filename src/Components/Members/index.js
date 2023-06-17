@@ -22,11 +22,14 @@ function Members(props) {
 
   return (
     <section className={styles.container}>
-      <Button
-        type={'add'}
-        resource={'Member'}
-        onClick={() => props.history.push('/members/form')}
-      />
+      <div className={styles.titleMembers}>
+        <h2>Members</h2>
+        <Button
+          type={'add'}
+          resource={'Member'}
+          onClick={() => props.history.push('/members/form')}
+        />
+      </div>
       {data.isLoading && <h1>Loading</h1>}
       {!data.isLoading && (
         <SharedTable data={data.list} handleDelete={delMember} editLink={'members/form/'} />

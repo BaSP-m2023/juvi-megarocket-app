@@ -2,16 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #000000;
+  background-color: #0f232e;
 }
-
 .main {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 0 5%;
   width: 90%;
-  height: 250px;
+  height: 13vh;
 }
 
 .appName {
@@ -23,27 +22,34 @@
 .rutes {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  align-content: flex-end;
   list-style-type: none;
+  padding: 0;
 }
 
 .rutes li > a {
   margin-left: 15px;
-  font-size: 1rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-decoration: none;
   text-transform: capitalize;
   color: #fff;
 }
+.rutes li > a:hover {
+  color: #f9a414;
+  background-color: #1c4257;
+  border-radius: 4px;
+}
 
 .license {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 8vh;
   width: 90%;
-  padding: 0 20px;
-  background-color: #ea3354;
+  color: #fff;
+  background-color: #0f232e;
 }
 
 .copyright {
@@ -57,16 +63,24 @@
 
 @media screen and (min-width: 750px) {
   .main {
-    padding: 0 20%;
     width: unset;
   }
-
+  .rutes li > a {
+    font-size: 1rem;
+  }
   .license {
     padding: 0 20px;
+    font-size: 0.9rem;
     width: calc(60% - 40px);
   }
 
   .socialIcon {
     margin-left: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .license {
+    padding: 0 20px;
   }
 }

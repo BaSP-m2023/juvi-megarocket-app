@@ -87,12 +87,17 @@ const AdminsForm = () => {
       <form className={styles.myForm}>
         <div className={styles.divContainer}>
           <div className={styles.inputDiv}>
-            <label>First Name</label>
-            <Input name="firstName" type="text" value={formData.firstName} onChange={onChange} />
+            <Input
+              labelText="First Name"
+              name="firstName"
+              type="text"
+              value={formData.firstName}
+              onChange={onChange}
+            />
           </div>
           <div className={styles.inputDiv}>
-            <label>Last Name</label>
             <Input
+              labelText="Last Name"
               className={styles.input}
               type="text"
               name="lastName"
@@ -101,8 +106,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>DNI</label>
             <Input
+              labelText="DNI"
               className={styles.input}
               type="text"
               name="dni"
@@ -111,8 +116,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>Phone</label>
             <Input
+              labelText="Phone"
               className={styles.input}
               type="text"
               name="phone"
@@ -121,8 +126,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>Email</label>
             <Input
+              labelText="Email"
               className={styles.input}
               type="text"
               name="email"
@@ -131,8 +136,8 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>City</label>
             <Input
+              labelText="City"
               className={styles.input}
               type="text"
               name="city"
@@ -141,9 +146,9 @@ const AdminsForm = () => {
             />
           </div>
           <div className={styles.inputDiv}>
-            <label>Password</label>
             <div className={styles.password}>
               <Input
+                labelText="Password"
                 className={styles.input}
                 type={showPassword ? 'text' : 'password'}
                 name="password"

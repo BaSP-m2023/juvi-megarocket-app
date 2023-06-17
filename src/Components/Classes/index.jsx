@@ -31,9 +31,12 @@ const Classes = () => {
 
   return (
     <section className={styles.containerClass}>
-      <Link to="/classes/form" className={styles.contButton}>
-        <Button type="add" resource="Class" />
-      </Link>
+      <div className={styles.titleClass}>
+        <h2>Classes</h2>
+        <Link to="/classes/form" className={styles.contButton}>
+          <Button type="add" resource="Class" />
+        </Link>
+      </div>
       {isLoading ? (
         <div>Is Loading</div>
       ) : (
