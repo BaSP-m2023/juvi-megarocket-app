@@ -51,7 +51,7 @@ const Form = () => {
   };
 
   const handleCancel = () => {
-    history.push('/trainers');
+    history.push('/admins/trainers');
     dispatch(resetErrorAndMessage());
   };
 
@@ -66,7 +66,7 @@ const Form = () => {
 
   const closeAlert = () => {
     if (error === '') {
-      history.push('/trainers');
+      history.push('/admins/trainers');
     }
     dispatch(resetErrorAndMessage());
   };

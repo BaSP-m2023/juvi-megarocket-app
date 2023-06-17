@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import { Link } from 'react-router-dom';
-import { Button, SharedTable, ModalAlert } from '../Shared';
+import { ModalAlert } from '../Shared';
+import Button from 'Components/Shared/Button';
+import SharedTable from 'Components/Shared/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superadmins/thunks';
 const SuperAdminsPage = () => {
