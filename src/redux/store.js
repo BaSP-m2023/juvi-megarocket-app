@@ -2,7 +2,6 @@ import { combineReducers, legacy_createStore as createStore, applyMiddleware } f
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { SuperAdminsReducer } from './superadmins/reducer';
-
 import trainersReducer from './trainers/reducer';
 import { adminsReducer } from './admins/reducer';
 import { activitiesReducer } from './activities/reducer';
