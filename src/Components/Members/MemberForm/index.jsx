@@ -7,6 +7,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './form.module.css';
 import { ModalAlert, Button, Input } from '../../Shared';
+import { useForm } from 'react-hook-form';
 
 const MemberForm = (props) => {
   const [modal, setModal] = useState(false);
@@ -15,6 +16,7 @@ const MemberForm = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
+  const { handleSubmit } = useForm();
 
   const [member, setMember] = useState({
     firstName: data.item.firstName ?? '',
@@ -97,8 +99,7 @@ const MemberForm = (props) => {
     }
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = () => {
     member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
     if (text === 'Add member') {
       dispatch(addMember(member, switchModal));
@@ -108,7 +109,7 @@ const MemberForm = (props) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formContainer}>
         <fieldset className={styles.fieldset}>
           <Input
