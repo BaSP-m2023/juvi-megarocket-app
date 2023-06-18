@@ -1,4 +1,6 @@
-import { Button, SharedTable, ModalAlert } from '../Shared';
+import { ModalAlert } from '../Shared';
+import Button from 'Components/Shared/Button';
+import SharedTable from 'Components/Shared/Table';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './trainers.module.css';
@@ -26,14 +28,14 @@ function Trainers() {
     <section className={styles.container}>
       <div className={styles.titleTrainers}>
         <h2>Trainers</h2>
-        <Link to="/trainers/form" className={styles.link}>
+        <Link to="/admins/trainers/form" className={styles.link}>
           <Button type="add" resource="Trainer" />
         </Link>
       </div>
       {isLoading ? (
         <h2>Loading...</h2>
       ) : (
-        <SharedTable data={list} editLink={'/trainers/form/'} handleDelete={handleDelete} />
+        <SharedTable data={list} editLink={'/admins/trainers/form/'} handleDelete={handleDelete} />
       )}
       {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
       {error != '' && <ModalAlert text={error} onClick={closeAlert} />}

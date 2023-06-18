@@ -6,12 +6,18 @@ import { useState } from 'react';
 
 function Navbar() {
   const [navVisible, setNavVisible] = useState(false);
+  const [adminNavVisible, setAdminNavVisible] = useState(false);
 
   const toggleNav = () => {
     setNavVisible(!navVisible);
   };
+  const adminNav = () => {
+    setNavVisible(!navVisible);
+    setAdminNavVisible(true);
+  };
   const closeNav = () => {
     setNavVisible(false);
+    setAdminNavVisible(false);
   };
   return (
     <nav className={`${styles.navbar} ${navVisible ? styles.navShadow : ''}`}>
@@ -22,41 +28,49 @@ function Navbar() {
               Home
             </Link>
           </li>
-          <li>
-            <Link to="/activities" onClick={closeNav}>
-              Activities
-            </Link>
-          </li>
-          <li>
-            <Link to="/admins" onClick={closeNav}>
-              Admins
-            </Link>
-          </li>
-          <li>
-            <Link to="/classes" onClick={closeNav}>
-              Classes
-            </Link>
-          </li>
-          <li>
-            <Link to="/members" onClick={closeNav}>
-              Members
-            </Link>
-          </li>
-          <li>
-            <Link to="/subscriptions" onClick={closeNav}>
-              Subscriptions
-            </Link>
-          </li>
-          <li>
-            <Link to="/super-admins" onClick={closeNav}>
-              SuperAdmins
-            </Link>
-          </li>
-          <li>
-            <Link to="/trainers" onClick={closeNav}>
-              Trainers
-            </Link>
-          </li>
+          {adminNavVisible && (
+            <>
+              <li>
+                <Link to="admins/activities" onClick={closeNav}>
+                  Activities
+                </Link>
+              </li>
+              <li>
+                <Link to="admins/classes" onClick={closeNav}>
+                  Classes
+                </Link>
+              </li>
+              <li>
+                <Link to="admins/members" onClick={closeNav}>
+                  Members
+                </Link>
+              </li>
+              <li>
+                <Link to="admins/trainers" onClick={closeNav}>
+                  Trainers
+                </Link>
+              </li>
+              <li>
+                <Link to="/subscriptions" onClick={closeNav}>
+                  Subscriptions
+                </Link>
+              </li>
+            </>
+          )}
+          {!adminNavVisible && (
+            <>
+              <li>
+                <Link to="/admins" onClick={adminNav}>
+                  Admins
+                </Link>
+              </li>
+              <li>
+                <Link to="/super-admins" onClick={closeNav}>
+                  SuperAdmins
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
         <FontAwesomeIcon
           icon={faArrowRight}

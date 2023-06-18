@@ -1,5 +1,9 @@
-.form,
-.form2 {
+.form {
+  color: #f9a414;
+  font-size: 15px;
+  padding: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,6 +14,25 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
+}
+.inputContainer {
+margin: 5px;
+padding: 5px;
+}
+
+.label {
+  padding: 2px 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #0F232E;
+}
+
+.form select, .form input {
+  width: 15vw;
+  padding: 5px;
+  border: 1px solid #8f9294;
+  border-radius: 4px;
 }
 
 .forms label {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMemberById, putMember, addMember } from '../../../redux/members/thunks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import { ModalAlert, Button, Input } from '../../Shared';
 import { useForm } from 'react-hook-form';
 
 const MemberForm = (props) => {
+  const history = useHistory();
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
@@ -232,7 +233,7 @@ const MemberForm = (props) => {
           onSubmit;
         }}
       />
-      <Button type={'cancel'} onClick={() => props.history.push('/members')} />
+      <Button type={'cancel'} onClick={() => history.goBack()} />
       {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
       {modalDone && <ModalAlert text={msg} onClick={() => props.history.push('/members')} />}
     </form>
