@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './input.module.css';
-import { useForm } from 'react-hook-form';
+//import { useForm } from 'react-hook-form';
 
-const Input = ({ labelText, type, name, value, onChange, placeholder }) => {
-  const { register } = useForm();
+const Input = ({ labelText, type, name, value, onChange, error, placeholder, register }) => {
+  //const { register } = useForm();
 
   return (
     <div className={styles.container}>
@@ -16,6 +16,7 @@ const Input = ({ labelText, type, name, value, onChange, placeholder }) => {
         onChange={onChange}
         placeholder={placeholder}
       ></input>
+      {error && <p className={styles.errorMessage}> {error} </p>}
     </div>
   );
 };

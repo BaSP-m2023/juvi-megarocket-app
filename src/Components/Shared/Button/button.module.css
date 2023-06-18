@@ -67,3 +67,10 @@
   width: 30px;
   height: 30px;
 }
+.btnReset {
+    background: #fddba1;
+    border-radius: 5px;
+    color: #373867;
+    border-style: none;
+    font-weight: 550;
+}
