@@ -20,7 +20,6 @@ const Form = () => {
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors }
   } = useForm({
     mode: 'onChange',
@@ -44,15 +43,11 @@ const Form = () => {
   }, [data.item, reset]);
 
   const onSubmit = (data) => {
-    console.log('data', data);
     if (id) {
       dispatch(editActivity(data, id, setModalText, setShowModal, setShowModalSuccess));
     } else {
       dispatch(addActivity(data, setModalText, setShowModal, setShowModalSuccess));
     }
-  };
-  const invalidSubmit = (error) => {
-    console.log(error);
   };
 
   const closeModal = () => {
@@ -65,8 +60,7 @@ const Form = () => {
         <div>is Loading</div>
       ) : (
         <>
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit, invalidSubmit)}>
-            {console.log(watch())};
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.divContainer}>
               <Input
                 register={register}
