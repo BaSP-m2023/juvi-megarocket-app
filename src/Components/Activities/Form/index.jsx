@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-import { Button, Input, ModalAlert } from '../../Shared';
-import { addActivity, editActivity, getByIdActivity } from '../../../redux/activities/thunks';
+import { Button, Input, ModalAlert } from 'Components/Shared';
+import { addActivity, editActivity, getByIdActivity } from 'redux/activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
