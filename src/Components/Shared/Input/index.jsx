@@ -1,4 +1,4 @@
-import styles from './input.module.css';
+import styles from 'Components/Shared/Input/input.module.css';
 
 const Input = ({ labelText, type, name, error, placeholder, register }) => {
   return (

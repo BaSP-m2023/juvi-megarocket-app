@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMemberById, putMember, addMember } from 'redux/members/thunks';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from 'Components/Members/MemberForm/form.module.css';
+
 import { schema } from 'Components/Members/MemberForm/memberFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { getMemberById, putMember, addMember } from 'redux/members/thunks';
 
 const MemberForm = (props) => {
   const [modal, setModal] = useState(false);
@@ -85,7 +87,6 @@ const MemberForm = (props) => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       if (text === 'Add member') {
         dispatch(addMember(data, switchModal));

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styles from './table.module.css';
-import { Button, ModalConfirm } from '../../Shared';
+import styles from 'Components/Shared/Table/table.module.css';
+import { Button, ModalConfirm } from 'Components/Shared';
 import { Link } from 'react-router-dom';
 
 const SharedTable = ({ data, handleDelete, editLink }) => {
