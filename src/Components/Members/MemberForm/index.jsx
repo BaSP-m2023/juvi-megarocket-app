@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMemberById, putMember, addMember } from '../../../redux/members/thunks';
+import { getMemberById, putMember, addMember } from 'Components/redux/members/thunks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from './form.module.css';
-import { schema } from './memberFormValidations';
-import { ModalAlert, Button, Input } from '../../Shared';
+import styles from 'Components/Members/MemberForm/form.module.css';
+import { schema } from 'Components/Members/MemberForm/memberFormValidations';
+import { ModalAlert, Button, Input } from 'Components/Shared';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 

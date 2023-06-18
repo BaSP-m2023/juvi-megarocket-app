@@ -1,30 +1,18 @@
 import styles from './input.module.css';
 
-const Input = ({
-  labelText,
-  type,
-  name,
-  placeholder,
-  defaultValue,
-  value,
-  onChange,
-  register,
-  error
-}) => {
+const Input = ({ labelText, type, name, value, error, placeholder, register }) => {
   return (
     <div className={styles.container}>
       <label className={styles.label}>{labelText}</label>
       <input
         className={styles.input}
         type={type}
-        defaultValue={defaultValue}
         value={value}
-        onChange={onChange}
         name={name}
         placeholder={placeholder}
         {...register(name)}
       ></input>
-      {error && <p>{error}</p>}
+      {error && <p className={styles.errorMessage}> {error} </p>}
     </div>
   );
 };
