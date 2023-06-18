@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMemberById, putMember, addMember } from '../../../redux/members/thunks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
 import styles from './form.module.css';
+import { schema } from './memberFormValidations';
 import { ModalAlert, Button, Input } from '../../Shared';
 import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const MemberForm = (props) => {
   const [modal, setModal] = useState(false);
@@ -16,186 +17,169 @@ const MemberForm = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
-  const { handleSubmit } = useForm();
+  const [memb, setMemb] = useState({});
+  const [text, setText] = useState('');
 
-  const [member, setMember] = useState({
-    firstName: data.item.firstName ?? '',
-    lastName: data.item.lastName ?? '',
-    dni: data.item.dni ?? '',
-    phone: data.item.phone ?? '',
-    email: data.item.email ?? '',
-    city: data.item.city ?? '',
-    birthDate: data.item.birthDate ?? '',
-    postalCode: data.item.postalCode ?? '',
-    memberships: data.item.memberships ?? 'Only Classes',
-    password: data.item.password ?? ''
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(schema)
   });
 
   const { id } = useParams();
-  let text = 'Add member';
-
-  if (id) {
-    text = 'Edit member';
-  } else {
-    text = 'Add member';
-  }
 
   useEffect(() => {
+    console.log(data.item);
+    console.log(memb);
     if (id) {
-      dispatch(getMemberById(id, setMember));
+      console.log('Si, ID!!!');
+      dispatch(getMemberById(id));
+      setMemb(data.item);
+      setText('Edit member');
+    } else {
+      console.log('Sad, NO ID!!!');
+      setMemb({});
+      setText('Add member');
     }
-  }, [data.error, msg]);
+  }, [data.error, msg, data.item.firstName, memb]);
 
-  useEffect(() => {
-    if (!id) {
-      setMember({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        birthDate: '',
-        postalCode: '',
-        memberships: 'Only Classes',
-        password: ''
-      });
-    }
-  }, []);
-
-  const onChange = (event) => {
-    setMember({
-      ...member,
-      [event.target.name]: event.target.value
-    });
-  };
-
-  const replaceBd = () => {
-    setMember({
-      ...member,
-      birthDate: member.birthDate.substring(0, 10)
-    });
-  };
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const errorAlert = (errorMsg) => {
-    setMsg(errorMsg);
-    setModal(!modal);
-  };
-
-  const successAlert = (successMsg) => {
-    setMsg(successMsg);
-    setModalDone(!modalDone);
-  };
-
   const switchModal = (error, msg) => {
     if (error) {
-      replaceBd();
-      errorAlert(msg);
+      setMsg(msg);
+      setModal(!modal);
     } else {
-      successAlert(msg);
+      setMsg(msg);
+      setModalDone(!modalDone);
     }
   };
 
-  const onSubmit = () => {
-    member.birthDate = member.birthDate + 'T03:00:00.000+00:00';
-    if (text === 'Add member') {
-      dispatch(addMember(member, switchModal));
-    } else {
-      dispatch(putMember(id, member, switchModal));
+  const handleChange = (event) => {
+    setMemb({
+      ...data.item,
+      [event.target.name]: event.current.value
+    });
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      console.log(await data);
+      if (text === 'Add member') {
+        dispatch(addMember(data, switchModal));
+      } else {
+        dispatch(putMember(id, data, switchModal));
+      }
+    } catch (error) {
+      switchModal(true, error);
     }
   };
+
+  const onInvalid = (errors) => console.error(errors);
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
       <div className={styles.formContainer}>
+        <h1>{text}</h1>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="First Name"
             className={styles.input}
-            name="firstName"
+            name={'firstName'}
             type="text"
-            value={member.firstName}
-            onChange={onChange}
+            value={memb?.firstName}
+            defaultValue={memb?.firstName ?? ''}
+            onChange={handleChange}
             placeholder="Ex: Tristan"
+            error={errors.firstName?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="Last Name"
             className={styles.input}
-            name="lastName"
+            name={'lastName'}
             type="text"
-            value={member.lastName}
-            onChange={onChange}
+            defaultValue={memb?.lastName ?? ''}
             placeholder="Ex: Galvez"
+            error={errors.lastName?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="DNI"
             className={styles.input}
-            name="dni"
+            name={'dni'}
             type="number"
-            value={member.dni}
-            onChange={onChange}
+            defaultValue={memb?.dni ?? ''}
             placeholder="Ex: 33555888"
+            error={errors.dni?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="Phone"
             className={styles.input}
-            name="phone"
+            name={'phone'}
             type="number"
-            value={member.phone}
-            onChange={onChange}
+            defaultValue={memb?.phone ?? ''}
             placeholder="Ex: 11426426"
+            error={errors.phone?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="Email"
             className={styles.input}
-            name="email"
+            name={'email'}
             type="text"
-            value={member.email}
-            onChange={onChange}
+            defaultValue={memb?.email ?? ''}
             placeholder="example@example.com"
+            error={errors.email?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="City"
             className={styles.input}
-            name="city"
+            name={'city'}
             type="text"
-            value={member.city}
-            onChange={onChange}
+            defaultValue={memb?.city ?? ''}
             placeholder="Ex: Casilda"
+            error={errors.city?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="Birth Day"
             className={styles.input}
-            name="birthDate"
-            type="date"
-            value={member.birthDate}
-            onChange={onChange}
+            name={'birthDate'}
+            type="datetime-local"
+            defaultValue={memb?.birthDate ?? '1990-01-01 01-01'}
+            error={errors.birthDate?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
           <Input
             labelText="Zip"
             className={styles.input}
-            name="postalCode"
+            name={'postalCode'}
             type="number"
-            value={member.postalCode}
-            onChange={onChange}
+            defaultValue={memb?.postalCode ?? ''}
             placeholder="Ex: 2170"
+            error={errors.postalCode?.message}
+            register={register}
           />
         </fieldset>
         <fieldset className={styles.fieldset}>
@@ -203,11 +187,12 @@ const MemberForm = (props) => {
             <Input
               labelText="Password"
               className={styles.input}
-              name="password"
+              name={'password'}
               type={showPassword ? 'text' : 'password'}
-              value={member.password}
-              onChange={onChange}
+              defaultValue={memb?.password ?? ''}
               placeholder="Password"
+              error={errors.password?.message}
+              register={register}
             />
             <FontAwesomeIcon
               icon={showPassword ? faEyeSlash : faEye}
@@ -218,20 +203,19 @@ const MemberForm = (props) => {
         </fieldset>
         <fieldset className={styles.fieldset}>
           <label>Membership</label>
-          <select name="memberships" value={member.memberships} onChange={onChange}>
+          <select
+            name="memberships"
+            defaultValue={memb?.memberships ?? 'Only Classes'}
+            {...register('memberships')}
+          >
             <option value="Only Classes">Only Classes</option>
             <option value="Classic">Classic</option>
             <option value="Black">Black</option>
           </select>
+          {errors.memberships && <p>{errors.memberships.message}</p>}
         </fieldset>
       </div>
-      <Button
-        type={'confirm'}
-        resource={'Member'}
-        onClick={() => {
-          onSubmit;
-        }}
-      />
+      <Button type={'submit'} resource={'Member'} />
       <Button type={'cancel'} onClick={() => props.history.push('/members')} />
       {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
       {modalDone && <ModalAlert text={msg} onClick={() => props.history.push('/members')} />}

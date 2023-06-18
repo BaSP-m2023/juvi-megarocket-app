@@ -1,21 +1,30 @@
-import React from 'react';
 import styles from './input.module.css';
-import { useForm } from 'react-hook-form';
 
-const Input = ({ labelText, type, name, value, onChange, placeholder }) => {
-  const { register } = useForm();
-
+const Input = ({
+  labelText,
+  type,
+  name,
+  placeholder,
+  defaultValue,
+  value,
+  onChange,
+  register,
+  error
+}) => {
   return (
     <div className={styles.container}>
       <label className={styles.label}>{labelText}</label>
       <input
         className={styles.input}
-        {...register(name)}
         type={type}
+        defaultValue={defaultValue}
         value={value}
         onChange={onChange}
+        name={name}
         placeholder={placeholder}
+        {...register(name)}
       ></input>
+      {error && <p>{error}</p>}
     </div>
   );
 };
