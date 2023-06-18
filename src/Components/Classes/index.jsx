@@ -1,7 +1,8 @@
 import styles from './classes.module.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SharedTable, Button } from '../Shared';
+import Button from 'Components/Shared/Button';
+import SharedTable from 'Components/Shared/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses, deleteClass } from '../../redux/classes/thunks';
 import ModalAlert from '../Shared/ModalAlert';
@@ -33,14 +34,14 @@ const Classes = () => {
     <section className={styles.containerClass}>
       <div className={styles.titleClass}>
         <h2>Classes</h2>
-        <Link to="/classes/form" className={styles.contButton}>
+        <Link to="/admins/classes/form" className={styles.contButton}>
           <Button type="add" resource="Class" />
         </Link>
       </div>
       {isLoading ? (
         <div>Is Loading</div>
       ) : (
-        <SharedTable data={list} editLink={'classes/form/'} handleDelete={deleteClasses} />
+        <SharedTable data={list} editLink={'/admins/classes/form/'} handleDelete={deleteClasses} />
       )}
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </section>

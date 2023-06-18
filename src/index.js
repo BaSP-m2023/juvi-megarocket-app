@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './Components/Layout';
+import Layout from './Routes';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Provider } from 'react-redux';

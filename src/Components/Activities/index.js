@@ -30,7 +30,7 @@ const Activities = () => {
       <section className={styles.container}>
         <div className={styles.titleActivities}>
           <h2>Activities</h2>
-          <Link to="/activities/ActivitiesForm">
+          <Link to="/admins/activities/ActivitiesForm">
             <Button type="add" resource="Activity" />
           </Link>
         </div>
@@ -39,7 +39,7 @@ const Activities = () => {
         ) : (
           <SharedTable
             data={list}
-            editLink={'activities/ActivitiesForm/'}
+            editLink={'/admins/activities/ActivitiesForm/'}
             handleDelete={deleteItem}
           />
         )}

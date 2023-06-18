@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMembers, deleteMember } from '../../redux/members/thunks';
 
 import styles from './members.module.css';
-import { SharedTable, Button, ModalAlert } from '../Shared';
+import { ModalAlert } from '../Shared';
+import Button from 'Components/Shared/Button';
+import SharedTable from 'Components/Shared/Table';
 
 function Members(props) {
   const [modal, setModal] = useState(false);
@@ -27,12 +29,12 @@ function Members(props) {
         <Button
           type={'add'}
           resource={'Member'}
-          onClick={() => props.history.push('/members/form')}
+          onClick={() => props.history.push('/admins/members/form')}
         />
       </div>
       {data.isLoading && <h1>Loading</h1>}
       {!data.isLoading && (
-        <SharedTable data={data.list} handleDelete={delMember} editLink={'members/form/'} />
+        <SharedTable data={data.list} handleDelete={delMember} editLink={'/admins/members/form/'} />
       )}
       {modal && (
         <ModalAlert
