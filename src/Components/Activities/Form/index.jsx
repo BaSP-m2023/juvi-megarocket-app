@@ -75,7 +75,7 @@ const Form = () => {
           <Button
             className={styles.addButton}
             type="cancel"
-            onClick={() => history.push('/activities')}
+            onClick={() => history.goBack()}
           ></Button>
         </form>
       )}

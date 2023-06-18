@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import { Link } from 'react-router-dom';
-import Button from '../Shared/Button/index.jsx';
-import { ModalAlert } from '../Shared/index.jsx';
+import Button from 'Components/Shared/Button';
+import ModalAlert from 'Components/Shared/ModalAlert';
 import { SharedTable } from '../Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
