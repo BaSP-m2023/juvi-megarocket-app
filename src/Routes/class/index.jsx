@@ -1,3 +1,3 @@
-import ClassList from 'Components/Classes';
+import ClassList from 'Components/Admin/Classes';
 
 export default ClassList;

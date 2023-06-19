@@ -1,9 +1,9 @@
 import styles from './subscriptions.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { SharedTable, ModalAlert, Button } from '../Shared';
+import { SharedTable, ModalAlert, Button } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions, deleteSubscription } from '../../redux/subscriptions/thunks';
+import { getSubscriptions, deleteSubscription } from 'redux/subscriptions/thunks';
 
 function Subscriptions() {
   const [showAlert, setshowAlert] = useState(false);

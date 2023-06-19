@@ -1,3 +1,3 @@
-import ClassForm from 'Components/Classes/Form';
+import ClassForm from 'Components/Admin/Classes/Form';
 
 export default ClassForm;

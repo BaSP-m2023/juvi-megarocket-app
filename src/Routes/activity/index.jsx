@@ -1,3 +1,3 @@
-import ActivityList from 'Components/Activities';
+import ActivityList from 'Components/Admin/Activities';
 
 export default ActivityList;

@@ -1,3 +1,3 @@
-import SubscriptionForm from 'Components/Subscriptions/Form';
+import SubscriptionForm from 'Components/Admin/Subscriptions/Form';
 
 export default SubscriptionForm;

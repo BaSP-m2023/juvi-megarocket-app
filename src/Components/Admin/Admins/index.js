@@ -3,9 +3,9 @@ import styles from './admins.module.css';
 import { Link } from 'react-router-dom';
 import Button from 'Components/Shared/Button';
 import ModalAlert from 'Components/Shared/ModalAlert';
-import { SharedTable } from '../Shared';
+import { SharedTable } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
+import { getAdmins, deleteAdmin } from 'redux/admins/thunks';
 
 function Admins() {
   const [modalText, setModalText] = useState('');

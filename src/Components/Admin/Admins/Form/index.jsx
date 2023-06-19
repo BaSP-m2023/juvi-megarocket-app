@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import ModalAlert from '../../Shared/ModalAlert/index.jsx';
-import { Input } from '../../Shared';
+import Button from 'Components/Shared/Button';
+import ModalAlert from 'Components/Shared/ModalAlert';
+import { Input } from 'Components/Shared';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
-import { editAdmin, addAdmin, getByIdAdmins } from '../../../redux/admins/thunks';
+import { editAdmin, addAdmin, getByIdAdmins } from 'redux/admins/thunks';
 
 const AdminsForm = () => {
   const dispatch = useDispatch();

@@ -83,7 +83,7 @@ function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link to="/members/subscriptions" onClick={closeNav}>
+                <Link to="/members/Membership" onClick={closeNav}>
                   Membership
                 </Link>
               </li>

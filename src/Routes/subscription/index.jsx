@@ -1,3 +1,3 @@
-import SubscriptionsList from 'Components/Subscriptions';
+import SubscriptionsList from 'Components/Admin/Subscriptions';
 
 export default SubscriptionsList;

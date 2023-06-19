@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getMembers, deleteMember } from 'redux/members/thunks';
 
-import styles from 'Components/Members/members.module.css';
+import styles from './members.module.css';
 import { ModalAlert } from 'Components/Shared';
 import Button from 'Components/Shared/Button';
 import SharedTable from 'Components/Shared/Table';

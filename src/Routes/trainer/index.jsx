@@ -1,3 +1,3 @@
-import TrainerList from 'Components/Trainers';
+import TrainerList from 'Components/Admin/Trainers';
 
 export default TrainerList;

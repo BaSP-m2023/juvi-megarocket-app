@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Button from 'Components/Shared/Button';
 import SharedTable from 'Components/Shared/Table';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClasses, deleteClass } from '../../redux/classes/thunks';
-import ModalAlert from '../Shared/ModalAlert';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
+import ModalAlert from 'Components/Shared/ModalAlert';
 
 const Classes = () => {
   const { list, isLoading } = useSelector((state) => state.classes);
