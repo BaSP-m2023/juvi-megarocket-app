@@ -1,3 +1,3 @@
-import AdminForm from 'Components/Admins/Form';
+import AdminForm from 'Components/Admin/Admins/Form';
 
 export default AdminForm;

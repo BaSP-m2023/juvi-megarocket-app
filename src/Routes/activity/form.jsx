@@ -1,3 +1,3 @@
-import ActivityForm from 'Components/Activities/Form';
+import ActivityForm from 'Components/Admin/Activities/Form';
 
 export default ActivityForm;

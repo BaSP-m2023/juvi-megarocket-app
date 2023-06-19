@@ -1,9 +1,9 @@
 import styles from './subscriptions.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { SharedTable, ModalAlert, Button } from '../Shared';
+import { SharedTable, ModalAlert, Button } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions, deleteSubscription } from '../../redux/subscriptions/thunks';
+import { getSubscriptions, deleteSubscription } from 'redux/subscriptions/thunks';
 
 function Subscriptions() {
   const [showAlert, setshowAlert] = useState(false);
@@ -27,13 +27,17 @@ function Subscriptions() {
   return (
     <>
       <section className={styles.container}>
-        <Link to="/subscriptions/form">
+        <Link to="/admins/subscriptions/form">
           <Button type="add" resource="Subscription"></Button>
         </Link>
         {isLoading ? (
           <h2>Loading...</h2>
         ) : (
-          <SharedTable data={list} editLink={'/subscriptions/form/'} handleDelete={handleDelete} />
+          <SharedTable
+            data={list}
+            editLink={'/admins/subscriptions/form/'}
+            handleDelete={handleDelete}
+          />
         )}
       </section>
       {showAlert && <ModalAlert text={alertText} onClick={showAlertHandler} />}

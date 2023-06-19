@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
-import { addTrainer, getTrainersBy, putTrainer } from '../../../redux/trainers/thunks';
-import { resetErrorAndMessage } from '../../../redux/trainers/actions';
-import { Button, Input, ModalAlert } from '../../Shared';
+import { addTrainer, getTrainersBy, putTrainer } from 'redux/trainers/thunks';
+import { resetErrorAndMessage } from 'redux/trainers/actions';
+import { Button, Input, ModalAlert } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {

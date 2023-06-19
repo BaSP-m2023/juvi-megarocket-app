@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import style from './form.module.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
-import { ModalAlert, Button } from '../../Shared';
+import { ModalAlert, Button } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {
-  addSubscription,
-  editSubscription,
-  getSubscriptionById
-} from '../../../redux/subscriptions/thunks';
+import { addSubscription, editSubscription, getSubscriptionById } from 'redux/subscriptions/thunks';
 
 const SubForm = () => {
   const { id } = useParams();

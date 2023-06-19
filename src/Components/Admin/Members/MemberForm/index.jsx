@@ -6,9 +6,9 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from 'Components/Members/MemberForm/form.module.css';
+import styles from 'Components/Admin/Members/MemberForm/form.module.css';
 
-import { schema } from 'Components/Members/MemberForm/memberFormValidations';
+import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
 import { getMemberById, putMember, addMember } from 'redux/members/thunks';
 

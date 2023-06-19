@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './classesForm.module.css';
 import { useHistory, useParams } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import { Input } from '../../Shared';
-import ModalAlert from '../../Shared/ModalAlert';
-import { postClass, getByIdClasses, putClass, deleteClass } from '../../../redux/classes/thunks';
+import Button from 'Components/Shared/Button';
+import { Input } from 'Components/Shared';
+import ModalAlert from 'Components/Shared/ModalAlert';
+import { postClass, getByIdClasses, putClass, deleteClass } from 'redux/classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrainers } from '../../../redux/trainers/thunks';
-import { getActivities } from '../../../redux/activities/thunks';
+import { getTrainers } from 'redux/trainers/thunks';
+import { getActivities } from 'redux/activities/thunks';
 
 const FormClasses = () => {
   const dispatch = useDispatch();

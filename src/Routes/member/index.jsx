@@ -1,3 +1,3 @@
-import MemberList from 'Components/Members';
+import MemberList from 'Components/Admin/Members';
 
 export default MemberList;
