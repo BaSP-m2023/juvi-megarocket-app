@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '../../Shared';
-import styles from './modal-alert.module.css';
+import { Button } from 'Components/Shared';
+import styles from 'Components/Shared/ModalAlert/modal-alert.module.css';
 
 const ModalAlert = ({ text, onClick }) => {
   return (

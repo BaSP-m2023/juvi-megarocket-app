@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './activities.module.css';
 import { Link } from 'react-router-dom';
-import { Button, SharedTable, ModalAlert } from '../Shared';
+import { Button, SharedTable, ModalAlert } from '../../Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getActivities, deleteActivity } from '../../redux/activities/thunks';
+import { getActivities, deleteActivity } from '../../../redux/activities/thunks';
 
 const Activities = () => {
   const [showModal, setShowModal] = useState(false);

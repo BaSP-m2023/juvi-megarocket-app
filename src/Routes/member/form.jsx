@@ -1,3 +1,3 @@
-import MemberForm from 'Components/Members/MemberForm';
+import MemberForm from 'Components/Admin/Members/MemberForm';
 
 export default MemberForm;

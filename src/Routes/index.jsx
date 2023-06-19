@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import Home from 'Components/Home';
 import Navbar from 'Components/Navbar';
 import Header from 'Components/Header/';
-import Footer from '../Components/Footer/';
 import styles from './layout.module.css';
 
 const activityForm = lazy(() => import('./activity/form'));
@@ -54,38 +53,19 @@ function Layout() {
                     <Route exact path="/admins/trainers" component={trainerList} />
                     <Route exact path="/admins/trainers/form" component={trainerForm} />
                     <Route path="/admins/trainers/form/:id" component={trainerForm} />
+                    <Route exact path="/admins/subscriptions" component={subscriptionList} />
+                    <Route exact path="/admins/subscriptions/form" component={subscriptionForm} />
+                    <Route path="/admins/subscriptions/form/:id" component={subscriptionForm} />
                   </>
                 )}
               />
-
-              <Route exact path="/activities" component={activityList} />
-              <Route exact path="/activities/ActivitiesForm" component={activityForm} />
-              <Route path="/activities/ActivitiesForm/:id" component={activityForm} />
-
-              <Route exact path="/classes" component={classList} />
-              <Route exact path="/classes/form/" component={classForm} />
-              <Route path="/classes/form/:id" component={classForm} />
-
-              <Route exact path="/members" component={memberList} />
-              <Route exact path="/members/form" component={memberForm} />
-              <Route path="/members/form/:id" component={memberForm} />
-
-              <Route path="/subscriptions" exact component={subscriptionList} />
-              <Route exact path="/subscriptions/form" component={subscriptionForm} />
-              <Route exact path="/subscriptions/form/:id" component={subscriptionForm} />
-
               <Route exact path="/super-admins" component={superAdminList} />
               <Route exact path="/super-admins/form" component={superAdminForm} />
               <Route exact path="/super-admins/form/:id" component={superAdminForm} />
-
-              <Route exact path="/trainers" component={trainerList} />
-              <Route exact path="/trainers/form" component={trainerForm} />
-              <Route exact path="/trainers/form/:id" component={trainerForm} />
             </Switch>
           </Suspense>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
