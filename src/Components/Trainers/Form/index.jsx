@@ -1,25 +1,39 @@
-import { useState, useEffect } from 'react';
-import styles from './form.module.css';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { addTrainer, getTrainersBy, putTrainer } from '../../../redux/trainers/thunks';
-import { resetErrorAndMessage } from '../../../redux/trainers/actions';
-import { Button, Input, ModalAlert } from '../../Shared';
+import styles from './form.module.css';
+import { Button, Input, ModalAlert } from 'Components/Shared';
+import { addTrainer, putTrainer, getTrainersBy } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import trainersSchema from './validationTrainers';
 
 const Form = () => {
-  const { error, message, item } = useSelector((state) => state.trainers);
   const dispatch = useDispatch();
+  const data = useSelector((state) => state.trainers);
   const { id } = useParams();
   const history = useHistory();
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: ''
+  const [showModal, setShowModal] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
+  const [modalText, setModalText] = useState('');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(trainersSchema),
+    defaultValues: {
+      firstName: data.item?.firstName || '',
+      lastName: data.item?.lastName || '',
+      dni: data.item?.dni || '',
+      phone: data.item?.phone || '',
+      email: data.item?.email || '',
+      city: data.item?.city || '',
+      password: data.item?.password || '',
+      salary: data.item?.salary || ''
+    }
   });
 
   useEffect(() => {
@@ -29,119 +43,121 @@ const Form = () => {
   }, [id]);
 
   useEffect(() => {
-    if (id && item) {
-      setFormData({
-        firstName: item.firstName,
-        lastName: item.lastName,
-        dni: item.dni,
-        phone: item.phone,
-        email: item.email,
-        city: item.city,
-        password: item.password,
-        salary: item.salary
+    if (data.item) {
+      reset({
+        firstName: data.item?.firstName || '',
+        lastName: data.item?.lastName || '',
+        dni: data.item?.dni || '',
+        phone: data.item?.phone || '',
+        email: data.item?.email || '',
+        city: data.item?.city || '',
+        password: data.item?.password || '',
+        salary: data.item?.salary || ''
       });
     }
-  }, [item]);
+  }, [data.item, reset]);
 
-  const onChangeInput = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleCancel = () => {
-    history.push('/admins/trainers');
-    dispatch(resetErrorAndMessage());
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
     if (id) {
-      dispatch(putTrainer(formData, id));
+      dispatch(putTrainer(data, id, setModalText, setShowModal, setShowModalSuccess));
     } else {
-      dispatch(addTrainer(formData));
+      dispatch(addTrainer(data, setModalText, setShowModal, setShowModalSuccess));
     }
   };
 
-  const closeAlert = () => {
-    if (error === '') {
-      history.push('/admins/trainers');
-    }
-    dispatch(resetErrorAndMessage());
+  const closeModal = () => {
+    setShowModal(!showModal);
   };
 
   return (
-    <div>
-      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
-      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
-      <form className={styles.addTrainer} onSubmit={onSubmit}>
-        <div className={styles.column}>
-          <Input
-            labelText={`First name`}
-            type={'text'}
-            name={`firstName`}
-            value={formData.firstName ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-          <Input
-            labelText={`Last Name`}
-            type={'text'}
-            name={`lastName`}
-            value={formData.lastName ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-          <Input
-            labelText={`City`}
-            type={'text'}
-            name={`city`}
-            value={formData.city ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-          <Input
-            labelText={`Dni`}
-            type={'text'}
-            name={`dni`}
-            value={formData.dni ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-        </div>
-        <div className={styles.column}>
-          <Input
-            labelText={`Email`}
-            type={'text'}
-            name={`email`}
-            value={formData.email ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-          <Input
-            labelText={`Phone`}
-            type={'text'}
-            name={`phone`}
-            value={formData.phone ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-          <Input
-            labelText={`Salary`}
-            type={'text'}
-            name={`salary`}
-            value={formData.salary ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-          <Input
-            labelText={`Password`}
-            type={'password'}
-            name={`password`}
-            value={formData.password ?? ''}
-            onChange={onChangeInput}
-          ></Input>
-        </div>
-        <Button type="confirm" />
-        <Button type="cancel" onClick={handleCancel}>
-          Cancel
-        </Button>
-      </form>
-    </div>
+    <>
+      {data.isLoading ? (
+        <div>is Loading</div>
+      ) : (
+        <>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.divContainer}>
+              <Input
+                register={register}
+                labelText="Name"
+                name="name"
+                type="text"
+                error={errors.name?.message}
+              />
+              <Input
+                register={register}
+                labelText="LastName"
+                name="lastname"
+                type="text"
+                error={errors.lastName?.message}
+              />
+              <Input
+                register={register}
+                labelText={`City`}
+                type={'text'}
+                name={`city`}
+                error={errors.city ?? ''}
+              ></Input>
+              <Input
+                register={register}
+                labelText={`Dni`}
+                type={'text'}
+                name={`dni`}
+                error={errors.dni ?? ''}
+              ></Input>
+            </div>
+            <div className={styles.column}>
+              <Input
+                register={register}
+                labelText={`Email`}
+                type={'text'}
+                name={`email`}
+                error={errors.email ?? ''}
+              ></Input>
+              <Input
+                register={register}
+                labelText={`Phone`}
+                type={'text'}
+                name={`phone`}
+                error={errors.phone ?? ''}
+              ></Input>
+              <Input
+                register={register}
+                labelText={`Salary`}
+                type={'text'}
+                name={`salary`}
+                error={errors.salary ?? ''}
+              ></Input>
+              <Input
+                register={register}
+                labelText={`Password`}
+                type={'password'}
+                name={`password`}
+                error={errors.password ?? ''}
+              ></Input>
+            </div>
+            <Button className={styles.addButton} type="confirm"></Button>
+            <Button
+              className={styles.addButton}
+              type="cancel"
+              onClick={() => history.push('/trainers')}
+            ></Button>
+          </form>
+          <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
+        </>
+      )}
+
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModalSuccess && (
+        <ModalAlert
+          text={modalText}
+          onClick={() => {
+            history.push('/trainers');
+            setShowModalSuccess(false);
+          }}
+        />
+      )}
+    </>
   );
 };
 
