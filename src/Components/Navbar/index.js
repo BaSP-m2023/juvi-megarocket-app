@@ -7,6 +7,7 @@ import { useState } from 'react';
 function Navbar() {
   const [navVisible, setNavVisible] = useState(false);
   const [adminNavVisible, setAdminNavVisible] = useState(false);
+  const [memberNavVisible, setMemberNavVisible] = useState(false);
 
   const toggleNav = () => {
     setNavVisible(!navVisible);
@@ -14,10 +15,17 @@ function Navbar() {
   const adminNav = () => {
     setNavVisible(!navVisible);
     setAdminNavVisible(true);
+    setMemberNavVisible(false);
+  };
+  const memberNav = () => {
+    setNavVisible(!navVisible);
+    setAdminNavVisible(false);
+    setMemberNavVisible(true);
   };
   const closeNav = () => {
     setNavVisible(false);
     setAdminNavVisible(false);
+    setMemberNavVisible(false);
   };
   return (
     <nav className={`${styles.navbar} ${navVisible ? styles.navShadow : ''}`}>
@@ -51,13 +59,42 @@ function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link to="/subscriptions" onClick={closeNav}>
+                <Link to="/admins/subscriptions" onClick={closeNav}>
                   Subscriptions
                 </Link>
               </li>
             </>
           )}
-          {!adminNavVisible && (
+          {memberNavVisible && (
+            <>
+              <li>
+                <Link to="/members/activities" onClick={closeNav}>
+                  Activities
+                </Link>
+              </li>
+              <li>
+                <Link to="/members/profile" onClick={closeNav}>
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <Link to="/members/signUp" onClick={closeNav}>
+                  Sign Up
+                </Link>
+              </li>
+              <li>
+                <Link to="/members/subscriptions" onClick={closeNav}>
+                  Membership
+                </Link>
+              </li>
+              <li>
+                <Link to="/members/schedule" onClick={closeNav}>
+                  Schedule
+                </Link>
+              </li>
+            </>
+          )}
+          {!adminNavVisible && !memberNavVisible && (
             <>
               <li>
                 <Link to="/admins" onClick={adminNav}>
@@ -67,6 +104,11 @@ function Navbar() {
               <li>
                 <Link to="/super-admins" onClick={closeNav}>
                   SuperAdmins
+                </Link>
+              </li>
+              <li>
+                <Link to="/members" onClick={memberNav}>
+                  Members
                 </Link>
               </li>
             </>
