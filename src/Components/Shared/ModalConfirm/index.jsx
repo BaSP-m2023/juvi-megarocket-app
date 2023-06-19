@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './modal-confirm.module.css';
-import Button from '../Button';
+import styles from 'Components/Shared/ModalConfirm/modal-confirm.module.css';
+import Button from 'Components/Shared/Button';
 
 const ModalConfirm = ({ title, message, onConfirm, onCancel }) => {
   return (

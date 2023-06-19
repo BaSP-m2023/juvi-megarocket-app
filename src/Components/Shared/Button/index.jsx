@@ -1,4 +1,4 @@
-import styles from './button.module.css';
+import styles from 'Components/Shared/Button/button.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 

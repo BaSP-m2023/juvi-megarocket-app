@@ -26,7 +26,7 @@ export const getMembers = () => {
   };
 };
 
-export const getMemberById = (id, setMember) => {
+export const getMemberById = (id) => {
   return async (dispatch) => {
     try {
       dispatch(getMemberByIdPending());
@@ -37,9 +37,6 @@ export const getMemberById = (id, setMember) => {
         throw new Error(data.error.message);
       }
 
-      data.data.birthDate = data.data.birthDate.substring(0, 10);
-
-      setMember(data.data);
       dispatch(getMemberByIdSuccess(data.data));
     } catch (error) {
       dispatch(getMemberByIdError(error));
@@ -57,6 +54,8 @@ export const addMember = (member, switchModal) => {
         body: JSON.stringify(member)
       });
       const newMemb = await response.json();
+
+      console.log(newMemb.message);
 
       if (newMemb.error) {
         switchModal(newMemb.error, newMemb.message);
