@@ -81,7 +81,7 @@ const Form = () => {
             <Button
               className={styles.addButton}
               type="cancel"
-              onClick={() => history.push('/activities')}
+              onClick={() => history.push('/admins/activities')}
             ></Button>
           </form>
           <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>

@@ -1,0 +1,73 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 0 50px;
+}
+.mainTitle {
+  display: flex;
+  width: 75vw;
+  flex-direction: row;
+  border-bottom: 1px solid #f9a414;
+}
+
+.mainTitle h1 {
+  color: #f9a414;
+  font-size: 2rem;
+}
+
+.firstCardsContainer,
+.secondCardsContainer {
+  display: flex;
+  flex-direction: row;
+  width: 72vw;
+  justify-content: space-between;
+  padding-top: 50px;
+  transition: all 400ms ease;
+}
+.card {
+  width: 20vw;
+  height: 30vh;
+  border-radius: 20px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  cursor: default;
+  transition: all 400ms ease;
+}
+.card:hover {
+  transform: scale(1.2);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.8);
+  transition: all 400ms ease;
+}
+
+.firstCardsContainer > .card:nth-child(1),
+.secondCardsContainer > .card:nth-child(3) {
+  color: #fff;
+  background-color: #9fa7ab;
+}
+
+.firstCardsContainer > .card:nth-child(2),
+.secondCardsContainer > .card:nth-child(2) {
+  color: #fff;
+  background-color: #f9a414;
+}
+
+.firstCardsContainer > .card:nth-child(3),
+.secondCardsContainer > .card:nth-child(1) {
+  color: #fff;
+  background-color: #0f232e;
+}
+
+.cardTitle,
+.cardText {
+  text-align: center;
+}
+
+.cardTitle {
+  width: 17vw;
+  padding-left: 20px;
+}
+
+.cardTitle h2 {
+  font-size: 1.3rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid;
+}
