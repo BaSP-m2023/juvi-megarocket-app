@@ -14,6 +14,7 @@ const classForm = lazy(() => import('Components/Admin/Classes/Form'));
 const classList = lazy(() => import('Components/Admin/Classes'));
 const memberForm = lazy(() => import('Components/Admin/Members/MemberForm'));
 const memberList = lazy(() => import('Components/Admin/Members'));
+const memberProfile = lazy(() => import('Components/Member/Profile'));
 const subscriptionForm = lazy(() => import('Components/Admin/Subscriptions/Form'));
 const subscriptionList = lazy(() => import('Components/Admin/Subscriptions'));
 const superAdminForm = lazy(() => import('Components/SuperAdmins/Form/Index'));
@@ -68,6 +69,7 @@ function Layout() {
                 render={() => (
                   <>
                     <Route exact path="/members/activities" component={activityMember} />
+                    <Route exact path="/members/profile" component={memberProfile} />
                   </>
                 )}
               />
