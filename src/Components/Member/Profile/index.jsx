@@ -29,16 +29,16 @@ const MemberProfile = () => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: data.item?.firstName ?? '',
-      lastName: data.item?.lastName ?? '',
-      dni: data.item?.dni ?? '',
-      phone: data.item?.phone ?? '',
-      email: data.item?.email ?? '',
-      city: data.item?.city ?? '',
-      birthDate: data.item?.birthDate ?? '',
-      postalCode: data.item?.postalCode ?? '',
-      password: data.item?.password ?? '',
-      memberships: data.item?.memberships ?? 'Only Classes'
+      firstName: 'Gianluca',
+      lastName: 'Agrano',
+      dni: 44555666,
+      phone: 3414445555,
+      email: 'gianlucka1@gmail.com',
+      city: 'Rosario',
+      birthDate: '26/07/2002',
+      postalCode: 2000,
+      password: 'contrasena123',
+      memberships: 'Black'
     }
   });
 
