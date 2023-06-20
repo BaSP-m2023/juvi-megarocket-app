@@ -4,22 +4,22 @@
 }
 
 .containerTitle h2 {
-  margin-left:170px ;
+  margin-left: 10%;
   color: #F9A414;
   margin-top: 100px;
 }
 
-div.containerInfo div {
+.containerInfo div {
   text-align: center;
 }
 
-div.containerInfo div h3,
-div.containerInfo div h4 {
+.containerInfo div h3,
+.containerInfo div h4 {
   margin: 0 auto;
   margin-top: 10px;
 }
 
-div.containerInfo div h4 {
+.containerInfo div h4 {
   margin-top: 10px;
   font-size: 15px;
   letter-spacing: 2px;
@@ -37,7 +37,7 @@ div.containerInfo div h4 {
 
 .containerInfo {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   color: white;
   font-size: 20px;
@@ -50,6 +50,7 @@ div.containerInfo div h4 {
   margin: 20px;
   border-radius: 10px;
   transition: transform 0.3s ease;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
 
 .classic {
@@ -59,6 +60,7 @@ div.containerInfo div h4 {
   margin: 20px;
   border-radius: 10px;
   transition: transform 0.3s ease;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
 
 .black {
@@ -68,6 +70,7 @@ div.containerInfo div h4 {
   margin: 20px;
   border-radius: 10px;
   transition: transform 0.3s ease;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
 
 .onlyClasses:hover,
@@ -86,11 +89,15 @@ div.containerInfo div h4 {
   margin-bottom: 50px;
 }
 
-.ulMemberOnlyClasses , .ulMemberClassic, .ulMemberBlack {
-margin-top: auto;
+.ulMemberOnlyClasses,
+.ulMemberClassic,
+.ulMemberBlack {
+  margin-top: auto;
 }
 
-.ulMemberOnlyClasses  li, .ulMemberClassic li, .ulMemberBlack li {
+.ulMemberOnlyClasses li,
+.ulMemberClassic li,
+.ulMemberBlack li {
   text-align: left;
   margin-bottom: 13px;
 }
@@ -102,8 +109,21 @@ margin-top: auto;
   flex-direction: column;
 }
 
-.ulMemberOnlyClasses ,
+.ulMemberOnlyClasses,
 .ulMemberClassic,
 .ulMemberBlack {
   margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .containerInfo {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .onlyClasses:hover,
+  .classic:hover,
+  .black:hover {
+    transform: none;
+  }
 }
