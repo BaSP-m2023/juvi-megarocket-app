@@ -39,6 +39,8 @@ const Form = () => {
   useEffect(() => {
     if (id) {
       dispatch(getTrainersBy(id));
+    } else {
+      data.item = {};
     }
   }, [id]);
 
@@ -80,14 +82,14 @@ const Form = () => {
               <Input
                 register={register}
                 labelText="firstName"
-                name="name"
+                name="firstName"
                 type="text"
                 error={errors.firstName?.message}
               />
               <Input
                 register={register}
                 labelText="lastName"
-                name="lastname"
+                name="lastName"
                 type="text"
                 error={errors.lastName?.message}
               />
@@ -96,14 +98,14 @@ const Form = () => {
                 labelText={`City`}
                 type={'text'}
                 name={`city`}
-                error={errors.city ?? ''}
+                error={errors.city?.message}
               ></Input>
               <Input
                 register={register}
                 labelText={`Dni`}
                 type={'text'}
                 name={`dni`}
-                error={errors.dni ?? ''}
+                error={errors.dni?.message}
               ></Input>
             </div>
             <div className={styles.column}>
@@ -112,35 +114,38 @@ const Form = () => {
                 labelText={`Email`}
                 type={'text'}
                 name={`email`}
-                error={errors.email ?? ''}
+                error={errors.email?.message}
               ></Input>
               <Input
                 register={register}
                 labelText={`Phone`}
                 type={'text'}
                 name={`phone`}
-                error={errors.phone ?? ''}
+                error={errors.phone?.message}
               ></Input>
               <Input
                 register={register}
                 labelText={`Salary`}
                 type={'text'}
                 name={`salary`}
-                error={errors.salary ?? ''}
+                error={errors.salary?.message}
               ></Input>
               <Input
                 register={register}
                 labelText={`Password`}
                 type={'password'}
                 name={`password`}
-                error={errors.password ?? ''}
+                error={errors.password?.message}
               ></Input>
             </div>
             <Button className={styles.addButton} type="confirm"></Button>
             <Button
               className={styles.addButton}
               type="cancel"
-              onClick={() => history.push('/trainers')}
+              onClick={(e) => {
+                e.preventDefault();
+                history.push('/admins/trainers');
+              }}
             ></Button>
           </form>
           <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
@@ -152,8 +157,9 @@ const Form = () => {
         <ModalAlert
           text={modalText}
           onClick={() => {
-            history.push('/trainers');
+            history.goBack();
             setShowModalSuccess(false);
+            data.message = '';
           }}
         />
       )}

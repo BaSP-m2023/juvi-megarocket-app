@@ -48,6 +48,6 @@ const trainersSchema = Joi.object({
         'Password must contain at least 8 characters and cannot contain blank spaces'
     })
     .required(),
-  salary: Joi.number().min(6).max(15).required()
+  salary: Joi.number().min(100000).max(9999999).required()
 });
 export default trainersSchema;
