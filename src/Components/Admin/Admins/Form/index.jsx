@@ -6,7 +6,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from 'Components/Admin/Admins/Form/form.module.css';
+import styles from './form.module.css';
 
 import { schema } from './adminFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
