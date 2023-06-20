@@ -28,6 +28,16 @@ function MembershipMember() {
             <li>Visualization of the grid.</li>
           </ul>
         </div>
+        <div className={styles.black}>
+          <h4>BLACK</h4>
+          <h3>$6000</h3>
+          <ul className={styles.ulMemberBlack}>
+            <li>Free access to the weight room.</li>
+            <li>Free access to the classes with previous inscription.</li>
+            <li>Personalized follow-up by a trainer.</li>
+            <li>Visualization of the grid.</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
