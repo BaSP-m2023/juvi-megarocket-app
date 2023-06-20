@@ -10,6 +10,16 @@ function MembershipMember() {
           touch with your branch manager.
         </p>
       </div>
+      <div className={styles.containerInfo}>
+        <div className={styles.onlyClasses}>
+          <h4>ONLY CLASSES</h4>
+          <h3>$2500</h3>
+          <ul className={styles.ulMemberOnlyClasses}>
+            <li>Free access to the classes with previous registration.</li>
+            <li>Grid display.</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
