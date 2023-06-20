@@ -41,7 +41,7 @@ function Members(props) {
           text={'Member deleted successfully'}
           onClick={() => {
             setModal(!modal);
-            props.history.push('/members');
+            props.history.push('/admins/members');
           }}
         />
       )}
