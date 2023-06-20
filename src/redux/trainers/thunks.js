@@ -92,7 +92,7 @@ export const addTrainer = (data, setModalText, setShowModal, setShowModalSuccess
     }
   };
 };
-export const putTrainer = (request, id) => {
+export const putTrainer = (data, id, setModalText, setShowModal, setShowModalSuccess) => {
   return async (dispatch) => {
     try {
       dispatch(putTrainerPending());
@@ -101,15 +101,20 @@ export const putTrainer = (request, id) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(request)
+        body: JSON.stringify(data)
       });
       const responseJson = await response.json();
       if (responseJson.error) {
         throw new Error(responseJson.message);
+      } else {
+        const { data, message } = responseJson;
+        setShowModalSuccess(true);
+        setModalText(message);
+        dispatch(putTrainerSuccess({ data, message }));
       }
-      const { data, message } = responseJson;
-      dispatch(putTrainerSuccess({ data, message }));
     } catch (error) {
+      setShowModal(true);
+      setModalText(error);
       dispatch(putTrainerError(error.message));
     }
   };
