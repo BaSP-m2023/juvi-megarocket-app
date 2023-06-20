@@ -5,20 +5,21 @@ import Navbar from 'Components/Navbar';
 import Header from 'Components/Header/';
 import styles from './layout.module.css';
 
-const activityForm = lazy(() => import('./activity/form'));
-const activityList = lazy(() => import('./activity'));
-const adminForm = lazy(() => import('./admin/form'));
-const adminList = lazy(() => import('./admin'));
-const classForm = lazy(() => import('./class/form'));
-const classList = lazy(() => import('./class'));
-const memberForm = lazy(() => import('./member/form'));
-const memberList = lazy(() => import('./member'));
-const subscriptionForm = lazy(() => import('./subscription/form'));
-const subscriptionList = lazy(() => import('./subscription'));
-const superAdminForm = lazy(() => import('./super-admin/form'));
-const superAdminList = lazy(() => import('./super-admin'));
-const trainerForm = lazy(() => import('./trainer/form'));
-const trainerList = lazy(() => import('./trainer'));
+const activityMember = lazy(() => import('Components/Member/Activity'));
+const activityForm = lazy(() => import('Components/Admin/Activities/Form'));
+const activityList = lazy(() => import('Components/Admin/Activities'));
+const adminForm = lazy(() => import('Components/Admin/Admins/Form'));
+const adminList = lazy(() => import('Components/Admin/Admins'));
+const classForm = lazy(() => import('Components/Admin/Classes/Form'));
+const classList = lazy(() => import('Components/Admin/Classes'));
+const memberForm = lazy(() => import('Components/Admin/Members/MemberForm'));
+const memberList = lazy(() => import('Components/Admin/Members'));
+const subscriptionForm = lazy(() => import('Components/Admin/Subscriptions/Form'));
+const subscriptionList = lazy(() => import('Components/Admin/Subscriptions'));
+const superAdminForm = lazy(() => import('Components/SuperAdmins/Form/Index'));
+const superAdminList = lazy(() => import('Components/SuperAdmins'));
+const trainerForm = lazy(() => import('Components/Admin/Trainers/Form'));
+const trainerList = lazy(() => import('Components/Admin/Trainers'));
 
 function Layout() {
   return (
@@ -62,6 +63,14 @@ function Layout() {
               <Route exact path="/super-admins" component={superAdminList} />
               <Route exact path="/super-admins/form" component={superAdminForm} />
               <Route exact path="/super-admins/form/:id" component={superAdminForm} />
+              <Route
+                path="/members"
+                render={() => (
+                  <>
+                    <Route exact path="/members/activities" component={activityMember} />
+                  </>
+                )}
+              />
             </Switch>
           </Suspense>
         </div>
