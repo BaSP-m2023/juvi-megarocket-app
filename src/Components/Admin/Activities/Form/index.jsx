@@ -93,7 +93,7 @@ const Form = () => {
         <ModalAlert
           text={modalText}
           onClick={() => {
-            history.push('/activities');
+            history.push('/admins/activities');
             setShowModalSuccess(false);
           }}
         />
