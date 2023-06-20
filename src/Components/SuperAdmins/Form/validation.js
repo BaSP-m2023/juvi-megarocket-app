@@ -15,7 +15,7 @@ const superAdminsSchema = Joi.object({
   password: Joi.string()
     .min(8)
     .max(20)
-    .regex(/^(?=.[A-Za-z])(?=.\d).{8,}$/)
+    .regex(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/)
     .messages({
       'string.pattern.base':
         'Password must contain: at least one number, one letter, and at least 8 characters and cannot contain blank spaces'
