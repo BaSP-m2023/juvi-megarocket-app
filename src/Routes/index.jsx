@@ -13,6 +13,7 @@ const classForm = lazy(() => import('./class/form'));
 const classList = lazy(() => import('./class'));
 const memberForm = lazy(() => import('./member/form'));
 const memberList = lazy(() => import('./member'));
+const memberSignUp = lazy(()=> import('./member/singUp'))
 const subscriptionForm = lazy(() => import('./subscription/form'));
 const subscriptionList = lazy(() => import('./subscription'));
 const superAdminForm = lazy(() => import('./super-admin/form'));
