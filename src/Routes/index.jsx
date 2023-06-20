@@ -5,6 +5,8 @@ import Navbar from 'Components/Navbar';
 import Header from 'Components/Header/';
 import styles from './layout.module.css';
 
+const activityMember = lazy(() => import('Components/Member/Activity'));
+const membershipMember = lazy(() => import('Components/Member/Membership'));
 const activityForm = lazy(() => import('Components/Admin/Activities/Form'));
 const activityList = lazy(() => import('Components/Admin/Activities'));
 const adminForm = lazy(() => import('Components/Admin/Admins/Form'));
@@ -14,7 +16,6 @@ const classList = lazy(() => import('Components/Admin/Classes'));
 const memberForm = lazy(() => import('Components/Admin/Members/MemberForm'));
 const memberList = lazy(() => import('Components/Admin/Members'));
 const memberSignUp = lazy(() => import('Components/Member/SignUp'));
-const activityMember = lazy(() => import('Components/Member/Activity'));
 const subscriptionForm = lazy(() => import('Components/Admin/Subscriptions/Form'));
 const subscriptionList = lazy(() => import('Components/Admin/Subscriptions'));
 const superAdminForm = lazy(() => import('Components/SuperAdmins/Form/Index'));
@@ -70,6 +71,7 @@ function Layout() {
                   <>
                     <Route exact path="/members/signUp" component={memberSignUp} />
                     <Route exact path="/members/activities" component={activityMember} />
+                    <Route exact path="/members/membership" component={membershipMember} />
                   </>
                 )}
               />
