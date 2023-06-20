@@ -79,14 +79,14 @@ const Form = () => {
             <div className={styles.divContainer}>
               <Input
                 register={register}
-                labelText="Name"
+                labelText="firstName"
                 name="name"
                 type="text"
-                error={errors.name?.message}
+                error={errors.firstName?.message}
               />
               <Input
                 register={register}
-                labelText="LastName"
+                labelText="lastName"
                 name="lastname"
                 type="text"
                 error={errors.lastName?.message}
