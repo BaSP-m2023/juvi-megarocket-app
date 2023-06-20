@@ -3,23 +3,24 @@ import { Route, Switch } from 'react-router-dom';
 import Home from 'Components/Home';
 import Navbar from 'Components/Navbar';
 import Header from 'Components/Header/';
-import Footer from '../Components/Footer/';
 import styles from './layout.module.css';
 
-const activityForm = lazy(() => import('./activity/form'));
-const activityList = lazy(() => import('./activity'));
-const adminForm = lazy(() => import('./admin/form'));
-const adminList = lazy(() => import('./admin'));
-const classForm = lazy(() => import('./class/form'));
-const classList = lazy(() => import('./class'));
-const memberForm = lazy(() => import('./member/form'));
-const memberList = lazy(() => import('./member'));
-const subscriptionForm = lazy(() => import('./subscription/form'));
-const subscriptionList = lazy(() => import('./subscription'));
-const superAdminForm = lazy(() => import('./super-admin/form'));
-const superAdminList = lazy(() => import('./super-admin'));
-const trainerForm = lazy(() => import('./trainer/form'));
-const trainerList = lazy(() => import('./trainer'));
+const activityMember = lazy(() => import('Components/Member/Activity'));
+const membershipMember = lazy(() => import('Components/Member/Membership'));
+const activityForm = lazy(() => import('Components/Admin/Activities/Form'));
+const activityList = lazy(() => import('Components/Admin/Activities'));
+const adminForm = lazy(() => import('Components/Admin/Admins/Form'));
+const adminList = lazy(() => import('Components/Admin/Admins'));
+const classForm = lazy(() => import('Components/Admin/Classes/Form'));
+const classList = lazy(() => import('Components/Admin/Classes'));
+const memberForm = lazy(() => import('Components/Admin/Members/MemberForm'));
+const memberList = lazy(() => import('Components/Admin/Members'));
+const subscriptionForm = lazy(() => import('Components/Admin/Subscriptions/Form'));
+const subscriptionList = lazy(() => import('Components/Admin/Subscriptions'));
+const superAdminForm = lazy(() => import('Components/SuperAdmins/Form/Index'));
+const superAdminList = lazy(() => import('Components/SuperAdmins'));
+const trainerForm = lazy(() => import('Components/Admin/Trainers/Form'));
+const trainerList = lazy(() => import('Components/Admin/Trainers'));
 
 function Layout() {
   return (
@@ -54,38 +55,28 @@ function Layout() {
                     <Route exact path="/admins/trainers" component={trainerList} />
                     <Route exact path="/admins/trainers/form" component={trainerForm} />
                     <Route path="/admins/trainers/form/:id" component={trainerForm} />
+                    <Route exact path="/admins/subscriptions" component={subscriptionList} />
+                    <Route exact path="/admins/subscriptions/form" component={subscriptionForm} />
+                    <Route path="/admins/subscriptions/form/:id" component={subscriptionForm} />
                   </>
                 )}
               />
-
-              <Route exact path="/activities" component={activityList} />
-              <Route exact path="/activities/ActivitiesForm" component={activityForm} />
-              <Route path="/activities/ActivitiesForm/:id" component={activityForm} />
-
-              <Route exact path="/classes" component={classList} />
-              <Route exact path="/classes/form/" component={classForm} />
-              <Route path="/classes/form/:id" component={classForm} />
-
-              <Route exact path="/members" component={memberList} />
-              <Route exact path="/members/form" component={memberForm} />
-              <Route path="/members/form/:id" component={memberForm} />
-
-              <Route path="/subscriptions" exact component={subscriptionList} />
-              <Route exact path="/subscriptions/form" component={subscriptionForm} />
-              <Route exact path="/subscriptions/form/:id" component={subscriptionForm} />
-
               <Route exact path="/super-admins" component={superAdminList} />
               <Route exact path="/super-admins/form" component={superAdminForm} />
               <Route exact path="/super-admins/form/:id" component={superAdminForm} />
-
-              <Route exact path="/trainers" component={trainerList} />
-              <Route exact path="/trainers/form" component={trainerForm} />
-              <Route exact path="/trainers/form/:id" component={trainerForm} />
+              <Route
+                path="/members"
+                render={() => (
+                  <>
+                    <Route exact path="/members/activities" component={activityMember} />
+                    <Route exact path="/members/membership" component={membershipMember} />
+                  </>
+                )}
+              />
             </Switch>
           </Suspense>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
