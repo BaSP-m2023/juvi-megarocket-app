@@ -117,7 +117,7 @@ export const putClass = (
   };
 };
 
-export const getByIdClasses = (id, setSelectedClass) => {
+export const getByIdClasses = (id) => {
   return async (dispatch) => {
     try {
       dispatch(getByIdClassPending());
@@ -127,13 +127,6 @@ export const getByIdClasses = (id, setSelectedClass) => {
       if (responseJson.error) {
         throw new Error(responseJson.message);
       }
-      setSelectedClass({
-        activity: data.activity._id,
-        trainer: data.trainer._id,
-        day: data.day,
-        hour: data.hour,
-        slots: data.slots
-      });
       dispatch(getByIdClassSuccess(data));
     } catch (error) {
       dispatch(getByIdClassError(error));
