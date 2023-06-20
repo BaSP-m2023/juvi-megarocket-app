@@ -7,17 +7,18 @@ const superAdminsSchema = Joi.object({
     )
     .min(5)
     .messages({
-      'string.pattern.base': 'Email is not valid, muy contain only one @ and a valid domain'
+      'string.pattern.base':
+        'Email is not valid, muy contain only one @ and a valid domain. You cannot use an email that is already in use'
     })
     .lowercase()
     .required(),
   password: Joi.string()
     .min(8)
     .max(20)
-    .regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+    .regex(/^(?=.[A-Za-z])(?=.\d).{8,}$/)
     .messages({
       'string.pattern.base':
-        'Password must contain at least 8 characters and cannot contain blank spaces'
+        'Password must contain: at least one number, one letter, and at least 8 characters and cannot contain blank spaces'
     })
     .required()
 });
