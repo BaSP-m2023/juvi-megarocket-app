@@ -18,6 +18,7 @@ const AdminsForm = ({ history }) => {
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const data = useSelector((state) => state.admins);
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [text, setText] = useState('');
 
@@ -40,9 +41,8 @@ const AdminsForm = ({ history }) => {
     }
   });
 
-  const { id } = useParams();
-
   useEffect(() => {
+    console.log(data.item);
     if (id) {
       dispatch(getByIdAdmins(id));
       setText('Edit admin');
@@ -50,7 +50,7 @@ const AdminsForm = ({ history }) => {
       data.item = {};
       setText('Add admin');
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (data.item) {

@@ -31,7 +31,7 @@ export const getAdmins = () => {
     }
   };
 };
-export const getByIdAdmins = (id, setSelectedAdmin) => {
+export const getByIdAdmins = (id) => {
   return async (dispatch) => {
     try {
       dispatch(getByIdAdminsPending());
@@ -41,17 +41,7 @@ export const getByIdAdmins = (id, setSelectedAdmin) => {
       if (responseJson.error) {
         throw new Error(responseJson.message);
       }
-      setSelectedAdmin({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        dni: data.dni,
-        phone: data.phone,
-        email: data.email,
-        city: data.city,
-        password: data.password
-      });
-      console.log(setSelectedAdmin);
-      dispatch(getByIdAdminsSuccess(data.data));
+      dispatch(getByIdAdminsSuccess(data));
     } catch (error) {
       dispatch(getByIdAdminsError(error));
     }
