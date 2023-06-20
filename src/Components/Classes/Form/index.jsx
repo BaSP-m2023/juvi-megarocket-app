@@ -8,17 +8,29 @@ import { postClass, getByIdClasses, putClass, deleteClass } from '../../../redux
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers } from '../../../redux/trainers/thunks';
 import { getActivities } from '../../../redux/activities/thunks';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import classesSchema from './validation';
 
 const FormClasses = () => {
   const dispatch = useDispatch();
+  const data = useSelector((state) => state.classes);
   const { id } = useParams();
   const history = useHistory();
-  const [formData, setFormData] = useState({
-    activity: '',
-    trainer: '',
-    day: '',
-    hour: '',
-    slots: ''
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(classesSchema),
+    defaultValues: {
+      activity: data.item?.activity?._id || 'Choose an activity',
+      trainer: data.item?.trainer?._id || 'Choose a trainer',
+      day: data.item?.day || '',
+      hour: data.item?.hour || '',
+      slots: data.item?.slot || ''
+    }
   });
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
@@ -32,28 +44,23 @@ const FormClasses = () => {
   }, []);
 
   useEffect(() => {
+    console.log(data.item);
     if (id) {
-      dispatch(getByIdClasses(id, setFormData));
-    }
-  }, [id]);
-
-  const onChangeInput = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (id) {
-      dispatch(putClass(id, formData, setModalText, setShowModal, setIsTrue, deleteClass));
+      dispatch(getByIdClasses(id));
     } else {
-      dispatch(postClass(formData, setModalText, setShowModal, setIsTrue, deleteClass));
+      data.item = {};
+    }
+  }, [data.item]);
+
+  const onSubmit = (data) => {
+    if (id) {
+      dispatch(putClass(id, data, setModalText, setShowModal, setIsTrue, deleteClass));
+    } else {
+      dispatch(postClass(data, setModalText, setShowModal, setIsTrue, deleteClass));
     }
   };
 
-  const onSubmitCancel = (e) => {
+  const onCancel = (e) => {
     e.preventDefault();
     history.goBack();
   };
@@ -65,25 +72,23 @@ const FormClasses = () => {
     }
   };
 
+  const onError = (e) => {
+    console.log(e);
+  };
+
   return (
     <>
-      <form className={styles.formClasses}>
+      <form className={styles.formClasses} onSubmit={handleSubmit(onSubmit, onError)}>
         <div className={styles.formContainer}>
           <div className={styles.inputClass}>
             <label className={styles.labelClasses} htmlFor="activity">
               Activity
             </label>
-            <select
-              className={styles.selectClasses}
-              id="activity"
-              name="activity"
-              value={formData.activity}
-              onChange={onChangeInput}
-            >
-              <option value="">Choose an Activity</option>
+            <select className={styles.selectClasses} name="activity" {...register('activity')}>
+              <option>Choose an Activity</option>
               {activities.list.map((activity) => (
-                <option key={activity._id} value={activity._id}>
-                  {activity.name}
+                <option key={activity._id} value={activity?._id}>
+                  {activity?.name}
                 </option>
               ))}
             </select>
@@ -92,51 +97,45 @@ const FormClasses = () => {
             <label className={styles.labelClasses} htmlFor="trainer">
               Trainer
             </label>
-            <select
-              className={styles.selectClasses}
-              id="trainer"
-              name="trainer"
-              value={formData.trainer}
-              onChange={onChangeInput}
-            >
-              <option value="">Choose a Trainer</option>
+            <select className={styles.selectClasses} name="trainer" {...register('trainer')}>
+              <option>Choose a Trainer</option>
               {trainers.list.map((trainer) => (
-                <option key={trainer._id} value={trainer._id}>
-                  {trainer.firstName} {trainer.lastName}
+                <option key={trainer._id} value={trainer?._id}>
+                  {trainer?.firstName} {trainer?.lastName}
                 </option>
               ))}
             </select>
           </div>
           <div className={styles.inputClass}>
             <Input
+              register={register}
               labelText="Day"
-              onChange={onChangeInput}
               type="text"
               name="day"
-              value={formData.day}
+              error={errors.day?.message}
             />
           </div>
           <div className={styles.inputClass}>
             <Input
+              register={register}
               labelText="Hour"
-              onChange={onChangeInput}
               type="text"
               name="hour"
-              value={formData.hour}
+              error={errors.hour?.message}
             />
           </div>
           <div className={styles.inputClass}>
             <Input
+              register={register}
               labelText="Slots"
-              onChange={onChangeInput}
               type="text"
               name="slots"
-              value={formData.slots}
+              error={errors.slots?.message}
             />
           </div>
         </div>
-        <Button type="confirm" onClick={onSubmit} buttonText="Confirm" />
-        <Button type="cancel" onClick={onSubmitCancel} buttonText="Cancel" />
+        <Button type="confirm" />
+        <Button type="cancel" onClick={onCancel} />
       </form>
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </>

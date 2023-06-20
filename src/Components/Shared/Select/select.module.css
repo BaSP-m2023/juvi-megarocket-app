@@ -1,0 +1,29 @@
+.sharedSelect {
+  width: 15vw;
+  height: 40px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #0F232E;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #0F232E;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sharedSelect:hover {
+  border-color: #888;
+}
+
+.sharedSelect:focus {
+  outline: none;
+  border-color: #0F232E;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.label {
+  padding: 6px 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #0F232E;
+}
