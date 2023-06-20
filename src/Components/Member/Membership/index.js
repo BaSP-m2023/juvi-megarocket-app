@@ -19,6 +19,15 @@ function MembershipMember() {
             <li>Grid display.</li>
           </ul>
         </div>
+        <div className={styles.classic}>
+          <h4>CLASSIC</h4>
+          <h3>$4000</h3>
+          <ul className={styles.ulMemberClassic}>
+            <li>Free access to the weight room.</li>
+            <li>Personalized follow-up by a trainer.</li>
+            <li>Visualization of the grid.</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
