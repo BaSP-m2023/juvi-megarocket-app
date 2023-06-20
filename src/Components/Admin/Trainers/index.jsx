@@ -1,12 +1,10 @@
-import { ModalAlert } from 'Components/Shared';
-import Button from 'Components/Shared/Button';
-import SharedTable from 'Components/Shared/Table';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './trainers.module.css';
 import { resetErrorAndMessage } from 'redux/trainers/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers, delTrainer } from 'redux/trainers/thunks';
+import { SharedTable, ModalAlert, Button } from 'Components/Shared';
 
 function Trainers() {
   const { list, isLoading, error, message, item } = useSelector((state) => state.trainers);
