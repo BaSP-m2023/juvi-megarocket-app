@@ -68,27 +68,27 @@ function Navbar() {
           {memberNavVisible && (
             <>
               <li>
-                <Link to="/members/activities" onClick={closeNav}>
+                <Link to="/members/activities" onClick={memberNav}>
                   Activities
                 </Link>
               </li>
               <li>
-                <Link to="/members/profile" onClick={closeNav}>
+                <Link to="/members/profile" onClick={memberNav}>
                   Profile
                 </Link>
               </li>
               <li>
-                <Link to="/members/signUp" onClick={closeNav}>
+                <Link to="/members/signUp" onClick={memberNav}>
                   Sign Up
                 </Link>
               </li>
               <li>
-                <Link to="/members/Membership" onClick={closeNav}>
+                <Link to="/members/Membership" onClick={memberNav}>
                   Membership
                 </Link>
               </li>
               <li>
-                <Link to="/members/schedule" onClick={closeNav}>
+                <Link to="/members/schedule" onClick={memberNav}>
                   Schedule
                 </Link>
               </li>

@@ -221,9 +221,11 @@ const MemberForm = (props) => {
           </fieldset>
         </div>
         <Button type={'submit'} resource={'Member'} />
-        <Button type={'cancel'} onClick={() => props.history.push('/members')} />
+        <Button type={'cancel'} onClick={() => props.history.push('/admins/members')} />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-        {modalDone && <ModalAlert text={msg} onClick={() => props.history.push('/members')} />}
+        {modalDone && (
+          <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} />
+        )}
       </form>
       <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
     </div>
