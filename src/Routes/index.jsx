@@ -6,6 +6,7 @@ import Header from 'Components/Header/';
 import styles from './layout.module.css';
 
 const activityMember = lazy(() => import('Components/Member/Activity'));
+const membershipMember = lazy(() => import('Components/Member/Membership'));
 const activityForm = lazy(() => import('Components/Admin/Activities/Form'));
 const activityList = lazy(() => import('Components/Admin/Activities'));
 const adminForm = lazy(() => import('Components/Admin/Admins/Form'));
@@ -70,6 +71,7 @@ function Layout() {
                   <>
                     <Route exact path="/members/activities" component={activityMember} />
                     <Route exact path="/members/profile" component={memberProfile} />
+                    <Route exact path="/members/membership" component={membershipMember} />
                   </>
                 )}
               />
