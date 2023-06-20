@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -41,28 +42,6 @@ const MemberProfile = () => {
     }
   });
 
-  useEffect(() => {
-    console.log(data.item);
-    data.item = {};
-  }, []);
-
-  // useEffect(() => {
-  //   if (data.item) {
-  //     reset({
-  //       firstName: data.item?.firstName ?? '',
-  //       lastName: data.item?.lastName ?? '',
-  //       dni: data.item?.dni ?? '',
-  //       phone: data.item?.phone ?? '',
-  //       email: data.item?.email ?? '',
-  //       city: data.item?.city ?? '',
-  //       birthDate: data.item?.birthDate ?? '',
-  //       postalCode: data.item?.postalCode ?? '',
-  //       password: data.item?.password ?? '',
-  //       memberships: data.item?.memberships ?? 'Only Classes'
-  //     });
-  //   }
-  // }, [data.item]);
-
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -98,7 +77,7 @@ const MemberProfile = () => {
               className={styles.input}
               name={'firstName'}
               type="text"
-              placeholder="Ex: Tristan"
+              placeholder="Ex: Gianluca"
               error={errors.firstName?.message}
               register={register}
             />
@@ -109,7 +88,7 @@ const MemberProfile = () => {
               className={styles.input}
               name={'lastName'}
               type="text"
-              placeholder="Ex: Galvez"
+              placeholder="Ex: Agrano"
               error={errors.lastName?.message}
               register={register}
             />
@@ -120,7 +99,7 @@ const MemberProfile = () => {
               className={styles.input}
               name={'dni'}
               type="number"
-              placeholder="Ex: 33555888"
+              placeholder="Ex: 44897162"
               error={errors.dni?.message}
               register={register}
             />
@@ -131,7 +110,7 @@ const MemberProfile = () => {
               className={styles.input}
               name={'phone'}
               type="number"
-              placeholder="Ex: 11426426"
+              placeholder="Ex: 1142642634"
               error={errors.phone?.message}
               register={register}
             />
@@ -153,7 +132,7 @@ const MemberProfile = () => {
               className={styles.input}
               name={'city'}
               type="text"
-              placeholder="Ex: Casilda"
+              placeholder="Ex: Rosario"
               error={errors.city?.message}
               register={register}
             />
@@ -174,7 +153,7 @@ const MemberProfile = () => {
               className={styles.input}
               name={'postalCode'}
               type="number"
-              placeholder="Ex: 2170"
+              placeholder="Ex: 2200"
               error={errors.postalCode?.message}
               register={register}
             />
