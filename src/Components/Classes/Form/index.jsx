@@ -20,6 +20,7 @@ const FormClasses = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onChange',
@@ -29,7 +30,7 @@ const FormClasses = () => {
       trainer: data.item?.trainer?._id || 'Choose a trainer',
       day: data.item?.day || '',
       hour: data.item?.hour || '',
-      slots: data.item?.slot || ''
+      slots: data.item?.slots || ''
     }
   });
   const [showModal, setShowModal] = useState(false);
@@ -44,13 +45,22 @@ const FormClasses = () => {
   }, []);
 
   useEffect(() => {
-    console.log(data.item);
     if (id) {
       dispatch(getByIdClasses(id));
-    } else {
-      data.item = {};
     }
-  }, [data.item]);
+  }, [id]);
+
+  useEffect(() => {
+    if (data.item) {
+      reset({
+        activity: data.item?.activity?._id || 'Choose an activity',
+        trainer: data.item?.trainer?._id || 'Choose a trainer',
+        day: data.item?.day || '',
+        hour: data.item?.hour || '',
+        slots: data.item?.slots || ''
+      });
+    }
+  }, [data.item, reset]);
 
   const onSubmit = (data) => {
     if (id) {
@@ -72,71 +82,74 @@ const FormClasses = () => {
     }
   };
 
-  const onError = (e) => {
-    console.log(e);
-  };
-
   return (
     <>
-      <form className={styles.formClasses} onSubmit={handleSubmit(onSubmit, onError)}>
-        <div className={styles.formContainer}>
-          <div className={styles.inputClass}>
-            <label className={styles.labelClasses} htmlFor="activity">
-              Activity
-            </label>
-            <select className={styles.selectClasses} name="activity" {...register('activity')}>
-              <option>Choose an Activity</option>
-              {activities.list.map((activity) => (
-                <option key={activity._id} value={activity?._id}>
-                  {activity?.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.inputClass}>
-            <label className={styles.labelClasses} htmlFor="trainer">
-              Trainer
-            </label>
-            <select className={styles.selectClasses} name="trainer" {...register('trainer')}>
-              <option>Choose a Trainer</option>
-              {trainers.list.map((trainer) => (
-                <option key={trainer._id} value={trainer?._id}>
-                  {trainer?.firstName} {trainer?.lastName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.inputClass}>
-            <Input
-              register={register}
-              labelText="Day"
-              type="text"
-              name="day"
-              error={errors.day?.message}
-            />
-          </div>
-          <div className={styles.inputClass}>
-            <Input
-              register={register}
-              labelText="Hour"
-              type="text"
-              name="hour"
-              error={errors.hour?.message}
-            />
-          </div>
-          <div className={styles.inputClass}>
-            <Input
-              register={register}
-              labelText="Slots"
-              type="text"
-              name="slots"
-              error={errors.slots?.message}
-            />
-          </div>
-        </div>
-        <Button type="confirm" />
-        <Button type="cancel" onClick={onCancel} />
-      </form>
+      {data.isLoading ? (
+        <div>is Loading</div>
+      ) : (
+        <>
+          <form className={styles.formClasses} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.formContainer}>
+              <div className={styles.inputClass}>
+                <label className={styles.labelClasses} htmlFor="activity">
+                  Activity
+                </label>
+                <select className={styles.selectClasses} name="activity" {...register('activity')}>
+                  <option>Choose an Activity</option>
+                  {activities.list.map((activity) => (
+                    <option key={activity._id} value={activity?._id}>
+                      {activity?.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.inputClass}>
+                <label className={styles.labelClasses} htmlFor="trainer">
+                  Trainer
+                </label>
+                <select className={styles.selectClasses} name="trainer" {...register('trainer')}>
+                  <option>Choose a Trainer</option>
+                  {trainers.list.map((trainer) => (
+                    <option key={trainer._id} value={trainer?._id}>
+                      {trainer?.firstName} {trainer?.lastName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.inputClass}>
+                <Input
+                  register={register}
+                  labelText="Day"
+                  type="text"
+                  name="day"
+                  error={errors.day?.message}
+                />
+              </div>
+              <div className={styles.inputClass}>
+                <Input
+                  register={register}
+                  labelText="Hour"
+                  type="text"
+                  name="hour"
+                  error={errors.hour?.message}
+                />
+              </div>
+              <div className={styles.inputClass}>
+                <Input
+                  register={register}
+                  labelText="Slots"
+                  type="text"
+                  name="slots"
+                  error={errors.slots?.message}
+                />
+              </div>
+            </div>
+            <Button type="confirm" />
+            <Button type="cancel" onClick={onCancel} />
+          </form>
+          <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
+        </>
+      )}
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </>
   );
