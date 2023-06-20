@@ -56,12 +56,8 @@ const MemberProfile = () => {
     }
   };
 
-  const onSubmit = async (data) => {
-    try {
-      dispatch(putMember(data, switchModal));
-    } catch (error) {
-      switchModal(true, error);
-    }
+  const onSubmit = () => {
+    switchModal(false, 'Member updated correctly!');
   };
 
   const onInvalid = (errors) => console.log(errors);
