@@ -173,7 +173,7 @@ const MemberForm = (props) => {
           </fieldset>
           <fieldset className={styles.fieldset}>
             <Input
-              labelText="Birth Day"
+              labelText="Birth Date"
               className={styles.input}
               name={'birthDate'}
               type="datetime-local"
