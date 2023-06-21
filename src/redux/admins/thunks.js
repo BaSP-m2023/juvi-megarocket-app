@@ -31,7 +31,7 @@ export const getAdmins = () => {
     }
   };
 };
-export const getByIdAdmins = (id, setSelectedAdmin) => {
+export const getByIdAdmins = (id) => {
   return async (dispatch) => {
     try {
       dispatch(getByIdAdminsPending());
@@ -41,23 +41,13 @@ export const getByIdAdmins = (id, setSelectedAdmin) => {
       if (responseJson.error) {
         throw new Error(responseJson.message);
       }
-      setSelectedAdmin({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        dni: data.dni,
-        phone: data.phone,
-        email: data.email,
-        city: data.city,
-        password: data.password
-      });
-      console.log(setSelectedAdmin);
-      dispatch(getByIdAdminsSuccess(data.data));
+      dispatch(getByIdAdminsSuccess(data));
     } catch (error) {
       dispatch(getByIdAdminsError(error));
     }
   };
 };
-export const addAdmin = (adminData, setModalText, setIsModalOpen, setSuccess) => {
+export const addAdmin = (adminData, switchModal) => {
   return async (dispatch) => {
     try {
       dispatch(addAdminsPending());
@@ -71,15 +61,13 @@ export const addAdmin = (adminData, setModalText, setIsModalOpen, setSuccess) =>
       const jsonData = await response.json();
       const newAdmin = jsonData.data;
       if (response.ok) {
-        setModalText('Admin created correctly!');
-        setSuccess(true);
-        setIsModalOpen(true);
+        switchModal(false, jsonData.message);
         return dispatch(addAdminsSuccess(newAdmin));
+      } else {
+        throw new Error(jsonData.message);
       }
-      dispatch(addAdminsError(jsonData.error));
-      setIsModalOpen(true);
-      setModalText(`${jsonData.message}`);
     } catch (error) {
+      switchModal(true, error);
       dispatch(addAdminsError(error));
     }
   };
@@ -108,7 +96,7 @@ export const deleteAdmin = (adminId, setModalText, setIsModalOpen) => {
   };
 };
 
-export const editAdmin = (adminId, formData, setSuccess, setModalText, setIsModalOpen) => {
+export const editAdmin = (adminId, data, switchModal) => {
   return async (dispatch) => {
     try {
       dispatch(putAdminsPending());
@@ -117,21 +105,19 @@ export const editAdmin = (adminId, formData, setSuccess, setModalText, setIsModa
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(data)
       });
 
       const responseData = await response.json();
       if (response.ok) {
-        setIsModalOpen(true);
-        setSuccess(true);
-        setModalText('Admin edited successfully ');
-        return dispatch(putAdminsSuccess(responseData.data));
+        switchModal(false, responseData.message);
+        dispatch(putAdminsSuccess(responseData.data));
+      } else {
+        throw new Error(responseData.message);
       }
-      dispatch(putAdminsError(responseData.error));
-      setIsModalOpen(true);
-      setModalText(`${responseData.message}`);
     } catch (error) {
-      return dispatch(putAdminsError(error));
+      switchModal(true, error);
+      dispatch(putAdminsError(error));
     }
   };
 };
