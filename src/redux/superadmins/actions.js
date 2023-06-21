@@ -42,10 +42,10 @@ export const putSuperAdminsPending = () => {
   };
 };
 
-export const putSuperAdminsSuccess = (updatedActivity, id) => {
+export const putSuperAdminsSuccess = (updatedSuperAdmins, id) => {
   return {
     type: PUT_SUPERADMINS_SUCCESS,
-    payload: updatedActivity,
+    payload: updatedSuperAdmins,
     id
   };
 };
@@ -80,10 +80,10 @@ export const postSuperAdminsPending = () => {
     type: ADD_SUPERADMINS_PENDING
   };
 };
-export const postSuperAdminsSuccess = (newActivity) => {
+export const postSuperAdminsSuccess = (SuperAdmins) => {
   return {
     type: ADD_SUPERADMINS_SUCCESS,
-    payload: newActivity
+    payload: SuperAdmins
   };
 };
 export const postSuperAdminsError = (error) => {

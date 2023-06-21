@@ -17,19 +17,8 @@ export const schema = Joi.object({
       'string.pattern.base': 'Last name must be only made of letters(it can be a compound Name)'
     })
     .required(),
-  dni: Joi.number()
-    .min(1000000)
-    .max(99999999)
-    .integer()
-    .messages({
-      'number.min': 'Must contain at least 7 characters',
-      'number.max': 'Can not contain more than 8 characters'
-    })
-    .required(),
-  phone: Joi.number().min(1000000000).max(9999999999).integer().required().messages({
-    'number.min': 'Must contain 10 characters',
-    'number.max': 'Must contain 10 characters'
-  }),
+  dni: Joi.number().min(1000000).max(99999999).integer().required(),
+  phone: Joi.number().min(1000000000).max(9999999999).integer().required(),
   email: Joi.string()
     .regex(
       /^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/

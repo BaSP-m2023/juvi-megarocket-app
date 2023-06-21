@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from 'Components/Admin/Members/MemberForm/form.module.css';
-
 import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
-import { getMemberById, putMember, addMember } from 'redux/members/thunks';
+import { putMember } from 'redux/members/thunks';
+import { useHistory } from 'react-router-dom';
 
-const MemberForm = (props) => {
+const MemberProfile = () => {
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
-  const [text, setText] = useState('');
+  const history = useHistory();
 
   const {
     register,
@@ -30,47 +29,18 @@ const MemberForm = (props) => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: data.item?.firstName ?? '',
-      lastName: data.item?.lastName ?? '',
-      dni: data.item?.dni ?? '',
-      phone: data.item?.phone ?? '',
-      email: data.item?.email ?? '',
-      city: data.item?.city ?? '',
-      birthDate: data.item?.birthDate ?? '',
-      postalCode: data.item?.postalCode ?? '',
-      password: data.item?.password ?? '',
-      memberships: data.item?.memberships ?? 'Only Classes'
+      firstName: 'Gianluca',
+      lastName: 'Agrano',
+      dni: 44555666,
+      phone: 3414445555,
+      email: 'gianlucka1@gmail.com',
+      city: 'Rosario',
+      birthDate: '26/07/2002',
+      postalCode: 2000,
+      password: 'contrasena123',
+      memberships: 'Black'
     }
   });
-
-  const { id } = useParams();
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getMemberById(id));
-      setText('Edit member');
-    } else {
-      data.item = {};
-      setText('Add member');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (data.item) {
-      reset({
-        firstName: data.item?.firstName ?? '',
-        lastName: data.item?.lastName ?? '',
-        dni: data.item?.dni ?? '',
-        phone: data.item?.phone ?? '',
-        email: data.item?.email ?? '',
-        city: data.item?.city ?? '',
-        birthDate: data.item?.birthDate ?? '',
-        postalCode: data.item?.postalCode ?? '',
-        password: data.item?.password ?? '',
-        memberships: data.item?.memberships ?? 'Only Classes'
-      });
-    }
-  }, [data.item]);
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -86,16 +56,8 @@ const MemberForm = (props) => {
     }
   };
 
-  const onSubmit = async (data) => {
-    try {
-      if (text === 'Add member') {
-        dispatch(addMember(data, switchModal));
-      } else {
-        dispatch(putMember(id, data, switchModal));
-      }
-    } catch (error) {
-      switchModal(true, error);
-    }
+  const onSubmit = () => {
+    switchModal(false, 'Member updated correctly!');
   };
 
   const onInvalid = (errors) => console.log(errors);
@@ -104,14 +66,14 @@ const MemberForm = (props) => {
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <div className={styles.formContainer}>
-          <h1>{text}</h1>
+          <h1>Edit Profile</h1>
           <fieldset className={styles.fieldset}>
             <Input
               labelText="First Name"
               className={styles.input}
               name={'firstName'}
               type="text"
-              placeholder="Ex: Tristan"
+              placeholder="Ex: Gianluca"
               error={errors.firstName?.message}
               register={register}
             />
@@ -122,7 +84,7 @@ const MemberForm = (props) => {
               className={styles.input}
               name={'lastName'}
               type="text"
-              placeholder="Ex: Galvez"
+              placeholder="Ex: Agrano"
               error={errors.lastName?.message}
               register={register}
             />
@@ -133,7 +95,7 @@ const MemberForm = (props) => {
               className={styles.input}
               name={'dni'}
               type="number"
-              placeholder="Ex: 33555888"
+              placeholder="Ex: 44897162"
               error={errors.dni?.message}
               register={register}
             />
@@ -144,7 +106,7 @@ const MemberForm = (props) => {
               className={styles.input}
               name={'phone'}
               type="number"
-              placeholder="Ex: 11426426"
+              placeholder="Ex: 1142642634"
               error={errors.phone?.message}
               register={register}
             />
@@ -166,14 +128,14 @@ const MemberForm = (props) => {
               className={styles.input}
               name={'city'}
               type="text"
-              placeholder="Ex: Casilda"
+              placeholder="Ex: Rosario"
               error={errors.city?.message}
               register={register}
             />
           </fieldset>
           <fieldset className={styles.fieldset}>
             <Input
-              labelText="Birth Date"
+              labelText="Birth Day"
               className={styles.input}
               name={'birthDate'}
               type="datetime-local"
@@ -187,7 +149,7 @@ const MemberForm = (props) => {
               className={styles.input}
               name={'postalCode'}
               type="number"
-              placeholder="Ex: 2170"
+              placeholder="Ex: 2200"
               error={errors.postalCode?.message}
               register={register}
             />
@@ -221,15 +183,13 @@ const MemberForm = (props) => {
           </fieldset>
         </div>
         <Button type={'submit'} resource={'Member'} />
-        <Button type={'cancel'} onClick={() => props.history.push('/admins/members')} />
+        <Button type={'cancel'} onClick={() => history.push('/members')} />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-        {modalDone && (
-          <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} />
-        )}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/members')} />}
       </form>
       <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
     </div>
   );
 };
 
-export default MemberForm;
+export default MemberProfile;
