@@ -1,158 +1,180 @@
-import React, { useState, useEffect } from 'react';
-import styles from './form.module.css';
-import { useHistory, useParams } from 'react-router-dom';
-import { Input } from 'Components/Shared';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
-import { editAdmin, addAdmin, getByIdAdmins } from 'redux/admins/thunks';
-import { Button, ModalAlert } from 'Components/Shared';
+import styles from './form.module.css';
 
-const AdminsForm = () => {
-  const dispatch = useDispatch();
-  const [modalText, setModalText] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+import { schema } from './adminFormValidations';
+import { ModalAlert, Button, Input } from 'Components/Shared';
+import { getByIdAdmins, editAdmin, addAdmin } from 'redux/admins/thunks';
+
+const AdminsForm = ({ history }) => {
+  const [modal, setModal] = useState(false);
+  const [modalDone, setModalDone] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const data = useSelector((state) => state.admins);
   const { id } = useParams();
-  const [selectedAdmin, setSelectedAdmin] = useState({});
-  const [success, setSuccess] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: selectedAdmin.firstName || '',
-    lastName: selectedAdmin.lastName || '',
-    dni: selectedAdmin.dni || '',
-    phone: selectedAdmin.phone || '',
-    email: selectedAdmin.email || '',
-    city: selectedAdmin.city || '',
-    password: selectedAdmin.password || ''
+  const dispatch = useDispatch();
+  const [text, setText] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(schema),
+    mode: 'onChange',
+    defaultValues: {
+      firstName: data.item?.firstName || '',
+      lastName: data.item?.lastName || '',
+      dni: data.item?.dni || '',
+      phone: data.item?.phone || '',
+      email: data.item?.email || '',
+      city: data.item?.city || '',
+      password: data.item?.password || ''
+    }
   });
 
-  const closeModalAndBack = (e) => {
-    e.preventDefault();
-    setIsModalOpen(false);
-    history.goBack();
-  };
-  const closeModal = (e) => {
-    e.preventDefault();
-    setIsModalOpen(false);
-    if (success) {
-      history.goBack();
+  useEffect(() => {
+    console.log(data.item);
+    if (id) {
+      dispatch(getByIdAdmins(id));
+      setText('Edit admin');
+    } else {
+      data.item = {};
+      setText('Add admin');
     }
-  };
+  }, [id]);
 
-  const history = useHistory();
-  const [showPassword, setShowPassword] = useState(false);
+  useEffect(() => {
+    if (data.item) {
+      reset({
+        firstName: data.item?.firstName || '',
+        lastName: data.item?.lastName || '',
+        dni: data.item?.dni || '',
+        phone: data.item?.phone || '',
+        email: data.item?.email || '',
+        city: data.item?.city || '',
+        password: data.item?.password || ''
+      });
+    }
+  }, [data.item]);
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  useEffect(() => {
-    if (id) {
-      dispatch(getByIdAdmins(id, setSelectedAdmin));
-    }
-  }, [id]);
-
-  useEffect(() => {
-    setFormData({
-      firstName: selectedAdmin.firstName || '',
-      lastName: selectedAdmin.lastName || '',
-      dni: selectedAdmin.dni || '',
-      phone: selectedAdmin.phone || '',
-      email: selectedAdmin.email || '',
-      city: selectedAdmin.city || '',
-      password: selectedAdmin.password || ''
-    });
-  }, [selectedAdmin]);
-
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (id) {
-      dispatch(editAdmin(id, formData, setSuccess, setModalText, setIsModalOpen));
+  const switchModal = (error, msg) => {
+    if (error) {
+      setMsg(msg);
+      setModal(!modal);
     } else {
-      dispatch(addAdmin(formData, setModalText, setIsModalOpen, setSuccess));
+      setMsg(msg);
+      setModalDone(!modalDone);
     }
   };
 
-  const switchButtonText = id ? 'Update' : 'Add';
+  const onSubmit = async (data) => {
+    try {
+      if (text === 'Add admin') {
+        dispatch(addAdmin(data, switchModal));
+      } else {
+        dispatch(editAdmin(id, data, switchModal));
+      }
+    } catch (error) {
+      switchModal(true, error);
+    }
+  };
+
+  const onInvalid = (errors) => console.log(errors);
 
   return (
-    <>
-      <form className={styles.myForm}>
-        <div className={styles.divContainer}>
-          <div className={styles.inputDiv}>
+    <div>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
+        <div className={styles.formContainer}>
+          <h1>{text}</h1>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="First Name"
+              className={styles.input}
               name="firstName"
               type="text"
-              value={formData.firstName}
-              onChange={onChange}
+              placeholder="Enter first name"
+              error={errors.firstName?.message}
+              register={register}
             />
-          </div>
-          <div className={styles.inputDiv}>
+          </fieldset>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Last Name"
               className={styles.input}
-              type="text"
               name="lastName"
-              value={formData.lastName}
-              onChange={onChange}
+              type="text"
+              placeholder="Enter last name"
+              error={errors.lastName?.message}
+              register={register}
             />
-          </div>
-          <div className={styles.inputDiv}>
+          </fieldset>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="DNI"
               className={styles.input}
-              type="text"
               name="dni"
-              value={formData.dni}
-              onChange={onChange}
+              type="number"
+              placeholder="Enter DNI"
+              error={errors.dni?.message}
+              register={register}
             />
-          </div>
-          <div className={styles.inputDiv}>
+          </fieldset>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Phone"
               className={styles.input}
-              type="text"
               name="phone"
-              value={formData.phone}
-              onChange={onChange}
+              type="number"
+              placeholder="Enter phone number"
+              error={errors.phone?.message}
+              register={register}
             />
-          </div>
-          <div className={styles.inputDiv}>
+          </fieldset>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Email"
               className={styles.input}
-              type="text"
               name="email"
-              value={formData.email}
-              onChange={onChange}
+              type="text"
+              placeholder="Enter email address"
+              error={errors.email?.message}
+              register={register}
             />
-          </div>
-          <div className={styles.inputDiv}>
+          </fieldset>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="City"
               className={styles.input}
-              type="text"
               name="city"
-              value={formData.city}
-              onChange={onChange}
+              type="text"
+              placeholder="Enter city"
+              error={errors.city?.message}
+              register={register}
             />
-          </div>
-          <div className={styles.inputDiv}>
+          </fieldset>
+          <fieldset className={styles.fieldset}>
             <div className={styles.password}>
               <Input
                 labelText="Password"
                 className={styles.input}
-                type={showPassword ? 'text' : 'password'}
                 name="password"
-                value={formData.password}
-                onChange={onChange}
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Enter password"
+                error={errors.password?.message}
+                register={register}
               />
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
@@ -160,17 +182,15 @@ const AdminsForm = () => {
                 onClick={togglePassword}
               />
             </div>
-          </div>
+          </fieldset>
         </div>
-        <Button className={styles.addButton} type="confirm" onClick={onSubmit}>
-          {switchButtonText}
-        </Button>
-        <Button type="cancel" className={styles.cancelButton} onClick={closeModalAndBack}>
-          Cancel
-        </Button>
+        <Button type="submit" resource="Admin" />
+        <Button type="cancel" onClick={() => history.push('/admins')} />
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/admins')} />}
       </form>
-      {isModalOpen && <ModalAlert text={modalText} onClick={closeModal} />}
-    </>
+      <Button className={styles.addButton} type="reset" onClick={() => reset()} />
+    </div>
   );
 };
 
