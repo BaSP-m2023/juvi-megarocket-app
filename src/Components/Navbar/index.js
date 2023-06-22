@@ -13,12 +13,12 @@ function Navbar() {
     setNavVisible(!navVisible);
   };
   const adminNav = () => {
-    setNavVisible(!navVisible);
+    setNavVisible(false);
     setAdminNavVisible(true);
     setMemberNavVisible(false);
   };
   const memberNav = () => {
-    setNavVisible(!navVisible);
+    setNavVisible(false);
     setAdminNavVisible(false);
     setMemberNavVisible(true);
   };
@@ -39,27 +39,27 @@ function Navbar() {
           {adminNavVisible && (
             <>
               <li>
-                <Link to="admins/activities" onClick={closeNav}>
+                <Link to="/admins/activities" onClick={adminNav}>
                   Activities
                 </Link>
               </li>
               <li>
-                <Link to="admins/classes" onClick={closeNav}>
+                <Link to="/admins/classes" onClick={adminNav}>
                   Classes
                 </Link>
               </li>
               <li>
-                <Link to="admins/members" onClick={closeNav}>
+                <Link to="/admins/members" onClick={adminNav}>
                   Members
                 </Link>
               </li>
               <li>
-                <Link to="admins/trainers" onClick={closeNav}>
+                <Link to="/admins/trainers" onClick={adminNav}>
                   Trainers
                 </Link>
               </li>
               <li>
-                <Link to="/admins/subscriptions" onClick={closeNav}>
+                <Link to="/admins/subscriptions" onClick={adminNav}>
                   Subscriptions
                 </Link>
               </li>
@@ -68,27 +68,27 @@ function Navbar() {
           {memberNavVisible && (
             <>
               <li>
-                <Link to="/members/activities" onClick={closeNav}>
+                <Link to="/members/activities" onClick={memberNav}>
                   Activities
                 </Link>
               </li>
               <li>
-                <Link to="/members/profile" onClick={closeNav}>
+                <Link to="/members/profile" onClick={memberNav}>
                   Profile
                 </Link>
               </li>
               <li>
-                <Link to="/members/signUp" onClick={closeNav}>
+                <Link to="/members/signUp" onClick={memberNav}>
                   Sign Up
                 </Link>
               </li>
               <li>
-                <Link to="/members/Membership" onClick={closeNav}>
+                <Link to="/members/Membership" onClick={memberNav}>
                   Membership
                 </Link>
               </li>
               <li>
-                <Link to="/members/schedule" onClick={closeNav}>
+                <Link to="/members/schedule" onClick={memberNav}>
                   Schedule
                 </Link>
               </li>
