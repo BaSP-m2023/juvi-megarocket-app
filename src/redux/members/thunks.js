@@ -54,9 +54,6 @@ export const addMember = (member, switchModal) => {
         body: JSON.stringify(member)
       });
       const newMemb = await response.json();
-
-      console.log(newMemb.message);
-
       if (newMemb.error) {
         switchModal(newMemb.error, newMemb.message);
         throw new Error(newMemb.message);
