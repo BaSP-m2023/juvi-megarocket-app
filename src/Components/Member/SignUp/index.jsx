@@ -17,6 +17,7 @@ const MemberSingUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -41,6 +42,7 @@ const MemberSingUp = () => {
   useEffect(() => {
     data.item = {};
   }, []);
+
   const history = useHistory();
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -187,9 +189,9 @@ const MemberSingUp = () => {
             </fieldset>
           </div>
           <Button type={'submit'} resource={'Member'} />
-          <Button type={'cancel'} onClick={() => history.goBack()} />
+          <Button type={'cancel'} onClick={() => history.push('/members')} />
           {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-          {modalDone && <ModalAlert text={msg} onClick={() => history.goBack()} />}
+          {modalDone && <ModalAlert text={msg} onClick={() => history.push('/members')} />}
         </form>
       </div>
     </div>
