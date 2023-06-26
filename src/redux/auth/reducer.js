@@ -5,7 +5,9 @@ import {
   LOGOUT_ERROR,
   LOGOUT_PENDING,
   LOGOUT_SUCCESS,
-  SET_AUTHENTICATION
+  GET_AUTHENTICATION_PENDING,
+  GET_AUTHENTICATION_SUCCESS,
+  GET_AUTHENTICATION_ERROR
 } from 'redux/auth/constants';
 
 const initialState = {
@@ -18,12 +20,14 @@ const initialState = {
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_PENDING:
+    case GET_AUTHENTICATION_PENDING:
     case LOGOUT_PENDING:
       return {
         ...state,
         isLoading: true
       };
     case LOGIN_ERROR:
+    case GET_AUTHENTICATION_ERROR:
     case LOGOUT_ERROR:
       return {
         ...state,
@@ -46,11 +50,12 @@ export const authReducer = (state = initialState, action) => {
         role: null
       };
     }
-    case SET_AUTHENTICATION: {
+    case GET_AUTHENTICATION_SUCCESS: {
       return {
         ...state,
         isLoading: false,
-        authenticated: true
+        authenticated: true,
+        role: action.payload.role
       };
     }
     default:
