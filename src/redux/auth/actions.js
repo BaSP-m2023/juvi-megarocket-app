@@ -4,7 +4,8 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_ERROR,
   LOGOUT_PENDING,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  SET_AUTHENTICATION
 } from 'redux/auth/constants';
 
 export const loginPending = () => {
@@ -39,3 +40,12 @@ export const logoutPending = () => ({
 export const logoutSuccess = () => ({
   type: LOGOUT_SUCCESS
 });
+
+export const setAuthentication = (role) => {
+  return {
+    type: SET_AUTHENTICATION,
+    payload: {
+      role
+    }
+  };
+};
