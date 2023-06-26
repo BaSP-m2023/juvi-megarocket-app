@@ -4,29 +4,45 @@ import {
   loginSuccess,
   logoutError,
   logoutPending,
-  logoutSuccess
+  logoutSuccess,
+  getAuthenticationPending,
+  getAuthenticationSuccess,
+  getAuthenticationError
 } from 'redux/auth/actions';
 
+import { firebaseApp } from '../helper/firebase';
+
 export const logout = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(logoutPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {
-      method: 'POST',
-      headers: {
-        token: sessionStorage.getItem('token')
-      }
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        }
-        sessionStorage.clear();
-        return dispatch(logoutSuccess());
-      })
-      .catch((error) => {
-        return dispatch(logoutError(error));
-      });
+    try {
+      await firebaseApp.auth().signOut();
+      dispatch(logoutSuccess());
+      sessionStorage.removeItem('token', '');
+      sessionStorage.removeItem('role', '');
+      return { error: false, message: 'Log Out Successfully' };
+    } catch (error) {
+      console.log(error);
+      dispatch(logoutError(error));
+      return {
+        error: true,
+        message: error
+      };
+    }
+  };
+};
+
+export const getAuth = (token) => {
+  return async (dispatch) => {
+    dispatch(getAuthenticationPending());
+    try {
+      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
+      const res = (await response).json();
+      dispatch(getAuthenticationSuccess(res.data));
+      return res.data;
+    } catch (error) {
+      return dispatch(getAuthenticationError(error.toString()));
+    }
   };
 };
 
