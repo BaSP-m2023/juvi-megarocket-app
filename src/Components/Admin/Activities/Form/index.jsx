@@ -61,7 +61,7 @@ const Form = () => {
       ) : (
         <>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.divContainer} testId="add-form">
+            <div className={styles.divContainer} data-testId="add-form">
               <Input
                 register={register}
                 labelText="Name"
@@ -85,7 +85,12 @@ const Form = () => {
               testId="cancel-button"
             ></Button>
           </form>
-          <Button className={styles.addButton} type="reset" onClick={() => reset()} testId="reset-button"></Button>
+          <Button
+            className={styles.addButton}
+            type="reset"
+            onClick={() => reset()}
+            testId="reset-button"
+          ></Button>
         </>
       )}
 

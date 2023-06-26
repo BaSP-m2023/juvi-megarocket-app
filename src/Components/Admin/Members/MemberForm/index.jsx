@@ -103,7 +103,7 @@ const MemberForm = (props) => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer} testId="add-form">
+        <div className={styles.formContainer} data-testId="add-form">
           <h1>{text}</h1>
           <fieldset className={styles.fieldset}>
             <Input
@@ -213,7 +213,7 @@ const MemberForm = (props) => {
           </fieldset>
           <fieldset className={styles.fieldset}>
             <label>Membership</label>
-            <select name="memberships" {...register('memberships')} >
+            <select name="memberships" {...register('memberships')}>
               <option value="Only Classes">Only Classes</option>
               <option value="Classic">Classic</option>
               <option value="Black">Black</option>
@@ -222,13 +222,22 @@ const MemberForm = (props) => {
           </fieldset>
         </div>
         <Button type={'submit'} resource={'Member'} testId="submit-button" />
-        <Button type={'cancel'} onClick={() => props.history.push('/admins/members')} testId="cancel-button" />
+        <Button
+          type={'cancel'}
+          onClick={() => props.history.push('/admins/members')}
+          testId="cancel-button"
+        />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && (
           <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} />
         )}
       </form>
-      <Button className={styles.addButton} type="reset" onClick={() => reset()} testId="reset-button"></Button>
+      <Button
+        className={styles.addButton}
+        type="reset"
+        onClick={() => reset()}
+        testId="reset-button"
+      ></Button>
     </div>
   );
 };

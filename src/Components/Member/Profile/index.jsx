@@ -187,7 +187,12 @@ const MemberProfile = () => {
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && <ModalAlert text={msg} onClick={() => history.push('/members')} />}
       </form>
-      <Button className={styles.addButton} type="reset" onClick={() => reset()} testId="reset-button"></Button>
+      <Button
+        className={styles.addButton}
+        type="reset"
+        onClick={() => reset()}
+        testId="reset-button"
+      ></Button>
     </div>
   );
 };
