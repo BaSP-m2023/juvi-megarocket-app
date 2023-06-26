@@ -61,7 +61,7 @@ const Form = () => {
       ) : (
         <>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.divContainer} data-testId="add-form">
+            <div className={styles.divContainer} data-testId="admin-activities-add-form">
               <Input
                 register={register}
                 labelText="Name"
@@ -77,24 +77,28 @@ const Form = () => {
                 error={errors.description?.message}
               />
             </div>
-            <Button className={styles.addButton} type="confirm" testId="confirm-button"></Button>
+            <Button
+              className={styles.addButton}
+              type="confirm"
+              testId="admin-activities-confirm-button"
+            ></Button>
             <Button
               className={styles.addButton}
               type="cancel"
               onClick={() => history.push('/admins/activities')}
-              testId="cancel-button"
+              testId="admin-activities-cancel-button"
             ></Button>
           </form>
           <Button
             className={styles.addButton}
             type="reset"
             onClick={() => reset()}
-            testId="reset-button"
+            testId="admin-activities-reset-button"
           ></Button>
         </>
       )}
 
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert" />}
       {showModalSuccess && (
         <ModalAlert
           text={modalText}
@@ -102,6 +106,7 @@ const Form = () => {
             history.push('/admins/activities');
             setShowModalSuccess(false);
           }}
+          testId="admin-activities-modal-alert"
         />
       )}
     </>

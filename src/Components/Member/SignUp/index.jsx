@@ -72,7 +72,7 @@ const MemberSingUp = () => {
     <div className={styles.background}>
       <div className={styles.card}>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-          <div className={styles.formContainer} data-testid="signup-form">
+          <div className={styles.formContainer} data-testid="member-signup-form">
             <fieldset className={styles.fieldset}>
               <Input
                 labelText="First Name"
@@ -188,10 +188,10 @@ const MemberSingUp = () => {
               {errors.memberships && <p>{errors.memberships.message}</p>}
             </fieldset>
           </div>
-          <Button type={'submit'} resource={'Member'} testId="submit-button" />
-          <Button type={'cancel'} onClick={() => history.push('/members')} testId="cancel-button" />
-          {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-          {modalDone && <ModalAlert text={msg} onClick={() => history.push('/members')} />}
+          <Button type={'submit'} resource={'Member'} testId="member-signup-submit-button" />
+          <Button type={'cancel'} onClick={() => history.push('/members')} testId="member-signup-cancel-button" />
+          {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="member-signup-modal-alert" />}
+          {modalDone && <ModalAlert text={msg} onClick={() => history.push('/members')} testId="member-signup-modal-alert" />}
         </form>
       </div>
     </div>

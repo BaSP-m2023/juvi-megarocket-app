@@ -33,15 +33,15 @@ const Classes = () => {
       <div className={styles.titleClass}>
         <h2>Classes</h2>
         <Link to="/admins/classes/form" className={styles.contButton}>
-          <Button type="add" resource="Class" testId="add-button" />
+          <Button type="add" resource="Class" testId="admin-classes-add-button" />
         </Link>
       </div>
       {isLoading ? (
         <div>Is Loading</div>
       ) : (
-        <SharedTable data={list} editLink={'/admins/classes/form/'} handleDelete={deleteClasses} />
+        <SharedTable data={list} editLink={'/admins/classes/form/'} handleDelete={deleteClasses} testId="admin-classes-table" />
       )}
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />}
     </section>
   );
 };

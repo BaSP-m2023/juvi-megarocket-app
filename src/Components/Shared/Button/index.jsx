@@ -36,8 +36,8 @@ const Button = ({ type, resource, onClick, testId }) => {
   };
 
   return (
-    <div className={styles.btnContainer} data-testid={testId}>
-      <button className={`${styles.btn} ${getTypeClassName()}`} onClick={onClick}>
+    <div className={styles.btnContainer}>
+      <button className={`${styles.btn} ${getTypeClassName()}`} onClick={onClick} data-testid={testId}>
         {text}
       </button>
     </div>

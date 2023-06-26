@@ -23,18 +23,19 @@ function Members(props) {
   };
 
   return (
-    <section className={styles.container} data-testid="admin-member-section">
+    <section className={styles.container} data-testid="admin-members-section">
       <div className={styles.titleMembers}>
         <h2>Members</h2>
         <Button
           type={'add'}
           resource={'Member'}
           onClick={() => props.history.push('/admins/members/form')}
+          testId="admin-members-add-button"
         />
       </div>
       {data.isLoading && <h1>Loading</h1>}
       {!data.isLoading && (
-        <SharedTable data={data.list} handleDelete={delMember} editLink={'/admins/members/form/'} />
+        <SharedTable data={data.list} handleDelete={delMember} editLink={'/admins/members/form/'} testId="admin-members-table" />
       )}
       {modal && (
         <ModalAlert
@@ -43,6 +44,7 @@ function Members(props) {
             setModal(!modal);
             props.history.push('/admins/members');
           }}
+          testId="admin-members-modal-alert"
         />
       )}
     </section>

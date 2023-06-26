@@ -31,7 +31,7 @@ const Activities = () => {
         <div className={styles.titleActivities}>
           <h2>Activities</h2>
           <Link to="/admins/activities/ActivitiesForm">
-            <Button type="add" resource="Activity" testId="add-button" />
+            <Button type="add" resource="Activity" testId="admin-activities-add-button" />
           </Link>
         </div>
         {isLoading ? (
@@ -41,10 +41,11 @@ const Activities = () => {
             data={list}
             editLink={'/admins/activities/ActivitiesForm/'}
             handleDelete={deleteItem}
+            testId="admin-activities-table"
           />
         )}
       </section>
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert"/>}
     </>
   );
 };

@@ -103,7 +103,7 @@ const MemberForm = (props) => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer} data-testId="add-form">
+        <div className={styles.formContainer} data-testId="admin-members-add-form">
           <h1>{text}</h1>
           <fieldset className={styles.fieldset}>
             <Input
@@ -221,22 +221,22 @@ const MemberForm = (props) => {
             {errors.memberships && <p>{errors.memberships.message}</p>}
           </fieldset>
         </div>
-        <Button type={'submit'} resource={'Member'} testId="submit-button" />
+        <Button type={'submit'} resource={'Member'} testId="admin-members-submit-button" />
         <Button
           type={'cancel'}
           onClick={() => props.history.push('/admins/members')}
-          testId="cancel-button"
+          testId="admin-members-cancel-button"
         />
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="admin-classes-modal-alert" />}
         {modalDone && (
-          <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} />
+          <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} testId="admin-classes-modal-alert" />
         )}
       </form>
       <Button
         className={styles.addButton}
         type="reset"
         onClick={() => reset()}
-        testId="reset-button"
+        testId="admin-members-reset-button"
       ></Button>
     </div>
   );

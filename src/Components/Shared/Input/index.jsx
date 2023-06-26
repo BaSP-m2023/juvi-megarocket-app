@@ -1,8 +1,8 @@
 import styles from 'Components/Shared/Input/input.module.css';
 
-const Input = ({ labelText, type, name, error, placeholder, register, testId }) => {
+const Input = ({ labelText, type, name, error, placeholder, register }) => {
   return (
-    <div className={styles.container} data-testid={testId}>
+    <div className={styles.container}>
       <label className={styles.label}>{labelText}</label>
       <input
         className={styles.input}

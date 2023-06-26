@@ -3,7 +3,7 @@ import styles from 'Components/Shared/Table/table.module.css';
 import { Button, ModalConfirm } from 'Components/Shared';
 import { Link } from 'react-router-dom';
 
-const SharedTable = ({ data, handleDelete, editLink }) => {
+const SharedTable = ({ data, handleDelete, editLink, testId }) => {
   if (!data || data.length === 0) {
     return <div>No data available</div>;
   }
@@ -37,7 +37,7 @@ const SharedTable = ({ data, handleDelete, editLink }) => {
 
   return (
     <div>
-      <table className={styles.table} data-testid="table">
+      <table className={styles.table} data-testid={testId}>
         <thead>
           <tr>
             {propertyNames.map((propertyName) => (
