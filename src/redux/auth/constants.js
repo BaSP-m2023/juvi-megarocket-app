@@ -1,0 +1,3 @@
+export const LOGOUT_ERROR = 'LOGOUT_ERROR';
+export const LOGOUT_PENDING = 'LOGOUT_PENDING';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';

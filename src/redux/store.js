@@ -1,13 +1,14 @@
 import { combineReducers, legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import { SuperAdminsReducer } from './superadmins/reducer';
-import trainersReducer from './trainers/reducer';
-import { adminsReducer } from './admins/reducer';
-import { activitiesReducer } from './activities/reducer';
-import { membersReducer } from './members/reducer';
-import { classesReducer } from './classes/reducer';
-import { subscriptionsReducer } from './subscriptions/reducer';
+import { SuperAdminsReducer } from 'redux/superadmins/reducer';
+import trainersReducer from 'redux/trainers/reducer';
+import { adminsReducer } from 'redux/admins/reducer';
+import { activitiesReducer } from 'redux/activities/reducer';
+import { membersReducer } from 'redux/members/reducer';
+import { classesReducer } from 'redux/classes/reducer';
+import { subscriptionsReducer } from 'redux/subscriptions/reducer';
+import { authReducer } from 'redux/auth/reducer';
 
 const rootReducer = combineReducers({
   trainers: trainersReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   classes: classesReducer,
   activities: activitiesReducer,
   subscriptions: subscriptionsReducer,
-  superAdmins: SuperAdminsReducer
+  superAdmins: SuperAdminsReducer,
+  auth: authReducer
 });
 
 const configureStore = () => {
