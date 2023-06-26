@@ -2,7 +2,7 @@ import styles from './membership.module.css';
 
 function MembershipMember() {
   return (
-    <div className={styles.containerMembership}>
+    <div className={styles.containerMembership} data-testid="member-membership-screen">
       <div className={styles.containerTitle}>
         <h2>MEMBERSHIPS</h2>
         <p className={styles.paragraphMember}>

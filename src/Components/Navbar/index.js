@@ -30,7 +30,10 @@ function Navbar() {
   return (
     <nav className={`${styles.navbar} ${navVisible ? styles.navShadow : ''}`}>
       <div className={styles.navContainer}>
-        <ul className={`${styles.rutes} ${navVisible ? styles.showNav : styles.hideNav}`}>
+        <ul
+          className={`${styles.rutes} ${navVisible ? styles.showNav : styles.hideNav}`}
+          data-testid="navbar"
+        >
           <li>
             <Link to="/" onClick={closeNav}>
               Home

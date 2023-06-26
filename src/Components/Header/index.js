@@ -3,7 +3,7 @@ import styles from './header.module.css';
 function Header() {
   return (
     <header>
-      <div className={styles.container}>
+      <div className={styles.container} data-testid="header-testid">
         <div className={styles.brand}>Radium Rocket</div>
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">

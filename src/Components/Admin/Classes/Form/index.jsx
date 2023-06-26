@@ -89,7 +89,7 @@ const FormClasses = () => {
       ) : (
         <>
           <form className={styles.formClasses} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.formContainer}>
+            <div className={styles.formContainer} data-testId="admin-classes-add-form">
               <div className={styles.inputClass}>
                 <label className={styles.labelClasses} htmlFor="activity">
                   Activity
@@ -144,13 +144,20 @@ const FormClasses = () => {
                 />
               </div>
             </div>
-            <Button type="confirm" />
-            <Button type="cancel" onClick={onCancel} />
+            <Button type="confirm" testId="admin-classes-confirm-button" />
+            <Button type="cancel" onClick={onCancel} testId="admin-classes-cancel-button" />
           </form>
-          <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
+          <Button
+            className={styles.addButton}
+            type="reset"
+            onClick={() => reset()}
+            testId="admin-classes-reset-button"
+          ></Button>
         </>
       )}
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModal && (
+        <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />
+      )}
     </>
   );
 };

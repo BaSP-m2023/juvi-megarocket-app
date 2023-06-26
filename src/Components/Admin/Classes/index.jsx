@@ -29,19 +29,26 @@ const Classes = () => {
   };
 
   return (
-    <section className={styles.containerClass}>
+    <section className={styles.containerClass} data-testid="admin-classes-section">
       <div className={styles.titleClass}>
         <h2>Classes</h2>
         <Link to="/admins/classes/form" className={styles.contButton}>
-          <Button type="add" resource="Class" />
+          <Button type="add" resource="Class" testId="admin-classes-add-button" />
         </Link>
       </div>
       {isLoading ? (
         <div>Is Loading</div>
       ) : (
-        <SharedTable data={list} editLink={'/admins/classes/form/'} handleDelete={deleteClasses} />
+        <SharedTable
+          data={list}
+          editLink={'/admins/classes/form/'}
+          handleDelete={deleteClasses}
+          testId="admin-classes-table"
+        />
       )}
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
+      {showModal && (
+        <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />
+      )}
     </section>
   );
 };

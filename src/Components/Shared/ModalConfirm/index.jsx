@@ -4,7 +4,7 @@ import Button from 'Components/Shared/Button';
 
 const ModalConfirm = ({ title, message, onConfirm, onCancel }) => {
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} data-testid="modal-confirm">
       <div className={styles.modalContent}>
         <h2>{title}</h2>
         <p>{message}</p>
