@@ -32,7 +32,7 @@ function Navbar() {
       <div className={styles.navContainer}>
         <ul
           className={`${styles.rutes} ${navVisible ? styles.showNav : styles.hideNav}`}
-          data-testid="navbar"
+          data-testid="landing-navbar"
         >
           <li>
             <Link to="/" onClick={closeNav}>
@@ -40,7 +40,7 @@ function Navbar() {
             </Link>
           </li>
           {adminNavVisible && (
-            <>
+            <div data-testid="admin-navbar">
               <li>
                 <Link to="/admins/activities" onClick={adminNav}>
                   Activities
@@ -66,10 +66,10 @@ function Navbar() {
                   Subscriptions
                 </Link>
               </li>
-            </>
+            </div>
           )}
           {memberNavVisible && (
-            <>
+            <div data-testid="member-navbar">
               <li>
                 <Link to="/members/activities" onClick={memberNav}>
                   Activities
@@ -95,7 +95,7 @@ function Navbar() {
                   Schedule
                 </Link>
               </li>
-            </>
+            </div>
           )}
           {!adminNavVisible && !memberNavVisible && (
             <>
