@@ -9,6 +9,8 @@ import {
 } from 'redux/auth/constants';
 
 const initialState = {
+  authenticated: '',
+  role: '',
   isLoading: false,
   error: ''
 };
@@ -51,5 +53,7 @@ export const authReducer = (state = initialState, action) => {
         authenticated: true
       };
     }
+    default:
+      return state;
   }
 };
