@@ -103,7 +103,7 @@ const MemberForm = (props) => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer} testId="add-form">
           <h1>{text}</h1>
           <fieldset className={styles.fieldset}>
             <Input
@@ -169,6 +169,7 @@ const MemberForm = (props) => {
               placeholder="Ex: Casilda"
               error={errors.city?.message}
               register={register}
+              testId="admin-member-form-city"
             />
           </fieldset>
           <fieldset className={styles.fieldset}>
@@ -212,7 +213,7 @@ const MemberForm = (props) => {
           </fieldset>
           <fieldset className={styles.fieldset}>
             <label>Membership</label>
-            <select name="memberships" {...register('memberships')}>
+            <select name="memberships" {...register('memberships')} >
               <option value="Only Classes">Only Classes</option>
               <option value="Classic">Classic</option>
               <option value="Black">Black</option>
@@ -220,14 +221,14 @@ const MemberForm = (props) => {
             {errors.memberships && <p>{errors.memberships.message}</p>}
           </fieldset>
         </div>
-        <Button type={'submit'} resource={'Member'} />
-        <Button type={'cancel'} onClick={() => props.history.push('/admins/members')} />
+        <Button type={'submit'} resource={'Member'} testId="submit-button" />
+        <Button type={'cancel'} onClick={() => props.history.push('/admins/members')} testId="cancel-button" />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && (
           <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} />
         )}
       </form>
-      <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
+      <Button className={styles.addButton} type="reset" onClick={() => reset()} testId="reset-button"></Button>
     </div>
   );
 };

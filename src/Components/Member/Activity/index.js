@@ -22,7 +22,7 @@ function ActivityMember() {
       {data.isLoading ? (
         <div>is Loading</div>
       ) : (
-        <div className={styles.mainContainer}>
+        <div className={styles.mainContainer} data-testid="main-cards-container">
           <div className={styles.mainTitle}>
             <h1>Activities</h1>
           </div>

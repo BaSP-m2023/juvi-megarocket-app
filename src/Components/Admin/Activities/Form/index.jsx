@@ -61,7 +61,7 @@ const Form = () => {
       ) : (
         <>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.divContainer}>
+            <div className={styles.divContainer} testId="add-form">
               <Input
                 register={register}
                 labelText="Name"
@@ -77,14 +77,15 @@ const Form = () => {
                 error={errors.description?.message}
               />
             </div>
-            <Button className={styles.addButton} type="confirm"></Button>
+            <Button className={styles.addButton} type="confirm" testId="confirm-button"></Button>
             <Button
               className={styles.addButton}
               type="cancel"
               onClick={() => history.push('/admins/activities')}
+              testId="cancel-button"
             ></Button>
           </form>
-          <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
+          <Button className={styles.addButton} type="reset" onClick={() => reset()} testId="reset-button"></Button>
         </>
       )}
 

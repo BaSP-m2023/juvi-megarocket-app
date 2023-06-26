@@ -37,7 +37,7 @@ const SharedTable = ({ data, handleDelete, editLink }) => {
 
   return (
     <div>
-      <table className={styles.table}>
+      <table className={styles.table} data-testid="table">
         <thead>
           <tr>
             {propertyNames.map((propertyName) => (

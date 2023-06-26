@@ -29,11 +29,11 @@ const Classes = () => {
   };
 
   return (
-    <section className={styles.containerClass}>
+    <section className={styles.containerClass} data-testid="admin-classes-section">
       <div className={styles.titleClass}>
         <h2>Classes</h2>
         <Link to="/admins/classes/form" className={styles.contButton}>
-          <Button type="add" resource="Class" />
+          <Button type="add" resource="Class" testId="add-button" />
         </Link>
       </div>
       {isLoading ? (

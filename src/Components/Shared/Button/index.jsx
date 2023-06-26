@@ -5,7 +5,7 @@ import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 const edit = <FontAwesomeIcon icon={faPen} />;
 const del = <FontAwesomeIcon icon={faTimes} size="lg" />;
 
-const Button = ({ type, resource, onClick }) => {
+const Button = ({ type, resource, onClick, testId }) => {
   let text = '';
   const getTypeClassName = () => {
     switch (type) {
@@ -36,7 +36,7 @@ const Button = ({ type, resource, onClick }) => {
   };
 
   return (
-    <div className={styles.btnContainer}>
+    <div className={styles.btnContainer} data-testid={testId}>
       <button className={`${styles.btn} ${getTypeClassName()}`} onClick={onClick}>
         {text}
       </button>

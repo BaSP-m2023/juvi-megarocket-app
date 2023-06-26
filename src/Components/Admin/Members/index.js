@@ -23,7 +23,7 @@ function Members(props) {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={styles.container} data-testid="admin-member-section">
       <div className={styles.titleMembers}>
         <h2>Members</h2>
         <Button
@@ -34,7 +34,11 @@ function Members(props) {
       </div>
       {data.isLoading && <h1>Loading</h1>}
       {!data.isLoading && (
-        <SharedTable data={data.list} handleDelete={delMember} editLink={'/admins/members/form/'} />
+        <SharedTable
+          data={data.list}
+          handleDelete={delMember}
+          editLink={'/admins/members/form/'}
+        />
       )}
       {modal && (
         <ModalAlert
