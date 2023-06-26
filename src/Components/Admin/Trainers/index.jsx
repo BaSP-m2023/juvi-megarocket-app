@@ -33,10 +33,19 @@ function Trainers() {
       {isLoading ? (
         <h2>Loading...</h2>
       ) : (
-        <SharedTable data={list} editLink={'/admins/trainers/form/'} handleDelete={handleDelete} testId="admin-trainers-table" />
+        <SharedTable
+          data={list}
+          editLink={'/admins/trainers/form/'}
+          handleDelete={handleDelete}
+          testId="admin-trainers-table"
+        />
       )}
-      {message != '' && <ModalAlert text={message} onClick={closeAlert} testId="admin-trainers-modal-alert" />}
-      {error != '' && <ModalAlert text={error} onClick={closeAlert} testId="admin-trainers-modal-alert" />}
+      {message != '' && (
+        <ModalAlert text={message} onClick={closeAlert} testId="admin-trainers-modal-alert" />
+      )}
+      {error != '' && (
+        <ModalAlert text={error} onClick={closeAlert} testId="admin-trainers-modal-alert" />
+      )}
     </section>
   );
 }

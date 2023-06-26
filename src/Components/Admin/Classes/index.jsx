@@ -39,9 +39,16 @@ const Classes = () => {
       {isLoading ? (
         <div>Is Loading</div>
       ) : (
-        <SharedTable data={list} editLink={'/admins/classes/form/'} handleDelete={deleteClasses} testId="admin-classes-table" />
+        <SharedTable
+          data={list}
+          editLink={'/admins/classes/form/'}
+          handleDelete={deleteClasses}
+          testId="admin-classes-table"
+        />
       )}
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />}
+      {showModal && (
+        <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />
+      )}
     </section>
   );
 };

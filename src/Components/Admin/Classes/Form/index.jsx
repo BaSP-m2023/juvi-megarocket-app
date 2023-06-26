@@ -155,7 +155,9 @@ const FormClasses = () => {
           ></Button>
         </>
       )}
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />}
+      {showModal && (
+        <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />
+      )}
     </>
   );
 };

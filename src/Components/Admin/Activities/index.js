@@ -45,7 +45,9 @@ const Activities = () => {
           />
         )}
       </section>
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert"/>}
+      {showModal && (
+        <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert" />
+      )}
     </>
   );
 };

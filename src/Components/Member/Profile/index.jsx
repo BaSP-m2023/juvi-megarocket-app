@@ -183,9 +183,25 @@ const MemberProfile = () => {
           </fieldset>
         </div>
         <Button type={'submit'} resource={'Member'} testId="member-profile-submit-button" />
-        <Button type={'cancel'} onClick={() => history.push('/members')} testId="member-profile-cancel-button" />
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="member-profile-modal-alert" />}
-        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/members')} testId="member-profile-modal-alert" />}
+        <Button
+          type={'cancel'}
+          onClick={() => history.push('/members')}
+          testId="member-profile-cancel-button"
+        />
+        {modal && (
+          <ModalAlert
+            text={msg}
+            onClick={() => setModal(!modal)}
+            testId="member-profile-modal-alert"
+          />
+        )}
+        {modalDone && (
+          <ModalAlert
+            text={msg}
+            onClick={() => history.push('/members')}
+            testId="member-profile-modal-alert"
+          />
+        )}
       </form>
       <Button
         className={styles.addButton}

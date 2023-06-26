@@ -227,9 +227,19 @@ const MemberForm = (props) => {
           onClick={() => props.history.push('/admins/members')}
           testId="admin-members-cancel-button"
         />
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="admin-classes-modal-alert" />}
+        {modal && (
+          <ModalAlert
+            text={msg}
+            onClick={() => setModal(!modal)}
+            testId="admin-classes-modal-alert"
+          />
+        )}
         {modalDone && (
-          <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} testId="admin-classes-modal-alert" />
+          <ModalAlert
+            text={msg}
+            onClick={() => props.history.push('/admins/members')}
+            testId="admin-classes-modal-alert"
+          />
         )}
       </form>
       <Button

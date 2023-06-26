@@ -98,7 +98,9 @@ const Form = () => {
         </>
       )}
 
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert" />}
+      {showModal && (
+        <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert" />
+      )}
       {showModalSuccess && (
         <ModalAlert
           text={modalText}

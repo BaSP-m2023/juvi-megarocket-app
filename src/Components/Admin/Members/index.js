@@ -35,7 +35,12 @@ function Members(props) {
       </div>
       {data.isLoading && <h1>Loading</h1>}
       {!data.isLoading && (
-        <SharedTable data={data.list} handleDelete={delMember} editLink={'/admins/members/form/'} testId="admin-members-table" />
+        <SharedTable
+          data={data.list}
+          handleDelete={delMember}
+          editLink={'/admins/members/form/'}
+          testId="admin-members-table"
+        />
       )}
       {modal && (
         <ModalAlert
