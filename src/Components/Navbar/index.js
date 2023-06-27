@@ -35,6 +35,11 @@ function Navbar() {
           data-testid="landing-navbar"
         >
           <li>
+            <Link to="/login" onClick={closeNav}>
+              Login
+            </Link>
+          </li>
+          <li>
             <Link to="/" onClick={closeNav}>
               Home
             </Link>
