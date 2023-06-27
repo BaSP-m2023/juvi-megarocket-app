@@ -10,7 +10,7 @@ import {
   getAuthenticationError
 } from 'redux/auth/actions';
 
-import { firebaseApp } from '../helper/firebase';
+import { firebaseApp } from '../../helper/firebase';
 
 export const logout = () => {
   return async (dispatch) => {
