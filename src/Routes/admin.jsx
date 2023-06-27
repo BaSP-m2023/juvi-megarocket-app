@@ -7,9 +7,8 @@ import SubscriptionsForm from 'Components/Admin/Subscriptions/Form';
 import Subscriptions from 'Components/Admin/Subscriptions';
 import Classes from 'Components/Admin/Classes';
 import ClassesForm from 'Components/Admin/Classes/Form';
-import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
-import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import Layout from 'Routes';
+import { Route, useRouteMatch, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import Layout from 'Components/Layout';
 
 const routes = [
   {

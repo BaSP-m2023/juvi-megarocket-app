@@ -6,7 +6,7 @@ import Profile from 'Components/Member/Profile';
 import Signup from 'Components/Member/SignUp';
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import Layout from 'Routes';
+import Layout from 'Components/Layout';
 
 const routes = [
   {

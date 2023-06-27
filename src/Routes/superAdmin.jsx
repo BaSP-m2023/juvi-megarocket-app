@@ -2,7 +2,7 @@ import Home from 'Components/SuperAdmins';
 import Admin from 'Components/Admin/Admins';
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import Layout from 'Routes';
+import Layout from 'Components/Layout';
 
 const routes = [
   {

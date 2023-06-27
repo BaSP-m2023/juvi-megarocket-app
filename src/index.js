@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './Routes';
+import Routes from './Routes';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Provider } from 'react-redux';
@@ -10,7 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <Layout />
+        <Routes />
       </Router>
     </Provider>
   </React.StrictMode>,
