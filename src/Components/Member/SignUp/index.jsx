@@ -79,8 +79,30 @@ const MemberSingUp = () => {
                 className={styles.input}
                 name={'firstName'}
                 type="text"
-                placeholder="Ex: Federico"
+                placeholder="Ex: John Doe"
                 error={errors.firstName?.message}
+                register={register}
+              />
+            </fieldset>
+            <fieldset className={styles.fieldset}>
+              <Input
+                labelText="Email"
+                className={styles.input}
+                name={'email'}
+                type="text"
+                placeholder="example@example.com"
+                error={errors.email?.message}
+                register={register}
+              />
+            </fieldset>
+            <fieldset className={styles.fieldset}>
+              <Input
+                labelText="Repeat Email"
+                className={styles.input}
+                name={'email'}
+                type="text"
+                placeholder="example@example.com"
+                error={errors.email?.message}
                 register={register}
               />
             </fieldset>
@@ -114,17 +136,6 @@ const MemberSingUp = () => {
                 type="number"
                 placeholder="Ex: 1122334455"
                 error={errors.phone?.message}
-                register={register}
-              />
-            </fieldset>
-            <fieldset className={styles.fieldset}>
-              <Input
-                labelText="Email"
-                className={styles.input}
-                name={'email'}
-                type="text"
-                placeholder="example@example.com"
-                error={errors.email?.message}
                 register={register}
               />
             </fieldset>
