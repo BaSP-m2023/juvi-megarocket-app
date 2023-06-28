@@ -1,67 +1,63 @@
-function Activities() {}
-
-Activities.prototype = {
+class Activities{
   get cardsMainContainer() {
-    return $('[data-testid="member-cards-container"]');
-  },
+    return $('[data-testid="member-cards-container"]')
+  }
 
   get activitiesTitle() {
     return $(`[data-testid="member-cards-container"] h1`)
-  },
+  }
 
   get firstCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(2)');
-  },
+    return this.cardsMainContainer.$(':nth-child(2)')
+  }
 
   get secondCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(3)');
-  },
+    return this.cardsMainContainer.$(':nth-child(3)')
+  }
 
   get thirdCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(4)');
-  },
+    return this.cardsMainContainer.$(':nth-child(4)')
+  }
 
   get firstCardFirstCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(2) :nth-child(1)');
-  },
+    return this.cardsMainContainer.$(':nth-child(2) :nth-child(1)')
+  }
 
   get secondCardFirstCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(2) :nth-child(2)');
-  },
+    return this.cardsMainContainer.$(':nth-child(2) :nth-child(2)')
+  }
 
   get thirdCardFirstCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(2) :nth-child(3)');
-  },
+    return this.cardsMainContainer.$(':nth-child(2) :nth-child(3)')
+  }
 
   get firstCardSecondCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(3) :nth-child(1)');
-  },
+    return this.cardsMainContainer.$(':nth-child(3) :nth-child(1)')
+  }
 
   get secondCardSecondCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(3) :nth-child(2)');
-  },
+    return this.cardsMainContainer.$(':nth-child(3) :nth-child(2)')
+  }
 
   get thirdCardSecondCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(3) :nth-child(3)');
-  },
+    return this.cardsMainContainer.$(':nth-child(3) :nth-child(3)')
+  }
 
   get firstCardThirdCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(4) :nth-child(1)');
-  },
+    return this.cardsMainContainer.$(':nth-child(4) :nth-child(1)')
+  }
 
   get secondCardThirdCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(4) :nth-child(2)');
-  },
+    return this.cardsMainContainer.$(':nth-child(4) :nth-child(2)')
+  }
 
   get thirdCardThirdCardContainer() {
-    return this.cardsMainContainer.$(':nth-child(4) :nth-child(3)');
-  },
+    return this.cardsMainContainer.$(':nth-child(4) :nth-child(3)')
+  }
 
-  activitiesTitleText: async function () {
-    return this.activitiesTitle.getText();
-  },
+  async activitiesTitleText() {
+    return this.activitiesTitle.getText()
+  }
 };
 
-var activities = new Activities();
-
-module.exports = activities;
+module.exports = new Activities;

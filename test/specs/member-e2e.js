@@ -6,10 +6,6 @@ describe('display of activities', function () {
     browser.url('https://juvi-megarocket-app.vercel.app/members/activities');
   });
 
-  /*it('Navigate to activities page', async () => {
-
-  });*/
-
   it('Verify the title is Activities', async function () {
     await activities.activitiesTitle.waitForDisplayed();
     const textTitle = await activities.activitiesTitleText();
