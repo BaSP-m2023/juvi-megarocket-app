@@ -12,7 +12,7 @@ class MembersEditDelete {
   }
 
   get firstMemberDeleteBtn() {
-      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(11) button:nth-child(2)`)
+      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(12) button`)
   }
 
   get formEditMemberTitle() {
@@ -116,27 +116,43 @@ class MembersEditDelete {
   }
 
   get successEditModal() {
-      return $(`#root > div > div > div > div > form > div.modal-alert_modal__aFCt9 > div`)
+      return $(`[data-testid="admin-classes-modal-alert"]`)
   }
 
   get successEditModalText() {
-      return $(`[data-testid="admin-members-modal-alert"] :first-child`)
+      return $(`[data-testid="admin-classes-modal-alert"] :first-child`)
   }
 
   get successEditModalCloseBtn() {
-      return $(`[data-testid="admin-members-modal-alert"] > div:nth-child(2) > :first-child`)
+      return $(`[data-testid="admin-classes-modal-alert"] > div:nth-child(2) > :first-child`)
   }
 
   get modalConfirmDelete() {
       return $(`[data-testid="modal-confirm"]`)
   }
 
+  get modalConfirmDeleteText() {
+    return $(`[data-testid="modal-confirm"] p`)
+  }
+
   get modalConfirmDeleteConfirmBtn() {
-      return $(`[data-testid="modal-confirm"] .button_btn__HDsEA button_btnConfirm__NEXgW`)
+      return $(`[data-testid="modal-confirm"] > :nth-child(3) > :nth-child(1) > button`)
   }
 
   get modalConfirmDeleteCancelBtn() {
-      return $(`[data-testid="modal-confirm"] .button_btn__HDsEA button_btnCancel__mWZOu`)
+      return $(`[data-testid="modal-confirm"] > :nth-child(3) > :nth-child(2) > button`)
+  }
+
+  get successDeleteModal() {
+    return $(`[data-testid="admin-members-modal-alert"]`)
+  }
+
+  get successDeleteModalText(){
+    return $(`[data-testid="admin-members-modal-alert"] p`)
+  }
+
+  get successDeleteModalCloseBtn() {
+    return $(`[data-testid="admin-members-modal-alert"] button`)
   }
 
   async firstMemberEditBtnClick() {
@@ -210,6 +226,17 @@ class MembersEditDelete {
     await this.modalConfirmDeleteConfirmBtn.click();
   }
 
+  async modalConfirmDeleteMessage() {
+    return await this.modalConfirmDeleteText.getText();
+  }
+
+  async successDeleteModalMessage() {
+    return await this.successDeleteModalText.getText();
+  }
+
+  async successDeleteModalCloseBtnClick() {
+    await this.successDeleteModalCloseBtn.click();
+  }
   async membersTitleText() {
       return await this.membersTitle.getText();
   }
