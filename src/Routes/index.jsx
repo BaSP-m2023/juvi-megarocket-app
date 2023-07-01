@@ -5,8 +5,6 @@ import { tokenListener } from 'helper/firebase';
 import { getAuth } from 'redux/auth/thunks';
 import PrivateRoute from './privateRoute';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
-import Home from 'Components/Home';
-import Layout from 'Components/Layout';
 
 const AdminRoutes = lazy(() => import('./admin'));
 const MemberRoutes = lazy(() => import('./member'));
@@ -27,9 +25,6 @@ function Routes() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Switch>
-        <Layout>
-          <Route exact path="/" component={Home} />
-        </Layout>
         <PrivateRoute path="/admin" role="ADMIN" component={AdminRoutes} />
         <PrivateRoute path="/member" role="MEMBER" component={MemberRoutes} />
         <PrivateRoute path="/super-admin" role="SUPERADMIN" component={SuperAdminRoutes} />

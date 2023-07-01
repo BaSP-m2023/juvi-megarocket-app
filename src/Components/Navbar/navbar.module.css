@@ -9,11 +9,12 @@
   background-color: #0f232e;
 }
 
-.rutes li > a:hover {
+ .navContainer a:hover {
   color: #f9a414;
   background-color: #1c4257;
   border-radius: 4px;
 }
+
 .navShadow {
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
 }
@@ -25,16 +26,15 @@
   height: 100%;
 }
 
-.rutes {
+.navContainer ul {
   display: flex;
   flex-direction: column;
-  height: 70vh;
-  padding: 0px 10px;
-  justify-content: space-evenly;
+  height: 30vh;
+  padding: 20px 10px;
+  justify-content: space-between;
   list-style-type: none;
 }
-
-.rutes li > a {
+.navContainer a {
   margin-left: 15px;
   color: #fff;
   font-size: 1rem;
@@ -42,6 +42,7 @@
   text-decoration: none;
   text-transform: capitalize;
 }
+
 
 .showNav {
   max-height: 500px;
@@ -82,7 +83,7 @@
     align-items: baseline;
   }
 
-  .rutes li {
+  .navContainer li {
     padding-top: 10px;
   }
 }
