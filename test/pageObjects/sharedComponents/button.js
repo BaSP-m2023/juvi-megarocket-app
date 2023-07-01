@@ -19,6 +19,14 @@ class Button {
     return $('[data-testid="admin-trainers-modal-alert"] button');
   }
 
+  get submitMemberButton(){
+    return $('[data-testid="member-signup-submit-button"]');
+  }
+
+  get cancelMemberButton(){
+    return $('[data-testid="member-signup-cancel-button"]');
+  }
+
   async addButtonClick() {
     await this.addButton.click();
   }
@@ -37,6 +45,14 @@ class Button {
 
   async newconfirmDeleteButtonClick() {
     await this.newconfirmDeleteButton.click();
+  }
+
+  async submitMemberButtonClick() {
+    await this.submitMemberButton.click();
+  }
+
+  async cancelMemberButtonClick(){
+    await this.cancelMemberButton.click();
   }
 }
 
