@@ -12,7 +12,7 @@ describe('page of sign up', () => {
   });
 
   it ('complete form', async () =>{
-    //await expect(signUpPage.formSignUp)
+    await expect(signUpPage.formSignUp).waitForEnabled();
 
 
   });
