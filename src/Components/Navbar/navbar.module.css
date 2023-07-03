@@ -12,6 +12,7 @@
   background-color: #1c4257;
   border-radius: 4px;
 }
+
 .navShadow {
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
 }
