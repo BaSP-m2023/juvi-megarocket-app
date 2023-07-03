@@ -1,7 +1,7 @@
 import Layout from 'Components/Layout';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import SignUpForm from 'Components/Signs/SignUp';
-import SignInForm from 'Components/Signs/SignIn';
+import SignUpForm from 'Components/Signs/SignUp/index';
+import SignInForm from 'Components/Signs/SignIn/index';
 
 const routes = [
   {

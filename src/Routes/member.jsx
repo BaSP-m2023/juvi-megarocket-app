@@ -3,7 +3,7 @@ import Activity from 'Components/Member/Activity/';
 import Membership from 'Components/Member/Membership';
 import Profile from 'Components/Member/Profile';
 /* import Schedule from 'Components/Member/Schedule'; */
-import Signup from 'Components/Member/SignUp';
+import Signup from 'Components/Signs/SignUp';
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from 'Components/Layout';
@@ -11,27 +11,27 @@ import Layout from 'Components/Layout';
 const routes = [
   {
     name: 'Home',
-    path: '/members'
+    path: '/member'
   },
   {
     name: 'Activity',
-    path: '/members/activity'
+    path: '/member/activities'
   },
   {
     name: 'Profile',
-    path: '/members/profile'
+    path: '/member/profile'
   },
   {
     name: 'Membership',
-    path: '/members/membership'
+    path: '/member/membership'
   },
   {
     name: 'Schedule',
-    path: '/members/schedule'
+    path: '/member/schedule'
   },
   {
     name: 'Signup',
-    path: '/members/signup'
+    path: '/member/signup'
   }
 ];
 

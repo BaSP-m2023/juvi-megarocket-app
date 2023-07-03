@@ -2,13 +2,13 @@ import Navbar from 'Components/Navbar';
 import Header from 'Components/Header/';
 import styles from './layout.module.css';
 
-function Layout() {
+function Layout({ routes, children }) {
   return (
     <div className={styles.container}>
       <Header />
       <div className={styles.mainContainer}>
-        <Navbar />
-        <div className={styles.homeContainer}></div>
+        <Navbar routes={routes} />
+        <div className={styles.homeContainer}>{children}</div>
       </div>
     </div>
   );

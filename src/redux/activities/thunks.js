@@ -18,9 +18,13 @@ import {
 
 export const getActivities = () => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getActivitiesPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const responseJson = await response.json();
       const data = responseJson.data;
       if (responseJson.error) {
@@ -35,10 +39,12 @@ export const getActivities = () => {
 
 export const deleteActivity = (_id, setModalText) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(deleteActivityPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${_id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const responseJson = await response.json();
 
@@ -57,14 +63,13 @@ export const deleteActivity = (_id, setModalText) => {
 
 export const addActivity = (formData, setModalText, setShowModal, setShowModalSuccess) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       const { name, description } = formData;
       dispatch(postActivitiesPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { token: token },
         body: JSON.stringify({ name, description })
       });
       const responseData = await response.json();
@@ -92,13 +97,12 @@ export const editActivity = (
   setShowModalSuccess
 ) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(putActivitiesPending);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { token: token },
         body: JSON.stringify(updatedActivity)
       });
 

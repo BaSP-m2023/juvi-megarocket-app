@@ -1,7 +1,6 @@
 .background {
   display: grid;
   height: 100vh;
-  background-color: #0f232e;
 }
 .card {
   justify-self: center;
