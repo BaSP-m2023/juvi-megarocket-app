@@ -17,6 +17,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const data = useSelector((state) => state);
   const dispatch = useDispatch();
+  const authState = useSelector((state) => state.auth);
 
   const {
     register,
@@ -49,6 +50,25 @@ const Login = () => {
       setModalDone(!modalDone);
     }
   };
+
+  useEffect(() => {
+    switch (authState.role) {
+      case 'TRAINER':
+        console.log('Redirigir a la página de entrenador');
+        break;
+      case 'SUPERADMIN':
+        console.log('Redirigir a la página de superadministrador');
+        break;
+      case 'MEMBER':
+        console.log('Redirigir a la página de miembro');
+        break;
+      case 'ADMIN':
+        console.log('Redirigir a la página de administrador');
+        break;
+      default:
+        console.log('Rol no reconocido');
+    }
+  }, [authState.role]);
 
   const onSubmit = async (data) => {
     try {

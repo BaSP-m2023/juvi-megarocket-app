@@ -47,19 +47,18 @@ export const getAuth = (token) => {
 };
 
 export const login = (credentials) => {
-  console.log(credentials);
   return async (dispatch) => {
     dispatch(loginPending);
     try {
       const firebaseResponse = await firebaseApp
         .auth()
         .signInWithEmailAndPassword(credentials.email, credentials.password);
-      console.log(firebaseResponse);
       const token = await firebaseResponse.user.getIdToken();
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
-      console.log = token;
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
       return dispatch(loginSuccess({ role, token }));
     } catch (error) {
       return dispatch(loginError(error.toString()));
