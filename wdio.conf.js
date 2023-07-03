@@ -30,8 +30,8 @@ exports.config = {
   // Patterns to exclude.
   exclude: [
       // 'path/to/excluded/files'
-      './test/specs/admin-e2e.js'
-      //'./test/specs/member-e2e.js'
+      //'./test/specs/admin-e2e.js'
+      './test/specs/member-e2e.js'
   ],
   //
   // ============
@@ -58,7 +58,7 @@ exports.config = {
   capabilities: [{
       // capabilities for local browser web tests
       browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
-      'goog:chromeOptions': {args: ['headless', 'disable-gpu']
+      'goog:chromeOptions': {args: ['disable-gpu']
       }
   }],
   //

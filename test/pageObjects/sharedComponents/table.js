@@ -1,15 +1,15 @@
 class TableShared {
 
   get ListOfTrainers() {
-    return $('[data-testid ="admin-trainers-table"]');
+    return $('[data-testid="admin-trainers-table"]');
   }
 
   get editButton (){
-    return $('[data-testid="admin-trainers-table"] tbody tr td:nth-child(9) div:nth-child(1) button:nth-child(1)');
+    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(9) button');
   }
 
   get deleteButton (){
-    return $('[data-testid="admin-trainers-table"] tbody tr td:nth-child(10) div:nth-child(1) button:nth-child(1)');
+    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(10) button');
   }
 
   async editButtonClick (){

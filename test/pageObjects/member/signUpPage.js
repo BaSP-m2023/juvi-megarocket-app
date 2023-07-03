@@ -44,6 +44,18 @@ class SignUpMember{
     return $('[data-testid="member-signup-form"] fieldset:nth-child(10) select');
   }
 
+  async formSignUp(name, lastname, dni, phone, email, city, bday, zip, password) {
+    await this.inputName.setValue(name);
+    await this.inputLastName.setValue(lastname);
+    await this.inputDni.setValue(dni);
+    await this.inputPhone.setValue(phone);
+    await this.inputEmail.setValue(email);
+    await this.inputCity.setValue(city);
+    await this.inputBday.setValue(bday);
+    await this.inputZip.setValue(zip);
+    await this.inputPassword.setValue(password);
+  }
+
 }
 
 module.exports = new SignUpMember();

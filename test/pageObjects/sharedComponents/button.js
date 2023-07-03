@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 class Button {
   get addButton() {
-    return $('[data-testid] button');
+    return $('[data-testid="admin-trainers-add-button"]');
   }
   get confirmEditButton() {
     return $('[data-testid="admin-trainers-confirm-button"]');

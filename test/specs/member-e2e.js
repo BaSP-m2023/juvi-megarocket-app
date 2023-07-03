@@ -14,16 +14,8 @@ describe('page of sign up', () => {
 
   it ('complete form', async () =>{
     await expect(SignUpMember.formSignUp).toBeDisplayed();
-    await expect (SignUpMember.inputName).addValue('Victoria');
-    await expect (SignUpMember.inputLastName).addValue('Ramirez');
-    await expect (SignUpMember.inputDni).addValue('3366622');
-    await expect (SignUpMember.inputPhone).addValue('3542223334');
-    await expect (SignUpMember.inputEmail).addValue();
-    await expect (SignUpMember.inputCity).addValue();
-    await expect (SignUpMember.inputBday).addValue();
-    await expect (SignUpMember.inputZip).addValue();
-    await expect (SignUpMember.inputPassword).addValue();
-    await expect (SignUpMember.inputSelect).addValue();
+    await SignUpMember.formSignUp("Victoria", "Ramirez", "31665222", "3415568223",
+    "vicrami25@gmail.com", "Fisherton","19/05/1995", "2000", "vicram2514");
     await Button.submitMemberButtonClick();
     await expect (ModalAlert.modalALertAddMember).toBeDisplayed();
     await ModalAlert.buttonAddCofirmMemberClick();

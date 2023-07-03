@@ -1,52 +1,41 @@
-const TrainersPage = require ("../pageObjects/admin/trainersPage");
-const Button = require ("../pageObjects/sharedComponents/button");
-const ModalAlert = require ("../pageObjects/sharedComponents/modalAlert");
-const ModalConfirm = require ("../pageObjects/sharedComponents/modalConfirm");
-const TableShared = require ("../pageObjects/sharedComponents/table");
+const TrainersPage = require ("../../test/pageObjects/admin/trainersPage.js");
+const Button = require ("../../test/pageObjects/sharedComponents/button.js");
+const ModalAlert = require ("../../test/pageObjects/sharedComponents/modalAlert.js");
+const ModalConfirm = require ("../../test/pageObjects/sharedComponents/modalConfirm.js");
+const TableShared = require ("../../test/pageObjects/sharedComponents/table.js");
 
 describe('page of trainers', () =>{
   beforeAll('open browser', () =>{
-      browser.setWindowSize (1360, 768);
       browser.url("http://localhost:3000/admins/trainers");
   });
 
   it('add a new trainer', async() => {
-    await expect (TableShared.ListOfTrainers).waitForEnabled();
+    await expect(TableShared.ListOfTrainers).toBeDisplayed();
     await Button.addButtonClick();
-    await expect (browser).toHaveUrl('http://localhost:3000/admins/trainers/form');
-    await expect (TrainersPage.addTrainerForm).waitForEnabled();
-    await expect (TrainersPage.firstNameInput).waitForEnabled();
-    await expect (TrainersPage.lastNameInput).waitForEnabled();
-    await expect (TrainersPage.cityInput).waitForEnabled();
-    await expect (TrainersPage.dniInput).waitForEnabled();
-    await expect (TrainersPage.emailInput).waitForEnabled();
-    await expect (TrainersPage.phoneInput).waitForEnabled();
-    await expect (TrainersPage.salaryInput).waitForEnabled();
-    await expect (TrainersPage.passwordInput).waitForEnabled();
+    await expect(browser).toHaveUrl('http://localhost:3000/admins/trainers/form');
     await TrainersPage.addTrainerForm("Victoria", "Ramirez", "Rosario", "35666222",
-    "vicramirez1@gmail.com", "3415566223","50000", "vic2514");
+    "vicramirez6@gmail.com", "3415566223","500000", "vicky2514");
     await TrainersPage.confirmButtonClick();
-    await expect (ModalAlert.alertSucces).waitForEnabled();
+    await browser.pause(3000);
+    await expect(ModalAlert.alertSucces).toBeDisplayed();
     await ModalAlert.confirmButtonClick();
   });
 
   it ('edit trainer', async() => {
     await expect (browser).toHaveUrl('http://localhost:3000/admins/trainers');
     await TableShared.editButtonClick();
-    await expect (browser).toHaveUrl('http://localhost:3000/admins/trainers/form');
-    await expect (TrainersPage.addTrainerForm).waitForEnabled();
-    await expect(TrainersPage.firstNameInput).toHaveAttribute('Victoria');
-    await button.confirmEditButtonClick();
-    await expect (ModalAlert.alertSucces).waitForEnabled();
-    await ModalAlert.confirmModalSuccesButtonClick();
+    await TrainersPage.editTrainerForm('Funes', '700000', 'victoria123');
+    await Button.confirmEditButtonClick();
+    await expect (ModalAlert.alertSucces).toBeDisplayed();
+    await Button.confirmModalSuccesButtonClick();
     await expect (browser).toHaveUrl('http://localhost:3000/admins/trainers');
   });
 
   it('delete trainer', async() =>{
     await TableShared.deleteButtonClick();
-    await expect (ModalConfirm.modalConfirmDelete).waitForEnabled();
+    await expect (ModalConfirm.modalConfirmDelete).toBeDisplayed();
     await Button.confirmDeleteButtonClick();
-    await expect (ModalAlert.confirmAlertDelete).waitForEnabled();
+    await expect (ModalAlert.confirmAlertDelete).toBeDisplayed();
     await Button.newconfirmDeleteButtonClick();
     await expect (browser).toHaveUrl('http://localhost:3000/admins/trainers');
     await TrainersPage.facebookButtonClick();

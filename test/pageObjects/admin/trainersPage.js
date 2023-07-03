@@ -13,7 +13,7 @@ class TrainersPage{
   }
 
   get instagramButton(){
-    return $('[data-testid ="header-testid"] div a:nth-child(3)');
+    return $('[data-testid="header-testid"] div a:nth-child(3)');
   }
 
   get addTrainerForm(){
@@ -41,19 +41,19 @@ class TrainersPage{
   }
 
   get emailInput(){
-    return $('form div:nth-child(2) div:nth-child(1) input');
+    return $('#root > div > div > div > form > div:nth-child(2) > div:nth-child(1) > input');
   }
 
   get phoneInput(){
-    return $('form div:nth-child(2) div:nth-child(2) input');
+    return $('#root > div > div > div > form > div:nth-child(2) > div:nth-child(2) > input');
   }
 
   get salaryInput(){
-    return $('form div:nth-child(2) div:nth-child(3) input');
+    return $('#root > div > div > div > form > div:nth-child(2) > div:nth-child(3) > input');
   }
 
   get passwordInput(){
-    return $('form div:nth-child(2) div:nth-child(4) input');
+    return $('#root > div > div > div > form > div:nth-child(2) > div:nth-child(4) > input');
   }
 
   get confirmButton (){
@@ -81,16 +81,16 @@ class TrainersPage{
     await this.lastNameInput.setValue(lastname);
     await this.cityInput.setValue(city);
     await this.dniInput.setValue(dni);
-    await this.emailInputInput.setValue(email);
-    await this.phoneInputInput.setValue(phone);
+    await this.emailInput.setValue(email);
+    await this.phoneInput.setValue(phone);
     await this.salaryInput.setValue(salary);
     await this.passwordInput.setValue(password);
   }
 
   async editTrainerForm(city, salary, password){
-    await this.cityInput.addValue(city);
-    await this.salaryInput.addValue(salary);
-    await this.salaryInput.addValue(password);
+    await this.cityInput.setValue(city);
+    await this.salaryInput.setValue(salary);
+    await this.passwordInput.setValue(password);
   }
 
 }
