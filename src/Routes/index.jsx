@@ -23,6 +23,7 @@ const superAdminForm = lazy(() => import('Components/SuperAdmins/Form/Index'));
 const superAdminList = lazy(() => import('Components/SuperAdmins'));
 const trainerForm = lazy(() => import('Components/Admin/Trainers/Form'));
 const trainerList = lazy(() => import('Components/Admin/Trainers'));
+const login = lazy(() => import('Components/Login'));
 
 function Layout() {
   return (
@@ -34,6 +35,7 @@ function Layout() {
           <Suspense fallback={<div>Loading...</div>}>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={login} />
               <Route exact path="/admins" component={adminList} />
               <Route exact path="/admins/Form/" component={adminForm} />
               <Route path="/admins/Form/:id" component={adminForm} />
