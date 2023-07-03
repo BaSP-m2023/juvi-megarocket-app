@@ -13,6 +13,7 @@ import {
 const initialState = {
   authenticated: '',
   role: '',
+  data: '',
   isLoading: false,
   error: ''
 };

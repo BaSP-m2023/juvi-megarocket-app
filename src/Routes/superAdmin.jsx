@@ -1,4 +1,4 @@
-import Home from 'Components/SuperAdmins';
+import Home from 'Components/Home';
 import Admin from 'Components/Admin/Admins';
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
@@ -11,7 +11,7 @@ const routes = [
   },
   {
     name: 'Admin',
-    path: '/super-admin/admin'
+    path: '/super-admin/admins'
   }
 ];
 

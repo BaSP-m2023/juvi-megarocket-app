@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -9,7 +8,6 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from 'Components/Admin/Members/MemberForm/form.module.css';
 import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
-import { getMemberById } from 'redux/members/thunks';
 import { useHistory } from 'react-router-dom';
 
 const MemberProfile = () => {
@@ -20,11 +18,6 @@ const MemberProfile = () => {
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
   const history = useHistory();
-  const { id } = useParams();
-
-  useEffect(() => {
-    dispatch(getMemberById(id));
-  }, []);
 
   console.log(data);
 

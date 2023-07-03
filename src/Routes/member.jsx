@@ -1,4 +1,4 @@
-/* import Home from 'Components/Member/Home'; */
+import Home from 'Components/Member/Home';
 import Activity from 'Components/Member/Activity/';
 import Membership from 'Components/Member/Membership';
 import Profile from 'Components/Member/Profile';
@@ -40,7 +40,7 @@ const MemberRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        {/*   <Route exact path={`${url}/`} component={Home} /> */}
+        <Route exact path={`${url}/`} component={Home} />
         <Route exact path={`${url}/activities`} component={Activity} />
         <Route exact path={`${url}/profile`} component={Profile} />
         <Route exact path={`${url}/membership`} component={Membership} />
