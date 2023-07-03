@@ -56,7 +56,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         authenticated: true,
-        role: action.payload.role
+        data: action.payload
       };
     }
     default:

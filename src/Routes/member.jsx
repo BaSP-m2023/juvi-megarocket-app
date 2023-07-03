@@ -28,10 +28,6 @@ const routes = [
   {
     name: 'Schedule',
     path: '/member/schedule'
-  },
-  {
-    name: 'Signup',
-    path: '/member/signup'
   }
 ];
 

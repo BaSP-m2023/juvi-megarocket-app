@@ -15,7 +15,7 @@ const MemberProfile = () => {
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const data = useSelector((state) => state.members);
+  const data = useSelector((state) => state.auth?.data);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -30,16 +30,16 @@ const MemberProfile = () => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: data.item?.firstName ?? '',
-      lastName: data.item?.lastName ?? '',
-      dni: data.item?.dni ?? '',
-      phone: data.item?.phone ?? '',
-      email: data.item?.email ?? '',
-      city: data.item?.city ?? '',
-      birthDate: data.item?.birthDate ?? '',
-      postalCode: data.item?.postalCode ?? '',
-      password: data.item?.password ?? '',
-      memberships: data.item?.memberships ?? 'Only Classes'
+      firstName: data?.firstName ?? '',
+      lastName: data?.lastName ?? '',
+      dni: data?.dni ?? '',
+      phone: data?.phone ?? '',
+      email: data?.email ?? '',
+      city: data?.city ?? '',
+      birthDate: data?.birthDate ?? '',
+      postalCode: data?.postalCode ?? '',
+      password: data?.password ?? '',
+      memberships: data?.memberships ?? 'Only Classes'
     }
   });
 
@@ -186,7 +186,7 @@ const MemberProfile = () => {
         <Button type={'submit'} resource={'Member'} testId="member-profile-submit-button" />
         <Button
           type={'cancel'}
-          onClick={() => history.push('/members')}
+          onClick={() => history.push('/member')}
           testId="member-profile-cancel-button"
         />
         {modal && (
@@ -199,7 +199,7 @@ const MemberProfile = () => {
         {modalDone && (
           <ModalAlert
             text={msg}
-            onClick={() => history.push('/members')}
+            onClick={() => history.push('/member')}
             testId="member-profile-modal-alert"
           />
         )}
