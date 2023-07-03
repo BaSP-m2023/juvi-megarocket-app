@@ -5,11 +5,11 @@ class TableShared {
   }
 
   get editButton (){
-    return $('[data-testid="admin-members-table"] > tbody > tr:nth-child(1) > td.table_edit__Oa\+9K > a > div > button');
+    return $('[data-testid="admin-trainers-table"] tbody tr td:nth-child(9) div:nth-child(1) button:nth-child(1)');
   }
 
   get deleteButton (){
-    return $('[data-testid="admin-members-table"] > tbody > tr:nth-child(1) > td.table_delete__ncQN4 > div > button');
+    return $('[data-testid="admin-trainers-table"] tbody tr td:nth-child(10) div:nth-child(1) button:nth-child(1)');
   }
 
   async editButtonClick (){
