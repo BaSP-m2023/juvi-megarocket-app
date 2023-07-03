@@ -79,7 +79,7 @@ const MemberSingUp = () => {
                 className={styles.input}
                 name={'firstName'}
                 type="text"
-                placeholder="Ex: Federico"
+                placeholder="Ex: John Doe"
                 error={errors.firstName?.message}
                 register={register}
               />
@@ -92,6 +92,28 @@ const MemberSingUp = () => {
                 type="text"
                 placeholder="Ex: Cavallo"
                 error={errors.lastName?.message}
+                register={register}
+              />
+            </fieldset>
+            <fieldset className={styles.fieldset}>
+              <Input
+                labelText="Email"
+                className={styles.input}
+                name={'email'}
+                type="text"
+                placeholder="example@example.com"
+                error={errors.email?.message}
+                register={register}
+              />
+            </fieldset>
+            <fieldset className={styles.fieldset}>
+              <Input
+                labelText="Repeat Email"
+                className={styles.input}
+                name={'email'}
+                type="text"
+                placeholder="example@example.com"
+                error={errors.email?.message}
                 register={register}
               />
             </fieldset>
@@ -119,17 +141,6 @@ const MemberSingUp = () => {
             </fieldset>
             <fieldset className={styles.fieldset}>
               <Input
-                labelText="Email"
-                className={styles.input}
-                name={'email'}
-                type="text"
-                placeholder="example@example.com"
-                error={errors.email?.message}
-                register={register}
-              />
-            </fieldset>
-            <fieldset className={styles.fieldset}>
-              <Input
                 labelText="City"
                 className={styles.input}
                 name={'city'}
@@ -144,7 +155,7 @@ const MemberSingUp = () => {
                 labelText="Birth Day"
                 className={styles.input}
                 name={'birthDate'}
-                type="datetime-local"
+                type="date"
                 error={errors.birthDate?.message}
                 register={register}
               />
@@ -191,7 +202,7 @@ const MemberSingUp = () => {
           <Button type={'submit'} resource={'Member'} testId="member-signup-submit-button" />
           <Button
             type={'cancel'}
-            onClick={() => history.push('/members')}
+            onClick={() => history.push('/')}
             testId="member-signup-cancel-button"
           />
           {modal && (
@@ -204,7 +215,7 @@ const MemberSingUp = () => {
           {modalDone && (
             <ModalAlert
               text={msg}
-              onClick={() => history.push('/members')}
+              onClick={() => history.push('/')}
               testId="member-signup-modal-alert"
             />
           )}
