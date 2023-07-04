@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from 'Components/Signs/SignUp/form.module.css';
-import { schema } from 'Components/Member/SignUp/memberSingUpValidations';
+import { schema } from 'Components/Signs/SignUp/memberSingUpValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
 import { addMember } from 'redux/members/thunks';
 
@@ -59,6 +59,7 @@ const MemberSingUp = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       dispatch(addMember(data, switchModal));
     } catch (error) {
