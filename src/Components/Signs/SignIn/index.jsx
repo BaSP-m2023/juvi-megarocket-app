@@ -34,7 +34,11 @@ const Login = () => {
 
   useEffect(() => {
     data.item = {};
-  }, []);
+    if (authState.error) {
+      switchModal(true, authState.error);
+      setModalDone(false);
+    }
+  }, [authState.error]);
 
   const history = useHistory();
   const togglePassword = () => {
@@ -73,6 +77,11 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       dispatch(login(data));
+      if (!authState.error) {
+        switchModal(false, 'Login success');
+      } else {
+        switchModal(true, authState.error);
+      }
     } catch (error) {
       switchModal(true, error);
     }
