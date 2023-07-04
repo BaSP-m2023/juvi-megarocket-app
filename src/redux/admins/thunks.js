@@ -18,9 +18,13 @@ import {
 
 export const getAdmins = () => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getAdminsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       if (response.error) {
         throw new Error(data.message);
@@ -49,13 +53,12 @@ export const getByIdAdmins = (id) => {
 };
 export const addAdmin = (adminData, switchModal) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(addAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { token: token },
         body: JSON.stringify(adminData)
       });
       const jsonData = await response.json();
@@ -75,10 +78,12 @@ export const addAdmin = (adminData, switchModal) => {
 
 export const deleteAdmin = (adminId, setModalText, setIsModalOpen) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(deleteAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       if (!response.ok) {
         throw new Error('Error deleting Admin.');
@@ -98,13 +103,12 @@ export const deleteAdmin = (adminId, setModalText, setIsModalOpen) => {
 
 export const editAdmin = (adminId, data, switchModal) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(putAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { token: token },
         body: JSON.stringify(data)
       });
 

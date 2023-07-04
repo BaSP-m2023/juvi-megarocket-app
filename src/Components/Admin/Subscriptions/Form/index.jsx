@@ -130,7 +130,7 @@ const SubForm = () => {
             </div>
             <div className={style.forms}>
               <label className={style.label}>Date</label>
-              <input name="date" type="datetime-local" value={formData.date} onChange={onChange} />
+              <input name="date" type="date" value={formData.date} onChange={onChange} />
             </div>
             <div className={style.forms}>
               <label className={style.label}>Class ID</label>

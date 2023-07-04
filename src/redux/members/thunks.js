@@ -6,9 +6,13 @@ import { delMemberPending, delMemberError, delMemberSuccess } from './actions';
 
 export const getMembers = () => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getMembersPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
 
       if (data.error) {
@@ -28,10 +32,15 @@ export const getMembers = () => {
 
 export const getMemberById = (id) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getMemberByIdPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
+      console.log(data);
 
       if (data.error) {
         throw new Error(data.error.message);
@@ -46,11 +55,12 @@ export const getMemberById = (id) => {
 
 export const addMember = (member, switchModal) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(addMemberPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
         method: 'POST',
-        headers: { 'Content-type': 'application/json' },
+        headers: { token: token },
         body: JSON.stringify(member)
       });
       const newMemb = await response.json();
@@ -68,11 +78,12 @@ export const addMember = (member, switchModal) => {
 
 export const putMember = (id, member, switchModal) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(putMemberPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
+        headers: { token: token },
         body: JSON.stringify({
           firstName: member.firstName,
           lastName: member.lastName,
@@ -101,10 +112,12 @@ export const putMember = (id, member, switchModal) => {
 
 export const deleteMember = (id) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(delMemberPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const data = await response.json();
 

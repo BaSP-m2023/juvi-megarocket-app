@@ -36,9 +36,12 @@ export const getAuth = (token) => {
   return async (dispatch) => {
     dispatch(getAuthenticationPending());
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
-      const res = (await response).json();
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, {
+        headers: { token }
+      });
+      const res = await response.json();
       dispatch(getAuthenticationSuccess(res.data));
+      console.log(res.data);
       return res.data;
     } catch (error) {
       return dispatch(getAuthenticationError(error.toString()));

@@ -1,10 +1,13 @@
 import styles from './header.module.css';
+import Logout from 'Components/Signs/Logout';
 
 function Header() {
+  const token = sessionStorage.getItem('token');
   return (
     <header>
       <div className={styles.container} data-testid="header-testid">
         <div className={styles.brand}>Radium Rocket</div>
+        {token ? <Logout /> : null}
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img

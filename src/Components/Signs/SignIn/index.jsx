@@ -5,9 +5,9 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { schema } from 'Components/Login/loginValidations';
+import { schema } from 'Components/Signs/SignIn/loginValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
-import styles from 'Components/Login/login.module.css';
+import styles from 'Components/Signs/SignIn/login.module.css';
 import { login } from 'redux/auth/thunks';
 
 const Login = () => {
@@ -54,16 +54,16 @@ const Login = () => {
   useEffect(() => {
     switch (authState.role) {
       case 'TRAINER':
-        console.log('Redirigir a la página de entrenador');
+        history.push('/trainer');
         break;
       case 'SUPERADMIN':
-        console.log('Redirigir a la página de superadministrador');
+        history.push('/super-admin');
         break;
       case 'MEMBER':
-        console.log('Redirigir a la página de miembro');
+        history.push('/member');
         break;
       case 'ADMIN':
-        console.log('Redirigir a la página de administrador');
+        history.push('/admin');
         break;
       default:
         console.log('Rol no reconocido');
