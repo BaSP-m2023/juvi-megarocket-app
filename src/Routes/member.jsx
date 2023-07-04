@@ -1,4 +1,4 @@
-import Home from 'Components/Member/Home';
+import Home from 'Components/Home';
 import Activity from 'Components/Member/Activity/';
 import Membership from 'Components/Member/Membership';
 import Profile from 'Components/Member/Profile';
