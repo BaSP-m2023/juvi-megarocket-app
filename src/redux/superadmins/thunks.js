@@ -66,7 +66,10 @@ export const addSuperAdmins = (formData, setModalText, setShowModal, setShowModa
       dispatch(postSuperAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify({ email, password })
       });
       const responseData = await response.json();

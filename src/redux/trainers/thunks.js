@@ -78,7 +78,10 @@ export const addTrainer = (data, setModalText, setShowModal, setShowModalSuccess
       dispatch(addTrainerPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify(data)
       });
       const responseJson = await response.json();
@@ -104,7 +107,10 @@ export const putTrainer = (data, id, setModalText, setShowModal, setShowModalSuc
       dispatch(putTrainerPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'PUT',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify(data)
       });
       const responseJson = await response.json();

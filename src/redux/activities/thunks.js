@@ -69,7 +69,10 @@ export const addActivity = (formData, setModalText, setShowModal, setShowModalSu
       dispatch(postActivitiesPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify({ name, description })
       });
       const responseData = await response.json();
@@ -102,7 +105,10 @@ export const editActivity = (
       dispatch(putActivitiesPending);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'PUT',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify(updatedActivity)
       });
 
