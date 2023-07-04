@@ -59,7 +59,6 @@ const MemberSingUp = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       dispatch(addMember(data, switchModal));
     } catch (error) {

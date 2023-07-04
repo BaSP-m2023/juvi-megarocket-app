@@ -58,7 +58,10 @@ export const addAdmin = (adminData, switchModal) => {
       dispatch(addAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify(adminData)
       });
       const jsonData = await response.json();
@@ -108,7 +111,10 @@ export const editAdmin = (adminId, data, switchModal) => {
       dispatch(putAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
         method: 'PUT',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify(data)
       });
 
