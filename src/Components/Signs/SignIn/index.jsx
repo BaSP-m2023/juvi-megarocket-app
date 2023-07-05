@@ -35,7 +35,7 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (!authState.error && authState.role != '') {
+    if (!authState.error && authState.role !== '' && authState.role !== null) {
       switchModal(false, `Login success \n Welcome... ${authState.role} !`);
       data.item = {};
     } else if (authState.error) {
