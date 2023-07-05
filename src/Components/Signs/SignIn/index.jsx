@@ -11,13 +11,15 @@ import styles from 'Components/Signs/SignIn/login.module.css';
 import { login } from 'redux/auth/thunks';
 
 const Login = () => {
+  const data = useSelector((state) => state);
+  data.item = {};
+  const authState = useSelector((state) => state.auth);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState(authState.error ?? '');
   const [showPassword, setShowPassword] = useState(false);
-  const data = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
 
   const {
     register,
@@ -33,14 +35,16 @@ const Login = () => {
   });
 
   useEffect(() => {
-    data.item = {};
-    if (authState.error) {
+    if (!authState.error && authState.role != '') {
+      switchModal(false, `Login success \n Welcome... ${authState.role} !`);
+      data.item = {};
+    } else if (authState.error) {
       switchModal(true, authState.error);
-      setModalDone(false);
+      authState.error = '';
+      data.item = {};
     }
-  }, [authState.error]);
+  }, [authState.error, authState.role]);
 
-  const history = useHistory();
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -55,33 +59,9 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    switch (authState.role) {
-      case 'TRAINER':
-        history.push('/trainer');
-        break;
-      case 'SUPERADMIN':
-        history.push('/super-admin');
-        break;
-      case 'MEMBER':
-        history.push('/member');
-        break;
-      case 'ADMIN':
-        history.push('/admin');
-        break;
-      default:
-        console.log('Rol no reconocido');
-    }
-  }, [authState.role]);
-
   const onSubmit = async (data) => {
     try {
       dispatch(login(data));
-      if (!authState.error) {
-        switchModal(false, 'Login success');
-      } else {
-        switchModal(true, authState.error);
-      }
     } catch (error) {
       switchModal(true, error);
     }
@@ -127,7 +107,12 @@ const Login = () => {
           <Button type={'submit'} />
           <Button type={'cancel'} onClick={() => history.push('/')} />
           {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-          {modalDone && <ModalAlert text={msg} onClick={() => history.push('/')} />}
+          {modalDone && (
+            <ModalAlert
+              text={msg}
+              onClick={() => history.push(`/${authState.role.toLowerCase()}`)}
+            />
+          )}
         </form>
       </div>
     </div>

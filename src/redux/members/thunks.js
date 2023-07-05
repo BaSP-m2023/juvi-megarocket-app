@@ -64,11 +64,12 @@ export const addMember = (member, switchModal) => {
         body: JSON.stringify(member)
       });
       const newMemb = await response.json();
+      console.log(member);
       if (newMemb.error) {
         switchModal(newMemb.error, newMemb.message);
         throw new Error(newMemb.message);
       }
-      switchModal(newMemb.error, newMemb.message);
+      switchModal(false, newMemb.message);
       dispatch(addMemberSuccess());
     } catch (error) {
       dispatch(addMemberError(error));
