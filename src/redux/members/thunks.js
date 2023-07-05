@@ -55,12 +55,13 @@ export const getMemberById = (id) => {
 
 export const addMember = (member, switchModal) => {
   return async (dispatch) => {
-    const token = sessionStorage.getItem('token');
     try {
       dispatch(addMemberPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(member)
       });
       const newMemb = await response.json();
@@ -84,7 +85,10 @@ export const putMember = (id, member, switchModal) => {
       dispatch(putMemberPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify({
           firstName: member.firstName,
           lastName: member.lastName,

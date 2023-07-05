@@ -68,7 +68,10 @@ export const postClass = (
       dispatch(postClassPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify({ activity, trainer, day, hour, slots })
       });
       const responseData = await response.json();
@@ -100,7 +103,10 @@ export const putClass = (
       dispatch(putClassPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'PUT',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify({ activity, trainer, day, hour, slots })
       });
       const responseData = await response.json();
