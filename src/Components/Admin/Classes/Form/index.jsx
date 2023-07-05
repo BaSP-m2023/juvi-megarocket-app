@@ -15,6 +15,7 @@ import classesSchema from './validation';
 const FormClasses = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.classes);
+  const existingClasses = useSelector((state) => state.classes.list);
   const { id } = useParams();
   const history = useHistory();
   const {
@@ -63,6 +64,22 @@ const FormClasses = () => {
   }, [data.item, reset]);
 
   const onSubmit = (data) => {
+    const { day, hour, trainer: selectedTrainerId } = data;
+
+    const hasConflict = existingClasses.some(
+      (existingClass) =>
+        existingClass.day === day &&
+        existingClass.hour === hour &&
+        existingClass.trainer._id === selectedTrainerId
+    );
+    if (hasConflict) {
+      const selectedTrainer = trainers.list.find((trainer) => trainer._id === selectedTrainerId);
+      setModalText(
+        `The trainer ${selectedTrainer.firstName} ${selectedTrainer.lastName} already has a class scheduled at the same time.`
+      );
+      setShowModal(true);
+      return;
+    }
     if (id) {
       dispatch(putClass(id, data, setModalText, setShowModal, setIsTrue, deleteClass));
     } else {
