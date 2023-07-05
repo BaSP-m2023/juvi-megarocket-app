@@ -148,7 +148,7 @@ const Form = () => {
               type="cancel"
               onClick={(e) => {
                 e.preventDefault();
-                history.push('/admins/trainers');
+                history.push('/admin/trainers');
               }}
               testId="admin-trainers-cancel-button"
             ></Button>

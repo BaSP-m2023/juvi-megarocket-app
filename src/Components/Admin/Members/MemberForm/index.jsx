@@ -64,8 +64,8 @@ const MemberForm = (props) => {
         phone: data.item?.phone ?? '',
         email: data.item?.email ?? '',
         city: data.item?.city ?? '',
-        birthDate: data.item?.birthDate ?? '',
-        postalCode: data.item?.postalCode ?? '',
+        //birthDate: data.item?.birthDate ?? '',
+        //postalCode: data.item?.postalCode ?? '',
         password: data.item?.password ?? '',
         memberships: data.item?.memberships ?? 'Only Classes'
       });
@@ -177,7 +177,7 @@ const MemberForm = (props) => {
               labelText="Birth Date"
               className={styles.input}
               name={'birthDate'}
-              type="datetime-local"
+              type="date"
               error={errors.birthDate?.message}
               register={register}
             />
@@ -224,7 +224,7 @@ const MemberForm = (props) => {
         <Button type={'submit'} resource={'Member'} testId="admin-members-submit-button" />
         <Button
           type={'cancel'}
-          onClick={() => props.history.push('/admins/members')}
+          onClick={() => props.history.push('/admin/members')}
           testId="admin-members-cancel-button"
         />
         {modal && (
@@ -237,7 +237,7 @@ const MemberForm = (props) => {
         {modalDone && (
           <ModalAlert
             text={msg}
-            onClick={() => props.history.push('/admins/members')}
+            onClick={() => props.history.push('/admin/members')}
             testId="admin-classes-modal-alert"
           />
         )}
