@@ -177,7 +177,7 @@ const MemberForm = (props) => {
               labelText="Birth Date"
               className={styles.input}
               name={'birthDate'}
-              type="datetime-local"
+              type="date"
               error={errors.birthDate?.message}
               register={register}
             />

@@ -40,8 +40,6 @@ export const getMemberById = (id) => {
         headers: { token: token }
       });
       const data = await response.json();
-      console.log(data);
-
       if (data.error) {
         throw new Error(data.error.message);
       }
