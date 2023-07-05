@@ -13,23 +13,23 @@ import Layout from 'Components/Layout';
 const routes = [
   {
     name: 'Home',
-    path: '/admins'
+    path: '/admin'
   },
   {
     name: 'Members',
-    path: '/admins/members'
+    path: '/admin/members'
   },
   {
     name: 'Trainers',
-    path: '/admins/trainers'
+    path: '/admin/trainers'
   },
   {
     name: 'Subscriptions',
-    path: '/admins/subscriptions'
+    path: '/admin/subscriptions'
   },
   {
     name: 'Classes',
-    path: '/admins/classes'
+    path: '/admin/classes'
   }
 ];
 
