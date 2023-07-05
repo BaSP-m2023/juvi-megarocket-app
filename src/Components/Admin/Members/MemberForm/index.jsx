@@ -93,7 +93,44 @@ const MemberForm = (props) => {
       if (text === 'Add member') {
         dispatch(addMember(data, switchModal));
       } else {
-        dispatch(putMember(id, data, switchModal));
+        if (data.password === '') {
+          dispatch(
+            putMember(
+              id,
+              {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                dni: data.dni,
+                phone: data.phone,
+                email: data.email,
+                city: data.city,
+                birthDate: data.birthDate,
+                postalCode: data.postalCode,
+                memberships: data.memberships
+              },
+              switchModal
+            )
+          );
+        } else {
+          dispatch(
+            putMember(
+              id,
+              {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                dni: data.dni,
+                phone: data.phone,
+                email: data.email,
+                city: data.city,
+                birthDate: data.birthDate,
+                postalCode: data.postalCode,
+                password: data.password,
+                memberships: data.memberships
+              },
+              switchModal
+            )
+          );
+        }
       }
     } catch (error) {
       switchModal(true, error);
