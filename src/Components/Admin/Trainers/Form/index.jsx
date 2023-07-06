@@ -138,11 +138,7 @@ const Form = () => {
                 error={errors.password?.message}
               ></Input>
             </div>
-            <Button
-              className={styles.addButton}
-              type="confirm"
-              testId="confirm-button"
-            ></Button>
+            <Button className={styles.addButton} type="confirm" testId="confirm-button"></Button>
             <Button
               className={styles.addButton}
               type="cancel"
@@ -162,9 +158,7 @@ const Form = () => {
         </>
       )}
 
-      {showModal && (
-        <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />
-      )}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />}
       {showModalSuccess && (
         <ModalAlert
           text={modalText}
