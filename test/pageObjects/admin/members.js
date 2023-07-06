@@ -135,18 +135,6 @@ class MembersEditDelete {
       return $(`[data-testid="modal-confirm"]`)
   }
 
-  get modalConfirmDeleteText() {
-    return $(`[data-testid="modal-confirm"] p`)
-  }
-
-  get modalConfirmDeleteConfirmBtn() {
-      return $(`[data-testid="modal-confirm"] > :nth-child(3) > :nth-child(1) > button`)
-  }
-
-  get modalConfirmDeleteCancelBtn() {
-      return $(`[data-testid="modal-confirm"] > :nth-child(3) > :nth-child(2) > button`)
-  }
-
   get successDeleteModal() {
     return $(`[data-testid="admin-members-modal-alert"]`)
   }
@@ -203,18 +191,6 @@ class MembersEditDelete {
 
   async firstMemberDeleteBtnClick() {
       await this.firstMemberDeleteBtn.click();
-  }
-
-  async modalConfirmDeleteCancelBtnClick() {
-    await this.modalConfirmDeleteCancelBtn.click();
-  }
-
-  async modalConfirmDeleteConfirmBtnClick() {
-    await this.modalConfirmDeleteConfirmBtn.click();
-  }
-
-  async modalConfirmDeleteMessage() {
-    return await this.modalConfirmDeleteText.getText();
   }
 
   async successDeleteModalMessage() {

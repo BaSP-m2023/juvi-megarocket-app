@@ -1,4 +1,5 @@
 const members = require('../pageObjects/admin/members');
+const modalConfirm = require('../pageObjects/sharedComponents/modalConfirm');
 
 describe('Members edit and delete flow', function () {
     beforeAll('Open browser', async function () {
@@ -86,9 +87,9 @@ describe('Members edit and delete flow', function () {
     await members.firstMemberDeleteBtnClick();
 
     await members.modalConfirmDelete.waitForDisplayed();
-    expect(await members.modalConfirmDeleteMessage()).toMatch(/sure.*delete/i);
-    await members.modalConfirmDeleteCancelBtn.waitForDisplayed();
-    await members.modalConfirmDeleteCancelBtnClick();
+    expect(await modalConfirm.confirmMessage()).toMatch(/sure.*delete/i);
+    await modalConfirm.cancelModalBtn.waitForDisplayed();
+    await modalConfirm.cancelClick();
 
     await expect(members.membersTable).toBeDisplayed();
   })
@@ -98,9 +99,9 @@ describe('Members edit and delete flow', function () {
     await members.firstMemberDeleteBtnClick();
 
     await members.modalConfirmDelete.waitForDisplayed();
-    expect(await members.modalConfirmDeleteMessage()).toMatch(/sure.*delete/i);
-    await members.modalConfirmDeleteConfirmBtn.waitForDisplayed();
-    await members.modalConfirmDeleteConfirmBtnClick();
+    expect(await modalConfirm.confirmMessage()).toMatch(/sure.*delete/i);
+    await modalConfirm.confirmModalBtn.waitForDisplayed();
+    await modalConfirm.confirmClick();
 
     await members.successDeleteModal.waitForDisplayed();
     expect(await members.successDeleteModalMessage()).toMatch(/deleted.*successfully/i);

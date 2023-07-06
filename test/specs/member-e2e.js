@@ -1,10 +1,38 @@
 const activities = require('../pageObjects/member/activities');
+//const login = require('../pageObjects/logIn');
 
 describe('display of activities', function () {
   beforeAll('Open browser for test activities display', async function () {
     browser.setWindowSize(1440, 1024);
-    browser.url('https://juvi-megarocket-app.vercel.app/members/activities');
+    browser.url('https://juvi-megarocket-app.vercel.app/');
   });
+
+  /*it('Log in with invalid credentials', async () => {
+    login.emailInput.setValue('any@thing.com');
+    login.passwordInput.setValue('wrongPassword');
+
+    //faltan test id para desarrollar los modales
+
+  })
+
+  it('Log in correctly and navigate to activities page', async () =>{
+    expect(login.signInBtn).waitForDisplayed();
+    await login.signInBtnClick();
+
+    expect(browser).toHaveUrlContaining('sign-in');
+
+    await login.fillFormLogInMember();
+
+    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
+    await login.showHidePasswordBtnClick();
+    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+
+    await login.logInBtn.waitForDisplayed();
+    await login.logInBtnClick();
+
+    //faltan test id para desarrollar los modales
+
+  })*/
 
   it('Verify the title is Activities', async function () {
     await activities.activitiesTitle.waitForDisplayed();
