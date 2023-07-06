@@ -27,7 +27,7 @@ function Trainers() {
       <div className={styles.titleTrainers}>
         <h2>Trainers</h2>
         <Link to="/admins/trainers/form" className={styles.link}>
-          <Button type="add" resource="Trainer" testId="admin-trainers-add-button" />
+          <Button type="add" resource="Trainer" testId="add-button" />
         </Link>
       </div>
       {isLoading ? (
@@ -40,12 +40,8 @@ function Trainers() {
           testId="admin-trainers-table"
         />
       )}
-      {message != '' && (
-        <ModalAlert text={message} onClick={closeAlert} testId="admin-trainers-modal-alert" />
-      )}
-      {error != '' && (
-        <ModalAlert text={error} onClick={closeAlert} testId="admin-trainers-modal-alert" />
-      )}
+      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
     </section>
   );
 }
