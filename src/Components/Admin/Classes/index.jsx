@@ -46,7 +46,7 @@ const Classes = () => {
           testId="admin-classes-table"
         />
       )}
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </section>
   );
 };

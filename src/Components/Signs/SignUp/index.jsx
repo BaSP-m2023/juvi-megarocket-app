@@ -207,9 +207,9 @@ const MemberSingUp = () => {
             <Button type={'submit'} resource={'Member'} testId="submit-button" />
             <Button type={'cancel'} onClick={() => history.push('/')} testId="cancel-button" />
           </div>
-          {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
+          {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
           {modalDone && (
-            <ModalAlert text={msg} onClick={() => history.push('/')} testId="modal-alert" />
+            <ModalAlert text={msg} onClick={() => history.push('/')} />
           )}
         </form>
       </div>

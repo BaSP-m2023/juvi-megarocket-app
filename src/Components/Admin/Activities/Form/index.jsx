@@ -94,7 +94,7 @@ const Form = () => {
         </>
       )}
 
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
       {showModalSuccess && (
         <ModalAlert
           text={modalText}
@@ -102,7 +102,6 @@ const Form = () => {
             history.push('/admins/activities');
             setShowModalSuccess(false);
           }}
-          testId="modal-alert"
         />
       )}
     </>

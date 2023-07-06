@@ -158,7 +158,7 @@ const Form = () => {
         </>
       )}
 
-      {showModal && <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
       {showModalSuccess && (
         <ModalAlert
           text={modalText}
@@ -167,7 +167,6 @@ const Form = () => {
             setShowModalSuccess(false);
             data.message = '';
           }}
-          testId="modal-alert"
         />
       )}
     </>

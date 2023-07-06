@@ -49,7 +49,6 @@ function Members(props) {
             setModal(!modal);
             props.history.push('/admins/members');
           }}
-          testId="modal-alert"
         />
       )}
     </section>

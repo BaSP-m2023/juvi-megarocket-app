@@ -227,12 +227,11 @@ const MemberForm = (props) => {
           onClick={() => props.history.push('/admins/members')}
           testId="cancel-button"
         />
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && (
           <ModalAlert
             text={msg}
             onClick={() => props.history.push('/admins/members')}
-            testId="modal-alert"
           />
         )}
       </form>
