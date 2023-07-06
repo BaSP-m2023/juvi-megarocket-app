@@ -109,7 +109,7 @@ const Login = () => {
             </fieldset>
           </div>
           <Button type={'submit'} data-testid="submit-button" />
-          <Button type={'cancel'} onClick={() => history.push('/')} data-testid="cancel-button" />
+          <Button type={'cancel'} onClick={() => history.push('/')} testId="cancel-button" />
           {modal && (
             <ModalAlert text={msg} onClick={() => setModal(!modal)} data-testid="modal-alert" />
           )}

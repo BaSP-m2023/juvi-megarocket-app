@@ -186,9 +186,7 @@ const MemberProfile = () => {
         <Button type={'submit'} resource={'Member'} testId="submit-button" />
         <Button type={'cancel'} onClick={() => history.push('/member')} testId="cancel-button" />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-        {modalDone && (
-          <ModalAlert text={msg} onClick={() => history.push('/member')} />
-        )}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/member')} />}
       </form>
       <Button
         className={styles.addButton}

@@ -229,10 +229,7 @@ const MemberForm = (props) => {
         />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && (
-          <ModalAlert
-            text={msg}
-            onClick={() => props.history.push('/admins/members')}
-          />
+          <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} />
         )}
       </form>
       <Button
