@@ -141,7 +141,7 @@ const Form = () => {
             <Button
               className={styles.addButton}
               type="confirm"
-              testId="admin-trainers-confirm-button"
+              testId="confirm-button"
             ></Button>
             <Button
               className={styles.addButton}
@@ -150,20 +150,20 @@ const Form = () => {
                 e.preventDefault();
                 history.push('/admins/trainers');
               }}
-              testId="admin-trainers-cancel-button"
+              testId="cancel-button"
             ></Button>
           </form>
           <Button
             className={styles.addButton}
             type="reset"
             onClick={() => reset()}
-            testId="admin-trainers-reset-button"
+            testId="reset-button"
           ></Button>
         </>
       )}
 
       {showModal && (
-        <ModalAlert text={modalText} onClick={closeModal} testId="admin-trainers-modal-alert" />
+        <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />
       )}
       {showModalSuccess && (
         <ModalAlert
@@ -173,7 +173,7 @@ const Form = () => {
             setShowModalSuccess(false);
             data.message = '';
           }}
-          testId="admin-trainers-modal-alert"
+          testId="modal-alert"
         />
       )}
     </>

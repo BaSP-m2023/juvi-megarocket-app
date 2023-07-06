@@ -33,7 +33,7 @@ const Classes = () => {
       <div className={styles.titleClass}>
         <h2>Classes</h2>
         <Link to="/admins/classes/form" className={styles.contButton}>
-          <Button type="add" resource="Class" testId="admin-classes-add-button" />
+          <Button type="add" resource="Class" testId="add-button" />
         </Link>
       </div>
       {isLoading ? (
@@ -47,7 +47,7 @@ const Classes = () => {
         />
       )}
       {showModal && (
-        <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />
+        <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />
       )}
     </section>
   );

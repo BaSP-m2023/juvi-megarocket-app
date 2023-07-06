@@ -14,7 +14,7 @@ function Logout() {
   };
   return (
     <div className={styles.btnLogOutContainer} onClick={logoutClick}>
-      <button className={styles.btnLogOut}>LogOut</button>
+      <button className={styles.btnLogOut} data-testid="logout-button">LogOut</button>
     </div>
   );
 }

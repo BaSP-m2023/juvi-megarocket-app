@@ -30,7 +30,7 @@ function Members(props) {
           type={'add'}
           resource={'Member'}
           onClick={() => props.history.push('/admins/members/form')}
-          testId="admin-members-add-button"
+          testId="add-button"
         />
       </div>
       {data.isLoading && <h1>Loading</h1>}
@@ -49,7 +49,7 @@ function Members(props) {
             setModal(!modal);
             props.history.push('/admins/members');
           }}
-          testId="admin-members-modal-alert"
+          testId="modal-alert"
         />
       )}
     </section>

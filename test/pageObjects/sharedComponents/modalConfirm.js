@@ -9,7 +9,7 @@ class ModalConfirm {
     return $('[data-testid="modal-confirm"] button:nth-child(1)');
   }
   get cancelModalBtn() {
-    return $('[data-testid="modal-confirm"] div:nth-child(2) button:nth-child(1))')
+    return $('[data-testid="modal-confirm"] div:nth-child(2) button:nth-child(1)')
   }
   async confirmClick() {
     await this.confirmModalBtn.click();

@@ -204,25 +204,25 @@ const MemberSingUp = () => {
             </div>
           </div>
           <div className={styles.btnContainer}>
-            <Button type={'submit'} resource={'Member'} testId="member-signup-submit-button" />
+            <Button type={'submit'} resource={'Member'} testId="submit-button" />
             <Button
               type={'cancel'}
               onClick={() => history.push('/')}
-              testId="member-signup-cancel-button"
+              testId="cancel-button"
             />
           </div>
           {modal && (
             <ModalAlert
               text={msg}
               onClick={() => setModal(!modal)}
-              testId="member-signup-modal-alert"
+              testId="modal-alert"
             />
           )}
           {modalDone && (
             <ModalAlert
               text={msg}
               onClick={() => history.push('/')}
-              testId="member-signup-modal-alert"
+              testId="modal-alert"
             />
           )}
         </form>

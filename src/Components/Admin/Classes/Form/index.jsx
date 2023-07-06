@@ -144,19 +144,19 @@ const FormClasses = () => {
                 />
               </div>
             </div>
-            <Button type="confirm" testId="admin-classes-confirm-button" />
-            <Button type="cancel" onClick={onCancel} testId="admin-classes-cancel-button" />
+            <Button type="confirm" testId="confirm-button" />
+            <Button type="cancel" onClick={onCancel} testId="cancel-button" />
           </form>
           <Button
             className={styles.addButton}
             type="reset"
             onClick={() => reset()}
-            testId="admin-classes-reset-button"
+            testId="reset-button"
           ></Button>
         </>
       )}
       {showModal && (
-        <ModalAlert text={modalText} onClick={closeModal} testId="admin-classes-modal-alert" />
+        <ModalAlert text={modalText} onClick={closeModal} testId="modal-alert" />
       )}
     </>
   );

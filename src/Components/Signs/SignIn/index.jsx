@@ -72,7 +72,7 @@ const Login = () => {
   return (
     <div className={styles.background}>
       <div className={styles.card}>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)} data-testid="signin-form">
           <div className={styles.formContainer}>
             <fieldset className={styles.fieldset}>
               <Input
@@ -104,13 +104,14 @@ const Login = () => {
               </div>
             </fieldset>
           </div>
-          <Button type={'submit'} />
-          <Button type={'cancel'} onClick={() => history.push('/')} />
-          {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+          <Button type={'submit'} data-testid="submit-button" />
+          <Button type={'cancel'} onClick={() => history.push('/')} data-testid="cancel-button" />
+          {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} data-testid="modal-alert" />}
           {modalDone && (
             <ModalAlert
               text={msg}
               onClick={() => history.push(`/${authState.role.toLowerCase()}`)}
+              data-testid="modal-alert"
             />
           )}
         </form>
