@@ -2,9 +2,6 @@ class ActivitiesTable {
   get activityTableTitle() {
     return $('[data-testid="admin-activities-section"] h2');
   }
-  get addActivityBtn() {
-    return $('[data-testid="admin-activities-add-button"]');
-  }
   get newActivityName() {
     return $('[data-testid="admin-activities-table"] tbody tr:last-child td:first-child');
   }
@@ -23,9 +20,7 @@ class ActivitiesTable {
   async deleteBtnClick() {
     await this.newActivityDeleteBtn.click();
   }
-  async addBtnClick() {
-    await this.addActivityBtn.click();
-  }
+
 }
 
 module.exports = new ActivitiesTable();

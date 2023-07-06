@@ -183,32 +183,16 @@ const MemberProfile = () => {
             {errors.memberships && <p>{errors.memberships.message}</p>}
           </fieldset>
         </div>
-        <Button type={'submit'} resource={'Member'} testId="member-profile-submit-button" />
-        <Button
-          type={'cancel'}
-          onClick={() => history.push('/member')}
-          testId="member-profile-cancel-button"
-        />
-        {modal && (
-          <ModalAlert
-            text={msg}
-            onClick={() => setModal(!modal)}
-            testId="member-profile-modal-alert"
-          />
-        )}
-        {modalDone && (
-          <ModalAlert
-            text={msg}
-            onClick={() => history.push('/member')}
-            testId="member-profile-modal-alert"
-          />
-        )}
+        <Button type={'submit'} resource={'Member'} testId="submit-button" />
+        <Button type={'cancel'} onClick={() => history.push('/member')} testId="cancel-button" />
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/member')} />}
       </form>
       <Button
         className={styles.addButton}
         type="reset"
         onClick={() => reset()}
-        testId="member-profile-reset-button"
+        testId="reset-button"
       ></Button>
     </div>
   );

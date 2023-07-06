@@ -221,32 +221,22 @@ const MemberForm = (props) => {
             {errors.memberships && <p>{errors.memberships.message}</p>}
           </fieldset>
         </div>
-        <Button type={'submit'} resource={'Member'} testId="admin-members-submit-button" />
+        <Button type={'submit'} resource={'Member'} testId="submit-button" />
         <Button
           type={'cancel'}
           onClick={() => props.history.push('/admins/members')}
-          testId="admin-members-cancel-button"
+          testId="cancel-button"
         />
-        {modal && (
-          <ModalAlert
-            text={msg}
-            onClick={() => setModal(!modal)}
-            testId="admin-classes-modal-alert"
-          />
-        )}
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && (
-          <ModalAlert
-            text={msg}
-            onClick={() => props.history.push('/admins/members')}
-            testId="admin-classes-modal-alert"
-          />
+          <ModalAlert text={msg} onClick={() => props.history.push('/admins/members')} />
         )}
       </form>
       <Button
         className={styles.addButton}
         type="reset"
         onClick={() => reset()}
-        testId="admin-members-reset-button"
+        testId="reset-button"
       ></Button>
     </div>
   );
