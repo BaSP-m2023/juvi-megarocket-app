@@ -9,7 +9,7 @@ describe('Members edit and delete flow', function () {
   it('Verify the title is Members and table is displayed.', async function () {
     await members.membersTitle.waitForDisplayed();
     const textTitle = await members.membersTitleText();
-    await expect(textTitle).toEqual('Members');
+    expect(await textTitle).toEqual('Members');
 
     await members.membersTable.waitForDisplayed();
   });
@@ -29,31 +29,33 @@ describe('Members edit and delete flow', function () {
 
   it('Click again to edit first member, change all the inputs values and click reset to test the data is restored.',
   async function () {
+
     await members.firstMemberEditBtn.waitForDisplayed();
     await members.firstMemberEditBtnClick();
     await expect(browser).toHaveUrlContaining("form");
 
-    //const previousValues = await members.getInputsValues();
+    const memberPreviousName = members.nameInputEditMembers.getAttribute('value');
 
     await members.updateFillForm();
     expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('password');
     await members.showHidePasswordBtnClick();
     expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('text');
 
-    browser.pause(2000)
+    browser.pause(2000);
 
     await members.resetMembersEditFormBtnClick();
 
+    const memberResetName = members.nameInputEditMembers.getAttribute('value');
+
+    expect(await memberPreviousName).toEqual(await memberResetName);
+
     await members.showHidePasswordBtnClick();
-
-    //const resetValues = await members.getInputsValues();
-
-    //expect(resetValues).toEqual(previousValues);
 
   })
 
   it('Change all the inputs and submit the update.', async function () {
-    //const previousValues = await members.getInputsValues();
+
+    //const memberPreviousName = members.nameInputEditMembers.getAttribute('value');
 
     await members.updateFillForm();
     expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('password');
@@ -62,9 +64,7 @@ describe('Members edit and delete flow', function () {
     // Pause for complete the time field
     await browser.pause(5000);
 
-    //const updatedValues = await members.getInputsValues();
-
-    //expect(updatedValues).toEqual(jasmine.objectContaining(previousValues))
+    //const memberNewName = members.nameInputEditMembers.getAttribute('value');
 
     await members.submitMembersEditFormBtn.waitForDisplayed();
     await members.submitMembersEditFormBtnClick();
@@ -76,6 +76,8 @@ describe('Members edit and delete flow', function () {
     await members.successEditModalCloseBtnClick();
 
     await expect(browser).toHaveUrl('http://localhost:3000/admins/members');
+
+    expect(await members.firstMemberNameText()).toEqual('Automation');
 
   })
 

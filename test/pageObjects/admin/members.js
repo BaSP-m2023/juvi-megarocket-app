@@ -11,6 +11,10 @@ class MembersEditDelete {
       return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(11) a`)
   }
 
+  get firstMemberName() {
+    return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(2)`)
+  }
+
   get firstMemberDeleteBtn() {
       return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(12) button`)
   }
@@ -163,23 +167,6 @@ class MembersEditDelete {
     await this.cancelMembersEditFormBtn.click();
   }
 
-  async getInputsValues() {
-    const inputValues = {};
-
-    inputValues.name = await this.nameInputEditMembers.getAttribute('value');
-    inputValues.lastname = await this.lastNameInputEditMembers.getAttribute('value');
-    inputValues.dni = await this.dniInputEditMembers.getAttribute('value');
-    inputValues.phone = await this.phoneInputEditMembers.getAttribute('value');
-    inputValues.email = await this.emailInputEditMembers.getAttribute('value');
-    inputValues.city = await this.cityInputEditMembers.getAttribute('value');
-    inputValues.birthDate = await this.birthDateInputEditMembers.getAttribute('value');
-    inputValues.zip = await this.zipInputEditMembers.getAttribute('value');
-    inputValues.password = await this.passwordInputEditMembers.getAttribute('value');
-    inputValues.membership = await this.membershipInputEditMembers.getSelectedOption();
-
-    return inputValues;
-  }
-
   async updateFillForm() {
     await this.nameInputEditMembers.setValue('Automation');
     await this.lastNameInputEditMembers.setValue('Testing');
@@ -237,9 +224,15 @@ class MembersEditDelete {
   async successDeleteModalCloseBtnClick() {
     await this.successDeleteModalCloseBtn.click();
   }
+
   async membersTitleText() {
       return await this.membersTitle.getText();
   }
+
+  async firstMemberNameText() {
+    return await this.firstMemberName.getText();
+  }
+
 };
 
 
