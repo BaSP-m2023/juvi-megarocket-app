@@ -27,7 +27,7 @@ function Admins() {
     <section className={styles.container}>
       <div className={styles.titleAdmin}>
         <h2>Admins</h2>
-        <Link to="/admins/form">
+        <Link to="/super-admin/admins/form">
           <Button type="add" resource="admin">
             Add Admin
           </Button>

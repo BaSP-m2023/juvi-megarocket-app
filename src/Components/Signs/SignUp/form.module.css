@@ -1,0 +1,68 @@
+.background {
+  display: grid;
+  height: 100vh;
+}
+.card {
+  justify-self: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #f7f9ed;
+  height: auto;
+  width: 600px;
+  border-radius: 16px;
+  padding-top: 60px;
+  padding-bottom: 35px;
+}
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  border: none;
+}
+.fieldset label {
+  color: #0f232e;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: initial;
+}
+.fieldset p {
+  font-weight: 500;
+}
+.fieldset select {
+  width: 16vw;
+  padding: 5px;
+}
+.password {
+  display: flex;
+  align-items: center;
+}
+.showPasswordIcon {
+  width: 2vw;
+  padding-left: 10px;
+  padding-top: 30px;
+}
+.formContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 50vw;
+}
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 30vw;
+  padding-top: 20px;
+}

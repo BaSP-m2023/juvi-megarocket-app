@@ -7,7 +7,7 @@ exports.config = {
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: 'local',
- 
+
   //
   // ==================
   // Specify Test Files
@@ -58,7 +58,8 @@ exports.config = {
   capabilities: [{
       // capabilities for local browser web tests
       browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
-      //'goog:chromeOptions': {args: ['headless', 'disable-gpu']}
+      'goog:chromeOptions': {args: ['disable-gpu']
+      }
   }],
   //
   // ===================

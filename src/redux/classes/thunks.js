@@ -18,9 +18,13 @@ import {
 
 export const getClasses = () => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getClassesPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const responseJson = await response.json();
       if (responseJson.error) {
         throw new Error(responseJson.message);
@@ -33,10 +37,12 @@ export const getClasses = () => {
 };
 export const deleteClass = (id, setModalText, setShowModal) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(deleteClassPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const responseJson = await response.json();
       if (responseJson.error) {
@@ -57,12 +63,14 @@ export const postClass = (
   setIsTrue
 ) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(postClassPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify({ activity, trainer, day, hour, slots })
       });
@@ -90,12 +98,14 @@ export const putClass = (
   setIsTrue
 ) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(putClassPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify({ activity, trainer, day, hour, slots })
       });

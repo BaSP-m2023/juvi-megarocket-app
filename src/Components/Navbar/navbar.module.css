@@ -4,37 +4,33 @@
   flex-direction: column;
   top: 0;
   height: 100vh;
-
   list-style-type: none;
   background-color: #0f232e;
 }
-
-.rutes li > a:hover {
+.navContainer a:hover {
   color: #f9a414;
   background-color: #1c4257;
   border-radius: 4px;
 }
+
 .navShadow {
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
 }
-
 .navContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
 }
-
-.rutes {
+.navContainer ul {
   display: flex;
   flex-direction: column;
-  height: 70vh;
-  padding: 0px 10px;
-  justify-content: space-evenly;
+  height: 30vh;
+  padding: 20px 10px;
+  justify-content: space-between;
   list-style-type: none;
 }
-
-.rutes li > a {
+.navContainer a {
   margin-left: 15px;
   color: #fff;
   font-size: 1rem;
@@ -42,19 +38,16 @@
   text-decoration: none;
   text-transform: capitalize;
 }
-
 .showNav {
   max-height: 500px;
   opacity: 1;
   display: flex;
   transition: all 0.3s ease-out;
 }
-
 .hideNav {
   display: none;
   opacity: 0;
 }
-
 .arrowIcon {
   align-self: center;
   color: #fff;
@@ -70,7 +63,6 @@
   .arrowIcon {
     display: none;
   }
-
   .navbar {
     width: 14vw;
   }
@@ -81,8 +73,7 @@
     justify-content: flex-start;
     align-items: baseline;
   }
-
-  .rutes li {
+  .navContainer li {
     padding-top: 10px;
   }
 }

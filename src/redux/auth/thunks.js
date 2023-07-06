@@ -10,7 +10,7 @@ import {
   getAuthenticationError
 } from 'redux/auth/actions';
 
-import { firebaseApp } from '../helper/firebase';
+import { firebaseApp } from '../../helper/firebase';
 
 export const logout = () => {
   return async (dispatch) => {
@@ -22,7 +22,6 @@ export const logout = () => {
       sessionStorage.removeItem('role', '');
       return { error: false, message: 'Log Out Successfully' };
     } catch (error) {
-      console.log(error);
       dispatch(logoutError(error));
       return {
         error: true,
@@ -36,8 +35,10 @@ export const getAuth = (token) => {
   return async (dispatch) => {
     dispatch(getAuthenticationPending());
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
-      const res = (await response).json();
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, {
+        headers: { token }
+      });
+      const res = await response.json();
       dispatch(getAuthenticationSuccess(res.data));
       return res.data;
     } catch (error) {
@@ -48,27 +49,20 @@ export const getAuth = (token) => {
 
 export const login = (credentials) => {
   return async (dispatch) => {
+    dispatch(loginPending);
     try {
-      dispatch(loginPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-      });
-      const responseJson = response.json();
-      const data = responseJson.data;
-      if (response.error) {
-        throw new Error(responseJson.message);
-      }
-      sessionStorage.setItem('token', data.token);
-      sessionStorage.setItem('role', data.role);
-      sessionStorage.setItem('email', data.email);
-      dispatch(loginSuccess(data));
+      const firebaseResponse = await firebaseApp
+        .auth()
+        .signInWithEmailAndPassword(credentials.email, credentials.password);
+      const token = await firebaseResponse.user.getIdToken();
+      const {
+        claims: { role }
+      } = await firebaseResponse.user.getIdTokenResult();
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+      return dispatch(loginSuccess({ role, token }));
     } catch (error) {
-      dispatch(loginError);
+      return dispatch(loginError(error.toString()));
     }
   };
 };
