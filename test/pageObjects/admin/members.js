@@ -107,52 +107,12 @@ class MembersEditDelete {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(11) select`)
   }
 
-  get resetMembersEditFormBtn() {
-      return $(`[data-testid="admin-members-reset-button"]`)
-  }
-
-  get submitMembersEditFormBtn() {
-      return $(`[data-testid="admin-members-submit-button"]`)
-  }
-
-  get cancelMembersEditFormBtn() {
-      return $(`[data-testid="admin-members-cancel-button"]`)
-  }
-
-  get successEditModal() {
-      return $(`[data-testid="admin-classes-modal-alert"]`)
-  }
-
-  get successEditModalText() {
-      return $(`[data-testid="admin-classes-modal-alert"] :first-child`)
-  }
-
-  get successEditModalCloseBtn() {
-      return $(`[data-testid="admin-classes-modal-alert"] > div:nth-child(2) > :first-child`)
-  }
-
   get modalConfirmDelete() {
       return $(`[data-testid="modal-confirm"]`)
   }
 
-  get successDeleteModal() {
-    return $(`[data-testid="admin-members-modal-alert"]`)
-  }
-
-  get successDeleteModalText(){
-    return $(`[data-testid="admin-members-modal-alert"] p`)
-  }
-
-  get successDeleteModalCloseBtn() {
-    return $(`[data-testid="admin-members-modal-alert"] button`)
-  }
-
   async firstMemberEditBtnClick() {
       await this.firstMemberEditBtn.click();
-  }
-
-  async cancelMembersEditFormBtnClick() {
-    await this.cancelMembersEditFormBtn.click();
   }
 
   async updateFillForm() {
@@ -172,33 +132,8 @@ class MembersEditDelete {
     await this.showHidePasswordBtn.click();
   }
 
-  async resetMembersEditFormBtnClick() {
-    await this.resetMembersEditFormBtn.click();
-  }
-
-  async submitMembersEditFormBtnClick() {
-    await this.submitMembersEditFormBtn.click();
-  }
-
-  async successEditModalTextDisplayed() {
-    const text = await this.successEditModalText.getText();
-    return text;
-  }
-
-  async successEditModalCloseBtnClick() {
-    await this.successEditModalCloseBtn.click();
-  }
-
   async firstMemberDeleteBtnClick() {
       await this.firstMemberDeleteBtn.click();
-  }
-
-  async successDeleteModalMessage() {
-    return await this.successDeleteModalText.getText();
-  }
-
-  async successDeleteModalCloseBtnClick() {
-    await this.successDeleteModalCloseBtn.click();
   }
 
   async membersTitleText() {

@@ -1,11 +1,36 @@
 const members = require('../pageObjects/admin/members');
 const modalConfirm = require('../pageObjects/sharedComponents/modalConfirm');
+const buttons = require('../pageObjects/sharedComponents/button');
+const modalAlert = require('../pageObjects/sharedComponents/modalAlert');
+const login = require('../pageObjects/logIn');
 
 describe('Members edit and delete flow', function () {
     beforeAll('Open browser', async function () {
       browser.setWindowSize(1440, 1024);
-      browser.url('http://localhost:3000/admins/members');
+      browser.url('http://localhost:3000/auth');
     })
+
+  it('Log in and navigate to the members section', async () => {
+      await login.signInBtn.waitForDisplayed();
+      await login.signInBtnClick();
+
+      await expect(browser).toHaveUrlContaining("sign-in");
+
+      await login.emailInput.waitForDisplayed();
+      await login.passwordInput.waitForDisplayed();
+      await login.fillFormLogInAdmin();
+      expect(await login.passwordInput.getAttribute('type')).toEqual('password');
+      await login.showHidePasswordBtnClick();
+      expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+
+      await login.submitBtnClick();
+
+      expect(await modalAlert.modalAlertMessage()).toContain('success');
+      await modalAlert.confirmAlertClick();
+
+      await expect(browser).toHaveUrlContaining("admin");
+
+  })
 
   it('Verify the title is Members and table is displayed.', async function () {
     await members.membersTitle.waitForDisplayed();
@@ -22,9 +47,9 @@ describe('Members edit and delete flow', function () {
     await members.firstMemberEditBtnClick();
     await expect(browser).toHaveUrlContaining("form");
 
-    await members.cancelMembersEditFormBtn.scrollIntoView();
-    await members.cancelMembersEditFormBtn.waitForDisplayed();
-    await members.cancelMembersEditFormBtnClick();
+    await buttons.cancelBtn.scrollIntoView();
+    await buttons.cancelBtn.waitForDisplayed();
+    await buttons.cancelBtnClick();
     await members.membersTable.waitForDisplayed();
   });
 
@@ -44,7 +69,7 @@ describe('Members edit and delete flow', function () {
 
     browser.pause(2000);
 
-    await members.resetMembersEditFormBtnClick();
+    await buttons.resetBtnClick();
 
     const memberResetName = members.nameInputEditMembers.getAttribute('value');
 
@@ -67,14 +92,14 @@ describe('Members edit and delete flow', function () {
 
     //const memberNewName = members.nameInputEditMembers.getAttribute('value');
 
-    await members.submitMembersEditFormBtn.waitForDisplayed();
-    await members.submitMembersEditFormBtnClick();
+    await buttons.submitBtn.waitForDisplayed();
+    await buttons.submitBtnClick();
 
-    await members.successEditModal.waitForDisplayed();
-    expect(await members.successEditModalTextDisplayed()).toContain('updated');
+    await modalAlert.modalAlertText.waitForDisplayed();
+    expect(await modalAlert.modalAlertMessage()).toContain('updated');
 
-    await members.successEditModalCloseBtn.waitForDisplayed();
-    await members.successEditModalCloseBtnClick();
+    await modalAlert.modalAlertButton.waitForDisplayed();
+    await modalAlert.confirmAlertClick();
 
     await expect(browser).toHaveUrl('http://localhost:3000/admins/members');
 
@@ -103,11 +128,11 @@ describe('Members edit and delete flow', function () {
     await modalConfirm.confirmModalBtn.waitForDisplayed();
     await modalConfirm.confirmClick();
 
-    await members.successDeleteModal.waitForDisplayed();
-    expect(await members.successDeleteModalMessage()).toMatch(/deleted.*successfully/i);
+    await modalAlert.modalAlertText.waitForDisplayed();
+    expect(await modalAlert.modalAlertMessage()).toMatch(/deleted.*successfully/i);
 
-    await members.successDeleteModalCloseBtn.waitForDisplayed();
-    await members.successDeleteModalCloseBtnClick();
+    await modalAlert.modalAlertButton.waitForDisplayed();
+    await modalAlert.confirmAlertClick();
 
     await expect(browser).toHaveUrl('http://localhost:3000/admins/members');
 

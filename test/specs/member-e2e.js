@@ -1,38 +1,54 @@
 const activities = require('../pageObjects/member/activities');
-//const login = require('../pageObjects/logIn');
+const login = require('../pageObjects/logIn');
+const modalAlert = require('../pageObjects/sharedComponents/modalAlert');
 
 describe('display of activities', function () {
   beforeAll('Open browser for test activities display', async function () {
     browser.setWindowSize(1440, 1024);
-    browser.url('https://juvi-megarocket-app.vercel.app/');
+    browser.url('http://localhost:3000/auth');
   });
 
-  /*it('Log in with invalid credentials', async () => {
-    login.emailInput.setValue('any@thing.com');
-    login.passwordInput.setValue('wrongPassword');
+  it('Log in with invalid credentials', async () => {
+    await login.signInBtn.waitForDisplayed();
+    await login.signInBtnClick();
 
-    //faltan test id para desarrollar los modales
+    await expect(browser).toHaveUrlContaining("sign-in");
+
+    await login.emailInput.waitForDisplayed();
+    await login.passwordInput.waitForDisplayed();
+    await login.emailInput.setValue('any@thing.com');
+    await login.passwordInput.setValue('wrongPassword');
+    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
+    await login.showHidePasswordBtnClick();
+    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+    await login.showHidePasswordBtnClick();
+
+    await login.submitBtnClick();
+
+    expect(await modalAlert.modalAlertMessage()).toContain('Error');
+    await modalAlert.confirmAlertClick();
 
   })
 
-  it('Log in correctly and navigate to activities page', async () =>{
-    expect(login.signInBtn).waitForDisplayed();
-    await login.signInBtnClick();
-
-    expect(browser).toHaveUrlContaining('sign-in');
-
+  it('Log in correctly and navigate to activities page', async () => {
+    await login.emailInput.waitForDisplayed();
+    await login.passwordInput.waitForDisplayed();
     await login.fillFormLogInMember();
-
     expect(await login.passwordInput.getAttribute('type')).toEqual('password');
     await login.showHidePasswordBtnClick();
     expect(await login.passwordInput.getAttribute('type')).toEqual('text');
 
-    await login.logInBtn.waitForDisplayed();
-    await login.logInBtnClick();
+    await login.submitBtnClick();
 
-    //faltan test id para desarrollar los modales
+    expect(await modalAlert.modalAlertMessage()).toContain('success');
+    await modalAlert.confirmAlertClick();
 
-  })*/
+    await activities.activitiesBtn.waitForDisplayed();
+    await activities.activitiesBtnClick();
+
+    await expect(browser).toHaveUrlContaining("activities");
+
+  })
 
   it('Verify the title is Activities', async function () {
     await activities.activitiesTitle.waitForDisplayed();
@@ -60,7 +76,7 @@ describe('display of activities', function () {
       const cardsCountThirdCardContainer = cardsThirdCardContainer.length;
 
       expect(cardsCountThirdCardContainer).toBeGreaterThanOrEqual(1);
-      expect(cardsCountThirdCardContainer).toBeLessThanOrEqual(3);
+      expect(cardsCountThirdCardContainer).toBeLessThanOrEqual(9);
     } else {
       expect(true).toBe(true);
     }

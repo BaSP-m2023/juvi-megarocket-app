@@ -1,26 +1,26 @@
 class LogIn {
   get signInBtn() {
-    return $(`[data-testid="landing-navbar"]`);
+    return $(`[data-testid="navbar"] a:first-child`);
   }
 
   get emailInput() {
-    return $(`form input:first-child`);
+    return $(`[data-testid="signin-form"] fieldset:first-child input`);
   }
 
   get passwordInput() {
-    return $(`form input:second-child`);
+    return $(`[data-testid="signin-form"] fieldset:nth-child(2) input`);
   }
 
   get showHidePasswordBtn() {
-    return $(`form svg`);
+    return $(`[data-testid="signin-form"] svg`);
   }
 
-  get logInBtn() {
-    return $(`form button:first-child`)
+  get submitBtn() {
+    return $(`[data-testid="signin-form"] button:first-child`)
   }
 
   get logInCancelBtn() {
-    return $(`form button:second-child`)
+    return $(`[data-testid="signin-form"] button:second-child`)
   }
 
   async showHidePasswordBtnClick() {
@@ -32,8 +32,13 @@ class LogIn {
     await this.passwordInput.setValue('Chimpance1');
   }
 
-  async logInBtnClick() {
-    await this.logInBtn.click();
+  async fillFormLogInAdmin() {
+    await this.emailInput.setValue('octavitossse@gmail.com');
+    await this.passwordInput.setValue('Marianobondar123456');
+  }
+
+  async submitBtnClick() {
+    await this.submitBtn.click();
   }
 
   async logInCancelBtnClick() {

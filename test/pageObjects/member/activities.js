@@ -1,4 +1,8 @@
 class Activities{
+  get activitiesBtn() {
+    return $(`[data-testid="navbar"] li:nth-child(2) a`);
+  }
+
   get cardsMainContainer() {
     return $('[data-testid="member-cards-container"]')
   }
@@ -53,6 +57,10 @@ class Activities{
 
   get thirdCardThirdCardContainer() {
     return this.cardsMainContainer.$(':nth-child(4) :nth-child(3)')
+  }
+
+  async activitiesBtnClick() {
+    await this.activitiesBtn.click();
   }
 
   async activitiesTitleText() {
