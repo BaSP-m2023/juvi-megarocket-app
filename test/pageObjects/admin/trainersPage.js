@@ -60,6 +60,49 @@ class TrainersPage{
     return $('[data-testid="admin-trainers-confirm-button"]');
   }
 
+  get navbarAdmin(){
+    return $('[data-testid="landing-navbar"]');
+  }
+  get signInNavbar(){
+    return $('[data-testid="landing-navbar"] li:nth-child(1) a');
+  }
+
+  get inputEmailAdmin(){
+    return $('#root > div > div > div > div > div > form > div:nth-child(1) > fieldset:nth-child(1) > div > input');
+  }
+
+  get inputPasswordAdmin(){
+    return $('#root > div > div > div > div > div > form > div:nth-child(1) > fieldset:nth-child(2) > div > div > input');
+  }
+
+  get submitButtonAdmin(){
+    return $('#root > div > div > div > div > div > form > div:nth-child(2) > button');
+  }
+
+  get ListOfTrainers() {
+    return $('[data-testid="admin-trainers-table"]');
+  }
+
+  get editButton (){
+    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(9) button');
+  }
+
+  get deleteButton (){
+    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(10) button');
+  }
+
+  async editButtonClick (){
+    await this.editButton.click();
+  }
+
+  async deleteButtonClick (){
+    await this.deleteButton.click();
+  }
+
+  async submitButtonAdminClick(){
+    await this.ubmitButtonAdmin.click();
+  }
+
   async facebookButtonClick (){
     await this.facebookButton.click();
   }
@@ -91,6 +134,11 @@ class TrainersPage{
     await this.cityInput.setValue(city);
     await this.salaryInput.setValue(salary);
     await this.passwordInput.setValue(password);
+  }
+
+  async signInAdmin(emailadmin, passwordadmin){
+    await this.inputEmailAdmin.setValue(emailadmin);
+    await this.passwordadmin.setValue(passwordadmin);
   }
 
 }

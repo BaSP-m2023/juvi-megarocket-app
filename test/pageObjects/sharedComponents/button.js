@@ -27,6 +27,14 @@ class Button {
     return $('[data-testid="member-signup-cancel-button"]');
   }
 
+  get profileMemberNavbar(){
+    return $('[data-testid=landing-navbar] li:nth-child(3) a');
+  }
+
+  get submitEditMember(){
+    return $('[data-testid=member-profile-submit-button]');
+  }
+
   async addButtonClick() {
     await this.addButton.click();
   }
@@ -53,6 +61,14 @@ class Button {
 
   async cancelMemberButtonClick(){
     await this.cancelMemberButton.click();
+  }
+
+  async profileMemberNavbarClick(){
+    await this.profileMemberNavbar.click();
+  }
+
+  async submitEditMemberClick(){
+    await this.submitEditMember.click();
   }
 }
 

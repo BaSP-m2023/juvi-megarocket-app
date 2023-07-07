@@ -138,7 +138,7 @@ const MemberProfile = () => {
               labelText="Birth Day"
               className={styles.input}
               name={'birthDate'}
-              type="datetime-local"
+              type="date"
               error={errors.birthDate?.message}
               register={register}
             />
