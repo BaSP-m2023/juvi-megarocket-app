@@ -53,6 +53,7 @@ export const schema = Joi.object({
   postalCode: Joi.number().max(9999).required(),
   memberships: Joi.string().valid('Black', 'Classic', 'Only Classes').default('Classic').required(),
   password: Joi.string()
+    .allow('')
     .min(8)
     .max(209)
     .regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
