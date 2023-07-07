@@ -117,7 +117,6 @@ export const editAdmin = (adminId, data, switchModal) => {
         },
         body: JSON.stringify(data)
       });
-
       const responseData = await response.json();
       if (response.ok) {
         switchModal(false, responseData.message);

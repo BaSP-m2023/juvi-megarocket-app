@@ -64,19 +64,13 @@ const FormClasses = () => {
   }, [data.item, reset]);
 
   const onSubmit = (data) => {
-    const { day, hour, trainer: selectedTrainerId } = data;
+    const { day, hour } = data;
 
     const hasConflict = existingClasses.some(
-      (existingClass) =>
-        existingClass.day === day &&
-        existingClass.hour === hour &&
-        existingClass.trainer._id === selectedTrainerId
+      (existingClass) => existingClass.day === day && existingClass.hour === hour
     );
     if (hasConflict) {
-      const selectedTrainer = trainers.list.find((trainer) => trainer._id === selectedTrainerId);
-      setModalText(
-        `The trainer ${selectedTrainer.firstName} ${selectedTrainer.lastName} already has a class scheduled at the same time.`
-      );
+      setModalText(`There is already a class scheduled at the same time.`);
       setShowModal(true);
       return;
     }

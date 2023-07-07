@@ -19,7 +19,6 @@ function Routes() {
   }, []);
   useEffect(() => {
     if (token) {
-      console.log(token);
       dispatch(getAuth(token));
     }
   }, [token]);
