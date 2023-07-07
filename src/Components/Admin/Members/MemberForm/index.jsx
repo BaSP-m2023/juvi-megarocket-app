@@ -20,7 +20,6 @@ const MemberForm = (props) => {
   const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
   const [text, setText] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
 
   const {
     register,
@@ -49,7 +48,6 @@ const MemberForm = (props) => {
   useEffect(() => {
     if (id) {
       dispatch(getMemberById(id));
-      setIsEditing(true);
       setText('Edit member');
     } else {
       data.item = {};
@@ -144,7 +142,7 @@ const MemberForm = (props) => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <div className={styles.formContainer} data-testId="admin-members-add-form">
           <h1>{text}</h1>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="First Name"
               className={styles.input}
@@ -153,10 +151,9 @@ const MemberForm = (props) => {
               placeholder="Ex: Tristan"
               error={errors.firstName?.message}
               register={register}
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Last Name"
               className={styles.input}
@@ -165,10 +162,9 @@ const MemberForm = (props) => {
               placeholder="Ex: Galvez"
               error={errors.lastName?.message}
               register={register}
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="DNI"
               className={styles.input}
@@ -177,10 +173,9 @@ const MemberForm = (props) => {
               placeholder="Ex: 33555888"
               error={errors.dni?.message}
               register={register}
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Phone"
               className={styles.input}
@@ -189,10 +184,9 @@ const MemberForm = (props) => {
               placeholder="Ex: 11426426"
               error={errors.phone?.message}
               register={register}
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Email"
               className={styles.input}
@@ -201,10 +195,9 @@ const MemberForm = (props) => {
               placeholder="example@example.com"
               error={errors.email?.message}
               register={register}
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="City"
               className={styles.input}
@@ -214,10 +207,9 @@ const MemberForm = (props) => {
               error={errors.city?.message}
               register={register}
               testId="admin-member-form-city"
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Birth Date"
               className={styles.input}
@@ -225,10 +217,9 @@ const MemberForm = (props) => {
               type="date"
               error={errors.birthDate?.message}
               register={register}
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <Input
               labelText="Zip"
               className={styles.input}
@@ -237,10 +228,9 @@ const MemberForm = (props) => {
               placeholder="Ex: 2170"
               error={errors.postalCode?.message}
               register={register}
-              readOnly={isEditing}
             />
           </fieldset>
-          <fieldset className={`${styles.fieldset} ${isEditing ? styles.readOnlyField : ''}`}>
+          <fieldset className={styles.fieldset}>
             <div className={styles.password}>
               <Input
                 labelText="Password"
@@ -250,7 +240,6 @@ const MemberForm = (props) => {
                 placeholder="Password"
                 error={errors.password?.message}
                 register={register}
-                readOnly={isEditing}
               />
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
