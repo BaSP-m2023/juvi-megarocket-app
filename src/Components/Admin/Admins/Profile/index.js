@@ -9,13 +9,14 @@ import styles from 'Components/Admin/Admins/Profile/adminprofile.module.css';
 import { schema } from 'Components/Admin/Admins/Form/adminFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
+import { editAdmin } from 'redux/admins/thunks';
 
 const AdminProfile = () => {
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const data = useSelector((state) => state.auth?.data);
+  const { data: admin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -28,13 +29,13 @@ const AdminProfile = () => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: data?.firstName ?? '',
-      lastName: data?.lastName ?? '',
-      dni: data?.dni ?? '',
-      phone: data?.phone ?? '',
-      email: data?.email ?? '',
-      city: data?.city ?? '',
-      password: data?.password ?? ''
+      firstName: admin?.firstName ?? '',
+      lastName: admin?.lastName ?? '',
+      dni: admin?.dni ?? '',
+      phone: admin?.phone ?? '',
+      email: admin?.email ?? '',
+      city: admin?.city ?? '',
+      password: admin?.password ?? ''
     }
   });
 
@@ -51,9 +52,31 @@ const AdminProfile = () => {
       setModalDone(!modalDone);
     }
   };
+  useEffect(() => {
+    if (admin) {
+      reset({
+        firstName: admin?.firstName || '',
+        lastName: admin?.lastName || '',
+        dni: admin?.dni || '',
+        phone: admin?.phone || '',
+        email: admin?.email || '',
+        city: admin?.city || '',
+        password: admin?.password || ''
+      });
+    }
+  }, [admin]);
 
-  const onSubmit = () => {
-    switchModal(false, 'Member updated correctly!');
+  const onSubmit = async (data) => {
+    try {
+      if (data.password === '') {
+        const { password, _id, __v, ...resData } = data;
+        dispatch(editAdmin(admin._id, resData, switchModal));
+      } else {
+        dispatch(editAdmin(admin._id, data, switchModal));
+      }
+    } catch (error) {
+      switchModal(true, error);
+    }
   };
 
   const onInvalid = (errors) => console.log(errors);
@@ -148,12 +171,13 @@ const AdminProfile = () => {
             </div>
           </fieldset>
         </div>
-        <Button type={'submit'} />
-        <Button type={'cancel'} onClick={() => history.push('/admin')} />
+        <div className={styles.profileBtn}>
+          <Button type={'submit'} />
+          <Button type={'cancel'} onClick={() => history.push('/admin')} />
+        </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/member')} />}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/admin')} />}
       </form>
-      <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
     </div>
   );
 };

@@ -48,7 +48,8 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         authenticated: false,
-        role: null
+        role: null,
+        data: ''
       };
     }
     case GET_AUTHENTICATION_SUCCESS: {

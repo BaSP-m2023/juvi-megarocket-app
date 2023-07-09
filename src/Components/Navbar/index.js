@@ -3,6 +3,7 @@ import styles from './navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+
 const Navbar = ({ routes }) => {
   const [navVisible, setNavVisible] = useState(false);
   const toggleNav = () => {
