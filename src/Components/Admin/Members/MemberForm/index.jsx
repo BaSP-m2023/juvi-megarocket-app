@@ -64,7 +64,7 @@ const MemberForm = (props) => {
         phone: data.item?.phone ?? '',
         email: data.item?.email ?? '',
         city: data.item?.city ?? '',
-        birthDate: data.item?.birthDate ?? '',
+        birthDate: data.item?.birthDate?.substring(0, 10) ?? '',
         postalCode: data.item?.postalCode ?? '',
         password: data.item?.password ?? '',
         memberships: data.item?.memberships ?? 'Only Classes'
@@ -91,7 +91,44 @@ const MemberForm = (props) => {
       if (text === 'Add member') {
         dispatch(addMember(data, switchModal));
       } else {
-        dispatch(putMember(id, data, switchModal));
+        if (data.password === '') {
+          dispatch(
+            putMember(
+              id,
+              {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                dni: data.dni,
+                phone: data.phone,
+                email: data.email,
+                city: data.city,
+                birthDate: data.birthDate,
+                postalCode: data.postalCode,
+                memberships: data.memberships
+              },
+              switchModal
+            )
+          );
+        } else {
+          dispatch(
+            putMember(
+              id,
+              {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                dni: data.dni,
+                phone: data.phone,
+                email: data.email,
+                city: data.city,
+                birthDate: data.birthDate,
+                postalCode: data.postalCode,
+                password: data.password,
+                memberships: data.memberships
+              },
+              switchModal
+            )
+          );
+        }
       }
     } catch (error) {
       switchModal(true, error);
@@ -177,7 +214,7 @@ const MemberForm = (props) => {
               labelText="Birth Date"
               className={styles.input}
               name={'birthDate'}
-              type="datetime-local"
+              type="date"
               error={errors.birthDate?.message}
               register={register}
             />

@@ -1,4 +1,5 @@
 import Home from 'Components/Home';
+import AdminsForm from 'Components/Admin/Admins/Profile';
 import MemberForm from 'Components/Admin/Members/MemberForm';
 import Member from 'Components/Admin/Members';
 import TrainerForm from 'Components/Admin/Trainers/Form';
@@ -13,23 +14,27 @@ import Layout from 'Components/Layout';
 const routes = [
   {
     name: 'Home',
-    path: '/admins'
+    path: '/admin'
+  },
+  {
+    name: 'Profile',
+    path: '/admin/profile'
   },
   {
     name: 'Members',
-    path: '/admins/members'
+    path: '/admin/members'
   },
   {
     name: 'Trainers',
-    path: '/admins/trainers'
+    path: '/admin/trainers'
   },
   {
     name: 'Subscriptions',
-    path: '/admins/subscriptions'
+    path: '/admin/subscriptions'
   },
   {
     name: 'Classes',
-    path: '/admins/classes'
+    path: '/admin/classes'
   }
 ];
 
@@ -39,6 +44,7 @@ const AdminRoutes = () => {
     <Layout routes={routes}>
       <Switch>
         <Route exact path={`${url}/`} component={Home} />
+        <Route exact path={`${url}/profile`} component={AdminsForm} />
         <Route exact path={`${url}/trainers`} component={Trainer} />
         <Route exact path={`${url}/trainers/form`} component={TrainerForm} />
         <Route exact path={`${url}/trainers/form/:id`} component={TrainerForm} />

@@ -13,6 +13,7 @@ const superAdminsSchema = Joi.object({
     .lowercase()
     .required(),
   password: Joi.string()
+    .allow('')
     .min(8)
     .max(20)
     .regex(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/)
