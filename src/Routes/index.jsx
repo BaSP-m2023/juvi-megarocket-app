@@ -38,6 +38,7 @@ function Routes() {
         <PrivateRoute path="/member" role="MEMBER" component={MemberRoutes} />
         <PrivateRoute path="/super-admin" role="SUPERADMIN" component={SuperAdminRoutes} />
         <Route path="/auth" component={AuthRoutes} />
+        {role === '' && <Redirect to="/auth" />}
         {role === 'ADMIN' && <Redirect to="/admin" />}
         {role === 'MEMBER' && <Redirect to="/member" />}
         {role === 'SUPERADMIN' && <Redirect to="/super-admin" />}
