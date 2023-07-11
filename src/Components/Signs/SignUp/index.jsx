@@ -221,7 +221,7 @@ const MemberSingUp = () => {
           {modalDone && (
             <ModalAlert
               text={msg}
-              onClick={() => history.push('/')}
+              onClick={() => history.push('/auth/sign-in')}
               testId="member-signup-modal-alert"
             />
           )}
