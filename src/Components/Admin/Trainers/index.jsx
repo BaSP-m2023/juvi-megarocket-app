@@ -26,7 +26,7 @@ function Trainers() {
     <section className={styles.container} data-testid="admin-trainers-section">
       <div className={styles.titleTrainers}>
         <h2>Trainers</h2>
-        <Link to="/admins/trainers/form" className={styles.link}>
+        <Link to="/admin/trainers/form" className={styles.link}>
           <Button type="add" resource="Trainer" testId="add-button" />
         </Link>
       </div>
