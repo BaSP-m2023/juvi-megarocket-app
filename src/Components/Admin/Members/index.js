@@ -29,8 +29,8 @@ function Members(props) {
         <Button
           type={'add'}
           resource={'Member'}
-          onClick={() => props.history.push('/admin/members/form')}
-          testId="admin-members-add-button"
+          onClick={() => props.history.push('/admins/members/form')}
+          testId="add-button"
         />
       </div>
       {data.isLoading && <h1>Loading</h1>}

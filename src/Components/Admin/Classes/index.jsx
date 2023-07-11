@@ -32,8 +32,8 @@ const Classes = () => {
     <section className={styles.containerClass} data-testid="admin-classes-section">
       <div className={styles.titleClass}>
         <h2>Classes</h2>
-        <Link to="/admin/classes/form" className={styles.contButton}>
-          <Button type="add" resource="Class" testId="admin-classes-add-button" />
+        <Link to="/admins/classes/form" className={styles.contButton}>
+          <Button type="add" resource="Class" testId="add-button" />
         </Link>
       </div>
       {isLoading ? (
