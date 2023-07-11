@@ -42,7 +42,6 @@ function Members(props) {
             setModal(!modal);
             props.history.push('/admin/members');
           }}
-          testId="admin-members-modal-alert"
         />
       )}
     </section>

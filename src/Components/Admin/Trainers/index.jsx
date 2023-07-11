@@ -40,12 +40,8 @@ function Trainers() {
           testId="admin-trainers-table"
         />
       )}
-      {message != '' && (
-        <ModalAlert text={message} onClick={closeAlert} testId="admin-trainers-modal-alert" />
-      )}
-      {error != '' && (
-        <ModalAlert text={error} onClick={closeAlert} testId="admin-trainers-modal-alert" />
-      )}
+      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
     </section>
   );
 }

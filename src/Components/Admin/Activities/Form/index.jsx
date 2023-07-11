@@ -77,30 +77,24 @@ const Form = () => {
                 error={errors.description?.message}
               />
             </div>
-            <Button
-              className={styles.addButton}
-              type="confirm"
-              testId="admin-activities-confirm-button"
-            ></Button>
+            <Button className={styles.addButton} type="confirm" testId="confirm-button"></Button>
             <Button
               className={styles.addButton}
               type="cancel"
               onClick={() => history.push('/admins/activities')}
-              testId="admin-activities-cancel-button"
+              testId="cancel-button"
             ></Button>
           </form>
           <Button
             className={styles.addButton}
             type="reset"
             onClick={() => reset()}
-            testId="admin-activities-reset-button"
+            testId="reset-button"
           ></Button>
         </>
       )}
 
-      {showModal && (
-        <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert" />
-      )}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
       {showModalSuccess && (
         <ModalAlert
           text={modalText}
@@ -108,7 +102,6 @@ const Form = () => {
             history.push('/admins/activities');
             setShowModalSuccess(false);
           }}
-          testId="admin-activities-modal-alert"
         />
       )}
     </>

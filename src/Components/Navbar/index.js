@@ -18,7 +18,7 @@ const Navbar = ({ routes }) => {
       <div className={styles.navContainer}>
         <ul
           className={`${styles.routes} ${navVisible ? styles.showNav : styles.hideNav}`}
-          data-testid="landing-navbar"
+          data-testid="navbar"
         >
           {routes.map((route) => (
             <li key={route.path}>
