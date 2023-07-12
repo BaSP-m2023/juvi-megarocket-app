@@ -36,3 +36,5 @@ class Buttons {
     await this.logoutButton.click();
   }
 }
+
+module.exports = new Buttons();

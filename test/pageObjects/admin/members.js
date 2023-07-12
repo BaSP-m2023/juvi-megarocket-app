@@ -1,4 +1,8 @@
 class MembersEditDelete {
+  get membersBtn() {
+    return $(`[data-testid="navbar"] li:nth-child(3) a`)
+  }
+
   get membersTitle() {
     return $(`[data-testid="admin-members-section"] h2`)
   }
@@ -8,15 +12,15 @@ class MembersEditDelete {
   }
 
   get firstMemberEditBtn() {
-      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(11) a`)
+      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(10) a`)
   }
 
   get firstMemberName() {
-    return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(2)`)
+    return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(1)`)
   }
 
   get firstMemberDeleteBtn() {
-      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(12) button`)
+      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(11) button`)
   }
 
   get formEditMemberTitle() {
@@ -107,8 +111,16 @@ class MembersEditDelete {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(11) select`)
   }
 
+  get inputsErrorMessages() {
+    return $(`p.input_errorMessage__Pjt5Q`)
+  }
+
   get modalConfirmDelete() {
       return $(`[data-testid="modal-confirm"]`)
+  }
+
+  async membersBtnClick() {
+    await this.membersBtn.click();
   }
 
   async firstMemberEditBtnClick() {
@@ -116,11 +128,20 @@ class MembersEditDelete {
   }
 
   async updateFillForm() {
+    function generateRandomEmail() {
+      const randomString = Math.random().toString(36).substring(2, 10);
+      const email = `test-${randomString}@automation.com`;
+
+      return email;
+    }
+
+    const randomEmail = generateRandomEmail();
+
     await this.nameInputEditMembers.setValue('Automation');
     await this.lastNameInputEditMembers.setValue('Testing');
     await this.dniInputEditMembers.setValue('98765432');
     await this.phoneInputEditMembers.setValue('9087654321');
-    await this.emailInputEditMembers.setValue('test@automation.qa');
+    await this.emailInputEditMembers.setValue(randomEmail);
     await this.cityInputEditMembers.setValue('Testland');
     await this.birthDateInputEditMembers.setValue('07101999');
     await this.zipInputEditMembers.setValue('9999');

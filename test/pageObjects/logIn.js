@@ -1,6 +1,6 @@
 class LogIn {
   get signInBtn() {
-    return $(`[data-testid="navbar"] a:first-child`);
+    return $(`[data-testid="navbar"] li:nth-child(2) a`);
   }
 
   get emailInput() {
@@ -34,6 +34,16 @@ class LogIn {
 
   async fillFormLogInAdmin() {
     await this.emailInput.setValue('octavitossse@gmail.com');
+    await this.passwordInput.setValue('Marianobondar123456');
+  }
+
+  async fillFormLogInTrainer() {
+    await this.emailInput.setValue('');
+    await this.passwordInput.setValue('');
+  }
+
+  async fillFormLogInSuperAdmin() {
+    await this.emailInput.setValue('octavito@gmail.com');
     await this.passwordInput.setValue('Marianobondar123456');
   }
 

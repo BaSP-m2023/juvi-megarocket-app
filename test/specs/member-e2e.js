@@ -5,7 +5,7 @@ const modalAlert = require('../pageObjects/sharedComponents/modalAlert');
 describe('display of activities', function () {
   beforeAll('Open browser for test activities display', async function () {
     browser.setWindowSize(1440, 1024);
-    browser.url('http://localhost:3000/auth');
+    browser.url('https://juvi-megarocket-app.vercel.app/');
   });
 
   it('Log in with invalid credentials', async () => {
@@ -30,7 +30,7 @@ describe('display of activities', function () {
 
   })
 
-  it('Log in correctly and navigate to activities page', async () => {
+  it('Log in with member user', async () => {
     await login.emailInput.waitForDisplayed();
     await login.passwordInput.waitForDisplayed();
     await login.fillFormLogInMember();
@@ -43,17 +43,17 @@ describe('display of activities', function () {
     expect(await modalAlert.modalAlertMessage()).toContain('success');
     await modalAlert.confirmAlertClick();
 
+  })
+
+  it('Navigate to activities page', async function () {
+
     await activities.activitiesBtn.waitForDisplayed();
     await activities.activitiesBtnClick();
 
     await expect(browser).toHaveUrlContaining("activities");
-
-  })
-
-  it('Verify the title is Activities', async function () {
     await activities.activitiesTitle.waitForDisplayed();
     const textTitle = await activities.activitiesTitleText();
-    await expect(textTitle).toEqual('Activities');
+    expect(textTitle).toEqual('Activities');
   });
 
   it('Verify the first two cards containers are displayed and have 3 cards each one.', async function () {

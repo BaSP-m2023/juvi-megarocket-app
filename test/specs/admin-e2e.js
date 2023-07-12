@@ -7,29 +7,57 @@ const login = require('../pageObjects/logIn');
 describe('Members edit and delete flow', function () {
     beforeAll('Open browser', async function () {
       browser.setWindowSize(1440, 1024);
-      browser.url('http://localhost:3000/auth');
+      browser.url('https://juvi-megarocket-app.vercel.app/');
     })
 
-  it('Log in and navigate to the members section', async () => {
-      await login.signInBtn.waitForDisplayed();
-      await login.signInBtnClick();
+  it('Log in with invalid credentials', async () => {
+    await login.signInBtn.waitForDisplayed();
+    await login.signInBtnClick();
 
-      await expect(browser).toHaveUrlContaining("sign-in");
+    await expect(browser).toHaveUrlContaining("sign-in");
 
-      await login.emailInput.waitForDisplayed();
-      await login.passwordInput.waitForDisplayed();
-      await login.fillFormLogInAdmin();
-      expect(await login.passwordInput.getAttribute('type')).toEqual('password');
-      await login.showHidePasswordBtnClick();
-      expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+    await login.emailInput.waitForDisplayed();
+    await login.passwordInput.waitForDisplayed();
+    await login.emailInput.setValue('any@thing.com');
+    await login.passwordInput.setValue('wrongPassword');
+    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
+    await login.showHidePasswordBtnClick();
+    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+    await login.showHidePasswordBtnClick();
 
-      await login.submitBtnClick();
+    await login.submitBtnClick();
 
-      expect(await modalAlert.modalAlertMessage()).toContain('success');
-      await modalAlert.confirmAlertClick();
+    expect(await modalAlert.modalAlertMessage()).toContain('Error');
+    await modalAlert.confirmAlertClick();
 
-      await expect(browser).toHaveUrlContaining("admin");
+  })
 
+  it('Log in with admin user', async () => {
+    await login.signInBtn.waitForDisplayed();
+    await login.signInBtnClick();
+
+    await expect(browser).toHaveUrlContaining("sign-in");
+
+    await login.emailInput.waitForDisplayed();
+    await login.passwordInput.waitForDisplayed();
+    await login.fillFormLogInAdmin();
+    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
+    await login.showHidePasswordBtnClick();
+    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+
+    await login.submitBtnClick();
+
+    expect(await modalAlert.modalAlertMessage()).toContain('success');
+    await modalAlert.confirmAlertClick();
+
+    await expect(browser).toHaveUrlContaining("admin");
+  })
+
+  it('Navigate to the members section', async () => {
+    await members.membersBtn.waitForDisplayed();
+    await members.membersBtnClick();
+
+    await expect(browser).toHaveUrlContaining("admin/members");
   })
 
   it('Verify the title is Members and table is displayed.', async function () {
@@ -51,6 +79,8 @@ describe('Members edit and delete flow', function () {
     await buttons.cancelBtn.waitForDisplayed();
     await buttons.cancelBtnClick();
     await members.membersTable.waitForDisplayed();
+
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/members');
   });
 
   it('Click again to edit first member, change all the inputs values and click reset to test the data is restored.',
@@ -67,8 +97,8 @@ describe('Members edit and delete flow', function () {
     await members.showHidePasswordBtnClick();
     expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('text');
 
-    browser.pause(2000);
-
+    await buttons.resetBtn.waitForDisplayed();
+    await buttons.resetBtn.scrollIntoView();
     await buttons.resetBtnClick();
 
     const memberResetName = members.nameInputEditMembers.getAttribute('value');
@@ -80,18 +110,10 @@ describe('Members edit and delete flow', function () {
   })
 
   it('Change all the inputs and submit the update.', async function () {
-
-    //const memberPreviousName = members.nameInputEditMembers.getAttribute('value');
-
     await members.updateFillForm();
     expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('password');
     await members.showHidePasswordBtnClick();
     expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('text');
-    // Pause for complete the time field
-    await browser.pause(5000);
-
-    //const memberNewName = members.nameInputEditMembers.getAttribute('value');
-
     await buttons.submitBtn.waitForDisplayed();
     await buttons.submitBtnClick();
 
@@ -101,7 +123,7 @@ describe('Members edit and delete flow', function () {
     await modalAlert.modalAlertButton.waitForDisplayed();
     await modalAlert.confirmAlertClick();
 
-    await expect(browser).toHaveUrl('http://localhost:3000/admins/members');
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/members');
 
     expect(await members.firstMemberNameText()).toEqual('Automation');
 
@@ -134,9 +156,7 @@ describe('Members edit and delete flow', function () {
     await modalAlert.modalAlertButton.waitForDisplayed();
     await modalAlert.confirmAlertClick();
 
-    await expect(browser).toHaveUrl('http://localhost:3000/admins/members');
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/members');
 
   })
-
 });
-
