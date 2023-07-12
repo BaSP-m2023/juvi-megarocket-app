@@ -17,9 +17,9 @@ export const logout = () => {
     dispatch(logoutPending());
     try {
       await firebaseApp.auth().signOut();
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('role');
       dispatch(logoutSuccess());
-      sessionStorage.removeItem('token', '');
-      sessionStorage.removeItem('role', '');
       return { error: false, message: 'Log Out Successfully' };
     } catch (error) {
       console.log(error);
@@ -60,8 +60,6 @@ export const login = (credentials) => {
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', role);
       return dispatch(loginSuccess({ role, token }));
     } catch (error) {
       return dispatch(loginError(error.toString()));

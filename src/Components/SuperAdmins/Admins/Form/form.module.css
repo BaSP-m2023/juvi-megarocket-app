@@ -1,0 +1,22 @@
+.myForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.divContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.password {
+  display: flex;
+  align-items: center;
+}
+.showPasswordIcon {
+  padding-left: 10px;
+  padding-top: 30px;
+}

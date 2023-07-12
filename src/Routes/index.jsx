@@ -10,6 +10,7 @@ const AdminRoutes = lazy(() => import('./admin'));
 const MemberRoutes = lazy(() => import('./member'));
 const SuperAdminRoutes = lazy(() => import('./superAdmin'));
 const AuthRoutes = lazy(() => import('./auth'));
+const TrainerRoutes = lazy(() => import('./trainer'));
 
 function Routes() {
   const dispatch = useDispatch();
@@ -19,7 +20,6 @@ function Routes() {
   }, []);
   useEffect(() => {
     if (token) {
-      console.log(token);
       dispatch(getAuth(token));
     }
   }, [token]);
@@ -29,6 +29,7 @@ function Routes() {
         <PrivateRoute path="/admin" role="ADMIN" component={AdminRoutes} />
         <PrivateRoute path="/member" role="MEMBER" component={MemberRoutes} />
         <PrivateRoute path="/super-admin" role="SUPERADMIN" component={SuperAdminRoutes} />
+        <PrivateRoute path="/trainer" role="TRAINER" component={TrainerRoutes} />
         <Route path="/auth" component={AuthRoutes} />
         <Redirect to="/auth" />
       </Switch>

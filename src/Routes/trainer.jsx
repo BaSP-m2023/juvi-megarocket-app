@@ -1,6 +1,7 @@
 import Home from 'Components/Home';
-import Admin from 'Components/SuperAdmins/Admins';
-import AdminsForm from 'Components/SuperAdmins/Admins/Form';
+import Profile from 'Components/Trainer/Profile';
+/* import Schedule from 'Components/Trainer/Schedule'; */
+
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from 'Components/Layout';
@@ -8,25 +9,29 @@ import Layout from 'Components/Layout';
 const routes = [
   {
     name: 'Home',
-    path: '/super-admin'
+    path: '/trainer'
   },
   {
-    name: 'Admin',
-    path: '/super-admin/admins'
+    name: 'Profile',
+    path: '/trainer/profile'
+  },
+  {
+    name: 'Schedule',
+    path: '/trainer/schedule'
   }
 ];
 
-const SuperAdminRoutes = () => {
+const MemberRoutes = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={routes}>
       <Switch>
         <Route exact path={`${url}/`} component={Home} />
-        <Route exact path={`${url}/admins`} component={Admin} />
-        <Route exact path={`${url}/admins/form`} component={AdminsForm} />
+        <Route exact path={`${url}/profile`} component={Profile} />
+        {/*     <Route exact path={`${url}/schedule`} component={Schedule} /> */}
       </Switch>
     </Layout>
   );
 };
 
-export default SuperAdminRoutes;
+export default MemberRoutes;

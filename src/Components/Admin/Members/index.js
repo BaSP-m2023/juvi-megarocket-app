@@ -29,7 +29,7 @@ function Members(props) {
         <Button
           type={'add'}
           resource={'Member'}
-          onClick={() => props.history.push('/admins/members/form')}
+          onClick={() => props.history.push('/admin/members/form')}
           testId="admin-members-add-button"
         />
       </div>
@@ -38,7 +38,7 @@ function Members(props) {
         <SharedTable
           data={data.list}
           handleDelete={delMember}
-          editLink={'/admins/members/form/'}
+          editLink={'/admin/members/form/'}
           testId="admin-members-table"
         />
       )}
@@ -47,7 +47,7 @@ function Members(props) {
           text={'Member deleted successfully'}
           onClick={() => {
             setModal(!modal);
-            props.history.push('/admins/members');
+            props.history.push('/admin/members');
           }}
           testId="admin-members-modal-alert"
         />
