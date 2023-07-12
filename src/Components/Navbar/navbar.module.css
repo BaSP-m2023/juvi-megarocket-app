@@ -7,6 +7,13 @@
   list-style-type: none;
   background-color: #0f232e;
 }
+
+.showNav {
+  max-height: none;
+  padding-top: 70px;
+  width: 26vw;
+}
+
 .navContainer a:hover {
   color: #f9a414;
   background-color: #1c4257;
@@ -21,18 +28,33 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  transition: width 0.3s ease-out;
 }
+
 .navContainer ul {
   display: flex;
   flex-direction: column;
-  height: 15vh;   
-  padding: 200px 10px;
+  height: 57vh;
+  padding: 0px;
   justify-content: space-between;
   list-style-type: none;
 }
+
+.superAdminNav ul {
+  height: 12vh;
+}
+.authNav ul {
+  height: 20vh;
+}
+.memberNav ul {
+  height: 44vh;
+}
+.adminNav ul {
+  height: 53vh;
+}
 .navContainer a {
   margin-left: 15px;
-  color: #fff;
+  color: #f9a414;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
@@ -75,5 +97,56 @@
   }
   .navContainer li {
     padding-top: 10px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .navbar {
+    width: 10vw;
+  }
+  .navContainer {
+    justify-content: flex-start;
+    align-items: baseline;
+  }
+  .navContainer li {
+    padding-top: 10px;
+  }
+  .arrowIcon {
+    display: block;
+  }
+}
+@media screen and (max-width: 390px) {
+  .expandedNavbar {
+    width: 260px;
+  }
+  .navbar {
+    width: 260px;
+  }
+
+  .navContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50px;
+    height: auto;
+    max-height: 100%;
+  }
+
+  .navContainer ul {
+    height: auto;
+  }
+
+  .navContainer li {
+    text-align: left;
+  }
+  .navContainer a {
+    margin-left: 0;
+    font-weight: 400;
+  }
+  .arrowIcon {
+    align-self: end;
+  }
+  .showNav {
+    max-height: none;
+    padding-top: 70px;
+    width: 260px;
   }
 }

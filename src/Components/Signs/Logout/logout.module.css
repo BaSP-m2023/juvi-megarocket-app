@@ -30,3 +30,14 @@
 .buttonText {
   padding: 5px 5px;
 }
+
+@media screen and (max-width: 390px) {
+  .buttonText {
+    display: none;
+  }
+}
+@media screen and (max-width: 750px) {
+  .buttonText {
+    display: none;
+  }
+}

@@ -7,7 +7,7 @@ import Layout from 'Components/Layout';
 
 const routes = [
   {
-    name: 'Home',
+    name: 'SuperAdmin',
     path: '/super-admin'
   },
   {
