@@ -40,8 +40,6 @@ export const getMemberById = (id) => {
         headers: { token: token }
       });
       const data = await response.json();
-      console.log(data);
-
       if (data.error) {
         throw new Error(data.error.message);
       }
@@ -55,20 +53,22 @@ export const getMemberById = (id) => {
 
 export const addMember = (member, switchModal) => {
   return async (dispatch) => {
-    const token = sessionStorage.getItem('token');
     try {
       dispatch(addMemberPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(member)
       });
       const newMemb = await response.json();
+      console.log(member);
       if (newMemb.error) {
         switchModal(newMemb.error, newMemb.message);
         throw new Error(newMemb.message);
       }
-      switchModal(newMemb.error, newMemb.message);
+      switchModal(false, newMemb.message);
       dispatch(addMemberSuccess());
     } catch (error) {
       dispatch(addMemberError(error));
@@ -83,7 +83,10 @@ export const putMember = (id, member, switchModal) => {
       dispatch(putMemberPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify({
           firstName: member.firstName,
           lastName: member.lastName,

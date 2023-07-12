@@ -68,15 +68,6 @@ class ProfileForm {
   get membershipBlack() {
     return $('[data-testid="member-profile-edit-form"]  fieldset:nth-child(11) option:nth-child(3)')
   }
-  get submitBtn() {
-    return $('[data-testid="member-profile-submit-button"]')
-  }
-  get cancelBtn() {
-    return $('[data-testid="member-profile-cancel-button"]')
-  }
-  get resetBtn() {
-    return $('[data-testid="member-profile-reset-button"]')
-  }
   get successModalText() {
     return $('[data-testid="member-profile-modal-alert"] p')
   }
@@ -85,9 +76,6 @@ class ProfileForm {
   }
   async successBtnClick() {
     await this.successModalBtn.click();
-  }
-  async submitBtnClick() {
-    await this.submitBtn.click();
   }
   async cancelBtnClick() {
     await this.cancelBtn.click();

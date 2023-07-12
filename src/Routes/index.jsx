@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { tokenListener } from 'helper/firebase';
@@ -13,12 +13,22 @@ const AuthRoutes = lazy(() => import('./auth'));
 const TrainerRoutes = lazy(() => import('./trainer'));
 
 function Routes() {
+  const [role, setRole] = useState('');
   const dispatch = useDispatch();
-  const token = sessionStorage.getItem('token');
+  const [token, setToken] = useState(sessionStorage.getItem('token') || '');
   useEffect(() => {
-    tokenListener();
+    const setUpTokenListener = async () => {
+      await new Promise((resolve) => {
+        tokenListener(resolve);
+      });
+      setToken(sessionStorage.getItem('token'));
+      setRole(sessionStorage.getItem('role'));
+    };
+    setUpTokenListener();
   }, []);
+  console.log(role);
   useEffect(() => {
+    console.log(role);
     if (token) {
       dispatch(getAuth(token));
     }
@@ -31,7 +41,10 @@ function Routes() {
         <PrivateRoute path="/super-admin" role="SUPERADMIN" component={SuperAdminRoutes} />
         <PrivateRoute path="/trainer" role="TRAINER" component={TrainerRoutes} />
         <Route path="/auth" component={AuthRoutes} />
-        <Redirect to="/auth" />
+        {role === null && <Redirect to="/auth" />}
+        {role === 'ADMIN' && <Redirect to="/admin" />}
+        {role === 'MEMBER' && <Redirect to="/member" />}
+        {role === 'SUPERADMIN' && <Redirect to="/super-admin" />}
       </Switch>
     </Suspense>
   );

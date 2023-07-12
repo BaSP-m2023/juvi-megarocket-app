@@ -59,7 +59,6 @@ const MemberSingUp = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       dispatch(addMember(data, switchModal));
     } catch (error) {
@@ -205,12 +204,8 @@ const MemberSingUp = () => {
             </div>
           </div>
           <div className={styles.btnContainer}>
-            <Button type={'submit'} resource={'Member'} testId="member-signup-submit-button" />
-            <Button
-              type={'cancel'}
-              onClick={() => history.push('/')}
-              testId="member-signup-cancel-button"
-            />
+            <Button type={'submit'} resource={'Member'} testId="submit-button" />
+            <Button type={'cancel'} onClick={() => history.push('/')} testId="cancel-button" />
           </div>
           {modal && (
             <ModalAlert
@@ -222,7 +217,7 @@ const MemberSingUp = () => {
           {modalDone && (
             <ModalAlert
               text={msg}
-              onClick={() => history.push('/')}
+              onClick={() => history.push('/auth/sign-in')}
               testId="member-signup-modal-alert"
             />
           )}
@@ -231,5 +226,4 @@ const MemberSingUp = () => {
     </div>
   );
 };
-
 export default MemberSingUp;

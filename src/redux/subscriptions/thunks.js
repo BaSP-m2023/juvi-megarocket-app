@@ -95,7 +95,10 @@ export const addSubscription = (formData, setAlertText, setShowAlert) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify(requestData)
       });
       const responseData = await response.json();
@@ -126,7 +129,10 @@ export const editSubscription = (id, formData, setAlertText, setShowAlert) => {
       dispatch(putSubscriptionsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'PUT',
-        headers: { token: token },
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
         body: JSON.stringify(requestData)
       });
       const responseData = await response.json();

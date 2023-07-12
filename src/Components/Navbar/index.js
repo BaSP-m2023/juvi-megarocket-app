@@ -3,6 +3,7 @@ import styles from './navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+
 const Navbar = ({ routes }) => {
   const [navVisible, setNavVisible] = useState(false);
   const toggleNav = () => {
@@ -17,7 +18,7 @@ const Navbar = ({ routes }) => {
       <div className={styles.navContainer}>
         <ul
           className={`${styles.routes} ${navVisible ? styles.showNav : styles.hideNav}`}
-          data-testid="landing-navbar"
+          data-testid="navbar"
         >
           {routes.map((route) => (
             <li key={route.path}>

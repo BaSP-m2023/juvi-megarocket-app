@@ -5,21 +5,20 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from 'Components/Admin/Members/MemberForm/form.module.css';
-import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
+import styles from 'Components/Admin/Admins/Profile/adminprofile.module.css';
+import { schema } from 'Components/Admin/Admins/Form/adminFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
+import { editAdmin } from 'redux/admins/thunks';
 
-const MemberProfile = () => {
+const AdminProfile = () => {
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const data = useSelector((state) => state.auth?.data);
+  const { data: admin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  console.log(data);
 
   const {
     register,
@@ -30,16 +29,13 @@ const MemberProfile = () => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: data?.firstName ?? '',
-      lastName: data?.lastName ?? '',
-      dni: data?.dni ?? '',
-      phone: data?.phone ?? '',
-      email: data?.email ?? '',
-      city: data?.city ?? '',
-      birthDate: data?.birthDate ?? '',
-      postalCode: data?.postalCode ?? '',
-      password: data?.password ?? '',
-      memberships: data?.memberships ?? 'Only Classes'
+      firstName: admin?.firstName ?? '',
+      lastName: admin?.lastName ?? '',
+      dni: admin?.dni ?? '',
+      phone: admin?.phone ?? '',
+      email: admin?.email ?? '',
+      city: admin?.city ?? '',
+      password: admin?.password ?? ''
     }
   });
 
@@ -56,9 +52,31 @@ const MemberProfile = () => {
       setModalDone(!modalDone);
     }
   };
+  useEffect(() => {
+    if (admin) {
+      reset({
+        firstName: admin?.firstName || '',
+        lastName: admin?.lastName || '',
+        dni: admin?.dni || '',
+        phone: admin?.phone || '',
+        email: admin?.email || '',
+        city: admin?.city || '',
+        password: admin?.password || ''
+      });
+    }
+  }, [admin]);
 
-  const onSubmit = () => {
-    switchModal(false, 'Member updated correctly!');
+  const onSubmit = async (data) => {
+    try {
+      if (data.password === '') {
+        const { password, _id, __v, ...resData } = data;
+        dispatch(editAdmin(admin._id, resData, switchModal));
+      } else {
+        dispatch(editAdmin(admin._id, data, switchModal));
+      }
+    } catch (error) {
+      switchModal(true, error);
+    }
   };
 
   const onInvalid = (errors) => console.log(errors);
@@ -66,7 +84,7 @@ const MemberProfile = () => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer} data-testid="member-profile-edit-form">
+        <div className={styles.formContainer}>
           <h1>Edit Profile</h1>
           <fieldset className={styles.fieldset}>
             <Input
@@ -135,27 +153,6 @@ const MemberProfile = () => {
             />
           </fieldset>
           <fieldset className={styles.fieldset}>
-            <Input
-              labelText="Birth Day"
-              className={styles.input}
-              name={'birthDate'}
-              type="date"
-              error={errors.birthDate?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
-            <Input
-              labelText="Zip"
-              className={styles.input}
-              name={'postalCode'}
-              type="number"
-              placeholder="Ex: 2200"
-              error={errors.postalCode?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
             <div className={styles.password}>
               <Input
                 labelText="Password"
@@ -173,29 +170,16 @@ const MemberProfile = () => {
               />
             </div>
           </fieldset>
-          <fieldset className={styles.fieldset}>
-            <label>Membership</label>
-            <select name="memberships" {...register('memberships')}>
-              <option value="Only Classes">Only Classes</option>
-              <option value="Classic">Classic</option>
-              <option value="Black">Black</option>
-            </select>
-            {errors.memberships && <p>{errors.memberships.message}</p>}
-          </fieldset>
         </div>
-        <Button type={'submit'} resource={'Member'} testId="submit-button" />
-        <Button type={'cancel'} onClick={() => history.push('/member')} testId="cancel-button" />
+        <div className={styles.profileBtn}>
+          <Button type={'submit'} />
+          <Button type={'cancel'} onClick={() => history.push('/admin')} />
+        </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/member')} />}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/admin')} />}
       </form>
-      <Button
-        className={styles.addButton}
-        type="reset"
-        onClick={() => reset()}
-        testId="reset-button"
-      ></Button>
     </div>
   );
 };
 
-export default MemberProfile;
+export default AdminProfile;

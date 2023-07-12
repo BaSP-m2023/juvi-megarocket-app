@@ -22,7 +22,6 @@ export const logout = () => {
       dispatch(logoutSuccess());
       return { error: false, message: 'Log Out Successfully' };
     } catch (error) {
-      console.log(error);
       dispatch(logoutError(error));
       return {
         error: true,
@@ -41,7 +40,6 @@ export const getAuth = (token) => {
       });
       const res = await response.json();
       dispatch(getAuthenticationSuccess(res.data));
-      console.log(res.data);
       return res.data;
     } catch (error) {
       return dispatch(getAuthenticationError(error.toString()));

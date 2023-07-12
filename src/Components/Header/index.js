@@ -3,6 +3,7 @@ import Logout from 'Components/Signs/Logout';
 
 function Header() {
   const token = sessionStorage.getItem('token');
+
   return (
     <header>
       <div className={styles.container} data-testid="header-testid">
