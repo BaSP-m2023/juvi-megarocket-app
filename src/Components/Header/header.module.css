@@ -2,11 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5%;
+  padding-left: 10px;
   height: 7vh;
   background-color: #0f232e;
 }
-
+.mediaIcon {
+  align-self: end;
+  padding-right: 10px;
+}
 .brand {
   color: #f9a414;
   font-weight: bold;
@@ -17,7 +20,12 @@
 .socialIcon {
   margin-left: 15px;
 }
-
+.socialMedia {
+  display: flex;
+}
+.btnHeader {
+  padding-right: 10px;
+}
 .appName {
   font-size: 2rem;
   font-weight: bold;
