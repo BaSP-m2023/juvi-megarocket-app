@@ -1,46 +1,75 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useState, useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import { useForm } from 'react-hook-form';
+
 import { joiResolver } from '@hookform/resolvers/joi';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 import styles from 'Components/Admin/Members/MemberForm/form.module.css';
+
 import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
+
 import { ModalAlert, Button, Input } from 'Components/Shared';
+
 import { useHistory } from 'react-router-dom';
-import { putTrainer } from 'redux/trainers/thunks';
+
+import { putMember } from 'redux/members/thunks';
 
 const MemberProfile = () => {
   const [modal, setModal] = useState(false);
+
   const [modalDone, setModalDone] = useState(false);
+
   const [msg, setMsg] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
-  const { data: trainer } = useSelector((state) => state.auth);
+
+  const { data: member } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
+
   const history = useHistory();
 
-  console.log(trainer);
+  console.log(member);
 
   const {
     register,
+
     handleSubmit,
+
     reset,
+
     formState: { errors }
   } = useForm({
     resolver: joiResolver(schema),
+
     mode: 'onChange',
+
     defaultValues: {
-      firstName: trainer?.firstName ?? '',
-      lastName: trainer?.lastName ?? '',
-      dni: trainer?.dni ?? '',
-      phone: trainer?.phone ?? '',
-      email: trainer?.email ?? '',
-      city: trainer?.city ?? '',
-      birthDate: trainer?.birthDate ?? '',
-      postalCode: trainer?.postalCode ?? '',
-      password: trainer?.password ?? '',
-      memberships: trainer?.memberships ?? 'Only Classes'
+      firstName: member?.firstName ?? '',
+
+      lastName: member?.lastName ?? '',
+
+      dni: member?.dni ?? '',
+
+      phone: member?.phone ?? '',
+
+      email: member?.email ?? '',
+
+      city: member?.city ?? '',
+
+      birthDate: member?.birthDate?.substring(0, 10) ?? '',
+
+      postalCode: member?.postalCode ?? '',
+
+      memberships: member?.memberships ?? 'Only Classes'
     }
   });
 
@@ -51,19 +80,47 @@ const MemberProfile = () => {
   const switchModal = (error, msg) => {
     if (error) {
       setMsg(msg);
+
       setModal(!modal);
     } else {
       setMsg(msg);
+
       setModalDone(!modalDone);
     }
   };
+
+  useEffect(() => {
+    if (member) {
+      reset({
+        firstName: member?.firstName ?? '',
+
+        lastName: member?.lastName ?? '',
+
+        dni: member?.dni ?? '',
+
+        phone: member?.phone ?? '',
+
+        email: member?.email ?? '',
+
+        city: member?.city ?? '',
+
+        birthDate: member?.birthDate?.substring(0, 10) ?? '',
+
+        postalCode: member?.postalCode ?? '',
+
+        memberships: member?.memberships ?? 'Only Classes'
+      });
+    }
+  }, [member]);
+
   const onSubmit = async (data) => {
     try {
       if (data.password === '') {
         const { password, _id, __v, ...resData } = data;
-        dispatch(putTrainer(trainer._id, resData, switchModal));
+
+        dispatch(putMember(member._id, resData, switchModal));
       } else {
-        dispatch(putTrainer(trainer._id, data, switchModal));
+        dispatch(putMember(member._id, data, switchModal));
       }
     } catch (error) {
       switchModal(true, error);
@@ -77,6 +134,7 @@ const MemberProfile = () => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <div className={styles.formContainer} data-testid="member-profile-edit-form">
           <h1>Edit Profile</h1>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="First Name"
@@ -88,6 +146,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="Last Name"
@@ -99,6 +158,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="DNI"
@@ -110,6 +170,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="Phone"
@@ -121,6 +182,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="Email"
@@ -132,6 +194,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="City"
@@ -143,6 +206,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="Birth Day"
@@ -153,6 +217,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <Input
               labelText="Zip"
@@ -164,6 +229,7 @@ const MemberProfile = () => {
               register={register}
             />
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <div className={styles.password}>
               <Input
@@ -175,6 +241,7 @@ const MemberProfile = () => {
                 error={errors.password?.message}
                 register={register}
               />
+
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
                 className={styles.showPasswordIcon}
@@ -182,21 +249,31 @@ const MemberProfile = () => {
               />
             </div>
           </fieldset>
+
           <fieldset className={styles.fieldset}>
             <label>Membership</label>
+
             <select name="memberships" {...register('memberships')}>
               <option value="Only Classes">Only Classes</option>
+
               <option value="Classic">Classic</option>
+
               <option value="Black">Black</option>
             </select>
+
             {errors.memberships && <p>{errors.memberships.message}</p>}
           </fieldset>
         </div>
+
         <Button type={'submit'} resource={'Member'} testId="submit-button" />
+
         <Button type={'cancel'} onClick={() => history.push('/member')} testId="cancel-button" />
+
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+
         {modalDone && <ModalAlert text={msg} onClick={() => history.push('/member')} />}
       </form>
+
       <Button
         className={styles.addButton}
         type="reset"
