@@ -94,7 +94,7 @@ const SubForm = () => {
 
   const handleFormClose = (e) => {
     e.preventDefault();
-    history.push('/admins/subscriptions');
+    history.push('/admin/subscriptions');
   };
 
   return (

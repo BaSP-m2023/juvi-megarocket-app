@@ -5,6 +5,9 @@ import {
   GET_BY_ID_TRAINERS_SUCCESS,
   GET_BY_ID_TRAINERS_PENDING,
   GET_BY_ID_TRAINERS_ERROR,
+  GET_BY_EMAIL_TRAINERS_SUCCESS,
+  GET_BY_EMAIL_TRAINERS_PENDING,
+  GET_BY_EMAIL_TRAINERS_ERROR,
   ADD_TRAINERS_SUCCESS,
   ADD_TRAINERS_PENDING,
   ADD_TRAINERS_ERROR,
@@ -49,6 +52,23 @@ export const getTrainerByIdPending = () => {
 export const getTrainerByIdError = (error) => {
   return {
     type: GET_BY_ID_TRAINERS_ERROR,
+    payload: error
+  };
+};
+export const getTrainerByEmailSuccess = (data) => {
+  return {
+    type: GET_BY_EMAIL_TRAINERS_SUCCESS,
+    payload: data
+  };
+};
+export const getTrainerByEmailPending = () => {
+  return {
+    type: GET_BY_EMAIL_TRAINERS_PENDING
+  };
+};
+export const getTrainerByEmailError = (error) => {
+  return {
+    type: GET_BY_EMAIL_TRAINERS_ERROR,
     payload: error
   };
 };
