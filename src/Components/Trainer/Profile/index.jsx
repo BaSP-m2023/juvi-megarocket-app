@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import { Button, Input, ModalAlert } from 'Components/Shared';
-import { getTrainersByEmail } from 'redux/trainers/thunks';
+import { putTrainer, getTrainersByEmail } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -10,12 +10,12 @@ import trainersSchema from './validationTrainers';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.trainers);
+  const trainer = useSelector((state) => state.trainers);
   const email = sessionStorage.getItem('email');
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
-  const [modalText] = useState('');
+  const [modalText, setModalText] = useState('');
   const {
     register,
     handleSubmit,
@@ -24,15 +24,14 @@ const Profile = () => {
     mode: 'onChange',
     resolver: joiResolver(trainersSchema),
     defaultValues: {
-      _id: data.item?._id || '',
-      firstName: data.item?.firstName || '',
-      lastName: data.item?.lastName || '',
-      dni: data.item?.dni || '',
-      phone: data.item?.phone || '',
-      email: data.item?.email || '',
-      city: data.item?.city || '',
-      password: data.item?.password || '',
-      salary: data.item?.salary || ''
+      firstName: trainer.item?.firstName || '',
+      lastName: trainer.item?.lastName || '',
+      dni: trainer.item?.dni || '',
+      phone: trainer.item?.phone || '',
+      email: trainer.item?.email || '',
+      city: trainer.item?.city || '',
+      password: trainer.item?.password || '',
+      salary: trainer.item?.salary || ''
     }
   });
 
@@ -41,9 +40,7 @@ const Profile = () => {
   }, [email]);
 
   const onSubmit = (data) => {
-    console.log('gola');
-    console.log(data);
-    //dispatch(putTrainer(data, setModalText, setShowModal, setShowModalSuccess));
+    dispatch(putTrainer(data, trainer.item._id, setModalText, setShowModal, setShowModalSuccess));
   };
 
   const closeModal = () => {
@@ -52,7 +49,7 @@ const Profile = () => {
 
   return (
     <>
-      {data.isLoading ? (
+      {trainer.isLoading ? (
         <div>is Loading</div>
       ) : (
         <>
@@ -120,7 +117,7 @@ const Profile = () => {
           onClick={() => {
             history.goBack();
             setShowModalSuccess(false);
-            data.message = '';
+            trainer.message = '';
           }}
         />
       )}
