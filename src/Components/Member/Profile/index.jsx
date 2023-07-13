@@ -9,17 +9,18 @@ import styles from 'Components/Admin/Members/MemberForm/form.module.css';
 import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
+import { putTrainer } from 'redux/trainers/thunks';
 
 const MemberProfile = () => {
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const data = useSelector((state) => state.auth?.data);
+  const { data: trainer } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log(data);
+  console.log(trainer);
 
   const {
     register,
@@ -30,16 +31,16 @@ const MemberProfile = () => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: data?.firstName ?? '',
-      lastName: data?.lastName ?? '',
-      dni: data?.dni ?? '',
-      phone: data?.phone ?? '',
-      email: data?.email ?? '',
-      city: data?.city ?? '',
-      birthDate: data?.birthDate ?? '',
-      postalCode: data?.postalCode ?? '',
-      password: data?.password ?? '',
-      memberships: data?.memberships ?? 'Only Classes'
+      firstName: trainer?.firstName ?? '',
+      lastName: trainer?.lastName ?? '',
+      dni: trainer?.dni ?? '',
+      phone: trainer?.phone ?? '',
+      email: trainer?.email ?? '',
+      city: trainer?.city ?? '',
+      birthDate: trainer?.birthDate ?? '',
+      postalCode: trainer?.postalCode ?? '',
+      password: trainer?.password ?? '',
+      memberships: trainer?.memberships ?? 'Only Classes'
     }
   });
 
@@ -56,9 +57,17 @@ const MemberProfile = () => {
       setModalDone(!modalDone);
     }
   };
-
-  const onSubmit = () => {
-    switchModal(false, 'Member updated correctly!');
+  const onSubmit = async (data) => {
+    try {
+      if (data.password === '') {
+        const { password, _id, __v, ...resData } = data;
+        dispatch(putTrainer(trainer._id, resData, switchModal));
+      } else {
+        dispatch(putTrainer(trainer._id, data, switchModal));
+      }
+    } catch (error) {
+      switchModal(true, error);
+    }
   };
 
   const onInvalid = (errors) => console.log(errors);
