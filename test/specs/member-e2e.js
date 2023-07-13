@@ -1,5 +1,5 @@
 const { date } = require('joi');
-const ProfileForm = require('../../test/pageObjects/member/profile/profileForm');
+const ProfileForm = require('../pageObjects/member/profileForm');
 const Activities = require('../pageObjects/member/activities');
 const Login = require('../pageObjects/sharedComponents/logIn');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
