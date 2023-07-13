@@ -24,6 +24,7 @@ const SuperAdminRoutes = () => {
         <Route exact path={`${url}/`} component={Home} />
         <Route exact path={`${url}/admins`} component={Admin} />
         <Route exact path={`${url}/admins/form`} component={AdminsForm} />
+        <Route exact path={`${url}/admins/form/:id`} component={AdminsForm} />
       </Switch>
     </Layout>
   );
