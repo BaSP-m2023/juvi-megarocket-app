@@ -8,6 +8,8 @@ import SubscriptionsForm from 'Components/Admin/Subscriptions/Form';
 import Subscriptions from 'Components/Admin/Subscriptions';
 import Classes from 'Components/Admin/Classes';
 import ClassesForm from 'Components/Admin/Classes/Form';
+import Activities from 'Components/Admin/Activities';
+import ActivitiesForm from 'Components/Admin/Activities/Form';
 import { Route, useRouteMatch, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from 'Components/Layout';
 
@@ -15,6 +17,10 @@ const routes = [
   {
     name: 'Admin',
     path: '/admin'
+  },
+  {
+    name: 'Activities',
+    path: '/admin/activities'
   },
   {
     name: 'Profile',
@@ -57,6 +63,9 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/classes`} component={Classes} />
         <Route exact path={`${url}/classes/form`} component={ClassesForm} />
         <Route exact path={`${url}/classes/form/:id`} component={ClassesForm} />
+        <Route exact path={`${url}/activities`} component={Activities} />
+        <Route exact path={`${url}/activities/ActivitiesForm`} component={ActivitiesForm} />
+        <Route exact path={`${url}/activities/ActivitiesForm/:id`} component={ActivitiesForm} />
       </Switch>
     </Layout>
   );

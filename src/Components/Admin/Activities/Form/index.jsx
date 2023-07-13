@@ -81,7 +81,7 @@ const Form = () => {
             <Button
               className={styles.addButton}
               type="cancel"
-              onClick={() => history.push('/admins/activities')}
+              onClick={() => history.push('/admin/activities')}
               testId="cancel-button"
             ></Button>
           </form>
@@ -99,7 +99,7 @@ const Form = () => {
         <ModalAlert
           text={modalText}
           onClick={() => {
-            history.push('/admins/activities');
+            history.push('/admin/activities');
             setShowModalSuccess(false);
           }}
         />
