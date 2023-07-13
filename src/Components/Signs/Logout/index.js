@@ -15,7 +15,11 @@ function Logout() {
   return (
     <div className={styles.btnLogOutContainer} onClick={logoutClick}>
       <button className={styles.btnLogOut} data-testid="logout-button">
-        LogOut
+        <span className={styles.buttonText}>Logout</span>
+        <img
+          className={styles.logoutIcon}
+          src={`${process.env.PUBLIC_URL}/assets/images/logout.png`}
+        />
       </button>
     </div>
   );

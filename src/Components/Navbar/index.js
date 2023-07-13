@@ -6,16 +6,39 @@ import { useState } from 'react';
 
 const Navbar = ({ routes }) => {
   const [navVisible, setNavVisible] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const toggleNav = () => {
     setNavVisible(!navVisible);
+    setExpanded(!expanded);
   };
   const closeNav = () => {
     setNavVisible(false);
   };
 
+  const getNavStyle = () => {
+    const routeCount = routes.length;
+    if (routeCount <= 2) {
+      return styles.superAdminNav;
+    } else if (routeCount === 3) {
+      return styles.authNav;
+    } else if (routeCount === 5) {
+      return styles.memberNav;
+    } else if (routeCount === 6) {
+      return styles.adminNav;
+    }
+  };
+
   return (
-    <nav className={`${styles.navbar} ${navVisible ? styles.navShadow : ''}`}>
-      <div className={styles.navContainer}>
+    <nav
+      className={`${styles.navbar} ${navVisible ? styles.navShadow : ''}: ${
+        expanded ? styles.expandedNavbar : ''
+      } `}
+    >
+      <div
+        className={`${styles.navContainer} ${getNavStyle()} : ${
+          expanded ? styles.expandedNavbar : ''
+        }`}
+      >
         <ul
           className={`${styles.routes} ${navVisible ? styles.showNav : styles.hideNav}`}
           data-testid="navbar"
@@ -30,10 +53,10 @@ const Navbar = ({ routes }) => {
         </ul>
         <FontAwesomeIcon
           icon={faArrowRight}
-          className={`${styles.showNav} ${styles.arrowIcon} ${
-            navVisible ? styles.arrowIconActive : ''
-          }`}
-          onClick={toggleNav}
+          className={`${styles.arrowIcon} ${expanded ? styles.arrowIconActive : ''}`}
+          onClick={() => {
+            toggleNav();
+          }}
         />
       </div>
     </nav>
