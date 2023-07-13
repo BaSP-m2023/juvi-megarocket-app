@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import { Button, Input, ModalAlert } from 'Components/Shared';
-import { putTrainer, getTrainersByEmail } from 'redux/trainers/thunks';
+import { getTrainersByEmail } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -15,7 +15,7 @@ const Profile = () => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
-  const [modalText, setModalText] = useState('');
+  const [modalText] = useState('');
   const {
     register,
     handleSubmit,
@@ -40,7 +40,7 @@ const Profile = () => {
     dispatch(getTrainersByEmail(email));
   }, [email]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     console.log('gola');
     console.log(data);
     //dispatch(putTrainer(data, setModalText, setShowModal, setShowModalSuccess));
@@ -57,43 +57,34 @@ const Profile = () => {
       ) : (
         <>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.divContainer} data-testId="admin-trainers-add-form">
-              <Input
-                register={register}
-                labelText="First Name"
-                name="firstName"
-                type="text"
-                error={errors.firstName?.message}
-              />
-              <Input
-                register={register}
-                labelText="Last Name"
-                name="lastName"
-                type="text"
-                error={errors.lastName?.message}
-              />
-              <Input
-                register={register}
-                labelText={`City`}
-                type={'text'}
-                name={`city`}
-                error={errors.city?.message}
-              ></Input>
-              <Input
-                register={register}
-                labelText={`Dni`}
-                type={'text'}
-                name={`dni`}
-                error={errors.dni?.message}
-              ></Input>
-              <Input
-                register={register}
-                labelText={`Password`}
-                type={'password'}
-                name={`password`}
-                error={errors.password?.message}
-              ></Input>
-            </div>
+            <Input
+              register={register}
+              labelText="First Name"
+              name="firstName"
+              type="text"
+              error={errors.firstName?.message}
+            />
+            <Input
+              register={register}
+              labelText="Last Name"
+              name="lastName"
+              type="text"
+              error={errors.lastName?.message}
+            />
+            <Input
+              register={register}
+              labelText={`City`}
+              type={'text'}
+              name={`city`}
+              error={errors.city?.message}
+            ></Input>
+            <Input
+              register={register}
+              labelText={`Dni`}
+              type={'text'}
+              name={`dni`}
+              error={errors.dni?.message}
+            ></Input>
             <Input
               register={register}
               labelText={`Phone`}
@@ -108,7 +99,7 @@ const Profile = () => {
               name={`salary`}
               error={errors.salary?.message}
             ></Input>
-            <Button className={styles.addButton} type="confirm" testId="confirm-button"></Button>
+            <Button className={styles.addButton} type="submit" testId="confirm-button"></Button>
             <Button
               className={styles.addButton}
               type="cancel"
