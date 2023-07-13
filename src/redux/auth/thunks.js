@@ -19,6 +19,7 @@ export const logout = () => {
       await firebaseApp.auth().signOut();
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('role');
+      sessionStorage.removeItem('email');
       dispatch(logoutSuccess());
       return { error: false, message: 'Log Out Successfully' };
     } catch (error) {
@@ -58,6 +59,7 @@ export const login = (credentials) => {
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
+      sessionStorage.setItem('email', credentials.email);
       return dispatch(loginSuccess({ role, token }));
     } catch (error) {
       return dispatch(loginError(error.toString()));

@@ -5,6 +5,9 @@ import {
   getTrainerByIdPending,
   getTrainerByIdSuccess,
   getTrainerByIdError,
+  getTrainerByEmailPending,
+  getTrainerByEmailSuccess,
+  getTrainerByEmailError,
   delTrainerPending,
   delTrainerSuccess,
   delTrainerError,
@@ -133,6 +136,28 @@ export const putTrainer = (data, id, setModalText, setShowModal, setShowModalSuc
       setShowModal(true);
       setModalText(error);
       dispatch(putTrainerError(error.message));
+    }
+  };
+};
+export const getTrainersByEmail = (email) => {
+  return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
+    try {
+      dispatch(getTrainerByEmailPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/email/${email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
+      });
+      const responseJson = await response.json();
+      if (responseJson.error) {
+        throw new Error(responseJson.message);
+      }
+      dispatch(getTrainerByEmailSuccess(responseJson.data));
+    } catch (error) {
+      dispatch(getTrainerByEmailError(error));
     }
   };
 };

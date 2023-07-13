@@ -26,9 +26,7 @@ function Routes() {
     };
     setUpTokenListener();
   }, []);
-  console.log(role);
   useEffect(() => {
-    console.log(role);
     if (token) {
       dispatch(getAuth(token));
     }
@@ -45,6 +43,7 @@ function Routes() {
         {role === 'ADMIN' && <Redirect to="/admin" />}
         {role === 'MEMBER' && <Redirect to="/member" />}
         {role === 'SUPERADMIN' && <Redirect to="/super-admin" />}
+        {role === 'TRAINER' && <Redirect to="/trainer" />}
       </Switch>
     </Suspense>
   );

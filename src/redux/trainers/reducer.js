@@ -5,6 +5,9 @@ import {
   GET_BY_ID_TRAINERS_SUCCESS,
   GET_BY_ID_TRAINERS_PENDING,
   GET_BY_ID_TRAINERS_ERROR,
+  GET_BY_EMAIL_TRAINERS_SUCCESS,
+  GET_BY_EMAIL_TRAINERS_PENDING,
+  GET_BY_EMAIL_TRAINERS_ERROR,
   ADD_TRAINERS_SUCCESS,
   ADD_TRAINERS_PENDING,
   ADD_TRAINERS_ERROR,
@@ -57,6 +60,24 @@ const trainersReducer = (state = initialState, action) => {
         isLoading: true
       };
     case GET_BY_ID_TRAINERS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
+    case GET_BY_EMAIL_TRAINERS_SUCCESS:
+      return {
+        ...state,
+        item: action.payload,
+        isLoading: false
+      };
+    case GET_BY_EMAIL_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_BY_EMAIL_TRAINERS_ERROR:
       return {
         ...state,
         error: action.payload,
