@@ -17,6 +17,10 @@ class ModalConfirm {
   async cancelClick() {
     await this.cancelModalBtn.click();
   }
+
+  async confirmMessage() {
+    return await this.confirmationText.getText();
+  }
 }
 
 module.exports = new ModalConfirm();
