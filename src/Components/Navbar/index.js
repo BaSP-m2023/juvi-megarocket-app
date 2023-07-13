@@ -29,9 +29,13 @@ const Navbar = ({ routes }) => {
   };
 
   return (
-    <nav className={`${styles.navbar} ${navVisible ? styles.navShadow : ''} `}>
+    <nav
+      className={`${styles.navbar} ${navVisible ? styles.navShadow : ''}: ${
+        expanded ? styles.expandedNavbar : ''
+      } `}
+    >
       <div
-        className={`${styles.navContainer} ${getNavStyle()} ${
+        className={`${styles.navContainer} ${getNavStyle()} : ${
           expanded ? styles.expandedNavbar : ''
         }`}
       >
