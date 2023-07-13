@@ -125,7 +125,7 @@
   .navContainer {
     display: flex;
     flex-direction: column;
-    width: 50px;
+    width: 70px;
     height: auto;
     max-height: 100%;
   }
