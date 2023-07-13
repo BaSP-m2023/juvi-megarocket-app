@@ -1,65 +1,53 @@
 /* eslint-disable no-undef */
 class Button {
   get addButton() {
-    return $('[data-testid="admin-trainers-add-button"]');
+    return $('[data-testid="add-button"]');
   }
-  get confirmEditButton() {
-    return $('[data-testid="admin-trainers-confirm-button"]');
-  }
-
-  get confirmModalSuccesButton() {
-    return $('[data-testid="admin-trainers-modal-alert"] button');
+  get confirmButton() {
+    return $('[data-testid="confirm-button"]');
   }
 
   get confirmDeleteButton() {
-    return $('[data-testid="modal-confirm"] button');
+    return $('[data-testid="confirm-button"]');
   }
 
-  get newconfirmDeleteButton() {
-    return $('[data-testid="admin-trainers-modal-alert"] button');
+  get submitButton(){
+    return $('[data-testid="submit-button"]');
   }
 
-  get submitMemberButton(){
-    return $('[data-testid="member-signup-submit-button"]');
-  }
-
-  get cancelMemberButton(){
-    return $('[data-testid="member-signup-cancel-button"]');
+  get cancelButton(){
+    return $('[data-testid="cancel-button"]');
   }
 
   get profileMemberNavbar(){
-    return $('[data-testid=landing-navbar] li:nth-child(3) a');
+    return $('[data-testid="navbar"] li:nth-child(3) a');
   }
 
-  get submitEditMember(){
-    return $('[data-testid=member-profile-submit-button]');
+  get logOutButton(){
+    return $('[data-testid="logout-button"]')
+  }
+
+  get signInButton(){
+    return $('[data-testid="signin-form"] button');
   }
 
   async addButtonClick() {
     await this.addButton.click();
   }
 
-  async confirmEditButtonClick() {
-    await this.confirmEditButton.click();
-  }
-
-  async confirmModalSuccesButtonClick() {
-    await this.confirmModalSuccesButton.click();
+  async confirmButtonClick() {
+    await this.confirmButton.click();
   }
 
   async confirmDeleteButtonClick() {
     await this.confirmDeleteButton.click();
   }
 
-  async newconfirmDeleteButtonClick() {
-    await this.newconfirmDeleteButton.click();
+  async submitButtonClick() {
+    await this.submitButton.click();
   }
 
-  async submitMemberButtonClick() {
-    await this.submitMemberButton.click();
-  }
-
-  async cancelMemberButtonClick(){
+  async cancelButtonClick(){
     await this.cancelMemberButton.click();
   }
 
@@ -67,8 +55,12 @@ class Button {
     await this.profileMemberNavbar.click();
   }
 
-  async submitEditMemberClick(){
-    await this.submitEditMember.click();
+  async logOutButtonClick(){
+    await this.logOutButton.click();
+  }
+
+  async signInButtonClick(){
+    await this.signInButton.click();
   }
 }
 

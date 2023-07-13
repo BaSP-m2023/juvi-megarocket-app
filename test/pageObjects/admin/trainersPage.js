@@ -56,13 +56,14 @@ class TrainersPage{
     return $('#root > div > div > div > form > div:nth-child(2) > div:nth-child(4) > input');
   }
 
-  get confirmButton (){
-    return $('[data-testid="admin-trainers-confirm-button"]');
+  get navbar(){
+    return $('[data-testid="navbar"]');
   }
 
-  get navbarAdmin(){
-    return $('[data-testid="landing-navbar"]');
+  get trainersNavbar(){
+    return $('[data-testid="navbar"] li:nth-child(3) a');
   }
+
   get signInNavbar(){
     return $('[data-testid="landing-navbar"] li:nth-child(1) a');
   }
@@ -117,6 +118,10 @@ class TrainersPage{
 
   async confirmButtonClick(){
     await this.confirmButton.click();
+  }
+
+  async trainersNavbarClick(){
+    await this.trainersNavbar.click();
   }
 
   async addTrainerForm (firstname, lastname, city, dni, email, phone, salary, password) {
