@@ -1,8 +1,8 @@
-const members = require('../pageObjects/admin/members');
-const modalConfirm = require('../pageObjects/sharedComponents/modalConfirm');
-const buttons = require('../pageObjects/sharedComponents/button');
-const modalAlert = require('../pageObjects/sharedComponents/modalAlert');
-const login = require('../pageObjects/logIn');
+const Members = require('../pageObjects/admin/members');
+const ModalConfirm = require('../pageObjects/sharedComponents/modalConfirm');
+const Buttons = require('../pageObjects/sharedComponents/button');
+const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
+const Login = require('../pageObjects/sharedComponents/logIn');
 
 describe('Members edit and delete flow', function () {
     beforeAll('Open browser', async function () {
@@ -11,74 +11,74 @@ describe('Members edit and delete flow', function () {
     })
 
   it('Log in with invalid credentials', async () => {
-    await login.signInBtn.waitForDisplayed();
-    await login.signInBtnClick();
+    await Login.signInBtn.waitForDisplayed();
+    await Login.signInBtnClick();
 
     await expect(browser).toHaveUrlContaining("sign-in");
 
-    await login.emailInput.waitForDisplayed();
-    await login.passwordInput.waitForDisplayed();
-    await login.emailInput.setValue('any@thing.com');
-    await login.passwordInput.setValue('wrongPassword');
-    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
-    await login.showHidePasswordBtnClick();
-    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
-    await login.showHidePasswordBtnClick();
+    await Login.emailInput.waitForDisplayed();
+    await Login.passwordInput.waitForDisplayed();
+    await Login.emailInput.setValue('any@thing.com');
+    await Login.passwordInput.setValue('wrongPassword');
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('password');
+    await Login.showHidePasswordBtnClick();
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('text');
+    await Login.showHidePasswordBtnClick();
 
-    await login.submitBtnClick();
+    await Login.submitBtnClick();
 
-    expect(await modalAlert.modalAlertMessage()).toContain('Error');
-    await modalAlert.confirmAlertClick();
+    expect(await ModalAlert.modalAlertMessage()).toContain('Error');
+    await ModalAlert.confirmAlertClick();
 
   })
 
   it('Log in with admin user', async () => {
-    await login.signInBtn.waitForDisplayed();
-    await login.signInBtnClick();
+    await Login.signInBtn.waitForDisplayed();
+    await Login.signInBtnClick();
 
     await expect(browser).toHaveUrlContaining("sign-in");
 
-    await login.emailInput.waitForDisplayed();
-    await login.passwordInput.waitForDisplayed();
-    await login.fillFormLogInAdmin();
-    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
-    await login.showHidePasswordBtnClick();
-    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+    await Login.emailInput.waitForDisplayed();
+    await Login.passwordInput.waitForDisplayed();
+    await Login.fillFormLogInAdmin();
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('password');
+    await Login.showHidePasswordBtnClick();
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('text');
 
-    await login.submitBtnClick();
+    await Login.submitBtnClick();
 
-    expect(await modalAlert.modalAlertMessage()).toContain('success');
-    await modalAlert.confirmAlertClick();
+    expect(await ModalAlert.modalAlertMessage()).toContain('success');
+    await ModalAlert.confirmAlertClick();
 
     await expect(browser).toHaveUrlContaining("admin");
   })
 
   it('Navigate to the members section', async () => {
-    await members.membersBtn.waitForDisplayed();
-    await members.membersBtnClick();
+    await Members.membersBtn.waitForDisplayed();
+    await Members.membersBtnClick();
 
     await expect(browser).toHaveUrlContaining("admin/members");
   })
 
-  it('Verify the title is Members and table is displayed.', async function () {
-    await members.membersTitle.waitForDisplayed();
-    const textTitle = await members.membersTitleText();
+  it('Verify the title is members and table is displayed.', async function () {
+    await Members.membersTitle.waitForDisplayed();
+    const textTitle = await Members.membersTitleText();
     expect(await textTitle).toEqual('Members');
 
-    await members.membersTable.waitForDisplayed();
+    await Members.membersTable.waitForDisplayed();
   });
 
   it('Click in the first member\'s edit button, should open the form, then press cancel and go back to table.',
   async function () {
 
-    await members.firstMemberEditBtn.waitForDisplayed();
-    await members.firstMemberEditBtnClick();
+    await Members.firstMemberEditBtn.waitForDisplayed();
+    await Members.firstMemberEditBtnClick();
     await expect(browser).toHaveUrlContaining("form");
 
-    await buttons.cancelBtn.scrollIntoView();
-    await buttons.cancelBtn.waitForDisplayed();
-    await buttons.cancelBtnClick();
-    await members.membersTable.waitForDisplayed();
+    await Buttons.cancelBtn.scrollIntoView();
+    await Buttons.cancelBtn.waitForDisplayed();
+    await Buttons.cancelBtnClick();
+    await Members.membersTable.waitForDisplayed();
 
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/members');
   });
@@ -86,75 +86,75 @@ describe('Members edit and delete flow', function () {
   it('Click again to edit first member, change all the inputs values and click reset to test the data is restored.',
   async function () {
 
-    await members.firstMemberEditBtn.waitForDisplayed();
-    await members.firstMemberEditBtnClick();
+    await Members.firstMemberEditBtn.waitForDisplayed();
+    await Members.firstMemberEditBtnClick();
     await expect(browser).toHaveUrlContaining("form");
 
-    const memberPreviousName = members.nameInputEditMembers.getAttribute('value');
+    const memberPreviousName = Members.nameInputEditMembers.getAttribute('value');
 
-    await members.updateFillForm();
-    expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('password');
-    await members.showHidePasswordBtnClick();
-    expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('text');
+    await Members.updateFillForm();
+    expect(await Members.passwordInputEditMembers.getAttribute('type')).toEqual('password');
+    await Members.showHidePasswordBtnClick();
+    expect(await Members.passwordInputEditMembers.getAttribute('type')).toEqual('text');
 
-    await buttons.resetBtn.waitForDisplayed();
-    await buttons.resetBtn.scrollIntoView();
-    await buttons.resetBtnClick();
+    await Buttons.resetBtn.waitForDisplayed();
+    await Buttons.resetBtn.scrollIntoView();
+    await Buttons.resetBtnClick();
 
-    const memberResetName = members.nameInputEditMembers.getAttribute('value');
+    const memberResetName = Members.nameInputEditMembers.getAttribute('value');
 
     expect(await memberPreviousName).toEqual(await memberResetName);
 
-    await members.showHidePasswordBtnClick();
+    await Members.showHidePasswordBtnClick();
 
   })
 
   it('Change all the inputs and submit the update.', async function () {
-    await members.updateFillForm();
-    expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('password');
-    await members.showHidePasswordBtnClick();
-    expect(await members.passwordInputEditMembers.getAttribute('type')).toEqual('text');
-    await buttons.submitBtn.waitForDisplayed();
-    await buttons.submitBtnClick();
+    await Members.updateFillForm();
+    expect(await Members.passwordInputEditMembers.getAttribute('type')).toEqual('password');
+    await Members.showHidePasswordBtnClick();
+    expect(await Members.passwordInputEditMembers.getAttribute('type')).toEqual('text');
+    await Buttons.submitBtn.waitForDisplayed();
+    await Buttons.submitBtnClick();
 
-    await modalAlert.modalAlertText.waitForDisplayed();
-    expect(await modalAlert.modalAlertMessage()).toContain('updated');
+    await ModalAlert.modalAlertText.waitForDisplayed();
+    expect(await ModalAlert.modalAlertMessage()).toContain('updated');
 
-    await modalAlert.modalAlertButton.waitForDisplayed();
-    await modalAlert.confirmAlertClick();
+    await ModalAlert.modalAlertButton.waitForDisplayed();
+    await ModalAlert.confirmAlertClick();
 
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/members');
 
-    expect(await members.firstMemberNameText()).toEqual('Automation');
+    expect(await Members.firstMemberNameText()).toEqual('Automation');
 
   })
 
   it('Click to delete the first member, the modal must open, cancel the delete with the button.', async function () {
-    await members.firstMemberDeleteBtn.waitForDisplayed();
-    await members.firstMemberDeleteBtnClick();
+    await Members.firstMemberDeleteBtn.waitForDisplayed();
+    await Members.firstMemberDeleteBtnClick();
 
-    await members.modalConfirmDelete.waitForDisplayed();
-    expect(await modalConfirm.confirmMessage()).toMatch(/sure.*delete/i);
-    await modalConfirm.cancelModalBtn.waitForDisplayed();
-    await modalConfirm.cancelClick();
+    await Members.modalConfirmDelete.waitForDisplayed();
+    expect(await ModalConfirm.confirmMessage()).toMatch(/sure.*delete/i);
+    await ModalConfirm.cancelModalBtn.waitForDisplayed();
+    await ModalConfirm.cancelClick();
 
-    await expect(members.membersTable).toBeDisplayed();
+    await expect(Members.membersTable).toBeDisplayed();
   })
 
   it('Click to delete the first members, the modal must open and click to confirm the delete.', async function () {
-    await members.firstMemberDeleteBtn.waitForDisplayed();
-    await members.firstMemberDeleteBtnClick();
+    await Members.firstMemberDeleteBtn.waitForDisplayed();
+    await Members.firstMemberDeleteBtnClick();
 
-    await members.modalConfirmDelete.waitForDisplayed();
-    expect(await modalConfirm.confirmMessage()).toMatch(/sure.*delete/i);
-    await modalConfirm.confirmModalBtn.waitForDisplayed();
-    await modalConfirm.confirmClick();
+    await Members.modalConfirmDelete.waitForDisplayed();
+    expect(await ModalConfirm.confirmMessage()).toMatch(/sure.*delete/i);
+    await ModalConfirm.confirmModalBtn.waitForDisplayed();
+    await ModalConfirm.confirmClick();
 
-    await modalAlert.modalAlertText.waitForDisplayed();
-    expect(await modalAlert.modalAlertMessage()).toMatch(/deleted.*successfully/i);
+    await ModalAlert.modalAlertText.waitForDisplayed();
+    expect(await ModalAlert.modalAlertMessage()).toMatch(/deleted.*successfully/i);
 
-    await modalAlert.modalAlertButton.waitForDisplayed();
-    await modalAlert.confirmAlertClick();
+    await ModalAlert.modalAlertButton.waitForDisplayed();
+    await ModalAlert.confirmAlertClick();
 
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/members');
 

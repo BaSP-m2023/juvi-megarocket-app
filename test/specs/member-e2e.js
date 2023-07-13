@@ -1,6 +1,6 @@
-const activities = require('../pageObjects/member/activities');
-const login = require('../pageObjects/logIn');
-const modalAlert = require('../pageObjects/sharedComponents/modalAlert');
+const Activities = require('../pageObjects/member/activities');
+const Login = require('../pageObjects/sharedComponents/logIn');
+const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
 
 describe('display of activities', function () {
   beforeAll('Open browser for test activities display', async function () {
@@ -9,70 +9,70 @@ describe('display of activities', function () {
   });
 
   it('Log in with invalid credentials', async () => {
-    await login.signInBtn.waitForDisplayed();
-    await login.signInBtnClick();
+    await Login.signInBtn.waitForDisplayed();
+    await Login.signInBtnClick();
 
     await expect(browser).toHaveUrlContaining("sign-in");
 
-    await login.emailInput.waitForDisplayed();
-    await login.passwordInput.waitForDisplayed();
-    await login.emailInput.setValue('any@thing.com');
-    await login.passwordInput.setValue('wrongPassword');
-    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
-    await login.showHidePasswordBtnClick();
-    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
-    await login.showHidePasswordBtnClick();
+    await Login.emailInput.waitForDisplayed();
+    await Login.passwordInput.waitForDisplayed();
+    await Login.emailInput.setValue('any@thing.com');
+    await Login.passwordInput.setValue('wrongPassword');
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('password');
+    await Login.showHidePasswordBtnClick();
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('text');
+    await Login.showHidePasswordBtnClick();
 
-    await login.submitBtnClick();
+    await Login.submitBtnClick();
 
-    expect(await modalAlert.modalAlertMessage()).toContain('Error');
-    await modalAlert.confirmAlertClick();
+    expect(await ModalAlert.modalAlertMessage()).toContain('Error');
+    await ModalAlert.confirmAlertClick();
 
   })
 
   it('Log in with member user', async () => {
-    await login.emailInput.waitForDisplayed();
-    await login.passwordInput.waitForDisplayed();
-    await login.fillFormLogInMember();
-    expect(await login.passwordInput.getAttribute('type')).toEqual('password');
-    await login.showHidePasswordBtnClick();
-    expect(await login.passwordInput.getAttribute('type')).toEqual('text');
+    await Login.emailInput.waitForDisplayed();
+    await Login.passwordInput.waitForDisplayed();
+    await Login.fillFormLogInMember();
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('password');
+    await Login.showHidePasswordBtnClick();
+    expect(await Login.passwordInput.getAttribute('type')).toEqual('text');
 
-    await login.submitBtnClick();
+    await Login.submitBtnClick();
 
-    expect(await modalAlert.modalAlertMessage()).toContain('success');
-    await modalAlert.confirmAlertClick();
+    expect(await ModalAlert.modalAlertMessage()).toContain('success');
+    await ModalAlert.confirmAlertClick();
 
   })
 
   it('Navigate to activities page', async function () {
 
-    await activities.activitiesBtn.waitForDisplayed();
-    await activities.activitiesBtnClick();
+    await Activities.activitiesBtn.waitForDisplayed();
+    await Activities.activitiesBtnClick();
 
     await expect(browser).toHaveUrlContaining("activities");
-    await activities.activitiesTitle.waitForDisplayed();
-    const textTitle = await activities.activitiesTitleText();
+    await Activities.activitiesTitle.waitForDisplayed();
+    const textTitle = await Activities.activitiesTitleText();
     expect(textTitle).toEqual('Activities');
   });
 
   it('Verify the first two cards containers are displayed and have 3 cards each one.', async function () {
-    await activities.firstCardContainer.waitForDisplayed();
-    await activities.firstCardFirstCardContainer.waitForDisplayed();
-    await activities.secondCardFirstCardContainer.waitForDisplayed();
-    await activities.thirdCardFirstCardContainer.waitForDisplayed();
+    await Activities.firstCardContainer.waitForDisplayed();
+    await Activities.firstCardFirstCardContainer.waitForDisplayed();
+    await Activities.secondCardFirstCardContainer.waitForDisplayed();
+    await Activities.thirdCardFirstCardContainer.waitForDisplayed();
 
-    await activities.secondCardContainer.waitForDisplayed();
-    await activities.firstCardSecondCardContainer.waitForDisplayed();
-    await activities.secondCardSecondCardContainer.waitForDisplayed();
-    await activities.thirdCardSecondCardContainer.waitForDisplayed();
+    await Activities.secondCardContainer.waitForDisplayed();
+    await Activities.firstCardSecondCardContainer.waitForDisplayed();
+    await Activities.secondCardSecondCardContainer.waitForDisplayed();
+    await Activities.thirdCardSecondCardContainer.waitForDisplayed();
   });
 
   it('Verify if the third card container exist, if exist verify to have at least 1 card and max 3 cards.', async function () {
-    const isThirdCardContainerExisting = await activities.thirdCardContainer.isExisting();
+    const isThirdCardContainerExisting = await Activities.thirdCardContainer.isExisting();
 
     if (isThirdCardContainerExisting) {
-      const cardsThirdCardContainer = await activities.thirdCardContainer.$$('div');
+      const cardsThirdCardContainer = await Activities.thirdCardContainer.$$('div');
       const cardsCountThirdCardContainer = cardsThirdCardContainer.length;
 
       expect(cardsCountThirdCardContainer).toBeGreaterThanOrEqual(1);
