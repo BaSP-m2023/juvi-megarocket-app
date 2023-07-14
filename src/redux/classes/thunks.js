@@ -129,9 +129,16 @@ export const putClass = (
 
 export const getByIdClasses = (id) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getByIdClassPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
+      });
       const responseJson = await response.json();
       const data = responseJson.data;
       if (responseJson.error) {

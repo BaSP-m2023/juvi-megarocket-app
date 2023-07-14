@@ -38,7 +38,11 @@ function Admins() {
           <h3>Is loading..</h3>
         </div>
       ) : (
-        <SharedTable data={data.list} handleDelete={onDelete} editLink="/admins/form/" />
+        <SharedTable
+          data={data.list}
+          handleDelete={onDelete}
+          editLink="/super-admin/admins/form/"
+        />
       )}
       {isModalOpen && <ModalAlert text={modalText} onClick={closeModal} />}
     </section>

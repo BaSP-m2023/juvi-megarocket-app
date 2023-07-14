@@ -11,7 +11,7 @@ class Buttons {
   get submitBtn() {
     return $('[data-testid="submit-button"]')
   }
-  get addActivityBtn() {
+  get addBtn() {
     return $('[data-testid="add-button"]');
   }
   get logoutButton() {
@@ -37,3 +37,4 @@ class Buttons {
   }
 }
 
+module.exports = new Buttons();

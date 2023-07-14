@@ -207,12 +207,23 @@ const MemberSingUp = () => {
             <Button type={'submit'} resource={'Member'} testId="submit-button" />
             <Button type={'cancel'} onClick={() => history.push('/')} testId="cancel-button" />
           </div>
-          {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-          {modalDone && <ModalAlert text={msg} onClick={() => history.push('/')} />}
+          {modal && (
+            <ModalAlert
+              text={msg}
+              onClick={() => setModal(!modal)}
+              testId="member-signup-modal-alert"
+            />
+          )}
+          {modalDone && (
+            <ModalAlert
+              text={msg}
+              onClick={() => history.push('/auth/sign-in')}
+              testId="member-signup-modal-alert"
+            />
+          )}
         </form>
       </div>
     </div>
   );
 };
-
 export default MemberSingUp;

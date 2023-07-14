@@ -8,7 +8,7 @@ const SharedTable = ({ data, handleDelete, editLink, testId }) => {
     return <div>No data available</div>;
   }
 
-  const excludedProperties = ['_id', 'isActive', '__v'];
+  const excludedProperties = ['_id', 'isActive', '__v', 'firebaseUid'];
   const propertyNames = Object.keys(data[0]).filter(
     (propertyName) => !excludedProperties.includes(propertyName)
   );

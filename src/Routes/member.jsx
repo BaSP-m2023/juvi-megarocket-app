@@ -10,7 +10,7 @@ import Layout from 'Components/Layout';
 
 const routes = [
   {
-    name: 'Home',
+    name: 'Member',
     path: '/member'
   },
   {
