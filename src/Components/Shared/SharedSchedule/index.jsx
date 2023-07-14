@@ -6,7 +6,7 @@ import { getClasses } from 'redux/classes/thunks';
 import { ModalAlert } from 'Components/Shared';
 import styles from 'Components/Shared/SharedSchedule/shared-schedule.module.css';
 
-const SharedSchedule = () => {
+const SharedSchedule = ({ user }) => {
   const [showAlert, setShowAlert] = React.useState(false);
   const [subs, setSubs] = React.useState([]);
   const subsData = useSelector((state) => state.subscriptions);
@@ -46,8 +46,12 @@ const SharedSchedule = () => {
   }, []);
 
   useEffect(() => {
-    setSubs(memberSearch('testing@member.com', subsData.list));
-  }, []);
+    if (sessionStorage.role === 'MEMBER') {
+      setSubs(memberSearch(user?.email ?? '', subsData.list));
+    } else if (sessionStorage.role === 'TRAINER') {
+      setSubs(trainerSearch(user, subsData.list));
+    }
+  }, [sessionStorage.role]);
 
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
@@ -70,16 +74,34 @@ const SharedSchedule = () => {
     return resp;
   };
 
-  const memberSearch = (email, subs) => {
-    const selectedSubs = [];
-    subs.forEach((sub) => {
-      sub.members.forEach((memb) => {
-        if (memb.email === email) {
+  const trainerSearch = (user, subs) => {
+    try {
+      const selectedSubs = [];
+      subs.forEach((sub) => {
+        if (sub.trainer._id === user._id) {
           selectedSubs.push(sub);
         }
       });
-    });
-    return selectedSubs;
+      return selectedSubs;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const memberSearch = (email, subs) => {
+    try {
+      const selectedSubs = [];
+      subs.forEach((sub) => {
+        sub.members.forEach((memb) => {
+          if (memb.email === email) {
+            selectedSubs.push(sub);
+          }
+        });
+      });
+      return selectedSubs;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
