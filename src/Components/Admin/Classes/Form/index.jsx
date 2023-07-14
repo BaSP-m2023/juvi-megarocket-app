@@ -39,6 +39,21 @@ const FormClasses = () => {
   const [isTrue, setIsTrue] = useState(false);
   const trainers = useSelector((state) => state.trainers);
   const activities = useSelector((state) => state.activities);
+  const availableHours = [
+    '07:00',
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00'
+  ];
 
   useEffect(() => {
     dispatch(getTrainers());
@@ -137,13 +152,17 @@ const FormClasses = () => {
                 />
               </div>
               <div className={styles.inputClass}>
-                <Input
-                  register={register}
-                  labelText="Hour"
-                  type="text"
-                  name="hour"
-                  error={errors.hour?.message}
-                />
+                <label className={styles.labelClasses} htmlFor="hour">
+                  Hour
+                </label>
+                <select className={styles.selectClasses} name="hour" {...register('hour')}>
+                  <option value="">Choose an Hour</option>
+                  {availableHours.map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className={styles.inputClass}>
                 <Input
