@@ -5,7 +5,7 @@ class ModalAlert {
   get modalAlertButton(){
     return $('[data-testid="modal-alert"] button')
   }
-  async modalAlertButtonClick(){
+  async confirmAlertClick(){
     await this.modalAlertButton.click();
   }
   async modalAlertMessage() {

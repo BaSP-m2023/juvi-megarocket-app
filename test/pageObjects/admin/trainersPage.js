@@ -5,7 +5,7 @@ class TrainersPage{
   }
 
   get facebookButton(){
-    return $('[data-testid ="header-testid"] div a')
+    return $('[data-testid ="header-testid"] div a');
   }
 
   get twitterButton(){
@@ -76,10 +76,6 @@ class TrainersPage{
     return $('#root > div > div > div > div > div > form > div:nth-child(1) > fieldset:nth-child(2) > div > div > input');
   }
 
-  get submitButtonAdmin(){
-    return $('#root > div > div > div > div > div > form > div:nth-child(2) > button');
-  }
-
   get ListOfTrainers() {
     return $('[data-testid="admin-trainers-table"]');
   }
@@ -100,10 +96,6 @@ class TrainersPage{
     await this.deleteButton.click();
   }
 
-  async submitButtonAdminClick(){
-    await this.ubmitButtonAdmin.click();
-  }
-
   async facebookButtonClick (){
     await this.facebookButton.click();
   }
@@ -114,10 +106,6 @@ class TrainersPage{
 
   async instagramButtonClick (){
     await this.facebookButton.click();
-  }
-
-  async confirmButtonClick(){
-    await this.confirmButton.click();
   }
 
   async trainersNavbarClick(){
@@ -139,11 +127,6 @@ class TrainersPage{
     await this.cityInput.setValue(city);
     await this.salaryInput.setValue(salary);
     await this.passwordInput.setValue(password);
-  }
-
-  async signInAdmin(emailadmin, passwordadmin){
-    await this.inputEmailAdmin.setValue(emailadmin);
-    await this.inputPasswordAdmin.setValue(passwordadmin);
   }
 
 }

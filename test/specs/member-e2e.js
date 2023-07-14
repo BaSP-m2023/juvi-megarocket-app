@@ -4,7 +4,8 @@ const Buttons = require ("../../test/pageObjects/sharedComponents/button.js");
 const ModalAlert = require ("../../test/pageObjects/sharedComponents/modalAlert.js");
 const ModalConfirm = require ("../../test/pageObjects/sharedComponents/modalConfirm.js");
 const LogIn = require("../../test/pageObjects/sharedComponents/login.js");
-const modalAlert = require("../../test/pageObjects/sharedComponents/modalAlert.js");
+const EditProfile = require("../../test/pageObjects/member/editProfile.js");
+const Membership = require("../../test/pageObjects/member/membership.js");
 
 describe('page of sign up', () => {
   beforeAll('open browser', () => {
@@ -14,49 +15,45 @@ describe('page of sign up', () => {
   it ('complete form', async () =>{
     await SignUpMember.SingUpNavbarClick();
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-up')
-    await SignUpMember.formSignUp("Victoria", "Ramirez", "vicrami25@gmail.com", "vicrami25@gmail.com", "31665222", "3415568223",
-     "Fisherton", "19-05-1995", "2000", "vicram2514");
+    await SignUpMember.formSignUp("Armando", "Rodriguez", "rodri125@gmail.com", "rodri125@gmail.com", "31665222", "3415568223",
+     "Fisherton", "19-05-1998", "2000", "armando2514");
     await SignUpMember.optionSelectBlackClick();
     await browser.pause(2000);
     await Buttons.submitBtnClick();
     await expect(ModalAlert.modalAlertText).toBeDisplayed();
-    await ModalAlert.modalAlertButtonClick();
+    await ModalAlert.confirmAlertClick();
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-in');
   });
 
-  it('login member', async ()=>{
-    await LogIn.signInBtnClick();
-    await SignUpMember.signIn("pablomorad@hotmail.com", "Chimpance1");
+  it('Log in with member user', async () => {
+    await LogIn.emailInput.waitForDisplayed();
+    await LogIn.passwordInput.waitForDisplayed();
+    await LogIn.fillFormLogInMember();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
+    await LogIn.showHidePasswordBtnClick();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
     await LogIn.submitBtnClick();
-    await expect (ModalAlert.modalAlertText).toBeDisplayed();
-    await ModalAlert.modalAlertButtonClick();
-    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member');
-  });
-
-  it('navigate on activities', async ()=>{
-    await SignUpMember.activitiesNavbarClick();
-    await expect (SignUpMember.screenActivities).toBeDisplayed();
-    await SignUpMember.cardGapClick();
-    await expect (SignUpMember.cardText).toBeDisplayed();
+    expect(await ModalAlert.modalAlertMessage()).toContain('success');
+    await ModalAlert.confirmAlertClick();
   });
 
   it('navigate on membership', async ()=>{
-    await SignUpMember.memebershipNavbarClick();
+    await Membership.memebershipNavbarClick();
     await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/membership');
-    await expect (SignUpMember.membershipScreen).toBeDisplayed();
-    await SignUpMember.membershipCardClassicClick();
-    await expect (SignUpMember.membershipCardClassickList).toBeDisplayed();
+    await expect (Membership.membershipScreen).toBeDisplayed();
+    await Membership.membershipCardClassicClick();
+    await expect (Membership.membershipCardClassickList).toBeDisplayed();
   });
 
   it('change profile', async()=> {
     await SignUpMember.homeNavbarClick();
-    await SignUpMember.profileMemberNavbarClick();
-  // await browser.refresh();
-  // await SignUpMember.editFormMember("3546623889", "Alvear");
-  // await SignUpMember.optionSelectClassicClick();
-  // await Buttons.submitBtnClick();
-  // await expect (ModalAlert.modalAlertText).toContain('member update');
-  // await ModalAlert.modalAlertButtonClick();
+    await EditProfile.profileMemberNavbarClick();
+    await browser.refresh();
+    await EditProfile.editFormMember("3546623889", "Alvear");
+    await EditProfile.optionSelectClassicClick();
+    await Buttons.submitBtnClick();
+    await expect (ModalAlert.modalAlertText).toContain('member update');
+    await ModalAlert.modalAlertButtonClick();
     await Buttons.logoutBtnClick();
   });
 });

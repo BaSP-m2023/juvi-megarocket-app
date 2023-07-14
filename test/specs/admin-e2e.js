@@ -9,35 +9,41 @@ describe('page of trainers', () =>{
       browser.url("https://juvi-megarocket-app.vercel.app/auth");
   });
 
-  it('login admin', async() =>{
+  it('Log in with admin user', async () => {
+    await LogIn.signInBtn.waitForDisplayed();
     await LogIn.signInBtnClick();
-    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-in');
-    await TrainersPage.signInAdmin("octavitossse@gmail.com", "Marianobondar123456");
+    await expect(browser).toHaveUrlContaining("sign-in");
+    await LogIn.emailInput.waitForDisplayed();
+    await LogIn.passwordInput.waitForDisplayed();
+    await LogIn.fillFormLogInAdmin();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
+    await LogIn.showHidePasswordBtnClick();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
     await LogIn.submitBtnClick();
-    await expect (ModalAlert.modalAlertText).toBeDisplayed();
-    await ModalAlert.modalAlertButtonClick();
-    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin');
-    await TrainersPage.trainersNavbarClick();
-  });
+    expect(await ModalAlert.modalAlertMessage()).toContain('success');
+    await ModalAlert.confirmAlertClick();
+    await expect(browser).toHaveUrlContaining("admin");
+  })
 
   it('add a new trainer', async() => {
+    await TrainersPage.trainersNavbarClick();
     await expect(TrainersPage.ListOfTrainers).toBeDisplayed();
     await Buttons.addBtnClick();
-    await TrainersPage.addTrainerForm("Marcos", "Garcia", "Rosario", "34656125",
-    "marcosgarcia2@gmail.com", "3615569853","600000", "marquito2314");
+    await TrainersPage.addTrainerForm("Martina", "Pereira", "Rosario", "34656125",
+    "mpereira25@gmail.com", "3615572863","300000", "martipe8314");
     await Buttons.confirmBtnClick();
     await browser.pause(3000);
     await expect(ModalAlert.modalAlertText).toBeDisplayed();
-    await ModalAlert.modalAlertButtonClick();
+    await ModalAlert.confirmAlertClick();
   });
 
   it ('edit trainer', async() => {
     await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/trainers');
     await TrainersPage.editButtonClick();
-    await TrainersPage.editTrainerForm('Funes', '700000', 'marco123');
+    await TrainersPage.editTrainerForm('Funes', '700000', 'marperez123');
     await Buttons.confirmBtnClick();
     await expect (ModalAlert.modalAlertText).toBeDisplayed();
-    await ModalAlert.modalAlertButtonClick();
+    await ModalAlert.confirmAlertClick();
     await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/trainers');
   });
 
@@ -46,11 +52,10 @@ describe('page of trainers', () =>{
     await expect (ModalConfirm.confirmationText).toBeDisplayed();
     await ModalConfirm.confirmClick();
     await expect (ModalAlert.modalAlertText).toBeDisplayed();
-    await ModalAlert.modalAlertButtonClick();
+    await ModalAlert.confirmAlertClick();
     await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/trainers');
     await TrainersPage.facebookButtonClick();
     await browser.newWindow('https://www.facebook.com/radiumrocket');
     await browser.switchWindow('https://juvi-megarocket-app.vercel.app/admin/trainers');
-    await Buttons.logoutBtnClick();
   });
 });

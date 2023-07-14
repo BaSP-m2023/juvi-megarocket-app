@@ -1,26 +1,26 @@
 class LogIn {
   get signInBtn() {
-    return $(`[data-testid="navbar"] li:nth-child(2) a`);
+    return $('[data-testid="navbar"] li:nth-child(2) a');
   }
 
   get emailInput() {
-    return $(`[data-testid="signin-form"] fieldset:first-child input`);
+    return $('[data-testid="signin-form"] fieldset:first-child input');
   }
 
   get passwordInput() {
-    return $(`[data-testid="signin-form"] fieldset:nth-child(2) input`);
+    return $('[data-testid="signin-form"] fieldset:nth-child(2) input');
   }
 
   get showHidePasswordBtn() {
-    return $(`[data-testid="signin-form"] svg`);
+    return $('[data-testid="signin-form"] svg');
   }
 
   get submitBtn() {
-    return $(`[data-testid="signin-form"] button:first-child`)
+    return $('[data-testid="signin-form"] button:first-child');
   }
 
   get logInCancelBtn() {
-    return $(`[data-testid="signin-form"] button:second-child`)
+    return $('[data-testid="signin-form"] button:second-child');
   }
 
   async showHidePasswordBtnClick() {
