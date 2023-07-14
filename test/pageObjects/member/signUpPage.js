@@ -63,10 +63,9 @@ class SignUpMember{
     return $('[data-testid="navbar"] li:nth-child(3) a ');
   }
 
-  get SignInNavbar(){
-    return $('[data-testid="navbar"] li:nth-child(2) a');
+  get homeNavbar(){
+    return $('[data-testid="navbar"] li:nth-child(1) a');
   }
-
   get activitiesNavbar(){
     return $('[data-testid="navbar"] li:nth-child(2) a');
   }
@@ -151,6 +150,14 @@ class SignUpMember{
     return $('[data-testid="member-profile-edit-form"] select option:nth-child(2)');
   }
 
+  get profileMemberNavbar(){
+    return $('[data-testid="navbar"] li:nth-child(3) a');
+  }
+
+  async profileMemberNavbarClick(){
+    await this.profileMemberNavbar.click();
+  }
+
   async inputSelectClick(){
     await this.inputSelect.click();
   }
@@ -161,6 +168,9 @@ class SignUpMember{
 
   async activitiesNavbarClick(){
     await this.activitiesNavbar.click();
+  }
+  async homeNavbarClick(){
+    await this.homeNavbar.click();
   }
 
   async SingUpNavbarClick(){

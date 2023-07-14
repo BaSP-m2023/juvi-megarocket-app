@@ -1,67 +1,47 @@
 /* eslint-disable no-undef */
-class Button {
-  get addButton() {
-    return $('[data-testid="add-button"]');
-  }
-  get confirmButton() {
+class Buttons {
+  get confirmBtn() {
     return $('[data-testid="confirm-button"]');
   }
-
-  get confirmDeleteButton() {
-    return $('[data-testid="confirm-button"]');
-  }
-
-  get submitButton(){
-    return $('[data-testid="submit-button"]');
-  }
-
-  get cancelButton(){
+  get cancelBtn() {
     return $('[data-testid="cancel-button"]');
   }
-
-  get profileMemberNavbar(){
-    return $('[data-testid="navbar"] li:nth-child(3) a');
+  get resetBtn() {
+    return $('[data-testid="reset-button"]');
   }
-
-  get logOutButton(){
-    return $('[data-testid="logout-button"]')
+  get submitBtn() {
+    return $('[data-testid="submit-button"]')
   }
-
+  get addBtn() {
+    return $('[data-testid="add-button"]');
+  }
+  get logoutButton() {
+    return $('[data-testid="logout-button"]');
+  }
   get signInButton(){
     return $('[data-testid="signin-form"] button');
   }
-
-  async addButtonClick() {
-    await this.addButton.click();
+  async confirmBtnClick() {
+    await this.confirmBtn.click();
   }
-
-  async confirmButtonClick() {
-    await this.confirmButton.click();
+  async cancelBtnClick() {
+    await this.cancelBtn.click();
   }
-
-  async confirmDeleteButtonClick() {
-    await this.confirmDeleteButton.click();
+  async resetBtnClick() {
+    await this.resetBtn.click();
   }
-
-  async submitButtonClick() {
-    await this.submitButton.click();
+  async addBtnClick() {
+    await this.addBtn.click();
   }
-
-  async cancelButtonClick(){
-    await this.cancelMemberButton.click();
+  async submitBtnClick() {
+    await this.submitBtn.click();
   }
-
-  async profileMemberNavbarClick(){
-    await this.profileMemberNavbar.click();
+  async logoutBtnClick() {
+    await this.logoutButton.click();
   }
-
-  async logOutButtonClick(){
-    await this.logOutButton.click();
-  }
-
   async signInButtonClick(){
     await this.signInButton.click();
   }
 }
 
-module.exports = new Button();
+module.exports = new Buttons();

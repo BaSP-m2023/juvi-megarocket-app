@@ -61,11 +61,11 @@ class TrainersPage{
   }
 
   get trainersNavbar(){
-    return $('[data-testid="navbar"] li:nth-child(3) a');
+    return $('[data-testid="navbar"] li:nth-child(5) a');
   }
 
   get signInNavbar(){
-    return $('[data-testid="landing-navbar"] li:nth-child(1) a');
+    return $('[data-testid="navbar"] li:nth-child(1) a');
   }
 
   get inputEmailAdmin(){
@@ -143,7 +143,7 @@ class TrainersPage{
 
   async signInAdmin(emailadmin, passwordadmin){
     await this.inputEmailAdmin.setValue(emailadmin);
-    await this.passwordadmin.setValue(passwordadmin);
+    await this.inputPasswordAdmin.setValue(passwordadmin);
   }
 
 }
