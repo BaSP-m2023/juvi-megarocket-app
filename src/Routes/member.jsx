@@ -2,7 +2,7 @@ import Home from 'Components/Home';
 import Activity from 'Components/Member/Activity/';
 import Membership from 'Components/Member/Membership';
 import Profile from 'Components/Member/Profile';
-/* import Schedule from 'Components/Member/Schedule'; */
+import Schedule from 'Components/Member/Schedule';
 import Signup from 'Components/Signs/SignUp';
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
@@ -40,7 +40,7 @@ const MemberRoutes = () => {
         <Route exact path={`${url}/activities`} component={Activity} />
         <Route exact path={`${url}/profile`} component={Profile} />
         <Route exact path={`${url}/membership`} component={Membership} />
-        {/*     <Route exact path={`${url}/schedule`} component={Schedule} /> */}
+        <Route exact path={`${url}/schedule`} component={Schedule} />
         <Route exact path={`${url}/signup`} component={Signup} />
       </Switch>
     </Layout>

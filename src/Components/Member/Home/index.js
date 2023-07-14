@@ -4,13 +4,15 @@ import { logout } from 'redux/auth/thunks';
 function Home() {
   const dispatch = useDispatch();
   return (
-    <button
-      onClick={() => {
-        dispatch(logout());
-      }}
-    >
-      SALIR
-    </button>
+    <div>
+      <button
+        onClick={() => {
+          dispatch(logout());
+        }}
+      >
+        SALIR
+      </button>
+    </div>
   );
 }
 
