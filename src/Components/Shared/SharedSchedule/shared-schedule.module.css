@@ -1,3 +1,61 @@
-.scheduleContent {
-  display: block;
+tr{
+  color: #000;
+}
+
+th{
+  background-color: #0F232E;
+  color: #F7F9ED;
+}
+
+td{
+  width: 5vw;
+  padding: 10px 5px;
+  margin: 1px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.scheduleContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 };
+
+.scheduleButtonsContainer{
+  display: flex;
+  width: 100px;
+  height: 100px;
+  background-color: #0b9ee7;
+}
+
+.scheduleTable{
+  border: 1px solid #000;
+};
+
+.scheduleBlockHour{
+  background-color: #F7F9ED;
+  color: #0F232E;
+}
+
+.scheduleBlockBoxing{
+  background-color: #F9A414;
+};
+
+.scheduleBlockSpinning{
+  background-color: #FDDBA1;
+};
+
+.scheduleBlockGap{
+  background-color: #9FA7AB;
+};
+
+.scheduleBlockFunctional{
+  background-color: #0b9ee7;
+};
+
+.scheduleBlockUnavailable{
+  background-color: #575555;
+  color: red;
+}
