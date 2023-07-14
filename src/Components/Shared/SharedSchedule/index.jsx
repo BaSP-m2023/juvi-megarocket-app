@@ -47,7 +47,7 @@ const SharedSchedule = ({ user }) => {
 
   useEffect(() => {
     if (sessionStorage.role === 'MEMBER') {
-      setSubs(memberSearch(user?.email ?? '', subsData.list));
+      setSubs(memberSearch(user.email, subsData.list));
     } else if (sessionStorage.role === 'TRAINER') {
       setSubs(trainerSearch(user, subsData.list));
     }
