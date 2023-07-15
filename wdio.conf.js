@@ -30,7 +30,7 @@ exports.config = {
   // Patterns to exclude.
   exclude: [
       // 'path/to/excluded/files'
-      './test/specs/admin-e2e.js'
+      //'./test/specs/admin-e2e.js'
       //'./test/specs/member-e2e.js'
   ],
   //

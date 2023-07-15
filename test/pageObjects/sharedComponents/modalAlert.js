@@ -1,36 +1,15 @@
 class ModalAlert {
-
-  get alertError(){
-    return $('');
+  get modalAlertText(){
+    return $('[data-testid="modal-alert"] p')
   }
-
-  get alertSucces(){
-    return $('[data-testid="admin-trainers-modal-alert"]');
+  get modalAlertButton(){
+    return $('[data-testid="modal-alert"] button')
   }
-
-
-  get confirmButton (){
-    return $('[data-testid="admin-trainers-modal-alert"] button')
+  async confirmAlertClick(){
+    await this.modalAlertButton.click();
   }
-
-  get confirmAlertDelete(){
-    return $('[data-testid="admin-trainers-modal-alert"]');
-  }
-
-  get modalALertAddMember(){
-    return $('[data-testid=member-signup-modal-alert]');
-  }
-
-  get buttonAddCofirmMember(){
-    return $('[data-testid=member-signup-modal-alert] div button');
-  }
-
-  async confirmButtonClick(){
-    await this.confirmButton.click();
-  }
-
-  async buttonAddCofirmMemberClick(){
-    await this.buttonAddCofirmMember.click();
+  async modalAlertMessage() {
+    return await this.modalAlertText.getText();
   }
 }
 

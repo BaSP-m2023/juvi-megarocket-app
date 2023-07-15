@@ -1,75 +1,47 @@
 /* eslint-disable no-undef */
-class Button {
-  get addButton() {
-    return $('[data-testid="admin-trainers-add-button"]');
+class Buttons {
+  get confirmBtn() {
+    return $('[data-testid="confirm-button"]');
   }
-  get confirmEditButton() {
-    return $('[data-testid="admin-trainers-confirm-button"]');
+  get cancelBtn() {
+    return $('[data-testid="cancel-button"]');
   }
-
-  get confirmModalSuccesButton() {
-    return $('[data-testid="admin-trainers-modal-alert"] button');
+  get resetBtn() {
+    return $('[data-testid="reset-button"]');
   }
-
-  get confirmDeleteButton() {
-    return $('[data-testid="modal-confirm"] button');
+  get submitBtn() {
+    return $('[data-testid="submit-button"]')
   }
-
-  get newconfirmDeleteButton() {
-    return $('[data-testid="admin-trainers-modal-alert"] button');
+  get addBtn() {
+    return $('[data-testid="add-button"]');
   }
-
-  get submitMemberButton(){
-    return $('[data-testid="member-signup-submit-button"]');
+  get logoutButton() {
+    return $('[data-testid="logout-button"]');
   }
-
-  get cancelMemberButton(){
-    return $('[data-testid="member-signup-cancel-button"]');
+  get signInButton(){
+    return $('[data-testid="signin-form"] button');
   }
-
-  get profileMemberNavbar(){
-    return $('[data-testid=landing-navbar] li:nth-child(3) a');
+  async confirmBtnClick() {
+    await this.confirmBtn.click();
   }
-
-  get submitEditMember(){
-    return $('[data-testid=member-profile-submit-button]');
+  async cancelBtnClick() {
+    await this.cancelBtn.click();
   }
-
-  async addButtonClick() {
-    await this.addButton.click();
+  async resetBtnClick() {
+    await this.resetBtn.click();
   }
-
-  async confirmEditButtonClick() {
-    await this.confirmEditButton.click();
+  async addBtnClick() {
+    await this.addBtn.click();
   }
-
-  async confirmModalSuccesButtonClick() {
-    await this.confirmModalSuccesButton.click();
+  async submitBtnClick() {
+    await this.submitBtn.click();
   }
-
-  async confirmDeleteButtonClick() {
-    await this.confirmDeleteButton.click();
+  async logoutBtnClick() {
+    await this.logoutButton.click();
   }
-
-  async newconfirmDeleteButtonClick() {
-    await this.newconfirmDeleteButton.click();
-  }
-
-  async submitMemberButtonClick() {
-    await this.submitMemberButton.click();
-  }
-
-  async cancelMemberButtonClick(){
-    await this.cancelMemberButton.click();
-  }
-
-  async profileMemberNavbarClick(){
-    await this.profileMemberNavbar.click();
-  }
-
-  async submitEditMemberClick(){
-    await this.submitEditMember.click();
+  async signInButtonClick(){
+    await this.signInButton.click();
   }
 }
 
-module.exports = new Button();
+module.exports = new Buttons();
