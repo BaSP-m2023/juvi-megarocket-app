@@ -13,6 +13,7 @@ import {
 const initialState = {
   authenticated: '',
   role: '',
+  data: '',
   isLoading: false,
   error: ''
 };
@@ -47,7 +48,8 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         authenticated: false,
-        role: null
+        role: null,
+        data: ''
       };
     }
     case GET_AUTHENTICATION_SUCCESS: {
@@ -55,7 +57,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         authenticated: true,
-        role: action.payload.role
+        data: action.payload
       };
     }
     default:

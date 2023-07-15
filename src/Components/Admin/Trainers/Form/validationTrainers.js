@@ -40,6 +40,7 @@ const trainersSchema = Joi.object({
     })
     .required(),
   password: Joi.string()
+    .allow('')
     .min(8)
     .max(15)
     .regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)

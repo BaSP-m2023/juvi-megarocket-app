@@ -18,9 +18,13 @@ import {
 
 export const getSubscriptions = () => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getSubscriptionsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const responseJson = await response.json();
       if (responseJson.error) {
         throw new Error(responseJson.message);
@@ -56,10 +60,12 @@ export const getSubscriptionById = (id, setSelectedSubscription) => {
 
 export const deleteSubscription = (id, setAlertText, setShowAlert) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(deleteSubscriptionsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const responseJson = await response.json();
       if (responseJson.error) {
@@ -79,6 +85,7 @@ export const deleteSubscription = (id, setAlertText, setShowAlert) => {
 
 export const addSubscription = (formData, setAlertText, setShowAlert) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     dispatch(postSubscriptionsPending());
     const requestData = {
       classes: formData.classes,
@@ -89,7 +96,8 @@ export const addSubscription = (formData, setAlertText, setShowAlert) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(requestData)
       });
@@ -111,6 +119,7 @@ export const addSubscription = (formData, setAlertText, setShowAlert) => {
 
 export const editSubscription = (id, formData, setAlertText, setShowAlert) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     const requestData = {
       classes: formData.classes,
       members: [formData.members._id],
@@ -121,7 +130,8 @@ export const editSubscription = (id, formData, setAlertText, setShowAlert) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(requestData)
       });

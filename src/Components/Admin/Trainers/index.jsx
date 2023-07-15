@@ -26,8 +26,8 @@ function Trainers() {
     <section className={styles.container} data-testid="admin-trainers-section">
       <div className={styles.titleTrainers}>
         <h2>Trainers</h2>
-        <Link to="/admins/trainers/form" className={styles.link}>
-          <Button type="add" resource="Trainer" testId="admin-trainers-add-button" />
+        <Link to="/admin/trainers/form" className={styles.link}>
+          <Button type="add" resource="Trainer" testId="add-button" />
         </Link>
       </div>
       {isLoading ? (
@@ -35,17 +35,13 @@ function Trainers() {
       ) : (
         <SharedTable
           data={list}
-          editLink={'/admins/trainers/form/'}
+          editLink={'/admin/trainers/form/'}
           handleDelete={handleDelete}
           testId="admin-trainers-table"
         />
       )}
-      {message != '' && (
-        <ModalAlert text={message} onClick={closeAlert} testId="admin-trainers-modal-alert" />
-      )}
-      {error != '' && (
-        <ModalAlert text={error} onClick={closeAlert} testId="admin-trainers-modal-alert" />
-      )}
+      {message != '' && <ModalAlert text={message} onClick={closeAlert} />}
+      {error != '' && <ModalAlert text={error} onClick={closeAlert} />}
     </section>
   );
 }

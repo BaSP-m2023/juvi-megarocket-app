@@ -4,57 +4,72 @@
   flex-direction: column;
   top: 0;
   height: 100vh;
-
   list-style-type: none;
   background-color: #0f232e;
 }
 
-.rutes li > a:hover {
+.showNav {
+  max-height: none;
+  padding-top: 70px;
+  width: 26vw;
+}
+
+.navContainer a:hover {
   color: #f9a414;
   background-color: #1c4257;
   border-radius: 4px;
 }
+
 .navShadow {
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
 }
-
 .navContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  transition: width 0.3s ease-out;
 }
 
-.rutes {
+.navContainer ul {
   display: flex;
   flex-direction: column;
-  height: 70vh;
-  padding: 0px 10px;
-  justify-content: space-evenly;
+  height: 57vh;
+  padding: 0px;
+  justify-content: space-between;
   list-style-type: none;
 }
 
-.rutes li > a {
+.superAdminNav ul {
+  height: 12vh;
+}
+.authNav ul {
+  height: 20vh;
+}
+.memberNav ul {
+  height: 44vh;
+}
+.adminNav ul {
+  height: 53vh;
+}
+.navContainer a {
   margin-left: 15px;
-  color: #fff;
+  color: #f9a414;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   text-transform: capitalize;
 }
-
 .showNav {
   max-height: 500px;
   opacity: 1;
   display: flex;
   transition: all 0.3s ease-out;
 }
-
 .hideNav {
   display: none;
   opacity: 0;
 }
-
 .arrowIcon {
   align-self: center;
   color: #fff;
@@ -70,7 +85,6 @@
   .arrowIcon {
     display: none;
   }
-
   .navbar {
     width: 14vw;
   }
@@ -81,8 +95,79 @@
     justify-content: flex-start;
     align-items: baseline;
   }
-
-  .rutes li {
+  .navContainer li {
     padding-top: 10px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .expandedNavbar {
+    max-width: 200px;
+  }
+  .authNav ul {
+    height: 43vh;
+  }
+  .navContainer a {
+    font-size: 1.3rem;
+  }
+  .navbar {
+    max-width: 200px;
+  }
+  .navContainer {
+    justify-content: space-between;
+  }
+  .navContainer ul {
+    padding-left: 11px;
+    width: 35vw;
+  }
+  .navContainer li {
+    padding-top: 50px;
+  }
+  .arrowIcon {
+    display: block;
+  }
+}
+@media screen and (max-width: 390px) {
+  .navContainer li {
+    padding-top: 0px;
+  }
+  .authNav ul {
+    padding-top: 50px;
+  }
+  .expandedNavbar {
+    width: 30vw;
+  }
+  .navbar {
+    width: 260px;
+  }
+  .navContainer a {
+    font-size: 1rem;
+  }
+
+  .navContainer {
+    padding-top: 259px;
+    height: 15vh;
+  }
+
+  .navContainer ul {
+    height: auto;
+    width: 27vw;
+    padding-left: 10px;
+  }
+
+  .navContainer li {
+    text-align: left;
+    padding-top: 15px;
+  }
+  .navContainer a {
+    margin-left: 0;
+    font-weight: 400;
+  }
+  .arrowIcon {
+    align-self: end;
+  }
+  .showNav {
+    max-height: none;
+    padding-top: 70px;
+    width: 260px;
   }
 }

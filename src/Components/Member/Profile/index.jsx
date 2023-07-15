@@ -8,7 +8,6 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from 'Components/Admin/Members/MemberForm/form.module.css';
 import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
-import { putMember } from 'redux/members/thunks';
 import { useHistory } from 'react-router-dom';
 
 const MemberProfile = () => {
@@ -16,9 +15,11 @@ const MemberProfile = () => {
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const data = useSelector((state) => state.members);
+  const data = useSelector((state) => state.auth?.data);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  console.log(data);
 
   const {
     register,
@@ -29,16 +30,16 @@ const MemberProfile = () => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: 'Gianluca',
-      lastName: 'Agrano',
-      dni: 44555666,
-      phone: 3414445555,
-      email: 'gianlucka1@gmail.com',
-      city: 'Rosario',
-      birthDate: '26/07/2002',
-      postalCode: 2000,
-      password: 'contrasena123',
-      memberships: 'Black'
+      firstName: data?.firstName ?? '',
+      lastName: data?.lastName ?? '',
+      dni: data?.dni ?? '',
+      phone: data?.phone ?? '',
+      email: data?.email ?? '',
+      city: data?.city ?? '',
+      birthDate: data?.birthDate ?? '',
+      postalCode: data?.postalCode ?? '',
+      password: data?.password ?? '',
+      memberships: data?.memberships ?? 'Only Classes'
     }
   });
 
@@ -182,32 +183,16 @@ const MemberProfile = () => {
             {errors.memberships && <p>{errors.memberships.message}</p>}
           </fieldset>
         </div>
-        <Button type={'submit'} resource={'Member'} testId="member-profile-submit-button" />
-        <Button
-          type={'cancel'}
-          onClick={() => history.push('/members')}
-          testId="member-profile-cancel-button"
-        />
-        {modal && (
-          <ModalAlert
-            text={msg}
-            onClick={() => setModal(!modal)}
-            testId="member-profile-modal-alert"
-          />
-        )}
-        {modalDone && (
-          <ModalAlert
-            text={msg}
-            onClick={() => history.push('/members')}
-            testId="member-profile-modal-alert"
-          />
-        )}
+        <Button type={'submit'} resource={'Member'} testId="submit-button" />
+        <Button type={'cancel'} onClick={() => history.push('/member')} testId="cancel-button" />
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/member')} />}
       </form>
       <Button
         className={styles.addButton}
         type="reset"
         onClick={() => reset()}
-        testId="member-profile-reset-button"
+        testId="reset-button"
       ></Button>
     </div>
   );

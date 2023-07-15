@@ -30,8 +30,8 @@ const Activities = () => {
       <section className={styles.container} data-testid="admin-activities-section">
         <div className={styles.titleActivities}>
           <h2>Activities</h2>
-          <Link to="/admins/activities/ActivitiesForm">
-            <Button type="add" resource="Activity" testId="admin-activities-add-button" />
+          <Link to="/admin/activities/ActivitiesForm">
+            <Button type="add" resource="Activity" testId="add-button" />
           </Link>
         </div>
         {isLoading ? (
@@ -39,15 +39,13 @@ const Activities = () => {
         ) : (
           <SharedTable
             data={list}
-            editLink={'/admins/activities/ActivitiesForm/'}
+            editLink={'/admin/activities/ActivitiesForm/'}
             handleDelete={deleteItem}
             testId="admin-activities-table"
           />
         )}
       </section>
-      {showModal && (
-        <ModalAlert text={modalText} onClick={closeModal} testId="admin-activities-modal-alert" />
-      )}
+      {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
     </>
   );
 };

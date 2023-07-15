@@ -1,0 +1,43 @@
+.btnLogOutContainer {
+  display: flex;
+  align-items: center;
+}
+
+.btnLogOut {
+  background: #fff;
+  color: #373867;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.btnLogOut:hover {
+  opacity: 0.8;
+  background-color: red;
+  color: #fff;
+}
+
+.logoutIcon {
+  height: 15px;
+  width: 15px;
+}
+
+.logoutIcon,
+.buttonText {
+  padding: 5px 5px;
+}
+
+@media screen and (max-width: 390px) {
+  .buttonText {
+    display: none;
+  }
+}
+@media screen and (max-width: 750px) {
+  .buttonText {
+    display: none;
+  }
+}

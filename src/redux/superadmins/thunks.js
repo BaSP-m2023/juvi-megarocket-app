@@ -17,9 +17,13 @@ import {
 } from './actions';
 export const getSuperAdmins = () => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getSuperAdminsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const responseJson = await response.json();
       if (responseJson.error) {
         throw new Error(responseJson.message);
@@ -32,10 +36,12 @@ export const getSuperAdmins = () => {
 };
 export const deleteSuperAdmins = (_id, setModalText, setShowModal) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(deleteSuperAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${_id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const responseJson = await response.json();
       if (response.ok) {
@@ -54,13 +60,15 @@ export const deleteSuperAdmins = (_id, setModalText, setShowModal) => {
 };
 export const addSuperAdmins = (formData, setModalText, setShowModal, setShowModalSuccess) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       const { email, password } = formData;
       dispatch(postSuperAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify({ email, password })
       });
@@ -88,13 +96,12 @@ export const editSuperAdmins = (
   setShowModalSuccess
 ) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(putSuperAdminsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/superAdmin/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { token: token },
         body: JSON.stringify(updatedSuperAdmin)
       });
       if (response.ok) {

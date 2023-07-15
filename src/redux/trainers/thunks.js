@@ -18,9 +18,13 @@ import {
 
 export const getTrainers = () => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getTrainersPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const responseJson = await response.json();
       if (responseJson.error) {
         throw new Error(responseJson.message);
@@ -34,9 +38,16 @@ export const getTrainers = () => {
 
 export const getTrainersBy = (id) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getTrainerByIdPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
+      });
       const responseJson = await response.json();
       if (responseJson.error) {
         throw new Error(responseJson.message);
@@ -49,10 +60,12 @@ export const getTrainersBy = (id) => {
 };
 export const delTrainer = (id) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(delTrainerPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const responseJson = await response.json();
       if (response.error) {
@@ -67,12 +80,14 @@ export const delTrainer = (id) => {
 };
 export const addTrainer = (data, setModalText, setShowModal, setShowModalSuccess) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(addTrainerPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(data)
       });
@@ -94,12 +109,14 @@ export const addTrainer = (data, setModalText, setShowModal, setShowModalSuccess
 };
 export const putTrainer = (data, id, setModalText, setShowModal, setShowModalSuccess) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(putTrainerPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(data)
       });

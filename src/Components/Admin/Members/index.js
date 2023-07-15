@@ -5,7 +5,6 @@ import { getMembers, deleteMember } from 'redux/members/thunks';
 
 import styles from './members.module.css';
 import { ModalAlert } from 'Components/Shared';
-import Button from 'Components/Shared/Button';
 import SharedTable from 'Components/Shared/Table';
 
 function Members(props) {
@@ -26,19 +25,13 @@ function Members(props) {
     <section className={styles.container} data-testid="admin-members-section">
       <div className={styles.titleMembers}>
         <h2>Members</h2>
-        <Button
-          type={'add'}
-          resource={'Member'}
-          onClick={() => props.history.push('/admins/members/form')}
-          testId="admin-members-add-button"
-        />
       </div>
       {data.isLoading && <h1>Loading</h1>}
       {!data.isLoading && (
         <SharedTable
           data={data.list}
           handleDelete={delMember}
-          editLink={'/admins/members/form/'}
+          editLink={'/admin/members/form/'}
           testId="admin-members-table"
         />
       )}
@@ -47,9 +40,8 @@ function Members(props) {
           text={'Member deleted successfully'}
           onClick={() => {
             setModal(!modal);
-            props.history.push('/admins/members');
+            props.history.push('/admin/members');
           }}
-          testId="admin-members-modal-alert"
         />
       )}
     </section>

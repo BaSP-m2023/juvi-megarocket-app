@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 class Buttons {
   get confirmBtn() {
     return $('[data-testid="confirm-button"]');
@@ -18,9 +17,6 @@ class Buttons {
   get logoutButton() {
     return $('[data-testid="logout-button"]');
   }
-  get signInButton(){
-    return $('[data-testid="signin-form"] button');
-  }
   async confirmBtnClick() {
     await this.confirmBtn.click();
   }
@@ -38,9 +34,6 @@ class Buttons {
   }
   async logoutBtnClick() {
     await this.logoutButton.click();
-  }
-  async signInButtonClick(){
-    await this.signInButton.click();
   }
 }
 
