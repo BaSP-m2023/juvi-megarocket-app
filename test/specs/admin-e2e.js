@@ -1,7 +1,8 @@
+const TrainersPage = require ("../../test/pageObjects/admin/trainersPage.js");
+const LogIn = require ("../../test/pageObjects/sharedComponents/login.js");
 const Members = require('../pageObjects/admin/members');
 const Buttons = require('../pageObjects/sharedComponents/button');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
-const Login = require('../pageObjects/sharedComponents/logIn');
 const ActivitiesTable = require('../pageObjects')
 const ActivitiesForm = require('../../test/pageObjects/admin/activities/activitiesForm')
 const ModalConfirm = require('../../test/pageObjects/sharedComponents/modalConfirm')
@@ -35,23 +36,18 @@ describe('Complete Admin flow.', () => {
   })
 
   it('Log in with admin user', async () => {
-    await Login.signInBtn.waitForDisplayed();
-    await Login.signInBtnClick();
-
+    await LogIn.signInBtn.waitForDisplayed();
+    await LogIn.signInBtnClick();
     await expect(browser).toHaveUrlContaining("sign-in");
-
-    await Login.emailInput.waitForDisplayed();
-    await Login.passwordInput.waitForDisplayed();
-    await Login.fillFormLogInAdmin();
-    expect(await Login.passwordInput.getAttribute('type')).toEqual('password');
-    await Login.showHidePasswordBtnClick();
-    expect(await Login.passwordInput.getAttribute('type')).toEqual('text');
-
-    await Login.submitBtnClick();
-
+    await LogIn.emailInput.waitForDisplayed();
+    await LogIn.passwordInput.waitForDisplayed();
+    await LogIn.fillFormLogInAdmin();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
+    await LogIn.showHidePasswordBtnClick();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
+    await LogIn.submitBtnClick();
     expect(await ModalAlert.modalAlertMessage()).toContain('success');
     await ModalAlert.confirmAlertClick();
-
     await expect(browser).toHaveUrlContaining("admin");
   })
 
@@ -224,6 +220,7 @@ describe('Complete Admin flow.', () => {
   it('Navigation after editing an activity', async () => {
     await expect(browser).toHaveUrl('http://localhost:3000/admins/activities');
   })
+
   it('Delete the new activity', async () => {
     await expect(ActivitiesTable.newActivityDeleteBtn).toBeClickable();
     await ActivitiesTable.deleteBtnClick();
@@ -239,4 +236,38 @@ describe('Complete Admin flow.', () => {
       expect('1').toEqual('1');
     }
   })
-})
+// start trainer flow
+  it('add a new trainer', async() => {
+    await TrainersPage.trainersNavbarClick();
+    await expect(TrainersPage.ListOfTrainers).toBeDisplayed();
+    await Buttons.addBtnClick();
+    await TrainersPage.addTrainerForm("Martina", "Pereira", "Rosario", "34656125",
+    "mpereira25@gmail.com", "3615572863","300000", "martipe8314");
+    await Buttons.confirmBtnClick();
+    await browser.pause(3000);
+    await expect(ModalAlert.modalAlertText).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
+  });
+
+  it ('edit trainer', async() => {
+    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/trainers');
+    await TrainersPage.editButtonClick();
+    await TrainersPage.editTrainerForm('Funes', '700000', 'marperez123');
+    await Buttons.confirmBtnClick();
+    await expect (ModalAlert.modalAlertText).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
+    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/trainers');
+  });
+
+  it('delete trainer', async() =>{
+    await TrainersPage.deleteButtonClick();
+    await expect (ModalConfirm.confirmationText).toBeDisplayed();
+    await ModalConfirm.confirmClick();
+    await expect (ModalAlert.modalAlertText).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
+    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/trainers');
+    await TrainersPage.facebookButtonClick();
+    await browser.newWindow('https://www.facebook.com/radiumrocket');
+    await browser.switchWindow('https://juvi-megarocket-app.vercel.app/admin/trainers');
+  });
+});

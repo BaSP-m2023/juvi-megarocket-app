@@ -1,13 +1,49 @@
-const { date } = require('joi');
+const SignUpMember = require("../../test/pageObjects/member/signUpPage.js");
+const Buttons = require ("../../test/pageObjects/sharedComponents/button.js");
+const LogIn = require("../../test/pageObjects/sharedComponents/login.js");
+const EditProfile = require("../../test/pageObjects/member/editProfile.js");
+const Membership = require("../../test/pageObjects/member/membership.js");
 const ProfileForm = require('../pageObjects/member/profileForm');
 const Activities = require('../pageObjects/member/activities');
-const Login = require('../pageObjects/sharedComponents/logIn');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
 
 describe('Members complete flow.', function () {
   beforeAll('Open browser for test activities display', async function () {
     browser.setWindowSize(1440, 1024);
     browser.url('https://juvi-megarocket-app.vercel.app/');
+  });
+
+  it ('complete form', async () =>{
+    await SignUpMember.SingUpNavbarClick();
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-up')
+    await SignUpMember.formSignUp("Armando", "Rodriguez", "rodri125@gmail.com", "rodri125@gmail.com", "31665222", "3415568223",
+     "Fisherton", "19-05-1998", "2000", "armando2514");
+    await SignUpMember.optionSelectBlackClick();
+    await browser.pause(2000);
+    await Buttons.submitBtnClick();
+    await expect(ModalAlert.modalAlertText).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-in');
+  });
+
+  it('Log in with member user', async () => {
+    await LogIn.emailInput.waitForDisplayed();
+    await LogIn.passwordInput.waitForDisplayed();
+    await LogIn.fillFormLogInMember();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
+    await LogIn.showHidePasswordBtnClick();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
+    await LogIn.submitBtnClick();
+    expect(await ModalAlert.modalAlertMessage()).toContain('success');
+    await ModalAlert.confirmAlertClick();
+  });
+
+  it('navigate on membership', async ()=>{
+    await Membership.memebershipNavbarClick();
+    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/membership');
+    await expect (Membership.membershipScreen).toBeDisplayed();
+    await Membership.membershipCardClassicClick();
+    await expect (Membership.membershipCardClassickList).toBeDisplayed();
   });
 
   it('Log in with invalid credentials', async () => {
@@ -31,21 +67,38 @@ describe('Members complete flow.', function () {
     await ModalAlert.confirmAlertClick();
 
   })
+  it ('complete form', async () =>{
+    await SignUpMember.SingUpNavbarClick();
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-up')
+    await SignUpMember.formSignUp("Armando", "Rodriguez", "rodri125@gmail.com", "rodri125@gmail.com", "31665222", "3415568223",
+     "Fisherton", "19-05-1998", "2000", "armando2514");
+    await SignUpMember.optionSelectBlackClick();
+    await browser.pause(2000);
+    await Buttons.submitBtnClick();
+    await expect(ModalAlert.modalAlertText).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-in');
+  });
 
   it('Log in with member user', async () => {
-    await Login.emailInput.waitForDisplayed();
-    await Login.passwordInput.waitForDisplayed();
-    await Login.fillFormLogInMember();
-    expect(await Login.passwordInput.getAttribute('type')).toEqual('password');
-    await Login.showHidePasswordBtnClick();
-    expect(await Login.passwordInput.getAttribute('type')).toEqual('text');
-
-    await Login.submitBtnClick();
-
+    await LogIn.emailInput.waitForDisplayed();
+    await LogIn.passwordInput.waitForDisplayed();
+    await LogIn.fillFormLogInMember();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
+    await LogIn.showHidePasswordBtnClick();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
+    await LogIn.submitBtnClick();
     expect(await ModalAlert.modalAlertMessage()).toContain('success');
     await ModalAlert.confirmAlertClick();
+  });
 
-  })
+  it('navigate on membership', async ()=>{
+    await Membership.memebershipNavbarClick();
+    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/membership');
+    await expect (Membership.membershipScreen).toBeDisplayed();
+    await Membership.membershipCardClassicClick();
+    await expect (Membership.membershipCardClassickList).toBeDisplayed();
+  });
 
   it('Navigate to activities page', async function () {
 
@@ -85,8 +138,16 @@ describe('Members complete flow.', function () {
   });
 
 //Start of profile section
-  it('Navigate to profile section', async () => {
-
+  it('change profile', async()=> {
+    await SignUpMember.homeNavbarClick();
+    await EditProfile.profileMemberNavbarClick();
+    await browser.refresh();
+    await EditProfile.editFormMember("3546623889", "Alvear");
+    await EditProfile.optionSelectClassicClick();
+    await Buttons.submitBtnClick();
+    await expect (ModalAlert.modalAlertText).toContain('member update');
+    await ModalAlert.modalAlertButtonClick();
+    await Buttons.logoutBtnClick();
   });
 
   it('Checks all the labels of the form', async() => {
@@ -113,7 +174,7 @@ describe('Members complete flow.', function () {
     await expect(ProfileForm.membershipSelect).toHaveValue('Black')
   })
   it('Change all the information and submit', async() => {
-    await ProfileForm.fillProfileForm('Juan', 'Canton', '42129353', '3413520137', 
+    await ProfileForm.fillProfileForm('Juan', 'Canton', '42129353', '3413520137',
     'juanignaciocanton1@gmail.com', 'Buenos aires', '21-08-1999',
     '4321', 'newpass123')
     await expect(ProfileForm.submitBtn).toBeDisplayed();
@@ -127,4 +188,4 @@ describe('Members complete flow.', function () {
   it('Correct navigation to members panel', async() => {
     await expect(browser).toHaveUrl('http://localhost:3000/members')
   })
-})
+});
