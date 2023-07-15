@@ -1,8 +1,8 @@
-const SignUpMember = require("../../test/pageObjects/member/signUpPage.js");
-const Buttons = require ("../../test/pageObjects/sharedComponents/button.js");
-const LogIn = require("../../test/pageObjects/sharedComponents/login.js");
-const EditProfile = require("../../test/pageObjects/member/editProfile.js");
-const Membership = require("../../test/pageObjects/member/membership.js");
+const SignUpMember = require('../pageObjects/member/signUpPage');
+const Buttons = require ('../pageObjects/sharedComponents/button');
+const LogIn = require('../pageObjects/sharedComponents/logIn');
+const EditProfile = require('../pageObjects/member/editProfile');
+const Membership = require('../pageObjects/member/membership');
 const ProfileForm = require('../pageObjects/member/profileForm');
 const Activities = require('../pageObjects/member/activities');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
@@ -47,21 +47,21 @@ describe('Members complete flow.', function () {
   });
 
   it('Log in with invalid credentials', async () => {
-    await Login.signInBtn.waitForDisplayed();
-    await Login.signInBtnClick();
+    await LogIn.signInBtn.waitForDisplayed();
+    await LogIn.signInBtnClick();
 
     await expect(browser).toHaveUrlContaining("sign-in");
 
-    await Login.emailInput.waitForDisplayed();
-    await Login.passwordInput.waitForDisplayed();
-    await Login.emailInput.setValue('any@thing.com');
-    await Login.passwordInput.setValue('wrongPassword');
-    expect(await Login.passwordInput.getAttribute('type')).toEqual('password');
-    await Login.showHidePasswordBtnClick();
-    expect(await Login.passwordInput.getAttribute('type')).toEqual('text');
-    await Login.showHidePasswordBtnClick();
+    await LogIn.emailInput.waitForDisplayed();
+    await LogIn.passwordInput.waitForDisplayed();
+    await LogIn.emailInput.setValue('any@thing.com');
+    await LogIn.passwordInput.setValue('wrongPassword');
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
+    await LogIn.showHidePasswordBtnClick();
+    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
+    await LogIn.showHidePasswordBtnClick();
 
-    await Login.submitBtnClick();
+    await LogIn.submitBtnClick();
 
     expect(await ModalAlert.modalAlertMessage()).toContain('Error');
     await ModalAlert.confirmAlertClick();
