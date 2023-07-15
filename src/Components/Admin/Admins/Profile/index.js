@@ -84,7 +84,7 @@ const AdminProfile = () => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer} testId="admin-form">
           <h1>Edit Profile</h1>
           <fieldset className={styles.fieldset}>
             <Input

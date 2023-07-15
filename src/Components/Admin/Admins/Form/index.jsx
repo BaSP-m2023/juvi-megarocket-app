@@ -97,7 +97,7 @@ const AdminsForm = ({ history }) => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer} testId="admin-form">
           <h1>{text}</h1>
           <fieldset className={styles.fieldset}>
             <Input
