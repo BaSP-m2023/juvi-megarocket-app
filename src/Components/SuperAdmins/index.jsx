@@ -22,17 +22,22 @@ const SuperAdminsPage = () => {
   };
   return (
     <>
-      <section className={styles.container}>
+      <section className={styles.container} data-testid="superadmin-admins-section">
         <div className={styles.titleSuperAdmins}>
           <h2>Super Admins</h2>
           <Link to="/super-admins/form">
-            <Button type="add" resource="Super Admin" />
+            <Button type="add" resource="Super Admin" testId="add-button" />
           </Link>
         </div>
         {isLoading ? (
           <div>Is loading</div>
         ) : (
-          <SharedTable data={list} editLink={'super-admins/form/'} handleDelete={deleteItem} />
+          <SharedTable
+            data={list}
+            editLink={'super-admins/form/'}
+            handleDelete={deleteItem}
+            testId="superadmin-admins-table"
+          />
         )}
       </section>
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
