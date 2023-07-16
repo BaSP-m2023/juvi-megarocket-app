@@ -72,7 +72,7 @@ const FormSuperAdmins = () => {
       ) : (
         <>
           <form className={styles.FormSuperAdmins} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.subContainer}>
+            <div className={styles.subContainer} data-testId="superadmin-admins-add-form">
               <Input
                 register={register}
                 labelText="Email"
@@ -95,10 +95,15 @@ const FormSuperAdmins = () => {
                 />
               </div>
             </div>
-            <Button type="confirm"></Button>
-            <Button type="cancel" onClick={closeModal}></Button>
+            <Button type="confirm" testId="confirm-button"></Button>
+            <Button type="cancel" onClick={closeModal} testId="cancel-button"></Button>
           </form>
-          <Button className={styles.addButton} type="reset" onClick={() => reset()}></Button>
+          <Button
+            className={styles.addButton}
+            type="reset"
+            onClick={() => reset()}
+            testId="reset-button"
+          ></Button>
         </>
       )}
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}

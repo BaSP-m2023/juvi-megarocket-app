@@ -4,7 +4,8 @@ const Members = require('../pageObjects/admin/members');
 const Buttons = require('../pageObjects/sharedComponents/button');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
 const ActivitiesForm = require('../pageObjects/admin/activities/activitiesForm');
-const ModalConfirm = require('../pageObjects/sharedComponents/modalConfirm')const Classes = require('../pageObjects/admin/classes');
+const ModalConfirm = require('../pageObjects/sharedComponents/modalConfirm')
+const Classes = require('../pageObjects/admin/classes');
 
 describe('Complete Admin flow.', () => {
   beforeAll('Browser openning', () => {
