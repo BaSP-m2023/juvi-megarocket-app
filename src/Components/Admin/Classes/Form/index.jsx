@@ -106,7 +106,8 @@ const FormClasses = () => {
   const closeModal = () => {
     setShowModal(false);
     if (isTrue) {
-      history.goBack();
+      history.replace('/admin/classes');
+      window.location.reload();
     }
   };
 
