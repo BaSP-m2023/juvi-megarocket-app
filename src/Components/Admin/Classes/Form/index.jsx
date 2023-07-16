@@ -81,14 +81,16 @@ const FormClasses = () => {
   const onSubmit = (data) => {
     const { day, hour } = data;
 
-    const hasConflict = existingClasses.some(
-      (existingClass) => existingClass.day === day && existingClass.hour === hour
-    );
+    const hasConflict = existingClasses
+      .filter((existingClass) => existingClass._id !== id)
+      .some((existingClass) => existingClass.day === day && existingClass.hour === hour);
+
     if (hasConflict) {
       setModalText(`There is already a class scheduled at the same time.`);
       setShowModal(true);
       return;
     }
+
     if (id) {
       dispatch(putClass(id, data, setModalText, setShowModal, setIsTrue, deleteClass));
     } else {
