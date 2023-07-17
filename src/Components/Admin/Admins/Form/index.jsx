@@ -97,7 +97,7 @@ const AdminsForm = ({ history }) => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer} data-testid="superAdmin-admin-form">
           <h1>{text}</h1>
           <fieldset className={styles.fieldset}>
             <Input
@@ -184,8 +184,12 @@ const AdminsForm = ({ history }) => {
             </div>
           </fieldset>
         </div>
-        <Button type="submit" resource="Admin" />
-        <Button type="cancel" onClick={() => history.push('/super-admin/admins')} />
+        <Button type="submit" resource="Admin" data-testid="submit-button" />
+        <Button
+          type="cancel"
+          onClick={() => history.push('/super-admin/admins')}
+          data-testid="cancel-button"
+        />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && <ModalAlert text={msg} onClick={() => history.push('/super-admin/admins')} />}
       </form>

@@ -84,7 +84,7 @@ const AdminProfile = () => {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer} data-testid="admin-profile-form">
           <h1>Edit Profile</h1>
           <fieldset className={styles.fieldset}>
             <Input
@@ -172,8 +172,12 @@ const AdminProfile = () => {
           </fieldset>
         </div>
         <div className={styles.profileBtn}>
-          <Button type={'submit'} />
-          <Button type={'cancel'} onClick={() => history.push('/admin')} />
+          <Button type={'submit'} data-testid="submit-button" />
+          <Button
+            type={'cancel'}
+            onClick={() => history.push('/admin')}
+            data-testid="cancel-button"
+          />
         </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && <ModalAlert text={msg} onClick={() => history.push('/admin')} />}
