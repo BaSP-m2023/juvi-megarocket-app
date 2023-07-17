@@ -16,6 +16,15 @@ td{
   text-align: center;
 }
 
+a{
+  cursor: pointer;
+}
+
+td:hover{
+  background-color: #F9A414;
+  transition: 1.5s;
+}
+
 .scheduleContainer{
   display: flex;
   flex-direction: column;

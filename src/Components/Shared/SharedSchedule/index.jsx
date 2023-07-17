@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptions } from 'redux/subscriptions/thunks';
 import { getClasses } from 'redux/classes/thunks';
 
-import { ModalAlert } from 'Components/Shared';
+import { ModalSchedule } from 'Components/Shared';
 import styles from 'Components/Shared/SharedSchedule/shared-schedule.module.css';
 
 const SharedSchedule = ({ user }) => {
   const [showAlert, setShowAlert] = React.useState(false);
   const [subs, setSubs] = React.useState([]);
+  const [selectedSub, setSelectedSub] = React.useState({});
+  const [selectedClass, setSelectedClass] = React.useState({});
   const subsData = useSelector((state) => state.subscriptions);
   const classData = useSelector((state) => state.classes);
   const dispatch = useDispatch();
@@ -53,6 +55,10 @@ const SharedSchedule = ({ user }) => {
     }
   }, [sessionStorage.role]);
 
+  useEffect(() => {
+    console.log('lol');
+  }, []);
+
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
     return new Date(someDate.getTime() + someDate.getTimezoneOffset() * 60000);
@@ -66,12 +72,24 @@ const SharedSchedule = ({ user }) => {
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
         classData.list.forEach((classes) => {
           if (classes._id === sub.classes._id) {
-            resp = classes.activity.name;
+            resp = classes;
           }
         });
       }
     });
     return resp;
+  };
+
+  const matcherSub = (subs, scheduleDay, scheduleHour) => {
+    let res;
+    subs.forEach((sub) => {
+      const date = dateConverter(sub.date);
+      const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
+      if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
+        res = sub;
+      }
+    });
+    return res;
   };
 
   const trainerSearch = (user, subs) => {
@@ -117,17 +135,32 @@ const SharedSchedule = ({ user }) => {
           <tr key={hour} className={styles.tr}>
             <td>{hour}</td>
             <td>{'CLOSED'}</td>
-            <td>{matcherClass(subs, 1, hour) ?? ``}</td>
-            <td>{matcherClass(subs, 2, hour) ?? ``}</td>
-            <td>{matcherClass(subs, 3, hour) ?? ``}</td>
-            <td>{matcherClass(subs, 4, hour) ?? ``}</td>
-            <td>{matcherClass(subs, 5, hour) ?? ``}</td>
-            <td>{matcherClass(subs, 6, hour) ?? ``}</td>
+            <td>
+              <a
+                onClick={() => {
+                  setSelectedClass(matcherClass(subs, 1, hour));
+                  setSelectedSub(matcherSub(subs, 1, hour));
+                  setShowAlert(true);
+                }}
+              >
+                {matcherClass(subs, 1, hour)?.activity.name ?? ``}
+              </a>
+            </td>
+            <td>{matcherClass(subs, 2, hour)?.activity.name ?? ``}</td>
+            <td>{matcherClass(subs, 3, hour)?.activity.name ?? ``}</td>
+            <td>{matcherClass(subs, 4, hour)?.activity.name ?? ``}</td>
+            <td>{matcherClass(subs, 5, hour)?.activity.name ?? ``}</td>
+            <td>{matcherClass(subs, 6, hour)?.activity.name ?? ``}</td>
           </tr>
         ))}
       </table>
       {showAlert && (
-        <ModalAlert title="Show" message="Testing" onClick={() => setShowAlert(false)} />
+        <ModalSchedule
+          role={sessionStorage.role}
+          objSub={selectedSub}
+          objClass={selectedClass}
+          onClick={() => setShowAlert(false)}
+        />
       )}
     </div>
   );
