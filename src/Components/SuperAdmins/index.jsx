@@ -9,7 +9,7 @@ import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superadmins/thunk
 const SuperAdminsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
-  const { list, isLoading } = useSelector((state) => state.superAdmins);
+  const { list, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSuperAdmins());
