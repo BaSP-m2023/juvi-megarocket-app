@@ -13,7 +13,6 @@ describe('Members complete flow.', function () {
     browser.setWindowSize(1440, 1024);
     browser.url('https://juvi-megarocket-app.vercel.app/');
   });
-
   it ('complete form', async () =>{
     await SignUpMember.SingUpNavbarClick();
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-up')
@@ -141,10 +140,9 @@ describe('Members complete flow.', function () {
 //Start of profile section
 
   it('Navigation to profile section', async()=> {
-    await expect(MemberNavbar.navbarProfile).toBeDisplayed();
-    await MemberNavbar.navbarProfileClick();
+    await expect(MemberNavbar.profile).toBeDisplayed();
+    await MemberNavbar.profileClick();
   });
-
   it('Checks all the labels of the form', async() => {
     await expect(ProfileForm.nameLabel).toHaveTextContaining('Name')
     await expect(ProfileForm.lastNameLabel).toHaveTextContaining('Last Name')
@@ -176,9 +174,9 @@ describe('Members complete flow.', function () {
     await Buttons.submitBtnClick();
   })
   it('Verification of success modal and click', async() => {
-    await expect(ModalConfirm.confirmationText).toHaveTextContaining('Member updated correctly!');
-    await expect(ModalConfirm.confirmModalBtn).toBeDisplayed();
-    await ModalConfirm.confirmClick();
+    await expect(ModalAlert.modalAlertText).toHaveTextContaining('Member updated correctly!');
+    await expect(ModalAlert.modalAlertButton).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
   })
   it('Correct navigation to members panel', async() => {
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member')

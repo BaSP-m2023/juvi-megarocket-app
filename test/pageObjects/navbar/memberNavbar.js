@@ -1,33 +1,33 @@
 class MemberNavbar {
-  get navbarHome(){
+  get home(){
     return $('[data-testid="navbar"] li:nth-child(1) a');
   }
-  get navbarActivity(){
+  get activity(){
     return $('[data-testid="navbar"] li:nth-child(2) a');
   }
-  get navbarProfile(){
+  get profile(){
     return $('[data-testid="navbar"] li:nth-child(3) a');
   }
-  get navbarMembership(){
+  get membership(){
     return $('[data-testid="navbar"] li:nth-child(4) a');
   }
-  get navbarSchedule(){
+  get schedule(){
     return $('[data-testid="navbar"] li:nth-child(5) a');
   }
-  async navbarHomeClick(){
-    await this.navbarHome.click();
+  async homeClick(){
+    await this.home.click();
   }
-  async navbarActivityClick(){
-    await this.navbarActivity.click();
+  async activityClick(){
+    await this.activity.click();
   }
-  async navbarProfileClick(){
-    await this.navbarProfile.click();
+  async profileClick(){
+    await this.profile.click();
   }
-  async navbarMembershipClick(){
-    await this.navbarMembership.click();
+  async membershipClick(){
+    await this.membership.click();
   }
-  async navbarScheduleClick(){
-    await this.navbarSchedule.click();
+  async scheduleClick(){
+    await this.schedule.click();
   }
 }
 
