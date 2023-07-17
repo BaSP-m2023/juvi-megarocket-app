@@ -55,10 +55,6 @@ const SharedSchedule = ({ user }) => {
     }
   }, [sessionStorage.role]);
 
-  useEffect(() => {
-    console.log('lol');
-  }, []);
-
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
     return new Date(someDate.getTime() + someDate.getTimezoneOffset() * 60000);
