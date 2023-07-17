@@ -69,6 +69,14 @@ const Login = () => {
 
   const onInvalid = (errors) => console.log(errors);
 
+  const handleClick = () => {
+    const newUrl = `/${authState.role.toLowerCase()}`;
+
+    history.replace(newUrl);
+
+    window.location.reload();
+  };
+
   return (
     <div className={styles.background}>
       <div className={styles.card}>
@@ -113,13 +121,7 @@ const Login = () => {
           {modal && (
             <ModalAlert text={msg} onClick={() => setModal(!modal)} data-testid="modal-alert" />
           )}
-          {modalDone && (
-            <ModalAlert
-              text={msg}
-              onClick={() => history.push(`/${authState.role.toLowerCase()}`)}
-              data-testid="modal-alert"
-            />
-          )}
+          {modalDone && <ModalAlert text={msg} onClick={handleClick} data-testid="modal-alert" />}
         </form>
       </div>
     </div>
