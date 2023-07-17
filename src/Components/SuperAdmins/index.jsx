@@ -32,7 +32,11 @@ const SuperAdminsPage = () => {
         {isLoading ? (
           <div>Is loading</div>
         ) : (
-          <SharedTable data={list} editLink={'super-admins/form/'} handleDelete={deleteItem} />
+          <SharedTable
+            data={list}
+            editLink={'super-admins/admin/form/'}
+            handleDelete={deleteItem}
+          />
         )}
       </section>
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}
