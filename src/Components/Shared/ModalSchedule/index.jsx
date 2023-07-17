@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'Components/Shared';
 import styles from 'Components/Shared/ModalSchedule/modal-schedule.module.css';
 
 const ModalSchedule = ({ role, objClass, objSub, onClick }) => {
@@ -32,11 +31,13 @@ const ModalSchedule = ({ role, objClass, objSub, onClick }) => {
   return (
     <div className={styles.modal}>
       <div className={styles['modal-content']} data-testid="modal-schedule">
+        <a className={styles.a} onClick={onClick}>
+          X
+        </a>
         {objClass && <p>{objClass.activity.name}</p>}
         {objClass && <p>{`Trainer: ${objClass.trainer.firstName} ${objClass.trainer.lastName}`}</p>}
         {objClass && <p>{`Slots: ${objClass.slots}`}</p>}
         {rulerCheck(role)}
-        <Button type="cancel" onClick={onClick} />
       </div>
     </div>
   );

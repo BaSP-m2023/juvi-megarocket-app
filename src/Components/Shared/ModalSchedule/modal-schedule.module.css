@@ -31,9 +31,10 @@
 
 .modal-content button {
   padding: 10px 20px;
-  background-color: #fddba1;
-  color: #000;
+  background-color: #F9A414;
+  color: #0f232e;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
 
   font-family: 'Roboto';
@@ -44,7 +45,21 @@
   text-align: center;
 }
 
-.subButton {
-  background-color: #F9A414;
+.a {
+  align-self: flex-end;
+  width: 15px;
+  height: 15px;
+  background-color: #5e5e5e;
   color: #0f232e;
+  border: 1px solid #333333;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+}
+
+.a:hover {
+  scale: 1.2;
+  font-size: 17px;
+  transition: 0.5s;
 }
