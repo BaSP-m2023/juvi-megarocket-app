@@ -27,7 +27,7 @@ class Buttons {
     await this.resetBtn.click();
   }
   async addBtnClick() {
-    await this.addActivityBtn.click();
+    await this.addBtn.click();
   }
   async submitBtnClick() {
     await this.submitBtn.click();

@@ -1,6 +1,6 @@
 class MembersEditDelete {
   get membersBtn() {
-    return $(`[data-testid="navbar"] li:nth-child(3) a`)
+    return $(`[data-testid="navbar"] li:nth-child(4) a`)
   }
 
   get membersTitle() {
@@ -11,16 +11,16 @@ class MembersEditDelete {
       return $(`[data-testid="admin-members-table"]`)
   }
 
-  get firstMemberEditBtn() {
-      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(10) a`)
+  get lastMemberEditBtn() {
+      return $(`[data-testid="admin-members-table"] tbody tr:last-child td:nth-child(10) a`)
   }
 
-  get firstMemberName() {
-    return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(1)`)
+  get lastMemberName() {
+    return $(`[data-testid="admin-members-table"] tbody tr:last-child td:nth-child(1)`)
   }
 
-  get firstMemberDeleteBtn() {
-      return $(`[data-testid="admin-members-table"] tbody tr:first-child td:nth-child(11) button`)
+  get lastMemberDeleteBtn() {
+      return $(`[data-testid="admin-members-table"] tbody tr:last-child td:nth-child(11) button`)
   }
 
   get formEditMemberTitle() {
@@ -123,8 +123,8 @@ class MembersEditDelete {
     await this.membersBtn.click();
   }
 
-  async firstMemberEditBtnClick() {
-      await this.firstMemberEditBtn.click();
+  async lastMemberEditBtnClick() {
+      await this.lastMemberEditBtn.click();
   }
 
   async updateFillForm() {
@@ -153,16 +153,16 @@ class MembersEditDelete {
     await this.showHidePasswordBtn.click();
   }
 
-  async firstMemberDeleteBtnClick() {
-      await this.firstMemberDeleteBtn.click();
+  async lastMemberDeleteBtnClick() {
+      await this.lastMemberDeleteBtn.click();
   }
 
   async membersTitleText() {
       return await this.membersTitle.getText();
   }
 
-  async firstMemberNameText() {
-    return await this.firstMemberName.getText();
+  async lastMemberNameText() {
+    return await this.lastMemberName.getText();
   }
 
 };
