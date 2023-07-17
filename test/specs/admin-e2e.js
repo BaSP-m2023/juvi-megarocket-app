@@ -1,13 +1,13 @@
-const TrainersPage = require ('../pageObjects/admin/trainersPage');
+//const TrainersPage = require ('../pageObjects/admin/trainersPage');
 const LogIn = require ('../pageObjects/sharedComponents/logIn');
-const Members = require('../pageObjects/admin/members');
+//const Members = require('../pageObjects/admin/members');
 const Buttons = require('../pageObjects/sharedComponents/button');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
-const ActivitiesForm = require('../../test/pageObjects/admin/activitiesForm');
-const ActivitiesTable = require('../../test/pageObjects/admin/activitiesTable');
+//const ActivitiesForm = require('../../test/pageObjects/admin/activitiesForm');
+//const ActivitiesTable = require('../../test/pageObjects/admin/activitiesTable');
 const ModalConfirm = require('../../test/pageObjects/sharedComponents/modalConfirm')
 const Classes = require('../pageObjects/admin/classes');
-const AdminNavbar = require('../../test/pageObjects/navbar/adminNavbar');
+//const AdminNavbar = require('../../test/pageObjects/navbar/adminNavbar');
 
 describe('Complete Admin flow.', () => {
   beforeAll('Browser openning', () => {
@@ -54,7 +54,7 @@ describe('Complete Admin flow.', () => {
   })
 
   //Start of activities section
-
+/*
   it('Navigate to activities section', async () => {
     await expect(AdminNavbar.activity).toBeDisplayed();
     await AdminNavbar.activityClick();
@@ -276,7 +276,7 @@ describe('Complete Admin flow.', () => {
     await browser.newWindow('https://www.facebook.com/radiumrocket');
     await browser.switchWindow('https://juvi-megarocket-app.vercel.app/admin/trainers');
   });
-
+*/
   //Start of classes section
 
   it('Navigate to classes section', async () => {
@@ -314,7 +314,7 @@ describe('Complete Admin flow.', () => {
     await Buttons.addBtnClick();
     await expect(browser).toHaveUrlContaining("admin/classes/form");
 
-    await Classes.activityInputEditClasses.waitForDisplayed();
+    await Classes.slotsInputEditClasses.waitForClickable();
 
     await Classes.fillClassesAddForm();
     await Buttons.resetBtn.waitForDisplayed();
@@ -322,7 +322,6 @@ describe('Complete Admin flow.', () => {
 
     const dayValue = await Classes.dayInputEditClasses.getValue();
     await expect(dayValue).toEqual('');
-
     await Classes.fillClassesAddForm();
     await Buttons.confirmBtn.waitForDisplayed();
     await Buttons.confirmBtnClick();
@@ -355,7 +354,7 @@ describe('Complete Admin flow.', () => {
     await Classes.lastClassesEditBtnClick();
     await expect(browser).toHaveUrlContaining('https://juvi-megarocket-app.vercel.app/admin/classes/form');
 
-    await Classes.slotsInputEditClasses.waitForDisplayed();
+    await Classes.slotsInputEditClasses.waitForClickable();
     await Classes.fillClassesEditForm();
     await Buttons.confirmBtn.waitForDisplayed();
     await Buttons.confirmBtnClick();

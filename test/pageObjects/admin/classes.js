@@ -40,7 +40,7 @@ get dayInputEditClasses() {
 }
 
 get hourInputEditClasses() {
-  return $(`[data-testid="admin-classes-add-form"] div:nth-child(4) input`)
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(4) select`)
 }
 
 get slotsInputEditClasses() {
@@ -75,19 +75,19 @@ async fillClassesAddForm() {
   await this.trainerInputEditClasses.selectByIndex(trainerCount - 1);
 
   await this.dayInputEditClasses.setValue('Friday');
-  await this.hourInputEditClasses.setValue('08:00');
+  const hourCount = await this.hourInputEditClasses.$$('option').length;
+  await this.hourInputEditClasses.selectByIndex(hourCount - 1);
   await this.slotsInputEditClasses.setValue('5');
 }
 
 async fillClassesEditForm() {
-  const activityCount = await this.activityInputEditClasses.$$('option').length;
-  await this.activityInputEditClasses.selectByIndex(activityCount - 2);
-
-  const trainerCount = await this.trainerInputEditClasses.$$('option').length;
-  await this.trainerInputEditClasses.selectByIndex(trainerCount - 2);
-
+  await this.activityInputEditClasses.waitForClickable({ timeout: 5000 });
+  await this.activityInputEditClasses.selectByIndex(1);
+  await this.trainerInputEditClasses.waitForClickable({ timeout: 5000 });
+  await this.trainerInputEditClasses.selectByIndex(1);
   await this.dayInputEditClasses.setValue('Tuesday');
-  await this.hourInputEditClasses.setValue('16:00');
+  await this.hourInputEditClasses.waitForClickable({ timeout: 5000 });
+  await this.hourInputEditClasses.selectByIndex(1);
   await this.slotsInputEditClasses.setValue('10');
 }
 
