@@ -33,8 +33,8 @@ class LogIn {
   }
 
   async fillFormLogInAdmin() {
-    await this.emailInput.setValue('juanignaciocanton1@gmail.com');
-    await this.passwordInput.setValue('Testing123');
+    await this.emailInput.setValue('octavitossse@gmail.com');
+    await this.passwordInput.setValue('Marianobondar123456');
   }
 
   async fillFormLogInTrainer() {
