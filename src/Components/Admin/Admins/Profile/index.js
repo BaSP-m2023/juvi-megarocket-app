@@ -172,14 +172,10 @@ const AdminProfile = () => {
           </fieldset>
         </div>
         <div className={styles.profileBtn}>
-          <Button type={'submit'} data-testid="submit-button" />
-          <Button
-            type={'cancel'}
-            onClick={() => history.push('/admin')}
-            data-testid="cancel-button"
-          />
+          <Button type={'submit'} testId="submit-button" />
+          <Button type={'cancel'} onClick={() => history.push('/admin')} testId="cancel-button" />
         </div>
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
         {modalDone && <ModalAlert text={msg} onClick={() => history.push('/admin')} />}
       </form>
     </div>
