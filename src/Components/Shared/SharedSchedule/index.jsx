@@ -122,6 +122,26 @@ const SharedSchedule = ({ user }) => {
     }
   };
 
+  const showTds = (hour, num) => {
+    return (
+      <td>
+        <a
+          onClick={() => {
+            onClick(matcherClass(subs, num, hour), matcherSub(subs, num, hour), true);
+          }}
+        >
+          {matcherClass(subs, num, hour)?.activity.name ?? ``}
+        </a>
+      </td>
+    );
+  };
+
+  const onClick = (selectedClass, selectedSub, showAlert) => {
+    setSelectedClass(selectedClass);
+    setSelectedSub(selectedSub);
+    setShowAlert(showAlert);
+  };
+
   return (
     <div className={styles.scheduleContainer}>
       <p>{`${nowDate.getFullYear()} ${nowDate.getMonth() + 1}`}</p>
@@ -135,22 +155,12 @@ const SharedSchedule = ({ user }) => {
           <tr key={hour} className={styles.tr}>
             <td>{hour}</td>
             <td>{'CLOSED'}</td>
-            <td>
-              <a
-                onClick={() => {
-                  setSelectedClass(matcherClass(subs, 1, hour));
-                  setSelectedSub(matcherSub(subs, 1, hour));
-                  setShowAlert(true);
-                }}
-              >
-                {matcherClass(subs, 1, hour)?.activity.name ?? ``}
-              </a>
-            </td>
-            <td>{matcherClass(subs, 2, hour)?.activity.name ?? ``}</td>
-            <td>{matcherClass(subs, 3, hour)?.activity.name ?? ``}</td>
-            <td>{matcherClass(subs, 4, hour)?.activity.name ?? ``}</td>
-            <td>{matcherClass(subs, 5, hour)?.activity.name ?? ``}</td>
-            <td>{matcherClass(subs, 6, hour)?.activity.name ?? ``}</td>
+            {showTds(hour, 1)}
+            {showTds(hour, 2)}
+            {showTds(hour, 3)}
+            {showTds(hour, 4)}
+            {showTds(hour, 5)}
+            {showTds(hour, 6)}
           </tr>
         ))}
       </table>
