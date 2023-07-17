@@ -1,11 +1,13 @@
-const TrainersPage = require ('../pageObjects/admin/trainersPage');
-const LogIn = require ('../pageObjects/sharedComponents/logIn');
-const Members = require('../pageObjects/admin/members');
-const Buttons = require('../pageObjects/sharedComponents/button');
-const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
-const ActivitiesForm = require('../pageObjects/admin/activities/activitiesForm');
-const ModalConfirm = require('../pageObjects/sharedComponents/modalConfirm')
-const Classes = require('../pageObjects/admin/classes');
+const TrainersPage = require ('../../test/pageObjects/admin/trainersPage.js');
+const LogIn = require ('../../test/pageObjects/sharedComponents/logIn.js');
+const Members = require('../../test/pageObjects/admin/members.js');
+const Buttons = require('../../test/pageObjects/sharedComponents/button.js');
+const ModalAlert = require('../../test/pageObjects/sharedComponents/modalAlert.js');
+const ActivitiesForm = require('../../test/pageObjects/admin/activities/activitiesForm.js');
+const ModalConfirm = require('../../test/pageObjects/sharedComponents/modalConfirm.js')
+const Classes = require('../../test/pageObjects/admin/classes.js');
+const Profile = require('../../test/pageObjects/admin/profile.js');
+const ActivitiesTable = require('../../test/pageObjects/admin/activitiesTable.js')
 
 describe('Complete Admin flow.', () => {
   beforeAll('Browser openning', () => {
@@ -83,10 +85,10 @@ describe('Complete Admin flow.', () => {
   })
   it('Submit form and check success alert', async () => {
     await ActivitiesForm.confirmBtnClick();
-    await expect(ActivitiesForm.modalAlertText).toBeDisplayed();
-    await expect(ActivitiesForm.modalAlertButton).toBeDisplayed();
-    await expect(ActivitiesForm.modalAlertText).toHaveTextContaining('Activity Crossfit was created successfully!');
-    await ActivitiesForm.confirmAlertClick();
+    await expect(ModalAlert.modalAlertText).toBeDisplayed();
+    await expect(ModalAlert.modalAlertButton).toBeDisplayed();
+    await expect(ModalAlert.modalAlertText).toHaveTextContaining('Activity Crossfit was created successfully!');
+    await ModalAlert.confirmAlertClick();
   })
 
   it('Navigation after create a new activity', async () => {
@@ -105,10 +107,10 @@ describe('Complete Admin flow.', () => {
   it('Modify and submit changes', async () => {
     await ActivitiesForm.fillForm('Boxing', 'This is also a very hardworking...');
     await ActivitiesForm.confirmBtnClick();
-    await expect(ActivitiesForm.modalAlertText).toBeDisplayed();
-    await expect(ActivitiesForm.modalAlertButton).toBeDisplayed();
-    await expect(ActivitiesForm.modalAlertText).toHaveTextContaining('was successfully updated');
-    await ActivitiesForm.confirmAlertClick();
+    await expect(ModalAlert.modalAlertText).toBeDisplayed();
+    await expect(ModalAlert.modalAlertButton).toBeDisplayed();
+    await expect(ModalAlert.modalAlertText).toHaveTextContaining('was successfully updated');
+    await ModalAlert.confirmAlertClick();
   })
   it('Navigation after editing an activity', async () => {
     await expect(browser).toHaveUrl('http://localhost:3000/admins/activities');
@@ -121,23 +123,35 @@ describe('Complete Admin flow.', () => {
     await expect(ModalConfirm.confirmationText).toHaveTextContaining('Are you sure you want to delete this item?');
     await expect(ModalConfirm.confirmModalBtn).toBeClickable();
     await ModalConfirm.confirmClick();
-    await expect(ActivitiesForm.modalAlertButton).toBeDisplayed();
-    await expect(ActivitiesForm.modalAlertText).toHaveTextContaining('was successfully deleted');
-  })
+    await expect(ModalAlert.modalAlertButton).toBeDisplayed();
+    await expect(ModalAlert.modalAlertText).toHaveTextContaining('was successfully deleted');
+  });
   it('Check if the new activity was successfully deleted', async () => {
     if(await expect(ActivitiesTable.newActivityName).toBeDisplayed()) {
       expect('1').toEqual('1');
     }
-  })
+  });
+
+  //edit Profile
+  it('edit profile', async() =>{
+    await Profile.profileNavbarClick();
+    await expect (Profile.profileForm).toBeDisplayed();
+    await Profile.profileForm("Alberto", "Martinez", "35665889", "3546598821",
+     "albert12@gmail.com", "Roldan", "albert12345");
+    await Buttons.submitBtn();
+    await expect (ModalAlert.modalAlertText).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
+    await expect (ModalAlert.modalAlertText).toHaveTextContaining('was successfully updated');
+    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin');
+  });
 
   //Star of members section
-
   it('Navigate to the members section', async () => {
     await Members.membersBtn.waitForDisplayed();
     await Members.membersBtnClick();
 
     await expect(browser).toHaveUrlContaining("admin/members");
-  })
+  });
 
   it('Verify the title is members and table is displayed.', async function () {
     await Members.membersTitle.waitForDisplayed();
@@ -153,12 +167,10 @@ describe('Complete Admin flow.', () => {
     await Members.lastMemberEditBtn.waitForDisplayed();
     await Members.lastMemberEditBtnClick();
     await expect(browser).toHaveUrlContaining("form");
-
     await Buttons.cancelBtn.scrollIntoView();
     await Buttons.cancelBtn.waitForDisplayed();
     await Buttons.cancelBtnClick();
     await Members.membersTable.waitForDisplayed();
-
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/members');
   });
 
