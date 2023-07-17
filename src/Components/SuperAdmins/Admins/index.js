@@ -24,11 +24,11 @@ function Admins() {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={styles.container} data-testid="sa-admin-section">
       <div className={styles.titleAdmin}>
         <h2>Admins</h2>
         <Link to="/super-admin/admins/form">
-          <Button type="add" resource="admin">
+          <Button type="add" resource="admin" testId="add-button">
             Add Admin
           </Button>
         </Link>
@@ -38,7 +38,12 @@ function Admins() {
           <h3>Is loading..</h3>
         </div>
       ) : (
-        <SharedTable data={data.list} handleDelete={onDelete} editLink="/admins/form/" />
+        <SharedTable
+          data={data.list}
+          handleDelete={onDelete}
+          editLink="/admins/form/"
+          testId="superadmin-admin-table"
+        />
       )}
       {isModalOpen && <ModalAlert text={modalText} onClick={closeModal} />}
     </section>

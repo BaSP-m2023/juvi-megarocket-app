@@ -10,7 +10,7 @@ const Schedule = () => {
     setMember(data.data);
   }, [data.data]);
 
-  return <SharedSchedule user={member} />;
+  return <SharedSchedule user={member} testId="member-schedule" />;
 };
 
 export default Schedule;
