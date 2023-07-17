@@ -184,12 +184,14 @@ const AdminsForm = ({ history }) => {
             </div>
           </fieldset>
         </div>
-        <Button type="submit" resource="Admin" />
-        <Button type="cancel" onClick={() => history.push('/super-admin/admins')} />
+        <div className={styles.btnForm}>
+          <Button type="submit" resource="Admin" />
+          <Button type="cancel" onClick={() => history.push('/super-admin/admins')} />
+          <Button className={styles.addButton} type="reset" onClick={() => reset()} />
+        </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && <ModalAlert text={msg} onClick={() => history.push('/super-admin/admins')} />}
       </form>
-      <Button className={styles.addButton} type="reset" onClick={() => reset()} />
     </div>
   );
 };

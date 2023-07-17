@@ -36,3 +36,8 @@
 .profileBtn {
   display: flex;
 }
+
+.btnForm {
+  display: flex;
+  justify-content: space-evenly;
+}
