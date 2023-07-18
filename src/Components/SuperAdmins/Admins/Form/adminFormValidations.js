@@ -46,5 +46,5 @@ export const schema = Joi.object({
       'string.pattern.base':
         'Password must contain at least 8 characters and cannot contain blank spaces'
     })
-    .required()
+    .allow('')
 });

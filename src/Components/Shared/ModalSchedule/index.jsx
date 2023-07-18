@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSubscriptionById, editSubscription } from 'redux/subscriptions/thunks';
 import styles from 'Components/Shared/ModalSchedule/modal-schedule.module.css';
 
-const ModalSchedule = ({ role, objClass, objSub, onClick }) => {
+const ModalSchedule = ({ role, user, objClass, objSub, onClick }) => {
   // add user to props
+  const [newSub, setNewSub] = useState({});
+  const dispatch = useDispatch();
+  const subData = useSelector((state) => state.subscriptions);
+
+  useEffect(() => {
+    dispatch(getSubscriptionById());
+  }, [subData.item, newSub]);
+
   const rulerCheck = (role) => {
     if (role === 'MEMBER') {
-      return (
-        <button
-          className={styles.subButton}
-          onClick={console.log('Should edit subscription and .push the new member')}
-        >
-          {'subscribe'}
-        </button>
-      );
+      if (checkSubscribe(objSub)) {
+        return (
+          <button
+            className={styles.subButton}
+            onClick={() => {
+              addMemberToSub(objSub, user._id);
+              dispatch(editSubscription(objSub._id, newSub));
+            }}
+          >
+            {'subscribe'}
+          </button>
+        );
+      } else {
+        return <p>{`You're subscribed for this class`}</p>;
+      }
     } else if (role === 'TRAINER') {
       return (
         <div>
@@ -24,8 +41,28 @@ const ModalSchedule = ({ role, objClass, objSub, onClick }) => {
         </div>
       );
     } else {
-      return <p></p>;
+      return (
+        <button
+          className={styles.subButton}
+          onClick={console.log('Should edit subscription and .push the new member')}
+        >
+          {'subscribe'}
+        </button>
+      );
     }
+  };
+
+  const checkSubscribe = (sub) => {
+    if (sub === subData.item) {
+      console.log('Yes');
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const addMemberToSub = (sub, membId) => {
+    setNewSub(sub.members.push(membId));
   };
 
   return (
