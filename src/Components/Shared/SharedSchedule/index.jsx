@@ -6,7 +6,7 @@ import { getClasses } from 'redux/classes/thunks';
 import { ModalSchedule } from 'Components/Shared';
 import styles from 'Components/Shared/SharedSchedule/shared-schedule.module.css';
 
-const SharedSchedule = ({ user, testId }) => {
+const SharedSchedule = ({ user, showAll, testId }) => {
   const [showAlert, setShowAlert] = React.useState(false);
   const [subs, setSubs] = React.useState([]);
   const [selectedSub, setSelectedSub] = React.useState({});
@@ -48,10 +48,12 @@ const SharedSchedule = ({ user, testId }) => {
   }, []);
 
   useEffect(() => {
-    if (sessionStorage.role === 'MEMBER') {
+    if (sessionStorage.role === 'MEMBER' && !showAll) {
       setSubs(memberSearch(user.email, subsData.list));
-    } else if (sessionStorage.role === 'TRAINER') {
+    } else if (sessionStorage.role === 'TRAINER' && !showAll) {
       setSubs(trainerSearch(user, subsData.list));
+    } else if (showAll) {
+      setSubs(subsData);
     }
   }, [sessionStorage.role]);
 
@@ -62,7 +64,7 @@ const SharedSchedule = ({ user, testId }) => {
 
   const matcherClass = (subs, scheduleDay, scheduleHour) => {
     let resp;
-    subs.forEach((sub) => {
+    subs?.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
