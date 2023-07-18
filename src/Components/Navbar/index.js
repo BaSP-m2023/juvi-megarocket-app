@@ -25,7 +25,7 @@ const Navbar = ({ routes }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [navVisible, expanded]);
 
   const getNavStyle = () => {
     const routeCount = routes.length;
