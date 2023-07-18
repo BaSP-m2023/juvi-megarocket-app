@@ -55,7 +55,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     } else if (showAll) {
       setSubs(subsData);
     }
-  }, [sessionStorage.role]);
+  }, [sessionStorage.role, subsData.list, classData.list]);
 
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
@@ -94,7 +94,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     try {
       const selectedSubs = [];
       subs.forEach((sub) => {
-        if (sub.trainer._id === user._id) {
+        if (sub?.classes?.trainer === user._id) {
           selectedSubs.push(sub);
         }
       });
@@ -107,7 +107,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
   const memberSearch = (email, subs) => {
     try {
       const selectedSubs = [];
-      subs.forEach((sub) => {
+      subs?.forEach((sub) => {
         sub.members.forEach((memb) => {
           if (memb.email === email) {
             selectedSubs.push(sub);
