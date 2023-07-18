@@ -10,7 +10,7 @@ const Schedule = () => {
 
   useEffect(() => {
     setMember(data.data);
-  }, [data.data]);
+  }, [data.data, gralSchedule, changeSchedule]);
 
   const onClick = () => {
     setGralSchedule(!gralSchedule);
@@ -25,7 +25,7 @@ const Schedule = () => {
     <div>
       <button onClick={onClick}>{`${changeSchedule}`}</button>
       {!gralSchedule && <SharedSchedule user={member} testId="member-schedule" />}
-      {gralSchedule && <SharedSchedule showAll={true} testId="member-schedule" />}
+      {gralSchedule && <SharedSchedule showAll={true} testId="member-schedule2" />}
     </div>
   );
 };

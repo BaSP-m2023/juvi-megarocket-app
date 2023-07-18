@@ -48,12 +48,12 @@ const SharedSchedule = ({ user, showAll, testId }) => {
   }, []);
 
   useEffect(() => {
-    if (sessionStorage.role === 'MEMBER' && !showAll) {
+    if (sessionStorage.role === 'MEMBER' && showAll !== true) {
       setSubs(memberSearch(user.email, subsData.list));
-    } else if (sessionStorage.role === 'TRAINER' && !showAll) {
+    } else if (sessionStorage.role === 'TRAINER' && showAll !== true) {
       setSubs(trainerSearch(user, subsData.list));
-    } else if (showAll) {
-      setSubs(subsData);
+    } else if (showAll === true) {
+      setSubs(subsData.list);
     }
   }, [sessionStorage.role, subsData.list, classData.list]);
 
@@ -64,7 +64,8 @@ const SharedSchedule = ({ user, showAll, testId }) => {
 
   const matcherClass = (subs, scheduleDay, scheduleHour) => {
     let resp;
-    subs?.forEach((sub) => {
+    console.log(subs);
+    subs.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
