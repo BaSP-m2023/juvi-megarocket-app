@@ -13,6 +13,7 @@ describe('Members complete flow.', function () {
     browser.setWindowSize(1440, 1024);
     browser.url('https://juvi-megarocket-app.vercel.app/');
   });
+
   it ('complete form', async () =>{
     await SignUpMember.SingUpNavbarClick();
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-up')
@@ -24,26 +25,6 @@ describe('Members complete flow.', function () {
     await expect(ModalAlert.modalAlertText).toBeDisplayed();
     await ModalAlert.confirmAlertClick();
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-in');
-  });
-
-  it('Log in with member user', async () => {
-    await SignIn.emailInput.waitForDisplayed();
-    await SignIn.passwordInput.waitForDisplayed();
-    await SignIn.fillFormLogInMember();
-    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('password');
-    await SignIn.showHidePasswordBtnClick();
-    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('text');
-    await SignIn.submitBtnClick();
-    expect(await ModalAlert.modalAlertMessage()).toContain('success');
-    await ModalAlert.confirmAlertClick();
-  });
-
-  it('navigate on membership', async ()=>{
-    await Membership.memebershipNavbarClick();
-    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/membership');
-    await expect (Membership.membershipScreen).toBeDisplayed();
-    await Membership.membershipCardClassicClick();
-    await expect (Membership.membershipCardClassickList).toBeDisplayed();
   });
 
   it('Log in with invalid credentials', async () => {
@@ -66,18 +47,6 @@ describe('Members complete flow.', function () {
     expect(await ModalAlert.modalAlertMessage()).toContain('Error');
     await ModalAlert.confirmAlertClick();
 
-  })
-  it ('complete form', async () =>{
-    await SignUpMember.SingUpNavbarClick();
-    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-up')
-    await SignUpMember.formSignUp("Armando", "Rodriguez", "rodri125@gmail.com", "rodri125@gmail.com", "31665222", "3415568223",
-     "Fisherton", "19-05-1998", "2000", "armando2514");
-    await SignUpMember.optionSelectBlackClick();
-    await browser.pause(2000);
-    await Buttons.submitBtnClick();
-    await expect(ModalAlert.modalAlertText).toBeDisplayed();
-    await ModalAlert.confirmAlertClick();
-    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-in');
   });
 
   it('Log in with member user', async () => {
@@ -90,6 +59,14 @@ describe('Members complete flow.', function () {
     await SignIn.submitBtnClick();
     expect(await ModalAlert.modalAlertMessage()).toContain('success');
     await ModalAlert.confirmAlertClick();
+  });
+
+  it('navigate on membership', async ()=>{
+    await Membership.memebershipNavbarClick();
+    await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/membership');
+    await expect (Membership.membershipScreen).toBeDisplayed();
+    await Membership.membershipCardClassicClick();
+    await expect (Membership.membershipCardClassickList).toBeDisplayed();
   });
 
   it('navigate on membership', async ()=>{
