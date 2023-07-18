@@ -46,6 +46,14 @@
 .authNav ul {
   height: 20vh;
 }
+
+.authNavBar ul {
+  height: 30vh;
+}
+.authNavBar ul li:nth-child(4) {
+  display: none;
+}
+
 .memberNav ul {
   height: 44vh;
 }
@@ -127,6 +135,12 @@
   }
 }
 @media screen and (max-width: 390px) {
+  .navHidden {
+    width: 9vw;
+    display: flex;
+    flex-direction: column;
+  }
+
   .navContainer li {
     padding-top: 0px;
   }
@@ -134,10 +148,10 @@
     padding-top: 50px;
   }
   .expandedNavbar {
-    width: 30vw;
+    max-width: 120px;
   }
   .navbar {
-    width: 260px;
+    max-width: 100px;
   }
   .navContainer a {
     font-size: 1rem;

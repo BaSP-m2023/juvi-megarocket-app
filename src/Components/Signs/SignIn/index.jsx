@@ -116,6 +116,7 @@ const Login = () => {
               </div>
             </fieldset>
           </div>
+          <a href="/auth/recover-password">Forgot password?</a>
           <Button type={'submit'} data-testid="submit-button" />
           <Button type={'cancel'} onClick={() => history.push('/')} testId="cancel-button" />
           {modal && (
