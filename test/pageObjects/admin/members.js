@@ -27,72 +27,36 @@ class MembersEditDelete {
       return $(`[data-testid="admin-members-add-form"] h1`)
   }
 
-  get nameLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(2) label`)
-  }
-
   get nameInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(2) input`)
-  }
-
-  get lastNameLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(3) label`)
   }
 
   get lastNameInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(3) input`)
   }
 
-  get dniLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(4) label`)
-  }
-
   get dniInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(4) input`)
-  }
-
-  get phoneLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(5) label`)
   }
 
   get phoneInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(5) input`)
   }
 
-  get emailLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(6) label`)
-  }
-
   get emailInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(6) input`)
-  }
-
-  get cityLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(7) label`)
   }
 
   get cityInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(7) input`)
   }
 
-  get birthDateLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(8) label`)
-  }
-
   get birthDateInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(8) input`)
   }
 
-  get zipLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(9) label`)
-  }
-
   get zipInputEditMembers() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(9) input`)
-  }
-
-  get passwordLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(10) label`)
   }
 
   get passwordInputEditMembers() {
@@ -101,10 +65,6 @@ class MembersEditDelete {
 
   get showHidePasswordBtn() {
       return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(10) svg`)
-  }
-
-  get membershipLabelEditMembers() {
-      return $(`[data-testid="admin-members-add-form"] fieldset:nth-child(11) label`)
   }
 
   get membershipInputEditMembers() {
