@@ -129,6 +129,11 @@ const MemberProfile = () => {
 
   const onInvalid = (errors) => console.log(errors);
 
+  const handleClick = () => {
+    const newUrl = '/member';
+    history.replace(newUrl);
+    window.location.reload();
+  };
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
@@ -271,7 +276,7 @@ const MemberProfile = () => {
 
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
 
-        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/member')} />}
+        {modalDone && <ModalAlert text={msg} onClick={handleClick} />}
       </form>
 
       <Button
