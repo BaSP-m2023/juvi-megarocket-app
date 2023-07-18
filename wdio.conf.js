@@ -29,10 +29,10 @@ exports.config = {
   ],
   // Patterns to exclude.
   exclude: [
-      './test/specs/member-e2e.js',
+      //'./test/specs/member-e2e.js',
       //'./test/specs/admin-e2e.js',
-      './test/specs/superadmin-e2e.js',
-      './test/specs/trainer-e2e.js'
+      //'./test/specs/superadmin-e2e.js',
+      //'./test/specs/trainer-e2e.js'
   ],
   //
   // ============
@@ -110,7 +110,7 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: ['chromedriver'],
- 
+
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
   // see also: https://webdriver.io/docs/frameworks
@@ -133,7 +133,7 @@ exports.config = {
   // see also: https://webdriver.io/docs/dot-reporter
   reporters: ['spec',['allure', {outputDir: 'allure-results', disableWebdriverScreenshotsReporting: true}]],
 
- 
+
   //
   // Options to be passed to Jasmine.
   jasmineOpts: {
@@ -147,7 +147,7 @@ exports.config = {
           // do something
       }
   },
- 
+
   //
   // =====
   // Hooks

@@ -47,7 +47,7 @@ class Profile {
     await this.inputPhone.setValue(phone);
     await this.inputEmail.setValue(email);
     await this.inputCity.setValue(city);
-    await this.inputPassword.setValue(password);
+    //await this.inputPassword.setValue(password);
   }
 
   async profileNavbarClick(){
