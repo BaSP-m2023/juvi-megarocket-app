@@ -40,10 +40,6 @@ class Profile {
     return $('#root > div > div > div > div > form > div:nth-child(1) > fieldset:nth-child(8) > div > svg > path');
   }
 
-  get buttonSubmit(){
-    return $('#root > div > div > div > div > form > div.adminprofile_profileBtn__7J6cX > div:nth-child(1) > button')
-  }
-
   async profileForm(name, lastname, dni, phone, email, city, password) {
     await this.inputName.setValue(name);
     await this.inputLastName.setValue(lastname);
@@ -56,6 +52,10 @@ class Profile {
 
   async profileNavbarClick(){
     await this.profileNavbar.click();
+  }
+
+  async pathClick(){
+    await this.path.click();
   }
 
 }
