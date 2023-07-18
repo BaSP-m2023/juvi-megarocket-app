@@ -1,0 +1,52 @@
+.recover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  background-color: #fff;
+  width: 40vw;
+  height: 60vh;
+  margin: 50px auto 0;
+  border: 1px solid darkgray;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  border-radius: 5%;
+}
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  border: none;
+}
+.btnRecover {
+  margin-top: 20px;
+  display: flex;
+  width: 18vw;
+  justify-content: space-evenly;
+}
+
+.fieldset input {
+  margin-top: 10px;
+}
+.btnConfirm {
+  background-color: #fddba1;
+  color: #373867;
+}
+.btnCancel {
+  color: #373867;
+}
+.btnConfirm,
+.btnCancel {
+  width: 6vw;
+  height: 3vw;
+  border-radius: 9%;
+  border: 1px solid;
+}
+.btnCancel:hover {
+  background-color: #373867;
+  color: #fff;
+}
+.btnConfirm:hover {
+  background-color: #8ad670;
+  color: #fff;
+}

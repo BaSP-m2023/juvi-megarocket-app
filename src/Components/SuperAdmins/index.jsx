@@ -9,7 +9,7 @@ import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superadmins/thunk
 const SuperAdminsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
-  const { list, isLoading } = useSelector((state) => state.superAdmins);
+  const { list, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSuperAdmins());
@@ -32,7 +32,11 @@ const SuperAdminsPage = () => {
         {isLoading ? (
           <div>Is loading</div>
         ) : (
-          <SharedTable data={list} editLink={'super-admins/form/'} handleDelete={deleteItem} />
+          <SharedTable
+            data={list}
+            editLink={'super-admins/admin/form/'}
+            handleDelete={deleteItem}
+          />
         )}
       </section>
       {showModal && <ModalAlert text={modalText} onClick={closeModal} />}

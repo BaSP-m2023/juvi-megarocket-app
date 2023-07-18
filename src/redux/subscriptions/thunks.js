@@ -58,7 +58,7 @@ export const getSubscriptionById = (id, setSelectedSubscription) => {
   };
 };
 
-export const deleteSubscription = (id, setAlertText, setShowAlert) => {
+export const deleteSubscription = (id) => {
   return async (dispatch) => {
     const token = sessionStorage.getItem('token');
     try {
@@ -73,17 +73,13 @@ export const deleteSubscription = (id, setAlertText, setShowAlert) => {
       }
       const { data, message } = responseJson;
       dispatch(deleteSubscriptionsSuccess({ data, message }));
-      setShowAlert(true);
-      setAlertText(responseJson.message);
     } catch (error) {
       dispatch(deleteSubscriptionsError(error.message));
-      setAlertText(error);
-      setShowAlert(true);
     }
   };
 };
 
-export const addSubscription = (formData, setAlertText, setShowAlert) => {
+export const addSubscription = (formData) => {
   return async (dispatch) => {
     const token = sessionStorage.getItem('token');
     dispatch(postSubscriptionsPending());
@@ -104,20 +100,16 @@ export const addSubscription = (formData, setAlertText, setShowAlert) => {
       const responseData = await response.json();
       if (response.ok) {
         dispatch(postSubscriptionsSuccess(responseData.data));
-        setAlertText(responseData.message);
-        setShowAlert(true);
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
       dispatch(postSubscriptionsError(error));
-      setAlertText(error.message);
-      setShowAlert(true);
     }
   };
 };
 
-export const editSubscription = (id, formData, setAlertText, setShowAlert) => {
+export const editSubscription = (id, formData) => {
   return async (dispatch) => {
     const token = sessionStorage.getItem('token');
     const requestData = {
@@ -139,15 +131,11 @@ export const editSubscription = (id, formData, setAlertText, setShowAlert) => {
       const data = responseData.data;
       if (response.ok) {
         dispatch(putSubscriptionsSuccess(data));
-        setAlertText(responseData.message);
-        setShowAlert(true);
       } else {
         throw new Error(responseData.message);
       }
     } catch (error) {
       dispatch(putSubscriptionsError(error));
-      setAlertText(error.message);
-      setShowAlert(true);
     }
   };
 };
