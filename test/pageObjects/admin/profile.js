@@ -37,7 +37,7 @@ class Profile {
   }
 
   get path (){
-    return $('#root > div > div > div > div > form > div:nth-child(1) > fieldset:nth-child(8) > div > svg > path');
+    return $('[data-testid="admin-profile-form"] svg path');
   }
 
   async profileForm(name, lastname, dni, phone, email, city, password) {
