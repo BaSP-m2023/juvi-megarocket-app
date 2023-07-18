@@ -1,18 +1,18 @@
 const SignUpMember = require('../pageObjects/member/signUpPage');
 const Buttons = require ('../pageObjects/sharedComponents/button');
 const LogIn = require('../pageObjects/sharedComponents/logIn');
-const EditProfile = require('../pageObjects/member/editProfile');
 const Membership = require('../pageObjects/member/membership');
 const ProfileForm = require('../pageObjects/member/profileForm');
 const Activities = require('../pageObjects/member/activities');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
+const MemberNavbar = require ('../../test/pageObjects/navbar/memberNavbar');
+const ModalConfirm = require ('../../test/pageObjects/sharedComponents/modalConfirm');
 
 describe('Members complete flow.', function () {
   beforeAll('Open browser for test activities display', async function () {
     browser.setWindowSize(1440, 1024);
     browser.url('https://juvi-megarocket-app.vercel.app/');
   });
-
   it ('complete form', async () =>{
     await SignUpMember.SingUpNavbarClick();
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/auth/sign-up')
@@ -138,18 +138,11 @@ describe('Members complete flow.', function () {
   });
 
 //Start of profile section
-  it('change profile', async()=> {
-    await SignUpMember.homeNavbarClick();
-    await EditProfile.profileMemberNavbarClick();
-    await browser.refresh();
-    await EditProfile.editFormMember("3546623889", "Alvear");
-    await EditProfile.optionSelectClassicClick();
-    await Buttons.submitBtnClick();
-    await expect (ModalAlert.modalAlertText).toContain('member update');
-    await ModalAlert.modalAlertButtonClick();
-    await Buttons.logoutBtnClick();
-  });
 
+  it('Navigation to profile section', async()=> {
+    await expect(MemberNavbar.profile).toBeDisplayed();
+    await MemberNavbar.profileClick();
+  });
   it('Checks all the labels of the form', async() => {
     await expect(ProfileForm.nameLabel).toHaveTextContaining('Name')
     await expect(ProfileForm.lastNameLabel).toHaveTextContaining('Last Name')
@@ -177,15 +170,15 @@ describe('Members complete flow.', function () {
     await ProfileForm.fillProfileForm('Juan', 'Canton', '42129353', '3413520137',
     'juanignaciocanton1@gmail.com', 'Buenos aires', '21-08-1999',
     '4321', 'newpass123')
-    await expect(ProfileForm.submitBtn).toBeDisplayed();
-    await ProfileForm.submitBtnClick();
+    await expect(Buttons.submitBtn).toBeDisplayed();
+    await Buttons.submitBtnClick();
   })
   it('Verification of success modal and click', async() => {
-    await expect(ProfileForm.successModalText).toHaveTextContaining('Member updated correctly!');
-    await expect(ProfileForm.successModalBtn).toBeDisplayed();
-    await ProfileForm.successBtnClick();
+    await expect(ModalAlert.modalAlertText).toHaveTextContaining('Member updated correctly!');
+    await expect(ModalAlert.modalAlertButton).toBeDisplayed();
+    await ModalAlert.confirmAlertClick();
   })
   it('Correct navigation to members panel', async() => {
-    await expect(browser).toHaveUrl('http://localhost:3000/members')
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member')
   })
 });

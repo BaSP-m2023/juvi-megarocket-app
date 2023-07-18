@@ -8,7 +8,6 @@ class ModalAlert {
   async confirmAlertClick() {
     await this.modalAlertButton.click();
   }
-
   async modalAlertMessage() {
     return await this.modalAlertText.getText();
   }

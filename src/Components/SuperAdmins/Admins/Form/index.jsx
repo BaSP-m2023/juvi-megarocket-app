@@ -1,24 +1,26 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from 'Components/Admin/Admins/Profile/adminprofile.module.css';
-import { schema } from 'Components/Admin/Admins/Form/adminFormValidations';
-import { ModalAlert, Button, Input } from 'Components/Shared';
-import { useHistory } from 'react-router-dom';
-import { editAdmin } from 'redux/admins/thunks';
+import styles from './form.module.css';
 
-const AdminProfile = () => {
+import { schema } from './adminFormValidations';
+import { ModalAlert, Button, Input } from 'Components/Shared';
+import { getByIdAdmins, editAdmin, addAdmin } from 'redux/admins/thunks';
+
+const AdminsForm = ({ history }) => {
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { data: admin } = useSelector((state) => state.auth);
+  const data = useSelector((state) => state.admins);
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const [text, setText] = useState('');
 
   const {
     register,
@@ -29,15 +31,40 @@ const AdminProfile = () => {
     resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      firstName: admin?.firstName ?? '',
-      lastName: admin?.lastName ?? '',
-      dni: admin?.dni ?? '',
-      phone: admin?.phone ?? '',
-      email: admin?.email ?? '',
-      city: admin?.city ?? '',
-      password: admin?.password ?? ''
+      firstName: data.item?.firstName || '',
+      lastName: data.item?.lastName || '',
+      dni: data.item?.dni || '',
+      phone: data.item?.phone || '',
+      email: data.item?.email || '',
+      city: data.item?.city || '',
+      password: data.item?.password || ''
     }
   });
+
+  useEffect(() => {
+    console.log(data.item);
+    if (id) {
+      dispatch(getByIdAdmins(id));
+      setText('Edit admin');
+    } else {
+      data.item = {};
+      setText('Add admin');
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (data.item) {
+      reset({
+        firstName: data.item?.firstName || '',
+        lastName: data.item?.lastName || '',
+        dni: data.item?.dni || '',
+        phone: data.item?.phone || '',
+        email: data.item?.email || '',
+        city: data.item?.city || '',
+        password: data.item?.password || ''
+      });
+    }
+  }, [data.item]);
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -52,27 +79,13 @@ const AdminProfile = () => {
       setModalDone(!modalDone);
     }
   };
-  useEffect(() => {
-    if (admin) {
-      reset({
-        firstName: admin?.firstName || '',
-        lastName: admin?.lastName || '',
-        dni: admin?.dni || '',
-        phone: admin?.phone || '',
-        email: admin?.email || '',
-        city: admin?.city || '',
-        password: admin?.password || ''
-      });
-    }
-  }, [admin]);
 
   const onSubmit = async (data) => {
     try {
-      if (data.password === '') {
-        const { password, _id, __v, ...resData } = data;
-        dispatch(editAdmin(admin._id, resData, switchModal));
+      if (text === 'Add admin') {
+        dispatch(addAdmin(data, switchModal));
       } else {
-        dispatch(editAdmin(admin._id, data, switchModal));
+        dispatch(editAdmin(id, data, switchModal));
       }
     } catch (error) {
       switchModal(true, error);
@@ -83,16 +96,20 @@ const AdminProfile = () => {
 
   return (
     <div>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer} data-testid="admin-profile-form">
-          <h1>Edit Profile</h1>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit, onInvalid)}
+        data-testid="admin-form"
+      >
+        <div className={styles.formContainer}>
+          <h1>{text}</h1>
           <fieldset className={styles.fieldset}>
             <Input
               labelText="First Name"
               className={styles.input}
-              name={'firstName'}
+              name="firstName"
               type="text"
-              placeholder="Ex: Gianluca"
+              placeholder="Enter first name"
               error={errors.firstName?.message}
               register={register}
             />
@@ -101,9 +118,9 @@ const AdminProfile = () => {
             <Input
               labelText="Last Name"
               className={styles.input}
-              name={'lastName'}
+              name="lastName"
               type="text"
-              placeholder="Ex: Agrano"
+              placeholder="Enter last name"
               error={errors.lastName?.message}
               register={register}
             />
@@ -112,9 +129,9 @@ const AdminProfile = () => {
             <Input
               labelText="DNI"
               className={styles.input}
-              name={'dni'}
+              name="dni"
               type="number"
-              placeholder="Ex: 44897162"
+              placeholder="Enter DNI"
               error={errors.dni?.message}
               register={register}
             />
@@ -123,9 +140,9 @@ const AdminProfile = () => {
             <Input
               labelText="Phone"
               className={styles.input}
-              name={'phone'}
+              name="phone"
               type="number"
-              placeholder="Ex: 1142642634"
+              placeholder="Enter phone number"
               error={errors.phone?.message}
               register={register}
             />
@@ -134,9 +151,9 @@ const AdminProfile = () => {
             <Input
               labelText="Email"
               className={styles.input}
-              name={'email'}
+              name="email"
               type="text"
-              placeholder="example@example.com"
+              placeholder="Enter email address"
               error={errors.email?.message}
               register={register}
             />
@@ -145,9 +162,9 @@ const AdminProfile = () => {
             <Input
               labelText="City"
               className={styles.input}
-              name={'city'}
+              name="city"
               type="text"
-              placeholder="Ex: Rosario"
+              placeholder="Enter city"
               error={errors.city?.message}
               register={register}
             />
@@ -157,9 +174,9 @@ const AdminProfile = () => {
               <Input
                 labelText="Password"
                 className={styles.input}
-                name={'password'}
+                name="password"
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Password"
+                placeholder="Enter password"
                 error={errors.password?.message}
                 register={register}
               />
@@ -171,15 +188,23 @@ const AdminProfile = () => {
             </div>
           </fieldset>
         </div>
-        <div className={styles.profileBtn}>
-          <Button type={'submit'} testId="submit-button" />
-          <Button type={'cancel'} onClick={() => history.push('/admin')} testId="cancel-button" />
-        </div>
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
-        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/admin')} />}
+        <Button type="submit" resource="Admin" testId="submit-button" />
+        <Button
+          type="cancel"
+          onClick={() => history.push('/super-admin/admins')}
+          testId="cancel-button"
+        />
+        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
+        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/super-admin/admins')} />}
       </form>
+      <Button
+        className={styles.addButton}
+        type="reset"
+        onClick={() => reset()}
+        testId="reset-button"
+      />
     </div>
   );
 };
 
-export default AdminProfile;
+export default AdminsForm;

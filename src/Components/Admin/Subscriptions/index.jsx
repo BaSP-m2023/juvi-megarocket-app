@@ -27,7 +27,7 @@ function Subscriptions() {
   return (
     <>
       <section className={styles.container}>
-        <Link to="/admins/subscriptions/form">
+        <Link to="/admin/subscriptions/form">
           <Button type="add" resource="Subscription"></Button>
         </Link>
         {isLoading ? (
@@ -35,7 +35,7 @@ function Subscriptions() {
         ) : (
           <SharedTable
             data={list}
-            editLink={'/admins/subscriptions/form/'}
+            editLink={'/admin/subscriptions/form/'}
             handleDelete={handleDelete}
           />
         )}

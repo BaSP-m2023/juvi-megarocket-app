@@ -24,7 +24,7 @@ function Admins() {
   };
 
   return (
-    <section className={styles.container} data-testid="superadmin-admins-section">
+    <section className={styles.container} data-testid="sa-admin-section">
       <div className={styles.titleAdmin}>
         <h2>Admins</h2>
         <Link to="/super-admin/admins/form">
@@ -41,8 +41,8 @@ function Admins() {
         <SharedTable
           data={data.list}
           handleDelete={onDelete}
-          editLink="/super-admin/admins/form/"
-          testId="superadmin-admins-table"
+          editLink="/admins/form/"
+          testId="superadmin-admin-table"
         />
       )}
       {isModalOpen && <ModalAlert text={modalText} onClick={closeModal} />}
