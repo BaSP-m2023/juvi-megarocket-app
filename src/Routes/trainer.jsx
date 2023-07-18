@@ -1,7 +1,6 @@
 import Home from 'Components/Home';
 import Profile from 'Components/Trainer/Profile';
-/* import Schedule from 'Components/Trainer/Schedule'; */
-
+import Schedule from 'Components/Trainer/Schedule';
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from 'Components/Layout';
@@ -28,7 +27,7 @@ const MemberRoutes = () => {
       <Switch>
         <Route exact path={`${url}/`} component={Home} />
         <Route exact path={`${url}/profile`} component={Profile} />
-        {/*     <Route exact path={`${url}/schedule`} component={Schedule} /> */}
+        <Route exact path={`${url}/schedule`} component={Schedule} />
       </Switch>
     </Layout>
   );
