@@ -9,10 +9,28 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
+.modal h1 {
+  color: #f9a414;
+  margin-left: 20px;
+  font-size: xx-large;
+  font-weight: bold;
+  align-self: baseline;
+  border-bottom: 1px solid;
+}
+.activityName {
+  margin-top: 10px;
+  font-size: xx-large;
+  font-weight: bold;
+}
+.slots {
+  align-self: baseline;
+  padding-left: 20px;
+}
 .modal-content {
   display: flex;
   flex-direction: column;
+  width: 30vw;
+  height: 54vh;
   background-color: #0f232e;
   position: relative;
   padding: 20px;
@@ -31,35 +49,32 @@
 
 .modal-content button {
   padding: 10px 20px;
-  background-color: #F9A414;
-  color: #0f232e;
+  background-color: #f9a414;
+  color: black;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
-
   font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 500;
+  font-style: small;
+  font-weight: 400;
   font-size: 24.8358px;
   line-height: 29px;
   text-align: center;
 }
+.modal-content button:hover {
+  background-color: #4ff216;
+  color: #fff;
+}
 
-.a {
-  align-self: flex-end;
-  width: 15px;
-  height: 15px;
-  background-color: #5e5e5e;
-  color: #0f232e;
-  border: 1px solid #333333;
-  border-radius: 10px;
+.close {
   cursor: pointer;
-  font-size: 16px;
-  text-align: center;
+  align-self: flex-end;
+  width: 2vw;
+  height: 3vh;
 }
 
 .a:hover {
-  scale: 1.2;
+  color: red;
   font-size: 17px;
   transition: 0.5s;
 }
