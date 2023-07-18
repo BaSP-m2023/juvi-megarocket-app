@@ -12,6 +12,7 @@ import Profile from 'Components/Admin/Admins/Profile';
 import ActivitiesForm from 'Components/Admin/Activities/Form';
 import { Route, useRouteMatch, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from 'Components/Layout';
+import EditPassword from 'Components/Admin/Admins/EditPassword/editPassword';
 
 const routes = [
   {
@@ -66,6 +67,7 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/activities/ActivitiesForm`} component={ActivitiesForm} />
         <Route exact path={`${url}/activities/ActivitiesForm/:id`} component={ActivitiesForm} />
         <Route exact path={`${url}/profile`} component={Profile} />
+        <Route exact path={`${url}/profile/changepassword`} component={EditPassword} />
       </Switch>
     </Layout>
   );

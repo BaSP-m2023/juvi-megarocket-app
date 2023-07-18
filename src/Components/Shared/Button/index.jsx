@@ -30,6 +30,9 @@ const Button = ({ type, resource, onClick, testId }) => {
       case 'reset':
         text = 'Reset';
         return styles.btnReset;
+      case 'changePassword':
+        text = 'Change password';
+        return styles.btnCancel;
       default:
         return styles.btn;
     }

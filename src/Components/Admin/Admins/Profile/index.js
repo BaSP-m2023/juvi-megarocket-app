@@ -10,6 +10,7 @@ import { schema } from 'Components/Admin/Admins/Form/adminFormValidations';
 import { ModalAlert, Button, Input } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { editAdmin } from 'redux/admins/thunks';
+import EditPassword from '../EditPassword/editPassword';
 
 const AdminProfile = () => {
   const [modal, setModal] = useState(false);
@@ -19,6 +20,7 @@ const AdminProfile = () => {
   const { data: admin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [showEditPassword, setShowEditPassword] = useState(false);
 
   const {
     register,
@@ -41,6 +43,14 @@ const AdminProfile = () => {
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
+  };
+  const openEditPassword = () => {
+    history.push('profile/changepassword');
+    // setShowEditPassword(true);
+  };
+
+  const closeEditPassword = () => {
+    setShowEditPassword(false);
   };
 
   const switchModal = (error, msg) => {
@@ -170,6 +180,7 @@ const AdminProfile = () => {
                 placeholder="Password"
                 error={errors.password?.message}
                 register={register}
+                readOnly={!showEditPassword}
               />
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
@@ -177,6 +188,7 @@ const AdminProfile = () => {
                 onClick={togglePassword}
               />
             </div>
+            <Button type={'changePassword'} onClick={openEditPassword}></Button>
           </fieldset>
         </div>
         <div className={styles.profileBtn}>
@@ -185,6 +197,7 @@ const AdminProfile = () => {
         </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
         {modalDone && <ModalAlert text={msg} onClick={handleClick} />}
+        {showEditPassword && <EditPassword adminId={admin?._id} onClose={closeEditPassword} />}
       </form>
     </div>
   );
