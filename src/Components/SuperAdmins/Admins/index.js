@@ -24,11 +24,11 @@ function Admins() {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={styles.container} data-testid="sa-admin-section">
       <div className={styles.titleAdmin}>
         <h2>Admins</h2>
         <Link to="/super-admin/admins/form">
-          <Button type="add" resource="admin">
+          <Button type="add" resource="admin" testId="add-button">
             Add Admin
           </Button>
         </Link>
@@ -42,6 +42,7 @@ function Admins() {
           data={data.list}
           handleDelete={onDelete}
           editLink="/super-admin/admins/form/"
+          testId="superadmin-admin-table"
         />
       )}
       {isModalOpen && <ModalAlert text={modalText} onClick={closeModal} />}

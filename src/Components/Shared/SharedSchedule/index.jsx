@@ -6,7 +6,7 @@ import { getClasses } from 'redux/classes/thunks';
 import { ModalSchedule } from 'Components/Shared';
 import styles from 'Components/Shared/SharedSchedule/shared-schedule.module.css';
 
-const SharedSchedule = ({ user }) => {
+const SharedSchedule = ({ user, testId }) => {
   const [showAlert, setShowAlert] = React.useState(false);
   const [subs, setSubs] = React.useState([]);
   const [selectedSub, setSelectedSub] = React.useState({});
@@ -141,7 +141,7 @@ const SharedSchedule = ({ user }) => {
   return (
     <div className={styles.scheduleContainer}>
       <p>{`${nowDate.getFullYear()} ${nowDate.getMonth() + 1}`}</p>
-      <table className={styles.scheduleTable}>
+      <table className={styles.scheduleTable} data-testid={testId}>
         <tr>
           {week.map((day) => (
             <th key={day}> {day} </th>
