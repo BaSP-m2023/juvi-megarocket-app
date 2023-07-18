@@ -131,9 +131,13 @@ export const editActivity = (
 };
 export const getByIdActivity = (id) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getByIdActivityPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const responseJson = await response.json();
       const data = responseJson.data;
       if (responseJson.error) {
