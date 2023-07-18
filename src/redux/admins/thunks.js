@@ -37,9 +37,13 @@ export const getAdmins = () => {
 };
 export const getByIdAdmins = (id) => {
   return async (dispatch) => {
+    const token = sessionStorage.getItem('token');
     try {
       dispatch(getByIdAdminsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const responseJson = await response.json();
       const data = responseJson.data;
       if (responseJson.error) {

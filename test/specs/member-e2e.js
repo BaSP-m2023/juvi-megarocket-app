@@ -1,6 +1,6 @@
 const SignUpMember = require('../pageObjects/member/signUpPage');
 const Buttons = require ('../pageObjects/sharedComponents/button');
-const LogIn = require('../pageObjects/sharedComponents/logIn');
+const SignIn = require('../../test/pageObjects/sharedComponents/signIn');
 const Membership = require('../pageObjects/member/membership');
 const ProfileForm = require('../pageObjects/member/profileForm');
 const Activities = require('../pageObjects/member/activities');
@@ -28,21 +28,21 @@ describe('Members complete flow.', function () {
   });
 
   it('Log in with invalid credentials', async () => {
-    await LogIn.signInBtn.waitForDisplayed();
-    await LogIn.signInBtnClick();
+    await SignIn.signInBtn.waitForDisplayed();
+    await SignIn.signInBtnClick();
 
     await expect(browser).toHaveUrlContaining("sign-in");
 
-    await LogIn.emailInput.waitForDisplayed();
-    await LogIn.passwordInput.waitForDisplayed();
-    await LogIn.emailInput.setValue('any@thing.com');
-    await LogIn.passwordInput.setValue('wrongPassword');
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
-    await LogIn.showHidePasswordBtnClick();
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
-    await LogIn.showHidePasswordBtnClick();
+    await SignIn.emailInput.waitForDisplayed();
+    await SignIn.passwordInput.waitForDisplayed();
+    await SignIn.emailInput.setValue('any@thing.com');
+    await SignIn.passwordInput.setValue('wrongPassword');
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('password');
+    await SignIn.showHidePasswordBtnClick();
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('text');
+    await SignIn.showHidePasswordBtnClick();
 
-    await LogIn.submitBtnClick();
+    await SignIn.submitBtnClick();
 
     expect(await ModalAlert.modalAlertMessage()).toContain('Error');
     await ModalAlert.confirmAlertClick();
@@ -50,13 +50,13 @@ describe('Members complete flow.', function () {
   });
 
   it('Log in with member user', async () => {
-    await LogIn.emailInput.waitForDisplayed();
-    await LogIn.passwordInput.waitForDisplayed();
-    await LogIn.fillFormLogInMember();
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
-    await LogIn.showHidePasswordBtnClick();
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
-    await LogIn.submitBtnClick();
+    await SignIn.emailInput.waitForDisplayed();
+    await SignIn.passwordInput.waitForDisplayed();
+    await SignIn.fillFormLogInMember();
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('password');
+    await SignIn.showHidePasswordBtnClick();
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('text');
+    await SignIn.submitBtnClick();
     expect(await ModalAlert.modalAlertMessage()).toContain('success');
     await ModalAlert.confirmAlertClick();
   });

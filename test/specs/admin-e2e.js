@@ -1,5 +1,5 @@
 const TrainersPage = require ('../pageObjects/admin/trainersPage');
-const LogIn = require ('../pageObjects/sharedComponents/logIn');
+const SignIn = require ('../../test/pageObjects/sharedComponents/signIn');
 const Members = require('../pageObjects/admin/members');
 const Buttons = require('../pageObjects/sharedComponents/button');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
@@ -17,21 +17,21 @@ describe('Complete Admin flow.', () => {
   })
 
   it('Log in with invalid credentials', async () => {
-    await LogIn.signInBtn.waitForDisplayed();
-    await LogIn.signInBtnClick();
+    await SignIn.signInBtn.waitForDisplayed();
+    await SignIn.signInBtnClick();
 
     await expect(browser).toHaveUrlContaining("sign-in");
 
-    await LogIn.emailInput.waitForDisplayed();
-    await LogIn.passwordInput.waitForDisplayed();
-    await LogIn.emailInput.setValue('any@thing.com');
-    await LogIn.passwordInput.setValue('wrongPassword');
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
-    await LogIn.showHidePasswordBtnClick();
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
-    await LogIn.showHidePasswordBtnClick();
+    await SignIn.emailInput.waitForDisplayed();
+    await SignIn.passwordInput.waitForDisplayed();
+    await SignIn.emailInput.setValue('any@thing.com');
+    await SignIn.passwordInput.setValue('wrongPassword');
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('password');
+    await SignIn.showHidePasswordBtnClick();
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('text');
+    await SignIn.showHidePasswordBtnClick();
 
-    await LogIn.submitBtnClick();
+    await SignIn.submitBtnClick();
 
     expect(await ModalAlert.modalAlertMessage()).toContain('Error');
     await ModalAlert.confirmAlertClick();
@@ -39,16 +39,16 @@ describe('Complete Admin flow.', () => {
   })
 
   it('Log in with admin user', async () => {
-    await LogIn.signInBtn.waitForDisplayed();
-    await LogIn.signInBtnClick();
+    await SignIn.signInBtn.waitForDisplayed();
+    await SignIn.signInBtnClick();
     await expect(browser).toHaveUrlContaining("sign-in");
-    await LogIn.emailInput.waitForDisplayed();
-    await LogIn.passwordInput.waitForDisplayed();
-    await LogIn.fillFormLogInAdmin();
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('password');
-    await LogIn.showHidePasswordBtnClick();
-    expect(await LogIn.passwordInput.getAttribute('type')).toEqual('text');
-    await LogIn.submitBtnClick();
+    await SignIn.emailInput.waitForDisplayed();
+    await SignIn.passwordInput.waitForDisplayed();
+    await SignIn.fillFormLogInAdmin();
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('password');
+    await SignIn.showHidePasswordBtnClick();
+    expect(await SignIn.passwordInput.getAttribute('type')).toEqual('text');
+    await SignIn.submitBtnClick();
     expect(await ModalAlert.modalAlertMessage()).toContain('success');
     await ModalAlert.confirmAlertClick();
     await expect(browser).toHaveUrlContaining("admin");

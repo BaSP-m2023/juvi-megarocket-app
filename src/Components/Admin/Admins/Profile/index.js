@@ -81,6 +81,14 @@ const AdminProfile = () => {
 
   const onInvalid = (errors) => console.log(errors);
 
+  const handleClick = () => {
+    const newUrl = '/admin';
+
+    history.replace(newUrl);
+
+    window.location.reload();
+  };
+
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
@@ -176,7 +184,7 @@ const AdminProfile = () => {
           <Button type={'cancel'} onClick={() => history.push('/admin')} testId="cancel-button" />
         </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
-        {modalDone && <ModalAlert text={msg} onClick={() => history.push('/admin')} />}
+        {modalDone && <ModalAlert text={msg} onClick={handleClick} />}
       </form>
     </div>
   );
