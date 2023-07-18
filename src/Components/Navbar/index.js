@@ -15,17 +15,32 @@ const Navbar = ({ routes }) => {
     setNavVisible(false);
   };
   useEffect(() => {
+    let resizeTimeout;
+
     const handleResize = () => {
-      const windowWidth = window.innerWidth;
-      const isDesktop = windowWidth >= 1024;
-      setNavVisible(isDesktop);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const windowWidth = window.innerWidth;
+        const isDesktop = windowWidth >= 1024;
+
+        if (!navVisible && isDesktop) {
+          setNavVisible(true);
+        } else if (navVisible && !isDesktop) {
+          setTimeout(() => {
+            setNavVisible(false);
+          }, 200000000);
+        }
+      }, 100);
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
+
     return () => {
+      clearTimeout(resizeTimeout);
       window.removeEventListener('resize', handleResize);
     };
-  }, [navVisible, expanded]);
+  }, [navVisible]);
 
   const getNavStyle = () => {
     const routeCount = routes.length;
