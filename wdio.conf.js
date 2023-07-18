@@ -31,8 +31,8 @@ exports.config = {
   exclude: [
       //'./test/specs/member-e2e.js',
       //'./test/specs/admin-e2e.js',
-      //'./test/specs/superadmin-e2e.js',
-      //'./test/specs/trainer-e2e.js'
+      // './test/specs/superadmin-e2e.js',
+      // './test/specs/trainer-e2e.js'
   ],
   //
   // ============
