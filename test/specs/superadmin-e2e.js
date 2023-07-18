@@ -1,6 +1,8 @@
 const SignIn = require('../../test/pageObjects/sharedComponents/signIn');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
 const AdminsCRUD = require('../pageObjects/superAdmin/adminCRUD');
+const Buttons = require('../pageObjects/sharedComponents/button');
+const ModalConfirm = require('../pageObjects/sharedComponents/modalConfirm');
 
 describe('Super admin complete flow, log in, and crud of admin.', function () {
   beforeAll('Open browser', async function () {
@@ -74,9 +76,9 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
   });
 
   it('Click to add a new admin to the table and fill the form, reset and fill again to confirm . Verify if the new admin is displayed in the table', async () => {
-    await AdminsCRUD.adminTitleTitle.waitForDisplayed();
+    await AdminsCRUD.adminTitle.waitForDisplayed();
     const title = await AdminsCRUD.adminTitleText();
-    expect(await title).toEqual('Admin');
+    expect(await title).toEqual('Admins');
     await AdminsCRUD.adminTable.waitForDisplayed();
 
     const initialAdminsCount = await AdminsCRUD.getNumberOfAdmins();
@@ -87,6 +89,7 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
 
     await AdminsCRUD.firstNameInput.waitForDisplayed();
 
+    await AdminsCRUD.passwordInput.waitForDisplayed();
     await AdminsCRUD.fillFormAddAdmin();
     await Buttons.resetBtn.waitForDisplayed();
     await Buttons.resetBtnClick();
@@ -94,9 +97,10 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
     const nameValue = await AdminsCRUD.firstNameInput.getValue();
     await expect(nameValue).toEqual('');
 
+    await AdminsCRUD.passwordInput.waitForDisplayed();
     await AdminsCRUD.fillFormAddAdmin();
-    await Buttons.confirmBtn.waitForDisplayed();
-    await Buttons.confirmBtnClick();
+    await Buttons.submitBtn.waitForDisplayed();
+    await Buttons.submitBtnClick();
 
     await ModalAlert.modalAlertText.waitForDisplayed();
     expect(await ModalAlert.modalAlertMessage()).toContain('created');
@@ -106,9 +110,9 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
 
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/super-admin/admins');
 
-    await AdminsCRUD.adminTitleTitle.waitForDisplayed();
+    await AdminsCRUD.adminTitle.waitForDisplayed();
     const titleText = await AdminsCRUD.adminTitleText();
-    expect(await titleText).toEqual('Admin');
+    expect(await titleText).toEqual('Admins');
     await AdminsCRUD.adminTable.waitForDisplayed();
 
     const finalAdminsCount = await AdminsCRUD.getNumberOfAdmins();
@@ -120,9 +124,9 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
   })
 
   it('Edit the last admin on the table and verify if it has changes', async () => {
-    await AdminsCRUD.adminTitleTitle.waitForDisplayed();
+    await AdminsCRUD.adminTitle.waitForDisplayed();
     const titleText = await AdminsCRUD.adminTitleText();
-    expect(await titleText).toEqual('Admin');
+    expect(await titleText).toEqual('Admins');
     await AdminsCRUD.adminTable.waitForDisplayed();
 
     await AdminsCRUD.lastAdminEditBtn.waitForDisplayed();
@@ -131,8 +135,8 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
 
     await AdminsCRUD.passwordInput.waitForDisplayed();
     await AdminsCRUD.fillFormEditAdmin();
-    await Buttons.confirmBtn.waitForDisplayed();
-    await Buttons.confirmBtnClick();
+    await Buttons.submitBtn.waitForDisplayed();
+    await Buttons.submitBtnClick();
 
     await ModalAlert.modalAlertText.waitForDisplayed();
     expect(await ModalAlert.modalAlertMessage()).toContain('updated');
@@ -142,12 +146,45 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
 
     await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/super-admin/admins');
 
-    await AdminsCRUD.adminTitleTitle.waitForDisplayed();
+    await AdminsCRUD.adminTitle.waitForDisplayed();
     const title = await AdminsCRUD.adminTitleText();
-    expect(await title).toEqual('Admin');
+    expect(await title).toEqual('Admins');
     await AdminsCRUD.adminTable.waitForDisplayed();
 
     const lastAdminName = await AdminsCRUD.lastAdminNameText();
     expect(await lastAdminName).toEqual('Edith');
+  })
+
+  it('Delete the last admin on the table', async () => {
+    await AdminsCRUD.adminTitle.waitForDisplayed();
+    const titleText = await AdminsCRUD.adminTitleText();
+    expect(await titleText).toEqual('Admins');
+    await AdminsCRUD.adminTable.waitForDisplayed();
+
+    const initialAdminsCount = await AdminsCRUD.getNumberOfAdmins();
+
+    await AdminsCRUD.lastAdminDeleteBtn.waitForDisplayed();
+    await AdminsCRUD.lastAdminDeleteBtnClick();
+
+    await ModalConfirm.confirmationText.waitForDisplayed();
+    expect(await ModalConfirm.confirmMessage()).toMatch(/sure.*delete/i);
+    await ModalConfirm.confirmModalBtn.waitForDisplayed();
+    await ModalConfirm.confirmClick();
+
+    await ModalAlert.modalAlertText.waitForDisplayed();
+    expect(await ModalAlert.modalAlertMessage()).toContain('deleted');
+
+    await ModalAlert.modalAlertButton.waitForDisplayed();
+    await ModalAlert.confirmAlertClick();
+
+    await AdminsCRUD.adminTitle.waitForDisplayed();
+    const title = await AdminsCRUD.adminTitleText();
+    expect(await title).toEqual('Admins');
+    await AdminsCRUD.adminTable.waitForDisplayed();
+
+    const finalAdminsCount = await AdminsCRUD.getNumberOfAdmins();
+
+    expect(finalAdminsCount).toEqual(initialAdminsCount - 1);
+
   })
 });
