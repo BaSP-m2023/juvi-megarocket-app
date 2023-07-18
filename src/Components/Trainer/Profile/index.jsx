@@ -10,28 +10,30 @@ import trainersSchema from './validationTrainers';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const trainer = useSelector((state) => state.trainers);
+  const { data: trainer } = useSelector((state) => state.auth);
   const email = sessionStorage.getItem('email');
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [modalText, setModalText] = useState('');
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(trainersSchema),
     defaultValues: {
-      firstName: trainer.item?.firstName || '',
-      lastName: trainer.item?.lastName || '',
-      dni: trainer.item?.dni || '',
-      phone: trainer.item?.phone || '',
-      email: trainer.item?.email || '',
-      city: trainer.item?.city || '',
-      password: trainer.item?.password || '',
-      salary: trainer.item?.salary || ''
+      firstName: trainer.firstName || '',
+      lastName: trainer.lastName || '',
+      dni: trainer.dni || '',
+      phone: trainer.phone || '',
+      email: trainer.email || '',
+      city: trainer.city || '',
+      password: trainer.password || '',
+      salary: trainer.salary || ''
     }
   });
 
@@ -39,12 +41,34 @@ const Profile = () => {
     dispatch(getTrainersByEmail(email));
   }, [email]);
 
+  useEffect(() => {
+    console.log(trainer);
+    console.log('trainer');
+    if (trainer) {
+      reset({
+        firstName: trainer.firstName || '',
+        lastName: trainer.lastName || '',
+        dni: trainer.dni || '',
+        phone: trainer.phone || '',
+        email: trainer.email || '',
+        city: trainer.city || '',
+        password: trainer.password || '',
+        salary: trainer.salary || ''
+      });
+    }
+  }, [trainer]);
   const onSubmit = (data) => {
-    dispatch(putTrainer(data, trainer.item._id, setModalText, setShowModal, setShowModalSuccess));
+    dispatch(putTrainer(data, trainer._id, setModalText, setShowModal, setShowModalSuccess));
   };
 
   const closeModal = () => {
     setShowModal(!showModal);
+  };
+
+  const handleClick = () => {
+    const newUrl = '/trainer';
+    history.replace(newUrl);
+    window.location.reload();
   };
 
   return (
@@ -115,7 +139,7 @@ const Profile = () => {
         <ModalAlert
           text={modalText}
           onClick={() => {
-            history.goBack();
+            handleClick();
             setShowModalSuccess(false);
             trainer.message = '';
           }}
