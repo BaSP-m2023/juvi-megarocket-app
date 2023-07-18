@@ -32,22 +32,17 @@ class Profile {
     return $('[data-testid="admin-profile-form"] fieldset:nth-child(7) input:nth-child(2)');
   }
 
-  get inputPassword() {
-    return $('[data-testid="admin-profile-form"] fieldset:nth-child(8) input:nth-child(2)');
-  }
-
   get path (){
     return $('[data-testid="admin-profile-form"] svg path');
   }
 
-  async profileForm(name, lastname, dni, phone, email, city, password) {
+  async profileForm(name, lastname, dni, phone, email, city) {
     await this.inputName.setValue(name);
     await this.inputLastName.setValue(lastname);
     await this.inputDni.setValue(dni);
     await this.inputPhone.setValue(phone);
     await this.inputEmail.setValue(email);
     await this.inputCity.setValue(city);
-    //await this.inputPassword.setValue(password);
   }
 
   async profileNavbarClick(){

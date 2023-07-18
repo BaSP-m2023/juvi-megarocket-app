@@ -27,12 +27,24 @@ get lastClasesDeleteBtn() {
   return $(`[data-testid="admin-classes-table"] tbody tr:last-child td:nth-child(7) button`)
 }
 
+get activityInputAddClasses() {
+  return $('[data-testid="admin-classes-add-form"] div:nth-child(1) option:last-child')
+}
+
+get trainerInputAddClasses() {
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(2) option:last-child`)
+}
+
+get hourInputAddClasses() {
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(4) option:last-child`)
+}
+
 get activityInputEditClasses() {
-  return $(`[data-testid="admin-classes-add-form"] div:nth-child(1) select`)
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(1) option:nth-child(4)`)
 }
 
 get trainerInputEditClasses() {
-  return $(`[data-testid="admin-classes-add-form"] div:nth-child(2) select`)
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(2) option:nth-child(4)`)
 }
 
 get dayInputEditClasses() {
@@ -40,7 +52,7 @@ get dayInputEditClasses() {
 }
 
 get hourInputEditClasses() {
-  return $(`[data-testid="admin-classes-add-form"] div:nth-child(4) input`)
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(4) option:nth-child(6)`)
 }
 
 get slotsInputEditClasses() {
@@ -68,26 +80,18 @@ async lastClassSlotsText() {
 }
 
 async fillClassesAddForm() {
-  const activityCount = await this.activityInputEditClasses.$$('option').length;
-  await this.activityInputEditClasses.selectByIndex(activityCount - 1);
-
-  const trainerCount = await this.trainerInputEditClasses.$$('option').length;
-  await this.trainerInputEditClasses.selectByIndex(trainerCount - 1);
-
+  await this.activityInputAddClasses.click();
+  await this.trainerInputAddClasses.click();
   await this.dayInputEditClasses.setValue('Friday');
-  await this.hourInputEditClasses.setValue('08:00');
+  await this.hourInputAddClasses.click();
   await this.slotsInputEditClasses.setValue('5');
 }
 
 async fillClassesEditForm() {
-  const activityCount = await this.activityInputEditClasses.$$('option').length;
-  await this.activityInputEditClasses.selectByIndex(activityCount - 2);
-
-  const trainerCount = await this.trainerInputEditClasses.$$('option').length;
-  await this.trainerInputEditClasses.selectByIndex(trainerCount - 2);
-
+  await this.activityInputEditClasses.click();
+  await this.trainerInputEditClasses.click();
   await this.dayInputEditClasses.setValue('Tuesday');
-  await this.hourInputEditClasses.setValue('16:00');
+  await this.hourInputEditClasses.click();
   await this.slotsInputEditClasses.setValue('10');
 }
 
