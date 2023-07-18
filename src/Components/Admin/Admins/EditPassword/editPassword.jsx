@@ -11,12 +11,12 @@ import { useHistory } from 'react-router-dom';
 
 const EditPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const [modalDone, setModalDone] = useState(false);
   const [msg, setMsg] = useState('');
-  const { data: admin } = useSelector((state) => state.auth);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { data: admin } = useSelector((state) => state.auth);
 
   const {
     register,
@@ -33,18 +33,36 @@ const EditPassword = () => {
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
+
   const switchModal = (error, msg) => {
     if (error) {
       setMsg(msg);
-      setModal(!modal);
+      setModal(true);
     } else {
       setMsg(msg);
-      setModalDone(!modalDone);
+      setModalDone(true);
     }
   };
-  console.log(admin);
+
+  const handleClick = () => {
+    const newUrl = '/admin';
+
+    history.replace(newUrl);
+
+    window.location.reload();
+  };
 
   const onSubmit = async (data) => {
+    data = {
+      firstName: admin.firstName,
+      lastName: admin.lastName,
+      city: admin.city,
+      dni: admin.dni,
+      phone: admin.phone,
+      email: admin.email,
+      password: data.password
+    };
+
     try {
       if (data.password === '') {
         dispatch(editAdmin(admin._id, switchModal));
@@ -56,19 +74,12 @@ const EditPassword = () => {
     }
   };
 
-  const handleClick = () => {
-    const newUrl = '/admin';
-
-    history.replace(newUrl);
-
-    window.location.reload();
-  };
   const onInvalid = (errors) => console.log(errors);
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <h1>Edit Password</h1>
+        <h1>{'Edit Password'}</h1>
         <fieldset>
           <Input
             labelText="New Password"

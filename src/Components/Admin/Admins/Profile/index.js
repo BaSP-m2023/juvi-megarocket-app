@@ -171,23 +171,6 @@ const AdminProfile = () => {
             />
           </fieldset>
           <fieldset className={styles.fieldset}>
-            <div className={styles.password}>
-              <Input
-                labelText="Password"
-                className={styles.input}
-                name={'password'}
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Password"
-                error={errors.password?.message}
-                register={register}
-                readOnly={!showEditPassword}
-              />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className={styles.showPasswordIcon}
-                onClick={togglePassword}
-              />
-            </div>
             <Button type={'changePassword'} onClick={openEditPassword}></Button>
           </fieldset>
         </div>

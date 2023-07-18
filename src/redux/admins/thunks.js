@@ -123,14 +123,16 @@ export const editAdmin = (adminId, data, switchModal) => {
       });
 
       const responseData = await response.json();
+      console.log(responseData);
+
       if (response.ok) {
         switchModal(false, responseData.message);
         dispatch(putAdminsSuccess(responseData.data));
       } else {
+        switchModal(true, responseData.message);
         throw new Error(responseData.message);
       }
     } catch (error) {
-      switchModal(true, error);
       dispatch(putAdminsError(error));
     }
   };

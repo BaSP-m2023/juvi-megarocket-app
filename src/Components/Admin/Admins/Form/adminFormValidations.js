@@ -7,18 +7,16 @@ export const schema = Joi.object({
     .pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/)
     .messages({
       'string.pattern.base': 'First name must be only made of letters(it can be a compound Name)'
-    })
-    .required(),
+    }),
   lastName: Joi.string()
     .min(3)
     .max(20)
     .pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/)
     .messages({
       'string.pattern.base': 'Last name must be only made of letters(it can be a compound Name)'
-    })
-    .required(),
-  dni: Joi.number().min(1000000).max(99999999).integer().required(),
-  phone: Joi.number().min(1000000000).max(9999999999).integer().required(),
+    }),
+  dni: Joi.number().min(1000000).max(99999999).integer(),
+  phone: Joi.number().min(1000000000).max(9999999999).integer(),
   email: Joi.string()
     .regex(
       /^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/
@@ -27,8 +25,7 @@ export const schema = Joi.object({
     .messages({
       'string.pattern.base': 'Email is not valid, must contain only one @ and a valid domain'
     })
-    .lowercase()
-    .required(),
+    .lowercase(),
   city: Joi.string()
     .min(2)
     .max(20)
@@ -36,8 +33,7 @@ export const schema = Joi.object({
     .messages({
       'string.pattern.base':
         'City name must be only made of letters(it can be a compound city name)'
-    })
-    .required(),
+    }),
   password: Joi.string()
     .min(8)
     .max(209)
@@ -45,6 +41,12 @@ export const schema = Joi.object({
     .messages({
       'string.pattern.base':
         'Password must contain at least 8 characters and cannot contain blank spaces'
+    })
+    .allow(''),
+  confirmPassword: Joi.string()
+    .valid(Joi.ref('password'))
+    .messages({
+      'string.pattern.base': 'Passwords must equal!'
     })
     .allow('')
 });
