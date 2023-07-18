@@ -1,4 +1,4 @@
-class LogIn {
+class SignIn {
   get signInBtn() {
     return $(`[data-testid="navbar"] li:nth-child(2) a`);
   }
@@ -33,8 +33,8 @@ class LogIn {
   }
 
   async fillFormLogInAdmin() {
-    await this.emailInput.setValue('octavitossse@gmail.com');
-    await this.passwordInput.setValue('Marianobondar123456');
+    await this.emailInput.setValue('juanignaciocanton1@gmail.com');
+    await this.passwordInput.setValue('Testing123');
   }
 
   async fillFormLogInTrainer() {
@@ -60,4 +60,4 @@ class LogIn {
   }
 }
 
-module.exports = new LogIn();
+module.exports = new SignIn();
