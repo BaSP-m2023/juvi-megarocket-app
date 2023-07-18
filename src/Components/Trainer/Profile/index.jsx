@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import { Button, Input, ModalAlert } from 'Components/Shared';
-import { putTrainer, getTrainersByEmail } from 'redux/trainers/thunks';
+import { putTrainer } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -11,7 +11,6 @@ import trainersSchema from './validationTrainers';
 const Profile = () => {
   const dispatch = useDispatch();
   const { data: trainer } = useSelector((state) => state.auth);
-  const email = sessionStorage.getItem('email');
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
@@ -36,10 +35,6 @@ const Profile = () => {
       salary: trainer.salary || ''
     }
   });
-
-  useEffect(() => {
-    dispatch(getTrainersByEmail(email));
-  }, [email]);
 
   useEffect(() => {
     console.log(trainer);
