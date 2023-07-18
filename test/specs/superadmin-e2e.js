@@ -122,7 +122,7 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
     const lastAdminName = await AdminsCRUD.lastAdminNameText();
     expect(await lastAdminName).toEqual('Micaela');
   })
-/*
+
   it('Edit the last admin on the table and verify if it has changes', async () => {
     await AdminsCRUD.adminTitle.waitForDisplayed();
     const titleText = await AdminsCRUD.adminTitleText();
@@ -135,8 +135,8 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
 
     await AdminsCRUD.passwordInput.waitForDisplayed();
     await AdminsCRUD.fillFormEditAdmin();
-    await Buttons.confirmBtn.waitForDisplayed();
-    await Buttons.confirmBtnClick();
+    await Buttons.submitBtn.waitForDisplayed();
+    await Buttons.submitBtnClick();
 
     await ModalAlert.modalAlertText.waitForDisplayed();
     expect(await ModalAlert.modalAlertMessage()).toContain('updated');
@@ -153,7 +153,7 @@ describe('Super admin complete flow, log in, and crud of admin.', function () {
 
     const lastAdminName = await AdminsCRUD.lastAdminNameText();
     expect(await lastAdminName).toEqual('Edith');
-  })*/
+  })
 
   it('Delete the last admin on the table', async () => {
     await AdminsCRUD.adminTitle.waitForDisplayed();

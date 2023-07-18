@@ -24,7 +24,7 @@ class AdminsCRUD {
   }
 
   get lastAdminDeleteBtn() {
-    return $(`[data-testid="superadmin-admin-table"] tbody tr:last-child button`)
+    return $(`[data-testid="superadmin-admin-table"] tbody tr:last-child td:nth-child(8) svg`)
   }
 
   get firstNameInput(){
