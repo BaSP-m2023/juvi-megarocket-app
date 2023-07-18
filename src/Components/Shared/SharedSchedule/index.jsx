@@ -55,11 +55,6 @@ const SharedSchedule = ({ user, testId }) => {
     }
   }, [sessionStorage.role, subsData.list, classData.list]);
 
-  useEffect(() => {
-    console.log(sessionStorage.role);
-    console.log(subs);
-  }, []);
-
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
     return new Date(someDate.getTime() + someDate.getTimezoneOffset() * 60000);
@@ -96,8 +91,6 @@ const SharedSchedule = ({ user, testId }) => {
   const trainerSearch = (user, subs) => {
     try {
       const selectedSubs = [];
-      console.log(user);
-      console.log(subs);
       subs.forEach((sub) => {
         if (sub?.classes?.trainer === user._id) {
           selectedSubs.push(sub);
