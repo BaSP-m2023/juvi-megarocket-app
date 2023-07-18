@@ -41,7 +41,7 @@ function Admins() {
         <SharedTable
           data={data.list}
           handleDelete={onDelete}
-          editLink="/admins/form/"
+          editLink="/super-admin/admins/form/"
           testId="superadmin-admin-table"
         />
       )}

@@ -1,17 +1,29 @@
-.myForm {
+.form {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin: 20px;
+  background-color: #fff;
 }
 
-.divContainer {
+.fieldset {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10px;
+  width: 40%;
+  border: none;
 }
-
+.fieldset label {
+  padding: 2px 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #0f232e;
+}
+.fieldset select {
+  width: 16vw;
+  padding: 5px;
+}
 .password {
   display: flex;
   align-items: center;
@@ -19,4 +31,13 @@
 .showPasswordIcon {
   padding-left: 10px;
   padding-top: 30px;
+}
+
+.profileBtn {
+  display: flex;
+}
+
+.btnForm {
+  display: flex;
+  justify-content: space-evenly;
 }

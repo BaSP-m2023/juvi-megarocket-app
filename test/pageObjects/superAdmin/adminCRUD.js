@@ -4,55 +4,55 @@ class AdminsCRUD {
   }
 
   get adminTitle() {
-    return $(`[data-testid="superadmin-admins-section"] h2`)
+    return $(`[data-testid="sa-admin-section"] h2`)
   }
 
   get adminTable() {
-    return $(`[data-testid="superadmin-admins-table"]`)
+    return $(`[data-testid="superadmin-admin-table"]`)
   }
 
   get adminTbody() {
-    return $(`[data-testid="superadmin-admins-table"] Tbody`)
+    return $(`[data-testid="superadmin-admin-table"] Tbody`)
   }
 
   get lastAdminEditBtn() {
-    return $(`[data-testid="superadmin-admins-table"] tbody tr:last-child td:nth-child(8) a`)
+    return $(`[data-testid="superadmin-admin-table"] tbody tr:last-child a`)
   }
 
   get lastAdminName() {
-    return $(`[data-testid="superadmin-admins-table"] tbody tr:last-child td:nth-child(1)`)
+    return $(`[data-testid="superadmin-admin-table"] tbody tr:last-child td:nth-child(1)`)
   }
 
   get lastAdminDeleteBtn() {
-    return $(`[data-testid="superadmin-admins-table"] tbody tr:last-child td:nth-child(9) button`)
+    return $(`[data-testid="superadmin-admin-table"] tbody tr:last-child td:nth-child(8) svg`)
   }
 
   get firstNameInput(){
-    return $(`[data-testid="superadmin-admins-add-form"] div:nth-child(1) input`)
+    return $(`[data-testid="admin-form"] > div:nth-child(1) > fieldset:nth-child(2) > div > input`)
   }
 
   get lastNameInput(){
-    return $(`[data-testid="superadmin-admins-add-form"] div:nth-child(2) input`)
+    return $(`[data-testid="admin-form"] fieldset:nth-child(3) input`)
   }
 
   get dniInput(){
-    return $(`[data-testid="superadmin-admins-add-form"] div:nth-child(3) input`)
+    return $(`[data-testid="admin-form"] fieldset:nth-child(4) input`)
   }
 
   get phoneInput(){
-    return $(`[data-testid="superadmin-admins-add-form"] div:nth-child(4) input`)
+    return $(`[data-testid="admin-form"] fieldset:nth-child(5) input`)
   }
 
   get emailInput(){
-    return $(`[data-testid="superadmin-admins-add-form"] div:nth-child(5) input`)
+    return $(`[data-testid="admin-form"] fieldset:nth-child(6) input`)
   }
 
   get cityInput(){
-    return $(`[data-testid="superadmin-admins-add-form"] div:nth-child(6) input`)
+    return $(`[data-testid="admin-form"] fieldset:nth-child(7) input`)
   }
 
   get passwordInput(){
-    return $(`[data-testid="superadmin-admins-add-form"] div:nth-child(7) input`)
+    return $(`[data-testid="admin-form"] fieldset:nth-child(8) input`)
   }
 
   async adminsBtnClick() {

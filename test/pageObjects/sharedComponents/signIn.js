@@ -1,4 +1,4 @@
-class LogIn {
+class SignIn {
   get signInBtn() {
     return $(`[data-testid="navbar"] li:nth-child(2) a`);
   }
@@ -60,4 +60,4 @@ class LogIn {
   }
 }
 
-module.exports = new LogIn();
+module.exports = new SignIn();

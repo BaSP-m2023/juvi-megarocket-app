@@ -20,7 +20,7 @@ const routes = [
   }
 ];
 
-const MemberRoutes = () => {
+const TrainerRoutes = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={routes}>
@@ -33,4 +33,4 @@ const MemberRoutes = () => {
   );
 };
 
-export default MemberRoutes;
+export default TrainerRoutes;
