@@ -16,13 +16,12 @@ const Classes = () => {
   useEffect(() => {
     dispatch(getSubscriptions());
     dispatch(getClasses());
-    console.log(subsData);
   }, [dispatch]);
 
   const deleteClasses = (_id) => {
     dispatch(deleteClass(_id, setModalText, setShowModal));
     subsData.list.forEach((sub) => {
-      if (sub.classes._id === _id) {
+      if (sub?.classes?._id === _id) {
         dispatch(deleteSubscription(sub._id));
       }
     });
