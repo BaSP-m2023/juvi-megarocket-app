@@ -30,14 +30,18 @@ const Profile = ({ user, activities }) => {
             <label>{'DNI'}</label>
             <p>{user.dni}</p>
           </fieldset>
-          <fieldset className={styles.profileFieldset}>
-            <label>{'Birth Date'}</label>
-            <p>{user.birthDate}</p>
-          </fieldset>
-          <fieldset className={styles.profileFieldset}>
-            <label>{'ZIP'}</label>
-            <p>{user.postalCode}</p>
-          </fieldset>
+          {sessionStorage.role !== 'ADMIN' && (
+            <fieldset className={styles.profileFieldset}>
+              <label>{'Birth Date'}</label>
+              <p>{user.birthDate}</p>
+            </fieldset>
+          )}
+          {sessionStorage.role !== 'ADMIN' && (
+            <fieldset className={styles.profileFieldset}>
+              <label>{'ZIP'}</label>
+              <p>{user.postalCode}</p>
+            </fieldset>
+          )}
           <fieldset className={styles.profileFieldset}>
             <label>{'City'}</label>
             <p>{user.city}</p>

@@ -45,7 +45,7 @@ const EditPassword = () => {
   };
 
   const handleClick = () => {
-    const newUrl = '/admin';
+    const newUrl = '/admin/profile';
 
     history.replace(newUrl);
 
