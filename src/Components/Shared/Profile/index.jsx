@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import styles from 'Components/Shared/Profile/member-profile.module.css';
 
 const Profile = ({ user, activities, onClick }) => {
   const history = useHistory();
-
-  useEffect(() => {
-    console.log();
-  }, []);
 
   return (
     <div className={styles.profileContainer}>
@@ -86,13 +82,19 @@ const Profile = ({ user, activities, onClick }) => {
       <div className={styles.profileButtonsContainer}>
         <button
           onClick={() => {
-            history.push('profile/edit');
+            history.push(`profile/edit`);
           }}
         >
           {'Edit profile'}
         </button>
         {sessionStorage.role === 'MEMBER' && <button onClick={onClick}>Manage membership</button>}
-        <button onClick={onClick}>Change password</button>
+        <button
+          onClick={() => {
+            history.push(`profile/password`);
+          }}
+        >
+          {'Change password'}
+        </button>
       </div>
     </div>
   );

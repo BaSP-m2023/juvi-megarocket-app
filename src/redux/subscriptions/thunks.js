@@ -129,8 +129,6 @@ export const editSubscription = (id, formData) => {
       });
       const responseData = await response.json();
       const data = responseData.data;
-      console.log(formData);
-      console.log(responseData.message);
       if (response.ok) {
         dispatch(putSubscriptionsSuccess(data));
       } else {

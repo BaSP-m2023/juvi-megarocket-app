@@ -28,9 +28,6 @@ const MemberProfile = () => {
   useEffect(() => {
     dispatch(getSubscriptions());
     dispatch(getClasses());
-    if (member) {
-      console.log(member);
-    }
   }, [member]);
 
   const selectedActivities = () => {

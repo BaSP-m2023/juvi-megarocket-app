@@ -55,7 +55,6 @@ const MemberProfileEdit = () => {
   };
 
   useEffect(() => {
-    console.log(member);
     if (member) {
       reset({
         firstName: member?.firstName ?? '',
