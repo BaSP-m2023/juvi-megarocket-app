@@ -49,7 +49,7 @@ export const deleteClass = (id, setModalText, setShowModal) => {
         throw new Error(responseJson.message);
       }
       dispatch(deleteClassSuccess(responseJson.data));
-      setModalText('Class deleted correctly');
+      setModalText('Class deleted successfully');
       setShowModal(true);
     } catch (error) {
       dispatch(deleteClassError(error));
