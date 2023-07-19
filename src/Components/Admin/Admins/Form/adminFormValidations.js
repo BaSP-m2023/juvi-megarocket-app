@@ -46,7 +46,8 @@ export const schema = Joi.object({
   confirmPassword: Joi.string()
     .valid(Joi.ref('password'))
     .messages({
-      'string.pattern.base': 'Passwords must equal!'
+      'string.pattern.base': 'Passwords must equal!',
+      'any.only': 'Passwords do not match. Must be equal!'
     })
     .allow('')
 });

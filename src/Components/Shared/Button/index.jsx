@@ -32,7 +32,7 @@ const Button = ({ type, resource, onClick, testId }) => {
         return styles.btnReset;
       case 'changePassword':
         text = 'Change password';
-        return styles.btnCancel;
+        return styles.btnPsw;
       default:
         return styles.btn;
     }
