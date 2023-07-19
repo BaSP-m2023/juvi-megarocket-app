@@ -43,7 +43,12 @@
   padding-top: 41px;
 }
 
-.sectionServices {
+.sectionServices,
+.sectionTrackgenix,
+.sectionRequestInformation,
+.ourStory,
+.sectionLinks,
+.socialMedia {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -82,6 +87,145 @@
 }
 .servicesText {
   padding-left: 20px;
+}
+.trackgenix {
+  display: flex;
+  flex-direction: column;
+}
+.artTrack {
+  display: flex;
+  max-width: 86vw;
+  justify-content: space-around;
+  padding-bottom: 20px;
+}
+.artTrack article {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+}
+.artTrack article p {
+  font-size: small;
+}
+.artTrack article button {
+  width: 5vw;
+  align-self: center;
+  border-radius: 7px;
+  border-width: 1px;
+}
+.artTrack article button:hover {
+  background-color: #0f232e;
+  color: #fff;
+}
+.information {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.informationForm {
+  display: flex;
+  width: 27vw;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.informationForm label {
+  font-weight: 500;
+}
+.informationForm input {
+  width: 29vw;
+  padding: 5px;
+  border: 1px solid #8f9294;
+  border-radius: 4px;
+}
+.sectionRequestInformation h4 {
+  margin: 10px 0px;
+}
+.contactArea {
+  display: flex;
+  justify-content: space-evenly;
+  width: 44vw;
+}
+.checkboxContact {
+  display: flex;
+  width: 17vw;
+  align-items: center;
+}
+.checkboxContact label {
+  font-weight: 400;
+}
+.contactContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 30px;
+}
+.btnContact {
+  width: 40vw;
+  margin-left: 30px;
+}
+.btnReset {
+  color: #0f232e;
+  width: 11vw;
+  border-radius: 7px;
+  border-width: 1px;
+  margin-right: 20px;
+}
+.btnSend {
+  color: #fff;
+  background-color: #0f232e;
+  width: 11vw;
+  border-radius: 7px;
+  border-width: 1px;
+}
+.storyContainer {
+  display: flex;
+}
+.storyContainer img {
+  max-width: 24vw;
+}
+.ourStory p {
+  font-size: small;
+}
+.storyText {
+  max-width: 49vw;
+}
+.linksContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.firstLinks {
+  width: 20vw;
+}
+
+.firstLinks h4 {
+  text-decoration: underline;
+  color: #0f232e;
+  margin-bottom: 0px;
+}
+.firstLinks li {
+  font-weight: 300;
+  color: #0f232e;
+  padding-top: 3px;
+}
+.firstLinks ul {
+  margin: 0px;
+}
+.socialMedia {
+  border-top: 3px solid #0f232e;
+}
+.mediaContainer,
+.city,
+.rights {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.mediaContainer img {
+  max-width: 4vw;
+  padding-left: 5px;
+}
+.rights {
+  margin-bottom: 20px;
 }
 @media screen and (min-width: 1024px) {
 }
