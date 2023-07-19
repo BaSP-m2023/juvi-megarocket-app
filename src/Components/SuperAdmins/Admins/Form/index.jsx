@@ -198,7 +198,10 @@ const AdminsForm = ({ history }) => {
           <Button
             className={styles.addButton}
             type="reset"
-            onClick={() => reset()}
+            onClick={(e) => {
+              e.preventDefault();
+              reset();
+            }}
             testId="reset-button"
           />
         </div>
