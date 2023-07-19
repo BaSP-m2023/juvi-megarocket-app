@@ -49,7 +49,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
 
   useEffect(() => {
     if (sessionStorage.role === 'MEMBER' && showAll !== true) {
-      setSubs(memberSearch(user.email, subsData.list));
+      setSubs(memberSearch(user?._id, subsData.list));
     } else if (sessionStorage.role === 'TRAINER' && showAll !== true) {
       setSubs(trainerSearch(user, subsData.list));
     } else if (showAll === true) {
@@ -64,12 +64,12 @@ const SharedSchedule = ({ user, showAll, testId }) => {
 
   const matcherClass = (subs, scheduleDay, scheduleHour) => {
     let resp;
-    subs.forEach((sub) => {
+    subs?.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
-        classData.list.forEach((classes) => {
-          if (classes._id === sub.classes._id) {
+        classData?.list.forEach((classes) => {
+          if (classes?._id === sub.classes?._id) {
             resp = classes;
           }
         });
@@ -80,7 +80,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
 
   const matcherSub = (subs, scheduleDay, scheduleHour) => {
     let res;
-    subs.forEach((sub) => {
+    subs?.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
@@ -104,12 +104,12 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     }
   };
 
-  const memberSearch = (email, subs) => {
+  const memberSearch = (id, subs) => {
     try {
       const selectedSubs = [];
       subs?.forEach((sub) => {
         sub.members.forEach((memb) => {
-          if (memb.email === email) {
+          if (memb?._id === id) {
             selectedSubs.push(sub);
           }
         });

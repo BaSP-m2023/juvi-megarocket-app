@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptionById, editSubscription } from 'redux/subscriptions/thunks';
+import { useDispatch } from 'react-redux';
+import { editSubscription } from 'redux/subscriptions/thunks';
 import styles from 'Components/Shared/ModalSchedule/modal-schedule.module.css';
 
-const ModalSchedule = ({ memberSearch, role, user, objClass, objSub, onClick }) => {
-  // add user to props
+const ModalSchedule = ({ role, user, objClass, objSub, onClick }) => {
   const [newSub, setNewSub] = useState({});
+  const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
-  const subData = useSelector((state) => state.subscriptions);
 
   useEffect(() => {
-    dispatch(getSubscriptionById());
-  }, [subData.item, newSub]);
+    if (edit) {
+      dispatch(editSubscription(objSub._id, newSub));
+    }
+  }, [newSub]);
 
-  const rulerCheck = (role) => {
-    if (role === 'MEMBER') {
+  const rulerCheck = () => {
+    if (sessionStorage.role === 'MEMBER') {
       if (checkSubscribe(objSub)) {
         return (
           <button
             className={styles.subButton}
             onClick={() => {
               addMemberToSub(objSub, user._id);
-              dispatch(editSubscription(objSub._id, newSub));
             }}
           >
             {'subscribe'}
@@ -30,7 +30,7 @@ const ModalSchedule = ({ memberSearch, role, user, objClass, objSub, onClick }) 
       } else {
         return <p>{`You're subscribed for this class`}</p>;
       }
-    } else if (role === 'TRAINER') {
+    } else if (sessionStorage.role === 'TRAINER') {
       return (
         <div>
           <p>{`Members:`}</p>
@@ -40,31 +40,55 @@ const ModalSchedule = ({ memberSearch, role, user, objClass, objSub, onClick }) 
             ))}
         </div>
       );
-    } else {
-      return (
-        <button
-          className={styles.subButton}
-          onClick={console.log('Should edit subscription and .push the new member')}
-        >
-          {'subscribe'}
-        </button>
-      );
     }
   };
 
   const checkSubscribe = (sub) => {
-    let subs = [];
-    subs.push(sub);
-    subs = memberSearch(user.email, subs);
-    if (subs.length === 0) {
-      return true;
-    } else {
+    let flag = false;
+    sub.members.forEach((memb) => {
+      console.log(memb);
+      if (memb._id === user._id) {
+        flag = true;
+      }
+    });
+    if (flag) {
       return false;
+    } else {
+      return true;
     }
   };
 
   const addMemberToSub = (sub, membId) => {
-    setNewSub(sub.members.push(membId));
+    try {
+      let flag = false;
+      let subsId = [];
+
+      if (membId !== undefined) {
+        sub.members.forEach((memb) => {
+          if (memb !== undefined) {
+            subsId.push(memb._id);
+          }
+        });
+        subsId.forEach((memb) => {
+          if (memb === membId) {
+            flag = true;
+          }
+        });
+      }
+
+      if (flag !== true) {
+        subsId.push(membId);
+        sub.members = subsId;
+      }
+
+      if (sub.classes?._id !== undefined) {
+        sub.classes = sub.classes._id;
+      }
+      setNewSub(sub);
+      setEdit(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
