@@ -60,7 +60,8 @@ export const postClass = (
   { activity, trainer, day, hour, slots },
   setModalText,
   setShowModal,
-  setIsTrue
+  setIsTrue,
+  setNewSub
 ) => {
   return async (dispatch) => {
     const token = sessionStorage.getItem('token');
@@ -79,6 +80,7 @@ export const postClass = (
         throw new Error(responseData.message);
       } else {
         setModalText('Class created correctly!');
+        setNewSub(true);
         setShowModal(true);
         setIsTrue(true);
       }

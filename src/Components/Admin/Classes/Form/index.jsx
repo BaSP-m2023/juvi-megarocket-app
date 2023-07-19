@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import styles from './classesForm.module.css';
-import { useHistory, useParams } from 'react-router-dom';
-import Button from 'Components/Shared/Button';
-import { Input } from 'Components/Shared';
-import ModalAlert from 'Components/Shared/ModalAlert';
-import { postClass, getByIdClasses, putClass, deleteClass } from 'redux/classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrainers } from 'redux/trainers/thunks';
-import { getActivities } from 'redux/activities/thunks';
+import { useHistory, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { postClass, getByIdClasses, putClass, deleteClass, getClasses } from 'redux/classes/thunks';
+import { getTrainers } from 'redux/trainers/thunks';
+import { getActivities } from 'redux/activities/thunks';
+import { addSubscription } from 'redux/subscriptions/thunks';
 import classesSchema from './validation';
+import { Input, Button, ModalAlert } from 'Components/Shared';
+import styles from './classesForm.module.css';
 
 const FormClasses = () => {
   const dispatch = useDispatch();
@@ -36,9 +35,11 @@ const FormClasses = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
+  const [newSub, setNewSub] = useState(false);
   const [isTrue, setIsTrue] = useState(false);
   const trainers = useSelector((state) => state.trainers);
   const activities = useSelector((state) => state.activities);
+  const classes = useSelector((state) => state.classes);
   const availableHours = [
     '09:00',
     '10:00',
@@ -59,11 +60,84 @@ const FormClasses = () => {
   useEffect(() => {
     dispatch(getTrainers());
     dispatch(getActivities());
-  }, []);
+    dispatch(getClasses());
+  }, [newSub, dispatch]);
 
   useEffect(() => {
     if (id) {
       dispatch(getByIdClasses(id));
+    }
+    console.log(classes);
+    if (newSub) {
+      const hoy = new Date();
+      const weekDay = classes.list[classes.list.length - 1].day;
+      const choosenDay = () => {
+        let variable;
+        for (let i = 0; i < week.length; i++) {
+          if (week[i] === weekDay) {
+            variable = i + 1;
+          }
+        }
+        return variable;
+      };
+      const dif = hoy.getDay() - choosenDay();
+      let theDay;
+      let theMonth = hoy.getMonth();
+      let theYear = hoy.getFullYear();
+      if (dif < 0) {
+        theDay = hoy.getDate() - dif;
+      } else if (choosenDay() === 0) {
+        theDay = hoy.getDate();
+      } else if (dif > 0) {
+        theDay = hoy.getDate() + 7 - dif;
+      }
+      if (hoy.getMonth() === (0, 2, 4, 6, 7, 9, 11)) {
+        if (theDay > 31) {
+          const dife = theDay - 31;
+          theDay = dife;
+          if (hoy.getMonth() === 11) {
+            theMonth = 0;
+          } else {
+            theMonth = hoy.getMonth() + 1;
+            theYear = hoy.getFullYear() + 1;
+          }
+        }
+      }
+      if (hoy.getMonth() === (3, 5, 8, 10)) {
+        if (theDay > 30) {
+          const dife = theDay - 30;
+          theDay = dife;
+          theMonth = hoy.getMonth() + 1;
+        }
+      }
+      if (hoy.getMonth() === 1) {
+        if (hoy.getFullYear() % 4 === 0) {
+          if (theDay > 29) {
+            const dife = theDay - 29;
+            theDay = dife;
+            theMonth = hoy.getMonth() + 1;
+          }
+        } else {
+          if (theDay > 28) {
+            const dife = theDay - 28;
+            theDay = dife;
+            theMonth = hoy.getMonth() + 1;
+          }
+        }
+      }
+      const daisito = new Date(
+        theYear,
+        theMonth,
+        theDay,
+        classes.list[classes.list.length - 1].hour.substring(0, 2),
+        classes.list[classes.list.length - 1].hour.substring(3, 5)
+      );
+      const subData = {
+        classes: classes.list[classes.list.length - 1]._id,
+        date: daisito.toISOString()
+      };
+      dispatch(addSubscription(subData));
+      setNewSub(false);
     }
   }, [id]);
 
@@ -90,12 +164,13 @@ const FormClasses = () => {
       setModalText(`There is already a class scheduled at the same time.`);
       setShowModal(true);
       return;
-    }
-
-    if (id) {
-      dispatch(putClass(id, data, setModalText, setShowModal, setIsTrue, deleteClass));
     } else {
-      dispatch(postClass(data, setModalText, setShowModal, setIsTrue, deleteClass));
+      if (id) {
+        dispatch(putClass(id, data, setModalText, setShowModal, setIsTrue, deleteClass));
+      } else {
+        dispatch(postClass(data, setModalText, setShowModal, setIsTrue, deleteClass, setNewSub));
+        dispatch(getClasses());
+      }
     }
   };
 
