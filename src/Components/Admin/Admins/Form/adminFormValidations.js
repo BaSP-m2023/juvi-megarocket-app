@@ -15,8 +15,12 @@ export const schema = Joi.object({
     .messages({
       'string.pattern.base': 'Last name must be only made of letters(it can be a compound Name)'
     }),
-  dni: Joi.number().min(1000000).max(99999999).integer(),
-  phone: Joi.number().min(1000000000).max(9999999999).integer(),
+  dni: Joi.number().min(1000000).max(99999999).integer().messages({
+    'string.pattern.base': 'DNI is not valid, must contain between 7-8 numbers'
+  }),
+  phone: Joi.number().min(1000000000).max(9999999999).integer().messages({
+    'string.pattern.base': 'Phone is not valid, must have 10 numbers(without 0 and 15)'
+  }),
   email: Joi.string()
     .regex(
       /^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/
@@ -46,7 +50,8 @@ export const schema = Joi.object({
   confirmPassword: Joi.string()
     .valid(Joi.ref('password'))
     .messages({
-      'string.pattern.base': 'Passwords must equal!'
+      'string.pattern.base': 'Passwords must equal!',
+      'any.only': 'Passwords do not match. Must be equal!'
     })
     .allow('')
 });

@@ -8,6 +8,7 @@ import { editAdmin } from 'redux/admins/thunks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
+import styles from './password.module.css';
 
 const EditPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -79,31 +80,46 @@ const EditPassword = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <h1>{'Edit Password'}</h1>
-        <fieldset>
-          <Input
-            labelText="New Password"
-            name={'password'}
-            type={showPassword ? 'text' : 'password'}
-            placeholder="New Password"
-            error={errors.password?.message}
-            register={register}
-          />
-          <div>
-            <Input
-              labelText="Confirm New Password"
-              name={'confirmPassword'}
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Confirm New Password"
-              error={errors.password?.message}
-              register={register}
-            />
-            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={togglePassword} />
+        <div className={styles.passwordContainer}>
+          <h1>{'Edit Password'}</h1>
+          <fieldset>
+            <div className={styles.passwordInput}>
+              <Input
+                labelText="New Password"
+                name={'password'}
+                type={showPassword ? 'text' : 'password'}
+                placeholder="New Password"
+                error={errors.password?.message}
+                register={register}
+              />
+              <div className={styles.passIcon}>
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  onClick={togglePassword}
+                />
+              </div>
+            </div>
+            <div className={styles.passwordInput}>
+              <Input
+                labelText="Confirm New Password"
+                name={'confirmPassword'}
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Confirm New Password"
+                error={errors.confirmPassword?.message}
+                register={register}
+              />
+              <div className={styles.passIcon}>
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  onClick={togglePassword}
+                />
+              </div>
+            </div>
+          </fieldset>
+          <div className={styles.passButton}>
+            <Button type="submit"></Button>
+            <Button type="cancel" onClick={() => history.push('/admin/profile')}></Button>
           </div>
-        </fieldset>
-        <div>
-          <Button type="submit"></Button>
-          <Button type="cancel" onClick={() => history.push('/admin/profile')}></Button>
         </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
         {modalDone && <ModalAlert text={msg} onClick={handleClick} />}
