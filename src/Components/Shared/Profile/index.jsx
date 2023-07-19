@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import styles from 'Components/Shared/Profile/member-profile.module.css';
 
-const Profile = ({ user, activities, onClick }) => {
+const Profile = ({ user, activities }) => {
   const history = useHistory();
 
   return (
@@ -87,7 +87,15 @@ const Profile = ({ user, activities, onClick }) => {
         >
           {'Edit profile'}
         </button>
-        {sessionStorage.role === 'MEMBER' && <button onClick={onClick}>Manage membership</button>}
+        {sessionStorage.role === 'MEMBER' && (
+          <button
+            onClick={() => {
+              history.push(`membership`);
+            }}
+          >
+            {'Manage Memberships'}
+          </button>
+        )}
         <button
           onClick={() => {
             history.push(`profile/password`);
