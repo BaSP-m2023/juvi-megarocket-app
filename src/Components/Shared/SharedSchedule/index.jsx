@@ -94,7 +94,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     try {
       const selectedSubs = [];
       subs.forEach((sub) => {
-        if (sub.trainer._id === user._id) {
+        if (sub?.trainer?._id === user?._id) {
           selectedSubs.push(sub);
         }
       });

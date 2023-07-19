@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const trainersSchema = Joi.object({
+export const Schema = Joi.object({
   firstName: Joi.string()
     .min(4)
     .max(10)
@@ -51,4 +51,3 @@ const trainersSchema = Joi.object({
     .required(),
   salary: Joi.number().min(100000).max(9999999).required()
 });
-export default trainersSchema;
