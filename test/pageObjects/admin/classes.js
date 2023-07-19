@@ -39,6 +39,10 @@ get hourInputAddClasses() {
   return $(`[data-testid="admin-classes-add-form"] div:nth-child(4) option:last-child`)
 }
 
+get dayInputAddClasses() {
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(3) option:nth-child(4)`)
+}
+
 get activityInputEditClasses() {
   return $(`[data-testid="admin-classes-add-form"] div:nth-child(1) option:nth-child(4)`)
 }
@@ -48,7 +52,7 @@ get trainerInputEditClasses() {
 }
 
 get dayInputEditClasses() {
-  return $(`[data-testid="admin-classes-add-form"] div:nth-child(3) input`)
+  return $(`[data-testid="admin-classes-add-form"] div:nth-child(3) option:nth-child(7)`)
 }
 
 get hourInputEditClasses() {
@@ -82,7 +86,7 @@ async lastClassSlotsText() {
 async fillClassesAddForm() {
   await this.activityInputAddClasses.click();
   await this.trainerInputAddClasses.click();
-  await this.dayInputEditClasses.setValue('Friday');
+  await this.dayInputEditClasses.click();
   await this.hourInputAddClasses.click();
   await this.slotsInputEditClasses.setValue('5');
 }
@@ -90,7 +94,7 @@ async fillClassesAddForm() {
 async fillClassesEditForm() {
   await this.activityInputEditClasses.click();
   await this.trainerInputEditClasses.click();
-  await this.dayInputEditClasses.setValue('Tuesday');
+  await this.dayInputEditClasses.click();
   await this.hourInputEditClasses.click();
   await this.slotsInputEditClasses.setValue('10');
 }
