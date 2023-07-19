@@ -9,6 +9,7 @@ import Classes from 'Components/Admin/Classes';
 import ClassesForm from 'Components/Admin/Classes/Form';
 import Activities from 'Components/Admin/Activities';
 import Profile from 'Components/Admin/Admins/Profile';
+import EditProfile from 'Components/Admin/Admins/EditProfile';
 import ActivitiesForm from 'Components/Admin/Activities/Form';
 import { Route, useRouteMatch, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from 'Components/Layout';
@@ -67,7 +68,8 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/activities/ActivitiesForm`} component={ActivitiesForm} />
         <Route exact path={`${url}/activities/ActivitiesForm/:id`} component={ActivitiesForm} />
         <Route exact path={`${url}/profile`} component={Profile} />
-        <Route exact path={`${url}/profile/changepassword`} component={EditPassword} />
+        <Route exact path={`${url}/profile/edit`} component={EditProfile} />
+        <Route exact path={`${url}/profile/password`} component={EditPassword} />
       </Switch>
     </Layout>
   );

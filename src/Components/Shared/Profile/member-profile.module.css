@@ -1,0 +1,145 @@
+.profileContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background-color: #ffe0ab;
+}
+
+.profileLeftContainer, .profileRightContainer {
+  width: 45%;
+}
+
+.profileInfoContainer {
+  color: #0F232E;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.profileFieldset {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.profileInfoContainer label {
+  font-size: 1.5em;
+}
+
+.profileInfoContainer p {
+  width: 50%;
+  padding-left: 5px;
+  margin-top: 0px;
+
+  border-top: 3px solid #0F232E;
+  border-left: 3px solid #F9A414;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+
+  font-size: 1.2em;
+}
+
+.profileRightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.profileImageContainer img {
+  width: 16vw;
+  height: 16vw;
+
+  border: 5px solid #0F232E;
+  border-radius: 1000px;
+  border-style: groove;
+
+  background-color: rgb(94, 94, 94);
+}
+
+.profileMembershipContainer {
+  padding-top: 5%;
+}
+
+.profileMembershipContainer {
+  font-size: 1.5em;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 700;
+}
+
+.profileMembershipContainer fieldset {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.profileMembershipContainer label {
+  font-size: 1.5em;
+  font-style: oblique;
+  color: #0F232E;
+}
+
+.profileMembershipContainer p {
+  padding-left: 5px;
+  margin-top: 0px;
+
+  border-radius: 5px;
+  border-top: 3px solid #0F232E;
+  border-left: 3px solid #F9A414;
+}
+
+.profileActivitiesTitle p {
+  font-size: 1.3em;
+  font-weight: 700;
+  font-style: italic;
+
+  color: #0F232E;
+}
+
+.profileActivitiesList {
+  width: 18vw;
+  height: 20vh;
+
+  overflow-y: visible;
+
+  border: 3px solid #0F232E;
+  border-radius: 10px;
+
+  font-size: 1em;
+  font-weight: 400;
+
+  background-color: #F9A414;
+  color: #0F232E;
+}
+
+.profileButtonsContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: flex-start;
+
+  padding: 0px;
+  margin: 0px;
+
+  height: 5vh;
+  width: 50vw;
+}
+
+.profileButtonsContainer button {
+  padding: 10px 12px;
+  margin-right: 5px;
+
+  border-style: none;
+  border-radius: 10px;
+
+  background-color: #0F232E;
+  color: #fff;
+  cursor: pointer;
+}

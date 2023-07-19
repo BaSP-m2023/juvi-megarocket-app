@@ -5,3 +5,4 @@ export { default as ModalConfirm } from './ModalConfirm';
 export { default as SharedTable } from './Table';
 export { default as SharedSchedule } from './SharedSchedule';
 export { default as ModalSchedule } from './ModalSchedule';
+export { default as Profile } from './Profile';

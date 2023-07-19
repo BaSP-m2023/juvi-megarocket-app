@@ -1,16 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { SharedSchedule } from 'Components/Shared/';
+import { SharedSchedule, Button } from 'Components/Shared/';
 
 const Schedule = () => {
   const data = useSelector((state) => state.auth);
   const [member, setMember] = useState(data?.data ?? {});
+  const [gralSchedule, setGralSchedule] = useState(false);
+  const [changeSchedule, setChangeSchedule] = useState('My Schedule');
 
   useEffect(() => {
     setMember(data.data);
-  }, [data.data]);
+  }, [data.data, gralSchedule, changeSchedule]);
 
-  return <SharedSchedule user={member} testId="member-schedule" />;
+  const onClick = () => {
+    setGralSchedule(!gralSchedule);
+    if (changeSchedule === 'My Schedule') {
+      setChangeSchedule('Main Schedule');
+    } else if (changeSchedule === 'Main Schedule') {
+      setChangeSchedule('My Schedule');
+    }
+  };
+
+  return (
+    <div>
+      <h2>{changeSchedule}</h2>
+      <Button type={changeSchedule} onClick={onClick} />
+      {!gralSchedule && <SharedSchedule user={member} testId="member-schedule" />}
+      {gralSchedule && <SharedSchedule user={member} showAll={true} testId="member-schedule2" />}
+    </div>
+  );
 };
 
 export default Schedule;
