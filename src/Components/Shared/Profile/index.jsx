@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 import styles from 'Components/Shared/Profile/member-profile.module.css';
 
 const Profile = ({ user, activities, onClick }) => {
+  const history = useHistory();
+
   useEffect(() => {
     console.log();
   }, []);
@@ -53,10 +57,18 @@ const Profile = ({ user, activities, onClick }) => {
           ></img>
         </div>
         <div className={styles.profileMembershipContainer}>
-          <fieldset>
-            <label>{'Membership status'}</label>
-            <p>{user.memberships}</p>
-          </fieldset>
+          {sessionStorage.role === 'MEMBER' && (
+            <fieldset>
+              <label>{'Membership status'}</label>
+              <p>{user.memberships}</p>
+            </fieldset>
+          )}
+          {sessionStorage.role !== 'MEMBER' && (
+            <fieldset>
+              <label>{'Account status'}</label>
+              <p>{sessionStorage.role}</p>
+            </fieldset>
+          )}
         </div>
         <div className={styles.profileActivitiesContainer}>
           <div className={styles.profileActivitiesTitle}>
@@ -72,8 +84,14 @@ const Profile = ({ user, activities, onClick }) => {
         </div>
       </div>
       <div className={styles.profileButtonsContainer}>
-        <button onClick={onClick}>Edit profile</button>
-        <button onClick={onClick}>Manage membership</button>
+        <button
+          onClick={() => {
+            history.push('profile/edit');
+          }}
+        >
+          {'Edit profile'}
+        </button>
+        {sessionStorage.role === 'MEMBER' && <button onClick={onClick}>Manage membership</button>}
         <button onClick={onClick}>Change password</button>
       </div>
     </div>

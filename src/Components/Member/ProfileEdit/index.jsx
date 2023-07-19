@@ -1,74 +1,41 @@
 /* eslint-disable no-unused-vars */
 
 import React, { useState, useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useForm } from 'react-hook-form';
-
 import { joiResolver } from '@hookform/resolvers/joi';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
 import styles from 'Components/Admin/Members/MemberForm/form.module.css';
-
 import { schema } from 'Components/Admin/Members/MemberForm/memberFormValidations';
-
 import { ModalAlert, Button, Input } from 'Components/Shared';
-
 import { useHistory } from 'react-router-dom';
-
 import { putMember } from 'redux/members/thunks';
 
-const MemberProfile = () => {
+const MemberProfileEdit = () => {
   const [modal, setModal] = useState(false);
-
   const [modalDone, setModalDone] = useState(false);
-
   const [msg, setMsg] = useState('');
-
   const [showPassword, setShowPassword] = useState(false);
-
   const { data: member } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
-
   const history = useHistory();
-
-  console.log(member);
 
   const {
     register,
-
     handleSubmit,
-
     reset,
-
     formState: { errors }
   } = useForm({
     resolver: joiResolver(schema),
-
     mode: 'onChange',
-
     defaultValues: {
       firstName: member?.firstName ?? '',
-
       lastName: member?.lastName ?? '',
-
       dni: member?.dni ?? '',
-
       phone: member?.phone ?? '',
-
       email: member?.email ?? '',
-
       city: member?.city ?? '',
-
       birthDate: member?.birthDate?.substring(0, 10) ?? '',
-
       postalCode: member?.postalCode ?? '',
-
       memberships: member?.memberships ?? 'Only Classes'
     }
   });
@@ -80,34 +47,25 @@ const MemberProfile = () => {
   const switchModal = (error, msg) => {
     if (error) {
       setMsg(msg);
-
       setModal(!modal);
     } else {
       setMsg(msg);
-
       setModalDone(!modalDone);
     }
   };
 
   useEffect(() => {
+    console.log(member);
     if (member) {
       reset({
         firstName: member?.firstName ?? '',
-
         lastName: member?.lastName ?? '',
-
         dni: member?.dni ?? '',
-
         phone: member?.phone ?? '',
-
         email: member?.email ?? '',
-
         city: member?.city ?? '',
-
         birthDate: member?.birthDate?.substring(0, 10) ?? '',
-
         postalCode: member?.postalCode ?? '',
-
         memberships: member?.memberships ?? 'Only Classes'
       });
     }
@@ -117,7 +75,6 @@ const MemberProfile = () => {
     try {
       if (data.password === '') {
         const { password, _id, __v, ...resData } = data;
-
         dispatch(putMember(member._id, resData, switchModal));
       } else {
         dispatch(putMember(member._id, data, switchModal));
@@ -130,7 +87,7 @@ const MemberProfile = () => {
   const onInvalid = (errors) => console.log(errors);
 
   const handleClick = () => {
-    const newUrl = '/member';
+    const newUrl = '/member/profile';
     history.replace(newUrl);
     window.location.reload();
   };
@@ -235,16 +192,15 @@ const MemberProfile = () => {
             />
           </fieldset>
         </div>
-
         <Button type={'submit'} resource={'Member'} testId="submit-button" />
-
-        <Button type={'cancel'} onClick={() => history.push('/member')} testId="cancel-button" />
-
+        <Button
+          type={'cancel'}
+          onClick={() => history.push('/member/profile')}
+          testId="cancel-button"
+        />
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
-
         {modalDone && <ModalAlert text={msg} onClick={handleClick} />}
       </form>
-
       <Button
         className={styles.addButton}
         type="reset"
@@ -255,4 +211,4 @@ const MemberProfile = () => {
   );
 };
 
-export default MemberProfile;
+export default MemberProfileEdit;
