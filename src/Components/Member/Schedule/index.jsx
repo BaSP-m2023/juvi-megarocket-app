@@ -6,7 +6,7 @@ const Schedule = () => {
   const data = useSelector((state) => state.auth);
   const [member, setMember] = useState(data?.data ?? {});
   const [gralSchedule, setGralSchedule] = useState(false);
-  const [changeSchedule, setChangeSchedule] = useState('Main Schedule');
+  const [changeSchedule, setChangeSchedule] = useState('My Schedule');
 
   useEffect(() => {
     setMember(data.data);
@@ -14,10 +14,10 @@ const Schedule = () => {
 
   const onClick = () => {
     setGralSchedule(!gralSchedule);
-    if (changeSchedule === 'Main Schedule') {
-      setChangeSchedule('My Schedule');
-    } else if (changeSchedule === 'My Schedule') {
+    if (changeSchedule === 'My Schedule') {
       setChangeSchedule('Main Schedule');
+    } else if (changeSchedule === 'Main Schedule') {
+      setChangeSchedule('My Schedule');
     }
   };
 
