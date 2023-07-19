@@ -24,7 +24,7 @@ const ModalSchedule = ({ role, user, objClass, objSub, onClick }) => {
               dispatch(editSubscription(objSub._id, newSub));
             }}
           >
-            {'subscribe'}
+            {'Subscribe'}
           </button>
         );
       } else {
@@ -68,12 +68,15 @@ const ModalSchedule = ({ role, user, objClass, objSub, onClick }) => {
   return (
     <div className={styles.modal}>
       <div className={styles['modal-content']} data-testid="modal-schedule">
-        <a className={styles.a} onClick={onClick}>
-          X
-        </a>
-        {objClass && <p>{objClass.activity.name}</p>}
+        <img
+          className={styles.close}
+          src={`${process.env.PUBLIC_URL}/assets/images/borrar.png`}
+          onClick={onClick}
+        ></img>
+        <h1>Class:</h1>
+        {objClass && <p className={styles.activityName}>{objClass.activity.name}</p>}
         {objClass && <p>{`Trainer: ${objClass.trainer.firstName} ${objClass.trainer.lastName}`}</p>}
-        {objClass && <p>{`Slots: ${objClass.slots}`}</p>}
+        {objClass && <p className={styles.slots}>{`Slots: ${objClass.slots}`}</p>}
         {rulerCheck(role)}
       </div>
     </div>

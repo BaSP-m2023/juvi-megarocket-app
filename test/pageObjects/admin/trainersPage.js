@@ -112,15 +112,26 @@ class TrainersPage{
     await this.trainersNavbar.click();
   }
 
-  async addTrainerForm (firstname, lastname, city, dni, email, phone, salary, password) {
+  async addTrainerForm (firstname, lastname, city, dni, phone, salary, password) {
     await this.firstNameInput.setValue(firstname);
     await this.lastNameInput.setValue(lastname);
     await this.cityInput.setValue(city);
     await this.dniInput.setValue(dni);
-    await this.emailInput.setValue(email);
     await this.phoneInput.setValue(phone);
     await this.salaryInput.setValue(salary);
     await this.passwordInput.setValue(password);
+  }
+
+  async addTrainerEmail() {
+    function generateRandomEmail() {
+      const randomString = Math.random().toString(36).substring(2, 10);
+      const email = `mail-${randomString}@qa.com`;
+
+      return email;
+    }
+    const randomEmail = generateRandomEmail();
+
+    await this.emailInput.setValue(randomEmail);
   }
 
   async editTrainerForm(city, salary, password){
