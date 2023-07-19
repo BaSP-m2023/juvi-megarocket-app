@@ -1,70 +1,142 @@
-tr{
+tr {
   color: #000;
 }
 
-th{
-  background-color: #0F232E;
-  color: #F7F9ED;
+th {
+  background-color: #0f232e;
+  color: #f7f9ed;
+  border: 1px solid;
+  border-radius: 10%;
+  width: 8vw;
+  height: 6vh;
 }
 
-td{
-  width: 5vw;
+td {
+  width: 8vw;
   padding: 10px 5px;
   margin: 1px;
-  border: 1px solid #000;
-  border-radius: 5px;
   text-align: center;
+  border-bottom: 2px solid lightgray;
 }
 
-a{
+a {
   cursor: pointer;
 }
-
-td:hover{
-  background-color: #F9A414;
-  transition: 1.5s;
+.tdBoxing {
+  background-color: #f9a414;
+  border-radius: 15%;
+  font-size: small;
+  font-weight: bold;
 }
 
-.scheduleContainer{
+.tdCrossfit {
+  background-color: #66db72;
+  border-radius: 15%;
+  font-size: small;
+  font-weight: bold;
+}
+.tdSpinning {
+  background-color: #fddba1;
+  border-radius: 15%;
+  font-size: small;
+  font-weight: bold;
+}
+.tdGap {
+  background-color: #5074a9;
+  border-radius: 15%;
+  font-size: small;
+  font-weight: bold;
+}
+.tdBodybuilding {
+  background-color: #af4269;
+  border-radius: 15%;
+  font-size: small;
+  font-weight: bold;
+}
+.tdFunctional {
+  background-color: #42afa9;
+  border-radius: 15%;
+  font-size: small;
+  font-weight: bold;
+}
+.tdBoxing:hover,
+.tdCrossfit:hover,
+.tdSpinning:hover,
+.tdGap:hover,
+.tdBodybuilding:hover,
+tdFunctional:hover {
+  transform: scale(1.1);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.8);
+  transition: all 400ms ease;
+}
+.probando {
+  width: 8vw;
+  height: 4vh;
+  border: 1px solid;
+  border-radius: 18%;
+}
+
+.closed {
+  background-color: #9fa7ab;
+  border-radius: 15%;
+  font-size: small;
+  font-weight: bold;
+}
+
+.hourTd {
+  height: 10vh;
+}
+.scheduleContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-};
+}
 
-.scheduleButtonsContainer{
+.scheduleButtonsContainer {
   display: flex;
   width: 100px;
   height: 100px;
   background-color: #0b9ee7;
 }
 
-.scheduleTable{
-  border: 1px solid #000;
-};
-
-.scheduleBlockHour{
-  background-color: #F7F9ED;
-  color: #0F232E;
+.scheduleBlockHour {
+  background-color: #f7f9ed;
+  color: #0f232e;
 }
 
-.scheduleBlockBoxing{
-  background-color: #F9A414;
-};
+.scheduleBlockBoxing {
+  background-color: #f9a414;
+}
 
-.scheduleBlockSpinning{
-  background-color: #FDDBA1;
-};
+.scheduleBlockSpinning {
+  background-color: #fddba1;
+}
 
-.scheduleBlockGap{
-  background-color: #9FA7AB;
-};
+.scheduleBlockGap {
+  background-color: #9fa7ab;
+}
 
-.scheduleBlockFunctional{
+.scheduleBlockFunctional {
   background-color: #0b9ee7;
-};
+}
 
-.scheduleBlockUnavailable{
+.scheduleBlockUnavailable {
   background-color: #575555;
   color: red;
+}
+.clock {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #252725;
+  color: #fff;
+  width: 22vh;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5%;
+}
+.time {
+  align-self: center;
 }
