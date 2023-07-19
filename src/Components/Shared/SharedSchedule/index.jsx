@@ -55,11 +55,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     } else if (showAll === true) {
       setSubs(subsData.list);
     }
-<<<<<<< HEAD
   }, [sessionStorage.role, subsData.list, classData.list, showAlert]);
-=======
-  }, [sessionStorage.role]);
->>>>>>> master
 
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
