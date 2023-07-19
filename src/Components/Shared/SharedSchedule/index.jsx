@@ -55,7 +55,11 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     } else if (showAll === true) {
       setSubs(subsData.list);
     }
+<<<<<<< HEAD
   }, [sessionStorage.role, subsData.list, classData.list, showAlert]);
+=======
+  }, [sessionStorage.role]);
+>>>>>>> master
 
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
@@ -64,7 +68,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
 
   const matcherClass = (subs, scheduleDay, scheduleHour) => {
     let resp;
-    subs?.forEach((sub) => {
+    subs.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
@@ -94,7 +98,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     try {
       const selectedSubs = [];
       subs.forEach((sub) => {
-        if (sub?.classes?.trainer === user._id) {
+        if (sub.trainer._id === user._id) {
           selectedSubs.push(sub);
         }
       });
@@ -107,7 +111,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
   const memberSearch = (id, subs) => {
     try {
       const selectedSubs = [];
-      subs?.forEach((sub) => {
+      subs.forEach((sub) => {
         sub.members.forEach((memb) => {
           if (memb?._id === id) {
             selectedSubs.push(sub);
