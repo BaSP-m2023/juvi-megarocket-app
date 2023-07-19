@@ -64,7 +64,6 @@ const SharedSchedule = ({ user, showAll, testId }) => {
 
   const matcherClass = (subs, scheduleDay, scheduleHour) => {
     let resp;
-    console.log(subs);
     subs.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
@@ -165,6 +164,8 @@ const SharedSchedule = ({ user, showAll, testId }) => {
       </table>
       {showAlert && (
         <ModalSchedule
+          memberSearch={memberSearch}
+          user={user}
           role={sessionStorage.role}
           objSub={selectedSub}
           objClass={selectedClass}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptionById, editSubscription } from 'redux/subscriptions/thunks';
 import styles from 'Components/Shared/ModalSchedule/modal-schedule.module.css';
 
-const ModalSchedule = ({ role, user, objClass, objSub, onClick }) => {
+const ModalSchedule = ({ memberSearch, role, user, objClass, objSub, onClick }) => {
   // add user to props
   const [newSub, setNewSub] = useState({});
   const dispatch = useDispatch();
@@ -53,8 +53,10 @@ const ModalSchedule = ({ role, user, objClass, objSub, onClick }) => {
   };
 
   const checkSubscribe = (sub) => {
-    if (sub === subData.item) {
-      console.log('Yes');
+    let subs = [];
+    subs.push(sub);
+    subs = memberSearch(user.email, subs);
+    if (subs.length === 0) {
       return true;
     } else {
       return false;

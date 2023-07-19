@@ -25,7 +25,7 @@ const Schedule = () => {
     <div>
       <button onClick={onClick}>{`${changeSchedule}`}</button>
       {!gralSchedule && <SharedSchedule user={member} testId="member-schedule" />}
-      {gralSchedule && <SharedSchedule showAll={true} testId="member-schedule2" />}
+      {gralSchedule && <SharedSchedule user={member} showAll={true} testId="member-schedule2" />}
     </div>
   );
 };
