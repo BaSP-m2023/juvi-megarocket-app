@@ -108,7 +108,7 @@ describe('Complete Admin flow.', () => {
     await expect(ActivitiesForm.nameInput).toHaveValue('Crossfit');
     await expect(ActivitiesForm.descriptionInput).toHaveValue('This is a very hardworking activity');
   })
-  it('Modify and submit changes', async () => {
+  it('Modify of activities and submit changes', async () => {
     await ActivitiesForm.fillForm('Boxing', 'This is also a very hardworking...');
     await Buttons.confirmBtnClick();
     await expect(ModalAlert.modalAlertText).toBeDisplayed();
@@ -127,6 +127,7 @@ describe('Complete Admin flow.', () => {
     await expect(ModalConfirm.confirmModalBtn).toBeClickable();
     await ModalConfirm.confirmClick();
     await expect(ModalAlert.modalAlertText).toHaveTextContaining('was successfully deleted');
+    await ModalAlert.confirmAlertClick();
   })
   it('Check if the new activity was successfully deleted', async () => {
     if( await expect(ActivitiesTable.newActivityName).toBeDisplayed() ) {
@@ -138,14 +139,14 @@ describe('Complete Admin flow.', () => {
 
   it('edit profile', async() =>{
     await Profile.profileNavbarClick();
-    await expect (Profile.profileForm).toBeDisplayed();
+    await Profile.inputCity.waitForDisplayed();
     await Profile.profileForm("Ernesto", "Martinez", "35565789", "3246697821",
-     "octavitossse@gmail.com", "Alvear");
+     "juanignaciocanton1@gmail.com", "Alvear");
     await Profile.pathClick();
-    await Buttons.submitBtn();
+    await Buttons.submitBtnClick();
     await expect (ModalAlert.modalAlertText).toBeDisplayed();
     await ModalAlert.confirmAlertClick();
-    await expect (ModalAlert.modalAlertText).toHaveTextContaining('was successfully updated');
+    await expect (ModalAlert.modalAlertMessage()).toHaveTextContaining('was successfully updated');
     await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin');
   });
 
@@ -262,8 +263,8 @@ describe('Complete Admin flow.', () => {
     await TrainersPage.trainersNavbarClick();
     await expect(TrainersPage.ListOfTrainers).toBeDisplayed();
     await Buttons.addBtnClick();
-    await TrainersPage.addTrainerForm("Martina", "Pereira", "Rosario", "34656125",
-    "mpereira25@gmail.com", "3615572863","300000", "martipe8314");
+    await TrainersPage.addTrainerForm("Martina", "Pereira", "Rosario", "34656125", "3615572863","300000", "martipe8314");
+    await TrainersPage.addTrainerEmail();
     await Buttons.confirmBtnClick();
     await browser.pause(3000);
     await expect(ModalAlert.modalAlertText).toBeDisplayed();

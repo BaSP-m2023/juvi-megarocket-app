@@ -114,7 +114,7 @@ export const editSubscription = (id, formData) => {
     const token = sessionStorage.getItem('token');
     const requestData = {
       classes: formData.classes,
-      members: [formData.members._id],
+      members: formData.members,
       date: formData.date
     };
     try {

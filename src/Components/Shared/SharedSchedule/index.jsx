@@ -6,7 +6,7 @@ import { getClasses } from 'redux/classes/thunks';
 import { ModalSchedule } from 'Components/Shared';
 import styles from 'Components/Shared/SharedSchedule/shared-schedule.module.css';
 
-const SharedSchedule = ({ user, testId }) => {
+const SharedSchedule = ({ user, showAll, testId }) => {
   const [showAlert, setShowAlert] = React.useState(false);
   const [subs, setSubs] = React.useState([]);
   const [selectedSub, setSelectedSub] = React.useState({});
@@ -48,12 +48,14 @@ const SharedSchedule = ({ user, testId }) => {
   }, []);
 
   useEffect(() => {
-    if (sessionStorage.role === 'MEMBER') {
-      setSubs(memberSearch(user.email, subsData.list));
-    } else if (sessionStorage.role === 'TRAINER') {
+    if (sessionStorage.role === 'MEMBER' && showAll !== true) {
+      setSubs(memberSearch(user?._id, subsData.list));
+    } else if (sessionStorage.role === 'TRAINER' && showAll !== true) {
       setSubs(trainerSearch(user, subsData.list));
+    } else if (showAll === true) {
+      setSubs(subsData.list);
     }
-  }, [sessionStorage.role, subsData.list, classData.list]);
+  }, [sessionStorage.role, subsData.list, classData.list, showAlert]);
 
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
@@ -62,12 +64,12 @@ const SharedSchedule = ({ user, testId }) => {
 
   const matcherClass = (subs, scheduleDay, scheduleHour) => {
     let resp;
-    subs?.forEach((sub) => {
+    subs.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
-        classData.list.forEach((classes) => {
-          if (classes._id === sub.classes._id) {
+        classData?.list.forEach((classes) => {
+          if (classes?._id === sub.classes?._id) {
             resp = classes;
           }
         });
@@ -78,7 +80,7 @@ const SharedSchedule = ({ user, testId }) => {
 
   const matcherSub = (subs, scheduleDay, scheduleHour) => {
     let res;
-    subs.forEach((sub) => {
+    subs?.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
@@ -92,7 +94,7 @@ const SharedSchedule = ({ user, testId }) => {
     try {
       const selectedSubs = [];
       subs.forEach((sub) => {
-        if (sub?.classes?.trainer === user._id) {
+        if (sub.trainer._id === user._id) {
           selectedSubs.push(sub);
         }
       });
@@ -102,12 +104,12 @@ const SharedSchedule = ({ user, testId }) => {
     }
   };
 
-  const memberSearch = (email, subs) => {
+  const memberSearch = (id, subs) => {
     try {
       const selectedSubs = [];
-      subs?.forEach((sub) => {
+      subs.forEach((sub) => {
         sub.members.forEach((memb) => {
-          if (memb.email === email) {
+          if (memb?._id === id) {
             selectedSubs.push(sub);
           }
         });
@@ -117,16 +119,45 @@ const SharedSchedule = ({ user, testId }) => {
       console.log(error);
     }
   };
+  const getTdStyle = (index) => {
+    if (index <= 13) {
+      return styles.probando;
+    } else {
+      return '';
+    }
+  };
 
   const showTds = (hour, num) => {
+    const activityName = matcherClass(subs, num, hour)?.activity.name ?? '';
+    const hasBoxing = activityName.includes('BOXING');
+    const hasCrossfit = activityName.includes('CROSSFIT');
+    const hasSpinning = activityName.includes('SPINNING');
+    const hasGap = activityName.includes('GAP');
+    const hasBodybuilding = activityName.includes('BODYBUILDING');
+    const hasFunctional = activityName.includes('FUNCTIONAL');
+
+    const tdClassName = hasBoxing
+      ? styles.tdBoxing
+      : hasCrossfit
+      ? styles.tdCrossfit
+      : hasSpinning
+      ? styles.tdSpinning
+      : hasGap
+      ? styles.tdGap
+      : hasBodybuilding
+      ? styles.tdBodybuilding
+      : hasFunctional
+      ? styles.tdFunctional
+      : styles.tdWithoutWord;
+
     return (
-      <td>
+      <td className={tdClassName}>
         <a
           onClick={() => {
             onClick(matcherClass(subs, num, hour), matcherSub(subs, num, hour), true);
           }}
         >
-          {matcherClass(subs, num, hour)?.activity.name ?? ``}
+          {activityName}
         </a>
       </td>
     );
@@ -140,17 +171,21 @@ const SharedSchedule = ({ user, testId }) => {
 
   return (
     <div className={styles.scheduleContainer}>
-      <p>{`${nowDate.getFullYear()} ${nowDate.getMonth() + 1}`}</p>
+      <div className={styles.clock}>
+        <p className={styles.time}>{`${nowDate.getDate()}/${
+          nowDate.getMonth() + 1
+        }/${nowDate.getFullYear()} ${nowDate.getHours()}:${nowDate.getMinutes()}`}</p>
+      </div>
       <table className={styles.scheduleTable} data-testid={testId}>
         <tr>
           {week.map((day) => (
             <th key={day}> {day} </th>
           ))}
         </tr>
-        {hours.map((hour) => (
+        {hours.map((hour, index) => (
           <tr key={hour} className={styles.tr}>
-            <td>{hour}</td>
-            <td>{'CLOSED'}</td>
+            <td className={getTdStyle(index)}>{hour}</td>
+            <td className={styles.closed}>{'CLOSED'}</td>
             {showTds(hour, 1)}
             {showTds(hour, 2)}
             {showTds(hour, 3)}
@@ -162,6 +197,8 @@ const SharedSchedule = ({ user, testId }) => {
       </table>
       {showAlert && (
         <ModalSchedule
+          memberSearch={memberSearch}
+          user={user}
           role={sessionStorage.role}
           objSub={selectedSub}
           objClass={selectedClass}

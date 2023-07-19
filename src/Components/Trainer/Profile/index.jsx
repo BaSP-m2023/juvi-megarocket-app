@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import { Button, Input, ModalAlert } from 'Components/Shared';
-import { putTrainer, getTrainersByEmail } from 'redux/trainers/thunks';
+import { putTrainer } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -10,41 +10,58 @@ import trainersSchema from './validationTrainers';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const trainer = useSelector((state) => state.trainers);
-  const email = sessionStorage.getItem('email');
+  const { data: trainer } = useSelector((state) => state.auth);
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [modalText, setModalText] = useState('');
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(trainersSchema),
     defaultValues: {
-      firstName: trainer.item?.firstName || '',
-      lastName: trainer.item?.lastName || '',
-      dni: trainer.item?.dni || '',
-      phone: trainer.item?.phone || '',
-      email: trainer.item?.email || '',
-      city: trainer.item?.city || '',
-      password: trainer.item?.password || '',
-      salary: trainer.item?.salary || ''
+      firstName: trainer.firstName || '',
+      lastName: trainer.lastName || '',
+      dni: trainer.dni || '',
+      phone: trainer.phone || '',
+      email: trainer.email || '',
+      city: trainer.city || '',
+      password: trainer.password || '',
+      salary: trainer.salary || ''
     }
   });
 
   useEffect(() => {
-    dispatch(getTrainersByEmail(email));
-  }, [email]);
-
+    if (trainer) {
+      reset({
+        firstName: trainer.firstName || '',
+        lastName: trainer.lastName || '',
+        dni: trainer.dni || '',
+        phone: trainer.phone || '',
+        email: trainer.email || '',
+        city: trainer.city || '',
+        password: trainer.password || '',
+        salary: trainer.salary || ''
+      });
+    }
+  }, [trainer]);
   const onSubmit = (data) => {
-    dispatch(putTrainer(data, trainer.item._id, setModalText, setShowModal, setShowModalSuccess));
+    dispatch(putTrainer(data, trainer._id, setModalText, setShowModal, setShowModalSuccess));
   };
 
   const closeModal = () => {
     setShowModal(!showModal);
+  };
+
+  const handleClick = () => {
+    const newUrl = '/trainer';
+    history.replace(newUrl);
+    window.location.reload();
   };
 
   return (
@@ -115,7 +132,7 @@ const Profile = () => {
         <ModalAlert
           text={modalText}
           onClick={() => {
-            history.goBack();
+            handleClick();
             setShowModalSuccess(false);
             trainer.message = '';
           }}

@@ -33,6 +33,12 @@ const Button = ({ type, resource, onClick, testId }) => {
       case 'changePassword':
         text = 'Change password';
         return styles.btnCancel;
+      case 'Main Schedule':
+        text = 'Shown my schedule';
+        return styles.btnMainSchedule;
+      case 'My Schedule':
+        text = 'Shown main schedule';
+        return styles.btnMySchedule;
       default:
         return styles.btn;
     }
