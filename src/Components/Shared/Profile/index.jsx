@@ -8,7 +8,7 @@ const Profile = ({ user, activities }) => {
 
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.profileLeftContainer}>
+      <div className={styles.profileLeftContainer} data-testid="profile-section">
         <div className={styles.profileInfoContainer}>
           <fieldset className={styles.profileFieldset}>
             <label>{'First Name'}</label>
@@ -87,7 +87,7 @@ const Profile = ({ user, activities }) => {
           )}
         </div>
       </div>
-      <div className={styles.profileButtonsContainer}>
+      <div className={styles.profileButtonsContainer} data-testid="profile-buttons-container">
         <button
           onClick={() => {
             history.push(`profile/edit`);

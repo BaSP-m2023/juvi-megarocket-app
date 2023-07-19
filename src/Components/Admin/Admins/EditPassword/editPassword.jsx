@@ -80,7 +80,7 @@ const EditPassword = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.passwordContainer}>
+        <div className={styles.passwordContainer} data-testid="password-change-form">
           <h1>{'Edit Password'}</h1>
           <fieldset>
             <div className={styles.passwordInput}>
@@ -117,8 +117,12 @@ const EditPassword = () => {
             </div>
           </fieldset>
           <div className={styles.passButton}>
-            <Button type="submit"></Button>
-            <Button type="cancel" onClick={() => history.push('/admin/profile')}></Button>
+            <Button type="submit" testId="submit-button"></Button>
+            <Button
+              type="cancel"
+              onClick={() => history.push('/admin/profile')}
+              testId="cancel-button"
+            ></Button>
           </div>
         </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}
