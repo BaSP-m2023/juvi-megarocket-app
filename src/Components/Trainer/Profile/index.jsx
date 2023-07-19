@@ -37,8 +37,6 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    console.log(trainer);
-    console.log('trainer');
     if (trainer) {
       reset({
         firstName: trainer.firstName || '',
