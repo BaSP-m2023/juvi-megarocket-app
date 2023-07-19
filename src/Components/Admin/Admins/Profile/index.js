@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from 'Components/Admin/Admins/Profile/adminprofile.module.css';
 import { schema } from 'Components/Admin/Admins/Form/adminFormValidations';
-import { ModalAlert, Button, Input } from 'Components/Shared';
+import { ModalAlert, Button, Input, Profile } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { editAdmin } from 'redux/admins/thunks';
 import EditPassword from '../EditPassword/editPassword';
@@ -101,87 +101,10 @@ const AdminProfile = () => {
 
   return (
     <div>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className={styles.formContainer} data-testid="admin-profile-form">
-          <h1>Edit Profile</h1>
-          <fieldset className={styles.fieldset}>
-            <Input
-              labelText="First Name"
-              className={styles.input}
-              name={'firstName'}
-              type="text"
-              placeholder="Ex: Gianluca"
-              error={errors.firstName?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
-            <Input
-              labelText="Last Name"
-              className={styles.input}
-              name={'lastName'}
-              type="text"
-              placeholder="Ex: Agrano"
-              error={errors.lastName?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
-            <Input
-              labelText="DNI"
-              className={styles.input}
-              name={'dni'}
-              type="number"
-              placeholder="Ex: 44897162"
-              error={errors.dni?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
-            <Input
-              labelText="Phone"
-              className={styles.input}
-              name={'phone'}
-              type="number"
-              placeholder="Ex: 1142642634"
-              error={errors.phone?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
-            <Input
-              labelText="Email"
-              className={styles.input}
-              name={'email'}
-              type="text"
-              placeholder="example@example.com"
-              error={errors.email?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
-            <Input
-              labelText="City"
-              className={styles.input}
-              name={'city'}
-              type="text"
-              placeholder="Ex: Rosario"
-              error={errors.city?.message}
-              register={register}
-            />
-          </fieldset>
-          <fieldset className={styles.fieldset}>
-            <Button type={'changePassword'} onClick={openEditPassword}></Button>
-          </fieldset>
-        </div>
-        <div className={styles.profileBtn}>
-          <Button type={'submit'} testId="submit-button" />
-          <Button type={'cancel'} onClick={() => history.push('/admin')} testId="cancel-button" />
-        </div>
-        {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
-        {modalDone && <ModalAlert text={msg} onClick={handleClick} />}
-        {showEditPassword && <EditPassword adminId={admin?._id} onClose={closeEditPassword} />}
-      </form>
+      <Profile />
+      {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} testId="modal-alert" />}
+      {modalDone && <ModalAlert text={msg} onClick={handleClick} />}
+      {showEditPassword && <EditPassword adminId={admin?._id} onClose={closeEditPassword} />}
     </div>
   );
 };
