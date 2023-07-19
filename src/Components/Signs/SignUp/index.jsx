@@ -108,7 +108,7 @@ const MemberSingUp = () => {
                 />
               </fieldset>
               <fieldset className={styles.fieldset}>
-                <Input
+                {/*<Input
                   labelText="Repeat Email"
                   className={styles.input}
                   name={'email'}
@@ -116,7 +116,7 @@ const MemberSingUp = () => {
                   placeholder="example@example.com"
                   error={errors.email?.message}
                   register={register}
-                />
+  />*/}
               </fieldset>
               <fieldset className={styles.fieldset}>
                 <Input
