@@ -30,6 +30,12 @@ const Button = ({ type, resource, onClick, testId }) => {
       case 'reset':
         text = 'Reset';
         return styles.btnReset;
+      case 'Main Schedule':
+        text = 'Shown my schedule';
+        return styles.btnMainSchedule;
+      case 'My Schedule':
+        text = 'Shown main schedule';
+        return styles.btnMySchedule;
       default:
         return styles.btn;
     }

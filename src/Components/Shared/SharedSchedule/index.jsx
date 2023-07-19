@@ -6,7 +6,7 @@ import { getClasses } from 'redux/classes/thunks';
 import { ModalSchedule } from 'Components/Shared';
 import styles from 'Components/Shared/SharedSchedule/shared-schedule.module.css';
 
-const SharedSchedule = ({ user, testId }) => {
+const SharedSchedule = ({ user, showAll, testId }) => {
   const [showAlert, setShowAlert] = React.useState(false);
   const [subs, setSubs] = React.useState([]);
   const [selectedSub, setSelectedSub] = React.useState({});
@@ -48,12 +48,14 @@ const SharedSchedule = ({ user, testId }) => {
   }, []);
 
   useEffect(() => {
-    if (sessionStorage.role === 'MEMBER') {
-      setSubs(memberSearch(user.email, subsData.list));
-    } else if (sessionStorage.role === 'TRAINER') {
+    if (sessionStorage.role === 'MEMBER' && showAll !== true) {
+      setSubs(memberSearch(user?._id, subsData.list));
+    } else if (sessionStorage.role === 'TRAINER' && showAll !== true) {
       setSubs(trainerSearch(user, subsData.list));
+    } else if (showAll === true) {
+      setSubs(subsData.list);
     }
-  }, [sessionStorage.role]);
+  }, [sessionStorage.role, subsData.list, classData.list, showAlert]);
 
   const dateConverter = (someDate) => {
     someDate = new Date(someDate);
@@ -66,8 +68,8 @@ const SharedSchedule = ({ user, testId }) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
-        classData.list.forEach((classes) => {
-          if (classes._id === sub.classes._id) {
+        classData?.list.forEach((classes) => {
+          if (classes?._id === sub.classes?._id) {
             resp = classes;
           }
         });
@@ -78,7 +80,7 @@ const SharedSchedule = ({ user, testId }) => {
 
   const matcherSub = (subs, scheduleDay, scheduleHour) => {
     let res;
-    subs.forEach((sub) => {
+    subs?.forEach((sub) => {
       const date = dateConverter(sub.date);
       const dateHour = date.getHours() + ':' + date.getMinutes() + 0;
       if (scheduleDay === date.getDay() && scheduleHour === dateHour) {
@@ -102,12 +104,12 @@ const SharedSchedule = ({ user, testId }) => {
     }
   };
 
-  const memberSearch = (email, subs) => {
+  const memberSearch = (id, subs) => {
     try {
       const selectedSubs = [];
       subs.forEach((sub) => {
         sub.members.forEach((memb) => {
-          if (memb.email === email) {
+          if (memb?._id === id) {
             selectedSubs.push(sub);
           }
         });
@@ -195,6 +197,8 @@ const SharedSchedule = ({ user, testId }) => {
       </table>
       {showAlert && (
         <ModalSchedule
+          memberSearch={memberSearch}
+          user={user}
           role={sessionStorage.role}
           objSub={selectedSub}
           objClass={selectedClass}

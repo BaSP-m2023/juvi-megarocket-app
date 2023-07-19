@@ -14,15 +14,12 @@ export const getMembers = () => {
         headers: { token: token }
       });
       const data = await response.json();
-
       if (data.error) {
         throw new Error(data.error.message);
       }
-
       data.data.forEach((item) => {
         item.birthDate = item.birthDate.substring(0, 10);
       });
-
       dispatch(getMembersSuccess(data.data));
     } catch (error) {
       dispatch(getMembersError(error));
@@ -43,7 +40,6 @@ export const getMemberById = (id) => {
       if (data.error) {
         throw new Error(data.error.message);
       }
-
       dispatch(getMemberByIdSuccess(data.data));
     } catch (error) {
       dispatch(getMemberByIdError(error));
@@ -62,8 +58,9 @@ export const addMember = (member, switchModal) => {
         },
         body: JSON.stringify(member)
       });
+
       const newMemb = await response.json();
-      console.log(member);
+
       if (newMemb.error) {
         switchModal(newMemb.error, newMemb.message);
         throw new Error(newMemb.message);
@@ -76,12 +73,12 @@ export const addMember = (member, switchModal) => {
   };
 };
 
-export const putMember = (id, member, switchModal) => {
+export const putMember = (_id, member, switchModal) => {
   return async (dispatch) => {
     const token = sessionStorage.getItem('token');
     try {
       dispatch(putMemberPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +97,11 @@ export const putMember = (id, member, switchModal) => {
           password: member.password
         })
       });
+
       const data = await response.json();
+
+      console.log(data);
+
       if (data.error) {
         switchModal(data.error, data.message);
         throw new Error(data.message);
@@ -122,6 +123,7 @@ export const deleteMember = (id) => {
         method: 'DELETE',
         headers: { token: token }
       });
+
       const data = await response.json();
 
       if (data.error) {
