@@ -40,8 +40,6 @@ const FormClasses = () => {
   const trainers = useSelector((state) => state.trainers);
   const activities = useSelector((state) => state.activities);
   const availableHours = [
-    '07:00',
-    '08:00',
     '09:00',
     '10:00',
     '11:00',
@@ -52,8 +50,11 @@ const FormClasses = () => {
     '16:00',
     '17:00',
     '18:00',
-    '19:00'
+    '19:00',
+    '20:00',
+    '21:00'
   ];
+  const week = ['Monday', 'Thuesday', 'Wenesday', 'Thursday', 'Friday', 'Saturday'];
 
   useEffect(() => {
     dispatch(getTrainers());
@@ -146,13 +147,17 @@ const FormClasses = () => {
                 </select>
               </div>
               <div className={styles.inputClass}>
-                <Input
-                  register={register}
-                  labelText="Day"
-                  type="text"
-                  name="day"
-                  error={errors.day?.message}
-                />
+                <label className={styles.labelClasses} htmlFor="day">
+                  Day
+                </label>
+                <select {...register('day')} name="day">
+                  <option>Choose a Day</option>
+                  {week.map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className={styles.inputClass}>
                 <label className={styles.labelClasses} htmlFor="hour">
