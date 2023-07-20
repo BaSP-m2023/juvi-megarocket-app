@@ -1,4 +1,7 @@
 class ProfileForm {
+  get editBtn() {
+    return $('[data-testid="profile-buttons-container"] button:nth-child(1)');
+  }
   get nameLabel() {
     return $('[data-testid="member-profile-edit-form"]  fieldset:nth-child(2) label');
   }
@@ -74,6 +77,15 @@ class ProfileForm {
   get successModalBtn() {
     return $('[data-testid="member-profile-modal-alert"] button')
   }
+  get changePassBtn() {
+    return $('[data-testid="profile-buttons-container"] button:nth-child(3)')
+  }
+  async changePassClick() {
+    await this.changePassBtn.click();
+  }
+  async editClick() {
+    await this.editBtn.click();
+  }
   async successBtnClick() {
     await this.successModalBtn.click();
   }
@@ -95,17 +107,8 @@ class ProfileForm {
   async membershipBlackClick() {
     await this.membershipBlack.click();
   }
-  async fillProfileForm(name, lastName, id, phone, email, city, date, zip, password) {
+  async fillProfileForm(name) {
     await this.nameInput.setValue(name);
-    await this.lastNameInput.setValue(lastName);
-    await this.idInput.setValue(id);
-    await this.phoneInput.setValue(phone);
-    await this.emailInput.setValue(email);
-    await this.cityInput.setValue(city);
-    await this.dateInput.setValue(date);
-    await browser.pause(1000)
-    await this.zipInput.setValue(zip);
-    await this.passwordInput.setValue(password);
   }
 }
 
