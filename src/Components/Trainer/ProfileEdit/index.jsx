@@ -59,7 +59,7 @@ const ProfileEdit = () => {
   };
 
   const handleClick = () => {
-    const newUrl = '/trainer';
+    const newUrl = '/trainer/profile';
     history.replace(newUrl);
     window.location.reload();
   };
@@ -117,9 +117,8 @@ const ProfileEdit = () => {
             <Button
               className={styles.addButton}
               type="cancel"
-              onClick={(e) => {
-                e.preventDefault();
-                history.push('/trainer');
+              onClick={() => {
+                history.push('/trainer/profile');
               }}
               testId="cancel-button"
             ></Button>
