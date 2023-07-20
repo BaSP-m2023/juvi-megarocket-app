@@ -141,7 +141,7 @@ describe('Members complete flow.', function () {
     await expect(ProfileForm.idInput).toHaveValue('42129353')
     await expect(ProfileForm.phoneInput).toHaveValue('3413520137')
     await expect(ProfileForm.emailInput).toHaveValue('juan@gmail.com')
-    await expect(ProfileForm.cityInput).toHaveValue('Rosario')
+    await expect(ProfileForm.cityInput).toHaveValue('ROSARIO')
     await expect(ProfileForm.zipInput).toHaveValue('2000')
   })
   it('Change all the information and submit', async() => {
