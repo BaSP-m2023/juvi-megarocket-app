@@ -141,16 +141,16 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     const tdClassName = hasBoxing
       ? styles.tdBoxing
       : hasCrossfit
-        ? styles.tdCrossfit
-        : hasSpinning
-          ? styles.tdSpinning
-          : hasGap
-            ? styles.tdGap
-            : hasBodybuilding
-              ? styles.tdBodybuilding
-              : hasFunctional
-                ? styles.tdFunctional
-                : styles.tdWithoutWord;
+      ? styles.tdCrossfit
+      : hasSpinning
+      ? styles.tdSpinning
+      : hasGap
+      ? styles.tdGap
+      : hasBodybuilding
+      ? styles.tdBodybuilding
+      : hasFunctional
+      ? styles.tdFunctional
+      : styles.tdWithoutWord;
 
     return (
       <td className={tdClassName}>
@@ -174,8 +174,9 @@ const SharedSchedule = ({ user, showAll, testId }) => {
   return (
     <div className={styles.scheduleContainer}>
       <div className={styles.clock}>
-        <p className={styles.time}>{`${nowDate.getDate()}/${nowDate.getMonth() + 1
-          }/${nowDate.getFullYear()} ${nowDate.getHours()}:${nowDate.getMinutes()}`}</p>
+        <p className={styles.time}>{`${nowDate.getDate()}/${
+          nowDate.getMonth() + 1
+        }/${nowDate.getFullYear()} ${nowDate.getHours()}:${nowDate.getMinutes()}`}</p>
       </div>
       <table className={styles.scheduleTable} data-testid={testId}>
         <tr>
