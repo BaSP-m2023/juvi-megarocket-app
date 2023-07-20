@@ -81,11 +81,11 @@ class TrainersPage{
   }
 
   get editButton (){
-    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(9) button');
+    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(8) button');
   }
 
   get deleteButton (){
-    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(10) button');
+    return $('[data-testid="admin-trainers-table"] tbody tr:last-child td:nth-child(9) button');
   }
 
   async editButtonClick (){
@@ -134,10 +134,8 @@ class TrainersPage{
     await this.emailInput.setValue(randomEmail);
   }
 
-  async editTrainerForm(city, salary, password){
-    await this.cityInput.setValue(city);
+  async editTrainerForm(salary){
     await this.salaryInput.setValue(salary);
-    await this.passwordInput.setValue(password);
   }
 
 }

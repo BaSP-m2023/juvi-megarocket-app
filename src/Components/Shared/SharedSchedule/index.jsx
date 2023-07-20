@@ -21,8 +21,8 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     'Hour/Day',
     'Sunday',
     'Monday',
-    'Thuesday',
-    'Wenesday',
+    'Tuesday',
+    'Wednesday',
     'Thursday',
     'Friday',
     'Saturday'

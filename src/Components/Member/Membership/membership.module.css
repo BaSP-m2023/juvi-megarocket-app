@@ -45,7 +45,7 @@
 
 .onlyClasses {
   background-color: #9FA7AB;
-  height: 529px;
+  height: 400px;
   width: 317px;
   margin: 20px;
   border-radius: 10px;
@@ -55,7 +55,7 @@
 
 .classic {
   background-color: #F9A414;
-  height: 529px;
+  height: 400px;
   width: 317px;
   margin: 20px;
   border-radius: 10px;
@@ -65,7 +65,7 @@
 
 .black {
   background-color: #0F232E;
-  height: 529px;
+  height: 400px;
   width: 317px;
   margin: 20px;
   border-radius: 10px;
@@ -76,7 +76,7 @@
 .onlyClasses:hover,
 .classic:hover,
 .black:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .paragraphMember {

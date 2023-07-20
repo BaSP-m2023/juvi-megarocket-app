@@ -283,7 +283,7 @@ describe('Complete Admin flow.', () => {
   it ('edit trainer', async() => {
     await expect (browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/admin/trainers');
     await TrainersPage.editButtonClick();
-    await TrainersPage.editTrainerForm('Funes', '700000', 'marperez123');
+    await TrainersPage.editTrainerForm('700000');
     await Buttons.confirmBtnClick();
     await expect (ModalAlert.modalAlertText).toBeDisplayed();
     await ModalAlert.confirmAlertClick();
