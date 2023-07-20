@@ -378,7 +378,7 @@ describe('Complete Admin flow.', () => {
 
     await Classes.lastClassesEditBtn.waitForDisplayed();
     await Classes.lastClassesEditBtnClick();
-   // await expect(browser).toHaveUrlContaining('https://juvi-megarocket-app.vercel.app/admin/classes/form');
+    await expect(browser).toHaveUrlContaining('https://juvi-megarocket-app.vercel.app/admin/classes/form');
 
     await Classes.slotsInputEditClasses.waitForDisplayed();
     await Classes.fillClassesEditForm();
