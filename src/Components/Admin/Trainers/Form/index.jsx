@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import trainersSchema from './validationTrainers';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ const Form = () => {
   return (
     <>
       {data.isLoading ? (
-        <div>is Loading</div>
+        <LoadingSpinner />
       ) : (
         <>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

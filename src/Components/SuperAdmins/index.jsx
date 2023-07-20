@@ -6,6 +6,7 @@ import Button from 'Components/Shared/Button';
 import SharedTable from 'Components/Shared/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superadmins/thunks';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 const SuperAdminsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
@@ -30,7 +31,7 @@ const SuperAdminsPage = () => {
           </Link>
         </div>
         {isLoading ? (
-          <div>Is loading</div>
+          <LoadingSpinner />
         ) : (
           <SharedTable
             data={list}

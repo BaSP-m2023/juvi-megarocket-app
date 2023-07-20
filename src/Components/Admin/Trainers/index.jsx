@@ -5,6 +5,7 @@ import { resetErrorAndMessage } from 'redux/trainers/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers, delTrainer } from 'redux/trainers/thunks';
 import { SharedTable, ModalAlert, Button } from 'Components/Shared';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 function Trainers() {
   const { list, isLoading, error, message, item } = useSelector((state) => state.trainers);
@@ -31,7 +32,7 @@ function Trainers() {
         </Link>
       </div>
       {isLoading ? (
-        <h2>Loading...</h2>
+        <LoadingSpinner />
       ) : (
         <SharedTable
           data={list}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './activity.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActivities } from 'redux/activities/thunks';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 function ActivityMember() {
   const data = useSelector((state) => state.activities);
@@ -20,7 +21,7 @@ function ActivityMember() {
   return (
     <>
       {data.isLoading ? (
-        <div>is Loading</div>
+        <LoadingSpinner />
       ) : (
         <div className={styles.mainContainer} data-testid="member-cards-container">
           <div className={styles.mainTitle}>

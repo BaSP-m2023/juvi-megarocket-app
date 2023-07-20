@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './admins.module.css';
 import { getAdmins, deleteAdmin } from 'redux/admins/thunks';
 import { Button, ModalAlert, SharedTable } from 'Components/Shared';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 function Admins() {
   const [modalText, setModalText] = useState('');
@@ -34,9 +35,7 @@ function Admins() {
         </Link>
       </div>
       {data.isLoading ? (
-        <div>
-          <h3>Is loading..</h3>
-        </div>
+        <LoadingSpinner />
       ) : (
         <SharedTable
           data={data.list}
