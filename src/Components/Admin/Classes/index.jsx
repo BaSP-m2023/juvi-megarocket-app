@@ -5,6 +5,7 @@ import { getClasses, deleteClass } from 'redux/classes/thunks';
 import { getSubscriptions, deleteSubscription } from 'redux/subscriptions/thunks';
 import { Button, ModalAlert, SharedTable } from 'Components/Shared';
 import styles from './classes.module.css';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 const Classes = () => {
   const { list, isLoading } = useSelector((state) => state.classes);
@@ -45,7 +46,7 @@ const Classes = () => {
         </Link>
       </div>
       {isLoading ? (
-        <div>Is Loading</div>
+        <LoadingSpinner />
       ) : (
         <SharedTable
           data={list}

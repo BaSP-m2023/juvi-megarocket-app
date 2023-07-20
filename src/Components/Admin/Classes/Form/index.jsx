@@ -10,7 +10,7 @@ import { addSubscription } from 'redux/subscriptions/thunks';
 import classesSchema from './validation';
 import { Input, Button, ModalAlert } from 'Components/Shared';
 import styles from './classesForm.module.css';
-
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 const FormClasses = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.classes);
@@ -196,7 +196,7 @@ const FormClasses = () => {
   return (
     <>
       {data.isLoading ? (
-        <div>is Loading</div>
+        <LoadingSpinner />
       ) : (
         <>
           <form className={styles.formClasses} onSubmit={handleSubmit(onSubmit)}>

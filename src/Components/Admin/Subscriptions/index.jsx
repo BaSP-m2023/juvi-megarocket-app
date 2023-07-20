@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { SharedTable, ModalAlert, Button } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptions, deleteSubscription } from 'redux/subscriptions/thunks';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 function Subscriptions() {
   const [showAlert, setshowAlert] = useState(false);
@@ -31,7 +32,7 @@ function Subscriptions() {
           <Button type="add" resource="Subscription"></Button>
         </Link>
         {isLoading ? (
-          <h2>Loading...</h2>
+          <LoadingSpinner />
         ) : (
           <SharedTable
             data={list}

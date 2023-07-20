@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, SharedTable, ModalAlert } from '../../Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActivities, deleteActivity } from '../../../redux/activities/thunks';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 const Activities = () => {
   const [showModal, setShowModal] = useState(false);
@@ -35,7 +36,7 @@ const Activities = () => {
           </Link>
         </div>
         {isLoading ? (
-          <div>is Loading</div>
+          <LoadingSpinner />
         ) : (
           <SharedTable
             data={list}
