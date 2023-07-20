@@ -16,6 +16,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
   const dispatch = useDispatch();
 
   const nowDate = new Date();
+
   const week = [
     'Hour/Day',
     'Sunday',
@@ -26,6 +27,7 @@ const SharedSchedule = ({ user, showAll, testId }) => {
     'Friday',
     'Saturday'
   ];
+
   const hours = [
     '09:00',
     '10:00',
