@@ -28,8 +28,8 @@ class SignIn {
   }
 
   async fillFormLogInMember() {
-    await this.emailInput.setValue('pablomorad@hotmail.com');
-    await this.passwordInput.setValue('Chimpance1');
+    await this.emailInput.setValue('juan@gmail.com');
+    await this.passwordInput.setValue('testing123');
   }
 
   async fillFormLogInAdmin() {

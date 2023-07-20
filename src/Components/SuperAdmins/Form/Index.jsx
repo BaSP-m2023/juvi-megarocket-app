@@ -95,8 +95,12 @@ const FormSuperAdmins = () => {
                 />
               </div>
             </div>
-            <Button type="confirm" testId="confirm-button"></Button>
-            <Button type="cancel" onClick={closeModal} testId="cancel-button"></Button>
+            <Button type="submit" testId="confirm-button"></Button>
+            <Button
+              type="cancel"
+              onClick={() => history.push('/super-admin/admins')}
+              testId="cancel-button"
+            ></Button>
           </form>
           <Button
             className={styles.addButton}
