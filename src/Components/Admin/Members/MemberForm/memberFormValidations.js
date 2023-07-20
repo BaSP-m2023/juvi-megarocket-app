@@ -22,8 +22,8 @@ export const schema = Joi.object({
     .max(99999999)
     .integer()
     .messages({
-      'number.min': 'Must contain at least 7 characters',
-      'number.max': 'Can not contain more than 8 characters'
+      'number.min': 'Must contain 8 characters',
+      'number.max': 'Must contain 8 characters'
     })
     .required(),
   phone: Joi.number().min(1000000000).max(9999999999).integer().required().messages({
