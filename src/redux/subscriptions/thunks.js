@@ -85,7 +85,6 @@ export const addSubscription = (formData) => {
     dispatch(postSubscriptionsPending());
     const requestData = {
       classes: formData.classes,
-      members: [formData.members],
       date: formData.date
     };
     try {
@@ -98,6 +97,8 @@ export const addSubscription = (formData) => {
         body: JSON.stringify(requestData)
       });
       const responseData = await response.json();
+      console.log(formData);
+      console.log(responseData.message);
       if (response.ok) {
         dispatch(postSubscriptionsSuccess(responseData.data));
       } else {

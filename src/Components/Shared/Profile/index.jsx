@@ -11,7 +11,7 @@ const Profile = ({ user, activities }) => {
 
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.profileLeftContainer}>
+      <div className={styles.profileLeftContainer} data-testid="profile-section">
         <div className={styles.profileInfoContainer}>
           <fieldset className={styles.profileFieldset}>
             <label>{'First Name'}</label>
@@ -70,19 +70,23 @@ const Profile = ({ user, activities }) => {
           )}
         </div>
         <div className={styles.profileActivitiesContainer}>
-          <div className={styles.profileActivitiesTitle}>
-            <p>{'Related activities:'}</p>
-          </div>
-          <div className={styles.profileActivitiesList}>
-            {activities.map((actv) => (
-              <div key={actv._id}>
-                <p>{actv.name}</p>
-              </div>
-            ))}
-          </div>
+          {sessionStorage.role === 'MEMBER' && (
+            <div className={styles.profileActivitiesTitle}>
+              <p>{'Related activities:'}</p>
+            </div>
+          )}
+          {sessionStorage.role === 'MEMBER' && (
+            <div className={styles.profileActivitiesList}>
+              {activities.map((actv) => (
+                <div key={actv._id}>
+                  <p>{actv.name}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      <div className={styles.profileButtonsContainer}>
+      <div className={styles.profileButtonsContainer} data-testid="profile-buttons-container">
         <button
           onClick={() => {
             history.push(`profile/edit`);
