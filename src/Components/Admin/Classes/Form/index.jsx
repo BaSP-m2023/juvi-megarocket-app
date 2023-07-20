@@ -56,7 +56,7 @@ const FormClasses = () => {
     '20:00',
     '21:00'
   ];
-  const week = ['Monday', 'Thuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   useEffect(() => {
     dispatch(getTrainers());
