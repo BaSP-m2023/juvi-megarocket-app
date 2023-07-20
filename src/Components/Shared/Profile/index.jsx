@@ -5,6 +5,9 @@ import styles from 'Components/Shared/Profile/member-profile.module.css';
 
 const Profile = ({ user, activities }) => {
   const history = useHistory();
+  const birthDateSubstring = user.birthDate
+    ? user.birthDate.substring(0, user.birthDate.indexOf('T'))
+    : '';
 
   return (
     <div className={styles.profileContainer}>
@@ -30,18 +33,14 @@ const Profile = ({ user, activities }) => {
             <label>{'DNI'}</label>
             <p>{user.dni}</p>
           </fieldset>
-          {sessionStorage.role !== 'ADMIN' && (
-            <fieldset className={styles.profileFieldset}>
-              <label>{'Birth Date'}</label>
-              <p>{user.birthDate}</p>
-            </fieldset>
-          )}
-          {sessionStorage.role !== 'ADMIN' && (
-            <fieldset className={styles.profileFieldset}>
-              <label>{'ZIP'}</label>
-              <p>{user.postalCode}</p>
-            </fieldset>
-          )}
+          <fieldset className={styles.profileFieldset}>
+            <label>{'Birth Date'}</label>
+            <p>{birthDateSubstring}</p>
+          </fieldset>
+          <fieldset className={styles.profileFieldset}>
+            <label>{'ZIP'}</label>
+            <p>{user.postalCode}</p>
+          </fieldset>
           <fieldset className={styles.profileFieldset}>
             <label>{'City'}</label>
             <p>{user.city}</p>
