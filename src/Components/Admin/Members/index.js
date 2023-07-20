@@ -6,6 +6,7 @@ import { getMembers, deleteMember } from 'redux/members/thunks';
 import styles from './members.module.css';
 import { ModalAlert } from 'Components/Shared';
 import SharedTable from 'Components/Shared/Table';
+import LoadingSpinner from 'Components/Shared/LoadingSpinner/index';
 
 function Members(props) {
   const [modal, setModal] = useState(false);
@@ -26,7 +27,7 @@ function Members(props) {
       <div className={styles.titleMembers}>
         <h2>Members</h2>
       </div>
-      {data.isLoading && <h1>Loading</h1>}
+      {data.isLoading && <LoadingSpinner />}
       {!data.isLoading && (
         <SharedTable
           data={data.list}
