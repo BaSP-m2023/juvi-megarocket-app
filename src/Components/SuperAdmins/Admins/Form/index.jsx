@@ -85,7 +85,38 @@ const AdminsForm = ({ history }) => {
       if (text === 'Add admin') {
         dispatch(addAdmin(data, switchModal));
       } else {
-        dispatch(editAdmin(id, data, switchModal));
+        if (data.password === '') {
+          dispatch(
+            editAdmin(
+              id,
+              {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                dni: data.dni,
+                phone: data.phone,
+                email: data.email,
+                city: data.city
+              },
+              switchModal
+            )
+          );
+        } else {
+          dispatch(
+            editAdmin(
+              id,
+              {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                dni: data.dni,
+                phone: data.phone,
+                email: data.email,
+                city: data.city,
+                password: data.password
+              },
+              switchModal
+            )
+          );
+        }
       }
     } catch (error) {
       switchModal(true, error);
