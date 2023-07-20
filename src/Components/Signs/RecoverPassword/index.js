@@ -3,19 +3,20 @@ import styles from 'Components/Signs/RecoverPassword/recover.module.css';
 
 import { useState } from 'react';
 import { ModalAlert } from 'Components/Shared';
+import { useHistory } from 'react-router-dom';
 
 const RecoverPassword = () => {
   const [modal, setModal] = useState(false);
-  const [email, setEmail] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(false);
+  const history = useHistory();
 
   const checkEmail = () => {
-    const testEmails = ['octavito@gmail.com', 'pablomorad@hotmail.com', 'octavitossse@gmail.com'];
-    const foundUser = testEmails.includes(email);
-    setIsValidEmail(foundUser);
-    if (foundUser) {
-      setModal(true);
-    }
+    setModal(true);
+  };
+
+  const returnToHome = () => {
+    const newUrl = '/auth/sign-in';
+    history.replace(newUrl);
+    window.location.reload();
   };
 
   return (
@@ -24,27 +25,21 @@ const RecoverPassword = () => {
       <div>
         <fieldset className={styles.fieldset}>
           <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="email@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input type="email" id="email" name="email" placeholder="email@example.com" />
         </fieldset>
       </div>
       <div className={styles.btnRecover}>
         <button className={styles.btnConfirm} onClick={checkEmail}>
           Confirm
         </button>
-        <button className={styles.btnCancel}>Cancel</button>
+        <button className={styles.btnCancel} onClick={returnToHome}>
+          Cancel
+        </button>
       </div>
-      {isValidEmail && <p>Email found in the data!</p>}
       {modal && (
         <ModalAlert
           text={'An email with the new password has been sent to your email address.'}
-          onClick={() => setModal(!modal)}
+          onClick={returnToHome}
         />
       )}
     </div>

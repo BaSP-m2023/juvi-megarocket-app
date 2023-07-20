@@ -28,13 +28,13 @@ class SignIn {
   }
 
   async fillFormLogInMember() {
-    await this.emailInput.setValue('pablomorad@hotmail.com');
-    await this.passwordInput.setValue('Chimpance1');
+    await this.emailInput.setValue('juan@gmail.com');
+    await this.passwordInput.setValue('testing123');
   }
 
   async fillFormLogInAdmin() {
-    await this.emailInput.setValue('octavitossse@gmail.com');
-    await this.passwordInput.setValue('Marianobondar123456');
+    await this.emailInput.setValue('juanignaciocanton1@gmail.com');
+    await this.passwordInput.setValue('Testing123');
   }
 
   async fillFormLogInTrainer() {

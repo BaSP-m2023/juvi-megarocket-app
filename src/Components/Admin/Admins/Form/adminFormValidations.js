@@ -14,12 +14,21 @@ export const schema = Joi.object({
     .pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/)
     .messages({
       'string.pattern.base': 'Last name must be only made of letters(it can be a compound Name)'
-    }),
-  dni: Joi.number().min(1000000).max(99999999).integer().messages({
-    'string.pattern.base': 'DNI is not valid, must contain between 7-8 numbers'
+    })
+    .required(),
+  dni: Joi.number().min(1000000).max(99999999).integer().required().messages({
+    'number.base': 'DNI must be a number',
+    'number.integer': 'DNI must be an integer',
+    'number.min': 'DNI must be 8 characters long',
+    'number.max': 'DNI must be 8 characters long',
+    'any.required': 'DNI is required'
   }),
-  phone: Joi.number().min(1000000000).max(9999999999).integer().messages({
-    'string.pattern.base': 'Phone is not valid, must have 10 numbers(without 0 and 15)'
+  phone: Joi.number().min(1000000000).max(9999999999).integer().required().messages({
+    'number.base': 'Phone must be a number',
+    'number.integer': 'Phone must be an integer',
+    'number.min': 'Phone must be 10 characters long',
+    'number.max': 'Phone must be 10 characters long',
+    'any.required': 'Phone is required'
   }),
   email: Joi.string()
     .regex(

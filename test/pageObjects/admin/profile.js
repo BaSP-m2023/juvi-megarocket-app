@@ -4,6 +4,17 @@ class Profile {
     return $('[data-testid="navbar"] li:nth-child(3) a');
   }
 
+  get profileSection() {
+    return $(`[data-testid=profile-section]`);
+  }
+
+  get editProfileBtn() {
+    return $(`[data-testid=profile-buttons-container] button:nth-child(1)`)
+  }
+
+  get changePasswordBtn() {
+    return $(`[data-testid=profile-buttons-container] button:nth-child(2)`)
+  }
   get profileForm() {
     return $('[data-testid="admin-profile-form"]');
   }
@@ -32,10 +43,6 @@ class Profile {
     return $('[data-testid="admin-profile-form"] fieldset:nth-child(7) input:nth-child(2)');
   }
 
-  get path (){
-    return $('[data-testid="admin-profile-form"] svg path');
-  }
-
   async profileForm(name, lastname, dni, phone, email, city) {
     await this.inputName.setValue(name);
     await this.inputLastName.setValue(lastname);
@@ -49,9 +56,12 @@ class Profile {
     await this.profileNavbar.click();
   }
 
-  async pathClick(){
-    await this.path.click();
+  async editProfileBtnClick() {
+    await this.editProfileBtn.click();
   }
 
+  async changePasswordBtnClick() {
+    await this.changePasswordBtn.click();
+  }
 }
 module.exports = new Profile();

@@ -104,7 +104,7 @@ const ProfileEditPassword = () => {
           </div>
         </fieldset>
         <div>
-          <Button type="submit"></Button>
+          <Button type="submit" testId="submit-button"></Button>
           <Button type="cancel" onClick={() => history.push('/member/profile')}></Button>
         </div>
         {modal && <ModalAlert text={msg} onClick={() => setModal(!modal)} />}

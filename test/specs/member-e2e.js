@@ -7,6 +7,8 @@ const Activities = require('../pageObjects/member/activities');
 const ModalAlert = require('../pageObjects/sharedComponents/modalAlert');
 const MemberNavbar = require ('../../test/pageObjects/navbar/memberNavbar');
 const ModalConfirm = require ('../../test/pageObjects/sharedComponents/modalConfirm');
+const profileForm = require('../pageObjects/member/profileForm');
+const ChangePassword = require('../../test/pageObjects/member/changePassword');
 
 describe('Members complete flow.', function () {
   beforeAll('Open browser for test activities display', async function () {
@@ -120,6 +122,10 @@ describe('Members complete flow.', function () {
     await expect(MemberNavbar.profile).toBeDisplayed();
     await MemberNavbar.profileClick();
   });
+  it('Navigation to edit section', async () => {
+    await expect(ProfileForm.editBtn).toBeDisplayed();
+    await ProfileForm.editClick();
+  })
   it('Checks all the labels of the form', async() => {
     await expect(ProfileForm.nameLabel).toHaveTextContaining('Name')
     await expect(ProfileForm.lastNameLabel).toHaveTextContaining('Last Name')
@@ -129,33 +135,46 @@ describe('Members complete flow.', function () {
     await expect(ProfileForm.cityLabel).toHaveTextContaining('City')
     await expect(ProfileForm.dateLabel).toHaveTextContaining('Birth Day')
     await expect(ProfileForm.zipLabel).toHaveTextContaining('Zip')
-    await expect(ProfileForm.passwordLabel).toHaveTextContaining('Password')
-    await expect(ProfileForm.membershipLabel).toHaveTextContaining('Membership')
   })
   it('Checks that the info is properly loaded', async() => {
-    await expect(ProfileForm.nameInput).toHaveValue('Gianluca')
-    await expect(ProfileForm.lastNameInput).toHaveValue('Agrano')
-    await expect(ProfileForm.idInput).toHaveValue('44555666')
-    await expect(ProfileForm.phoneInput).toHaveValue('3414445555')
-    await expect(ProfileForm.emailInput).toHaveValue('gianlucka1@gmail.com')
+    await expect(ProfileForm.lastNameInput).toHaveValue('Canton')
+    await expect(ProfileForm.idInput).toHaveValue('42129353')
+    await expect(ProfileForm.phoneInput).toHaveValue('3413520137')
+    await expect(ProfileForm.emailInput).toHaveValue('juan@gmail.com')
     await expect(ProfileForm.cityInput).toHaveValue('Rosario')
     await expect(ProfileForm.zipInput).toHaveValue('2000')
-    await expect(ProfileForm.passwordInput).toHaveValue('contrasena123')
-    await expect(ProfileForm.membershipSelect).toHaveValue('Black')
   })
   it('Change all the information and submit', async() => {
-    await ProfileForm.fillProfileForm('Juan', 'Canton', '42129353', '3413520137',
-    'juanignaciocanton1@gmail.com', 'Buenos aires', '21-08-1999',
-    '4321', 'newpass123')
+    await ProfileForm.fillProfileForm('Juan')
     await expect(Buttons.submitBtn).toBeDisplayed();
     await Buttons.submitBtnClick();
   })
   it('Verification of success modal and click', async() => {
-    await expect(ModalAlert.modalAlertText).toHaveTextContaining('Member updated correctly!');
+    await expect(ModalAlert.modalAlertText).toHaveTextContaining('Member updated');
     await expect(ModalAlert.modalAlertButton).toBeDisplayed();
     await ModalAlert.confirmAlertClick();
   })
+  it('Correct navigation to members profile', async() => {
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/profile')
+  })
+  it('Navigation to change password section', async () => {
+    await expect (ProfileForm.changePassBtn).toBeDisplayed();
+    await ProfileForm.changePassClick();
+    await expect(ChangePassword.passwordTittle).toBeDisplayed();
+  })
   it('Correct navigation to members panel', async() => {
-    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member')
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/profile/password');
+  })
+  it('Fill the passwords input', async() => {
+    await ChangePassword.fillPasswords('testing123', 'testing123');
+  })
+  it('Click in submit and confirm', async () => {
+    await expect(ChangePassword.submitBtn).toBeDisplayed();
+    await ChangePassword.submitClick();
+    await expect(ChangePassword.confirmBtn).toBeDisplayed();
+    await ChangePassword.confirmClick();
+  })
+  it('Correct navigation to members profile', async() => {
+    await expect(browser).toHaveUrl('https://juvi-megarocket-app.vercel.app/member/profile')
   })
 });
