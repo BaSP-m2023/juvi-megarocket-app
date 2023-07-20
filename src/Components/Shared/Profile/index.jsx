@@ -33,14 +33,18 @@ const Profile = ({ user, activities }) => {
             <label>{'DNI'}</label>
             <p>{user.dni}</p>
           </fieldset>
-          <fieldset className={styles.profileFieldset}>
-            <label>{'Birth Date'}</label>
-            <p>{birthDateSubstring}</p>
-          </fieldset>
-          <fieldset className={styles.profileFieldset}>
-            <label>{'ZIP'}</label>
-            <p>{user.postalCode}</p>
-          </fieldset>
+          {sessionStorage.role === 'MEMBER' && (
+            <fieldset className={styles.profileFieldset}>
+              <label>{'Birth Date'}</label>
+              <p>{birthDateSubstring}</p>
+            </fieldset>
+          )}
+          {sessionStorage.role === 'MEMBER' && (
+            <fieldset className={styles.profileFieldset}>
+              <label>{'ZIP'}</label>
+              <p>{user.postalCode}</p>
+            </fieldset>
+          )}
           <fieldset className={styles.profileFieldset}>
             <label>{'City'}</label>
             <p>{user.city}</p>
@@ -70,12 +74,12 @@ const Profile = ({ user, activities }) => {
           )}
         </div>
         <div className={styles.profileActivitiesContainer}>
-          {sessionStorage.role === 'MEMBER' && (
+          {sessionStorage.role !== 'ADMIN' && (
             <div className={styles.profileActivitiesTitle}>
               <p>{'Related activities:'}</p>
             </div>
           )}
-          {sessionStorage.role === 'MEMBER' && (
+          {sessionStorage.role !== 'ADMIN' && (
             <div className={styles.profileActivitiesList}>
               {activities.map((actv) => (
                 <div key={actv._id}>

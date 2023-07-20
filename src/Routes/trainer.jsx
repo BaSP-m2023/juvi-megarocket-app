@@ -1,5 +1,7 @@
 import Home from 'Components/Home';
-import Profile from 'Components/Trainer/Profile';
+import TrainerProfile from 'Components/Trainer/Profile';
+import ProfileEdit from 'Components/Trainer/ProfileEdit';
+import ProfileEditPassword from 'Components/Trainer/ProfileEditPass';
 import Schedule from 'Components/Trainer/Schedule';
 import { Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
@@ -26,7 +28,9 @@ const TrainerRoutes = () => {
     <Layout routes={routes}>
       <Switch>
         <Route exact path={`${url}/`} component={Home} />
-        <Route exact path={`${url}/profile`} component={Profile} />
+        <Route exact path={`${url}/profile`} component={TrainerProfile} />
+        <Route exact path={`${url}/profile/edit`} component={ProfileEdit} />
+        <Route exact path={`${url}/profile/password`} component={ProfileEditPassword} />
         <Route exact path={`${url}/schedule`} component={Schedule} />
       </Switch>
     </Layout>
